@@ -302,16 +302,14 @@
     * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     #mode-toggle { display: none; }
   }
-</style>
   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-N0ENDBHCS4"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-N0ENDBHCS4');
-</script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N0ENDBHCS4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-N0ENDBHCS4');
+  </script>
 </head>
 <body>
 <!-- dark mode is default; .print-mode toggled by JS -->
@@ -331,7 +329,7 @@
         <select id="tz-select">
           <option value="10"  selected>Melbourne / Sydney (AEST, UTC+10)</option>
           <option value="9.5"         >Adelaide (ACST, UTC+9:30)</option>
-          <option value="9"           >Brisbane (AEST no DST, UTC+9)</option>
+          <option value="10"          >Brisbane (AEST, UTC+10)</option>
           <option value="8"           >Perth (AWST, UTC+8)</option>
           <option value="12"          >Auckland (NZST, UTC+12)</option>
           <option value="8"           >Singapore / Hong Kong (UTC+8)</option>
