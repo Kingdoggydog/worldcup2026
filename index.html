@@ -431,22 +431,44 @@
       <div class="ctrl-row">
         <span class="ctrl-label">Timezone</span>
         <select id="tz-select">
-          <option value="10"  selected>Melbourne / Sydney (AEST, UTC+10)</option>
-          <option value="9.5"         >Adelaide (ACST, UTC+9:30)</option>
-          <option value="10"          >Brisbane (AEST, UTC+10)</option>
-          <option value="8"           >Perth (AWST, UTC+8)</option>
-          <option value="12"          >Auckland (NZST, UTC+12)</option>
-          <option value="8"           >Singapore / Hong Kong (UTC+8)</option>
-          <option value="5.5"         >India (IST, UTC+5:30)</option>
-          <option value="3"           >Moscow (UTC+3)</option>
-          <option value="2"           >Paris / Berlin (CEST, UTC+2)</option>
-          <option value="1"           >London (BST, UTC+1)</option>
-          <option value="0"           >UTC+0</option>
-          <option value="-3"          >Argentina / Brazil (UTC-3)</option>
-          <option value="-4"          >New York (EDT, UTC-4)</option>
-          <option value="-5"          >Chicago (CDT, UTC-5)</option>
-          <option value="-6"          >Denver (MDT, UTC-6)</option>
-          <option value="-7"          >Los Angeles (PDT, UTC-7)</option>
+          <option value="12">Auckland (NZST, UTC+12)</option>
+          <option value="11">Solomon Islands (UTC+11)</option>
+          <option value="10">Melbourne / Sydney (AEST, UTC+10)</option>
+          <option value="10">Brisbane (AEST, UTC+10)</option>
+          <option value="9.5">Adelaide (ACST, UTC+9:30)</option>
+          <option value="9.5">Darwin (ACST, UTC+9:30)</option>
+          <option value="9">Tokyo / Seoul (JST/KST, UTC+9)</option>
+          <option value="8">Perth (AWST, UTC+8)</option>
+          <option value="8">Singapore / Hong Kong (UTC+8)</option>
+          <option value="8">Beijing / Shanghai (CST, UTC+8)</option>
+          <option value="8">Kuala Lumpur (MYT, UTC+8)</option>
+          <option value="7">Bangkok / Jakarta (UTC+7)</option>
+          <option value="6">Dhaka (BST, UTC+6)</option>
+          <option value="5.5">India (IST, UTC+5:30)</option>
+          <option value="5">Karachi / Islamabad (PKT, UTC+5)</option>
+          <option value="4">Dubai / Abu Dhabi (GST, UTC+4)</option>
+          <option value="3">Nairobi / Riyadh (EAT/AST, UTC+3)</option>
+          <option value="3">Moscow (MSK, UTC+3)</option>
+          <option value="3">Istanbul (TRT, UTC+3)</option>
+          <option value="2">Cairo (EET, UTC+2)</option>
+          <option value="2">Johannesburg (SAST, UTC+2)</option>
+          <option value="2">Paris / Berlin / Rome (CEST, UTC+2)</option>
+          <option value="2">Athens / Helsinki (EEST, UTC+2)</option>
+          <option value="1">London (BST, UTC+1)</option>
+          <option value="1">Dublin (IST, UTC+1)</option>
+          <option value="1">Lagos / Casablanca (WAT, UTC+1)</option>
+          <option value="0">UTC+0 / Reykjavik</option>
+          <option value="0">Accra / Dakar (GMT, UTC+0)</option>
+          <option value="-3">Buenos Aires / Sao Paulo (UTC-3)</option>
+          <option value="-3">Santiago (CLT, UTC-3)</option>
+          <option value="-4">New York / Toronto (EDT, UTC-4)</option>
+          <option value="-4">Caracas / La Paz (UTC-4)</option>
+          <option value="-5">Chicago / Mexico City (CDT, UTC-5)</option>
+          <option value="-5">Lima / Bogota (PET/COT, UTC-5)</option>
+          <option value="-6">Denver / Calgary (MDT, UTC-6)</option>
+          <option value="-7">Los Angeles / Vancouver (PDT, UTC-7)</option>
+          <option value="-8">Anchorage (AKDT, UTC-8)</option>
+          <option value="-10">Honolulu (HST, UTC-10)</option>
         </select>
       </div>
       <div class="ctrl-row">
@@ -525,7 +547,7 @@
   <div class="schedule" id="schedule"></div>
 
   <div class="footer">
-    <p id="footer-tz">All times AEST (UTC+10) &bull; Source: FIFA / Fox Sports 2026 &bull; <span id="version">v1.21</span></p>
+    <p id="footer-tz">All times AEST (UTC+10) &bull; Source: FIFA / Fox Sports 2026 &bull; <span id="version">v1.22</span></p>
     <p>72 group stage matches &bull; 12 groups &bull; Top 2 per group + 8 best 3rd place advance</p>
   </div>
   <div id="bmc-mobile">
@@ -811,7 +833,7 @@ function render(offset, team) {
     ? `UTC${sign}${Math.floor(offset)}:${Math.abs((offset%1)*60) === 30 ? '30':'00'}`
     : `UTC${sign}${offset}`;
   document.getElementById('footer-tz').innerHTML =
-    `All times ${lbl} \u2022 Source: FIFA / Fox Sports 2026 \u2022 <span id="version" style="color:var(--text-muted);font-style:italic">v1.21</span>`;
+    `All times ${lbl} \u2022 Source: FIFA / Fox Sports 2026 \u2022 <span id="version" style="color:var(--text-muted);font-style:italic">v1.22</span>`;
 
   document.getElementById('highlight-note').textContent =
     team === 'none' ? 'No team highlighted' : `Showing ${team}'s matches`;
@@ -843,7 +865,102 @@ koBtn.addEventListener('click', () => {
   render(s.offset, s.team);
 });
 
-render(10, 'none');
+// Auto-detect user timezone and select matching dropdown option
+(function() {
+  // Map IANA timezone strings to UTC offset values matching our dropdown
+  const TZ_MAP = {
+    // Oceania
+    'Pacific/Auckland':     12, 'Pacific/Fiji':         12, 'Pacific/Tongatapu':    13,
+    'Pacific/Noumea':       11, 'Pacific/Guadalcanal':  11,
+    'Australia/Sydney':     10, 'Australia/Melbourne':  10, 'Australia/Hobart':     10,
+    'Australia/ACT':        10, 'Australia/Canberra':   10, 'Australia/NSW':        10,
+    'Australia/Brisbane':   10, 'Australia/Queensland': 10, 'Australia/Lindeman':   10,
+    'Australia/Adelaide':   9.5,'Australia/Broken_Hill':9.5,'Australia/South':      9.5,
+    'Australia/Darwin':     9.5,'Australia/North':      9.5,
+    'Australia/Perth':      8,  'Australia/West':       8,
+    // Asia
+    'Asia/Tokyo':           9,  'Asia/Seoul':           9,  'Asia/Pyongyang':       9,
+    'Asia/Shanghai':        8,  'Asia/Beijing':         8,  'Asia/Taipei':          8,
+    'Asia/Singapore':       8,  'Asia/Hong_Kong':       8,  'Asia/Kuala_Lumpur':    8,
+    'Asia/Manila':          8,  'Asia/Makassar':        8,  'Asia/Brunei':          8,
+    'Asia/Bangkok':         7,  'Asia/Jakarta':         7,  'Asia/Ho_Chi_Minh':     7,
+    'Asia/Saigon':          7,  'Asia/Phnom_Penh':      7,  'Asia/Vientiane':       7,
+    'Asia/Rangoon':         6.5,'Asia/Yangon':          6.5,
+    'Asia/Dhaka':           6,  'Asia/Almaty':          6,
+    'Asia/Kolkata':         5.5,'Asia/Calcutta':        5.5,'Asia/Colombo':         5.5,
+    'Asia/Karachi':         5,  'Asia/Tashkent':        5,  'Asia/Yekaterinburg':   5,
+    'Asia/Kabul':           4.5,
+    'Asia/Dubai':           4,  'Asia/Muscat':          4,  'Asia/Baku':            4,
+    'Asia/Tbilisi':         4,  'Asia/Yerevan':         4,
+    'Asia/Tehran':          3.5,
+    'Asia/Baghdad':         3,  'Asia/Kuwait':          3,  'Asia/Riyadh':          3,
+    'Asia/Qatar':           3,  'Asia/Aden':            3,
+    'Asia/Jerusalem':       3,  'Asia/Tel_Aviv':        3,  'Asia/Amman':           3,
+    'Asia/Beirut':          3,  'Asia/Damascus':        3,  'Asia/Nicosia':         3,
+    // Europe
+    'Europe/Moscow':        3,  'Europe/Minsk':         3,  'Europe/Istanbul':      3,
+    'Europe/Kirov':         3,  'Europe/Simferopol':    3,
+    'Europe/Athens':        3,  'Europe/Bucharest':     3,  'Europe/Helsinki':      3,
+    'Europe/Riga':          3,  'Europe/Tallinn':       3,  'Europe/Vilnius':       3,
+    'Europe/Sofia':         3,  'Europe/Nicosia':       3,
+    'Europe/Paris':         2,  'Europe/Berlin':        2,  'Europe/Rome':          2,
+    'Europe/Madrid':        2,  'Europe/Amsterdam':     2,  'Europe/Brussels':      2,
+    'Europe/Zurich':        2,  'Europe/Vienna':        2,  'Europe/Warsaw':        2,
+    'Europe/Stockholm':     2,  'Europe/Oslo':          2,  'Europe/Copenhagen':    2,
+    'Europe/Prague':        2,  'Europe/Budapest':      2,  'Europe/Ljubljana':     2,
+    'Europe/Zagreb':        2,  'Europe/Sarajevo':      2,  'Europe/Skopje':        2,
+    'Europe/Belgrade':      2,  'Europe/Bratislava':    2,
+    'Europe/London':        1,  'Europe/Dublin':        1,  'Europe/Lisbon':        1,
+    'Atlantic/Reykjavik':   0,  'UTC':                  0,  'Etc/UTC':              0,
+    'Africa/Abidjan':       0,  'Africa/Accra':         0,  'Africa/Dakar':         0,
+    // Africa
+    'Africa/Nairobi':       3,  'Africa/Addis_Ababa':   3,  'Africa/Dar_es_Salaam': 3,
+    'Africa/Kampala':       3,  'Africa/Mogadishu':     3,
+    'Africa/Cairo':         2,  'Africa/Johannesburg':  2,  'Africa/Harare':        2,
+    'Africa/Lusaka':        2,  'Africa/Maputo':        2,  'Africa/Kigali':        2,
+    'Africa/Lagos':         1,  'Africa/Kinshasa':      1,  'Africa/Casablanca':    1,
+    'Africa/Tunis':         1,  'Africa/Algiers':       1,
+    // Americas
+    'America/Sao_Paulo':   -3,  'America/Fortaleza':   -3,  'America/Recife':      -3,
+    'America/Buenos_Aires':-3,  'America/Argentina/Buenos_Aires':-3,
+    'America/Montevideo':  -3,  'America/Asuncion':    -3,  'America/Santiago':    -3,
+    'America/New_York':    -4,  'America/Detroit':     -4,  'America/Toronto':     -4,
+    'America/Boston':      -4,  'America/Atlanta':     -4,  'America/Miami':       -4,
+    'America/Caracas':     -4,  'America/La_Paz':      -4,  'America/Manaus':      -4,
+    'America/Chicago':     -5,  'America/Winnipeg':    -5,  'America/Indiana/Indianapolis':-5,
+    'America/Mexico_City': -5,  'America/Bogota':      -5,  'America/Lima':        -5,
+    'America/Denver':      -6,  'America/Phoenix':     -6,  'America/Edmonton':    -6,
+    'America/Guatemala':   -6,  'America/Tegucigalpa': -6,  'America/Costa_Rica':  -6,
+    'America/Los_Angeles': -7,  'America/Vancouver':   -7,  'America/Tijuana':     -7,
+    'America/Anchorage':   -8,  'America/Juneau':      -8,
+    'Pacific/Honolulu':    -10, 'Pacific/Tahiti':      -10,
+  };
+
+  // Get user's IANA timezone
+  let userTz = 0; // default to UTC+0 if no match
+  try {
+    const ianaZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    if (TZ_MAP[ianaZone] !== undefined) {
+      userTz = TZ_MAP[ianaZone];
+    } else {
+      // Fallback: calculate offset from browser directly
+      const offsetMins = -new Date().getTimezoneOffset();
+      userTz = offsetMins / 60;
+    }
+  } catch(e) {}
+
+  // Select the matching dropdown option (pick closest if no exact match)
+  const sel = document.getElementById('tz-select');
+  const opts = Array.from(sel.options);
+  let bestIdx = 0, bestDiff = Infinity;
+  opts.forEach((o, i) => {
+    const diff = Math.abs(parseFloat(o.value) - userTz);
+    if (diff < bestDiff) { bestDiff = diff; bestIdx = i; }
+  });
+  sel.selectedIndex = bestIdx;
+
+  render(parseFloat(sel.options[bestIdx].value), 'none');
+})();
 </script>
 
 <!-- Buy Me a Coffee widget -->
