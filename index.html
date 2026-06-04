@@ -575,7 +575,7 @@
   <div class="schedule" id="schedule"></div>
 
   <div class="footer">
-    <p id="footer-tz">All times AEST (UTC+10) &bull; Source: FIFA / Fox Sports 2026 &bull; <span id="version">v1.1</span></p>
+    <p id="footer-tz">All times AEST (UTC+10) &bull; Source: FIFA / Fox Sports 2026 &bull; <span id="version">v1.2</span></p>
     <p>72 group stage matches &bull; 12 groups &bull; Top 2 per group + 8 best 3rd place advance</p>
   </div>
   <div id="bmc-mobile">
@@ -861,7 +861,7 @@ function render(offset, team) {
     ? `UTC${sign}${Math.floor(offset)}:${Math.abs((offset%1)*60) === 30 ? '30':'00'}`
     : `UTC${sign}${offset}`;
   document.getElementById('footer-tz').innerHTML =
-    `All times ${lbl} \u2022 Source: FIFA / Fox Sports 2026 \u2022 <span id="version" style="color:var(--text-muted);font-style:italic">v1.1</span>`;
+    `All times ${lbl} \u2022 Source: FIFA / Fox Sports 2026 \u2022 <span id="version" style="color:var(--text-muted);font-style:italic">v1.2</span>`;
 
   document.getElementById('highlight-note').textContent =
     team === 'none' ? 'No team highlighted' : `Showing ${team}'s matches`;
@@ -894,24 +894,22 @@ koBtn.addEventListener('click', () => {
 });
 
 render(10, 'none');
-</script>
 
-<!-- Buy Me a Coffee: only load widget script on desktop via JS -->
-<script>
-  if (window.innerWidth > 900) {
-    var s = document.createElement('script');
-    s.setAttribute('data-name', 'BMC-Widget');
-    s.setAttribute('data-cfasync', 'false');
-    s.setAttribute('data-id', 'coolcato');
-    s.setAttribute('data-description', 'Support me on Buy me a coffee!');
-    s.setAttribute('data-message', 'Please consider buying me a coffee to help me to create more things like this. Enjoy the World Cup!');
-    s.setAttribute('data-color', '#C9A84C');
-    s.setAttribute('data-position', 'Right');
-    s.setAttribute('data-x_margin', '18');
-    s.setAttribute('data-y_margin', '18');
-    s.src = 'https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js';
-    document.body.appendChild(s);
-  }
+// Buy Me a Coffee - desktop only
+if (window.innerWidth > 900) {
+  var bmc = document.createElement('script');
+  bmc.setAttribute('data-name', 'BMC-Widget');
+  bmc.setAttribute('data-cfasync', 'false');
+  bmc.setAttribute('data-id', 'coolcato');
+  bmc.setAttribute('data-description', 'Support me on Buy me a coffee!');
+  bmc.setAttribute('data-message', 'Please consider buying me a coffee to help me to create more things like this. Enjoy the World Cup!');
+  bmc.setAttribute('data-color', '#C9A84C');
+  bmc.setAttribute('data-position', 'Right');
+  bmc.setAttribute('data-x_margin', '18');
+  bmc.setAttribute('data-y_margin', '18');
+  bmc.src = 'https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js';
+  document.body.appendChild(bmc);
+}
 </script>
 
 </body>
