@@ -239,11 +239,24 @@
   }
   body.print-mode .schedule { gap: 4px 6px; }
 
-  /* single column on small mobile */
-  @media (max-width: 540px) {
-    .schedule { grid-template-columns: 1fr; }
-    .header { flex-direction: column; align-items: flex-start; }
-    .header-right { align-items: flex-start; text-align: left; }
+  /* single column on mobile - night mode only */
+  @media (max-width: 768px) {
+    body:not(.print-mode) .schedule { grid-template-columns: 1fr; }
+    body:not(.print-mode) .header { flex-direction: column; align-items: flex-start; gap: 10px; }
+    body:not(.print-mode) .header-right { align-items: flex-start; text-align: left; width: 100%; }
+    body:not(.print-mode) .ctrl-row { flex-wrap: wrap; gap: 6px; }
+    body:not(.print-mode) select { font-size: 14px; padding: 6px 8px; width: 100%; }
+    body:not(.print-mode) #mode-toggle,
+    body:not(.print-mode) #knockout-toggle { font-size: 12px; padding: 6px 12px; }
+    body:not(.print-mode) .match { padding: 8px 10px; margin-bottom: 3px; }
+    body:not(.print-mode) .time { font-size: 16px; width: 44px; }
+    body:not(.print-mode) .teams { font-size: 14px; }
+    body:not(.print-mode) .venue { font-size: 11px; }
+    body:not(.print-mode) .day-name { font-size: 15px; }
+    body:not(.print-mode) .day-date { font-size: 13px; }
+    body:not(.print-mode) .legend { gap: 4px 8px; }
+    body:not(.print-mode) .legend-item { font-size: 11px; }
+    body:not(.print-mode) .page { padding: 16px 14px 24px 14px; }
   }
 
   /* ── DAY BLOCK ───────────────────────────────────────────────────────────── */
