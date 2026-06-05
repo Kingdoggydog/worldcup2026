@@ -423,6 +423,18 @@
   body.print-mode .footer p { font-size: 9px; }
 
   /* ── PRINT MEDIA ─────────────────────────────────────────────────────────── */
+  .schedule-note {
+    background: var(--bg-match); border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    padding: 10px 14px; margin-bottom: 16px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(11px, 1.8vw, 13px);
+    color: var(--text-sub); letter-spacing: 0.5px;
+    border-radius: 3px; flex-shrink: 0;
+  }
+  .schedule-note strong { color: var(--gold); }
+  body.print-mode .schedule-note { display: none; }
+
   /* scores */
   .score-ft {
     font-family: 'Barlow Condensed', sans-serif; font-weight: 800;
@@ -594,10 +606,14 @@
 
 
 
+  <div class="schedule-note">
+    <strong>Scores will be updated live during the tournament.</strong>
+    The group stage kicks off on <span id="kickoff-date">12 June 2026</span>. Check back then to see live and final scores updated automatically.
+  </div>
   <div class="schedule" id="schedule"></div>
 
   <div class="footer">
-    <p id="footer-tz">All times AEST (UTC+10) &bull; Source: FIFA / Fox Sports 2026 &bull; <span id="version">v1.3</span></p>
+    <p id="footer-tz">All times AEST (UTC+10) &bull; Source: FIFA / Fox Sports 2026 &bull; <span id="version">v1.31</span></p>
     <p>72 group stage matches &bull; 12 groups &bull; Top 2 per group + 8 best 3rd place advance</p>
   </div>
   <div id="bmc-mobile">
@@ -814,7 +830,6 @@ async function loadScores() {
 }
 
 function getScore(teamsStr) {
-  // teamsStr e.g. "Mexico v South Africa"
   const parts = teamsStr.split(' v ');
   if (parts.length !== 2) return null;
   const home = parts[0].trim();
@@ -823,10 +838,10 @@ function getScore(teamsStr) {
   const s = scoreMap[key];
   if (!s) return null;
   if (s.status === 'FINISHED' && s.home !== null && s.away !== null) {
-    return { text: s.home + ' - ' + s.away, cls: 'score-ft', label: 'FT' };
+    return { home: s.home, away: s.away, cls: 'score-ft', label: 'FT' };
   }
   if ((s.status === 'IN_PLAY' || s.status === 'PAUSED') && s.home !== null) {
-    return { text: s.home + ' - ' + s.away, cls: 'score-live', label: s.status === 'PAUSED' ? 'HT' : 'LIVE' };
+    return { home: s.home, away: s.away, cls: 'score-live', label: s.status === 'PAUSED' ? 'HT' : 'LIVE' };
   }
   return null;
 }
@@ -882,7 +897,7 @@ function render(offset, team) {
       const cls = hi ? ' highlighted' : '';
       const score = getScore(m.teams);
       const scoreHtml = score
-        ? `<span class="${score.cls}">${score.text}<span class="score-label${score.cls==='score-live'?' live':''}">${score.label}</span></span>`
+        ? `<span class="${score.cls}">${score.home} - ${score.away}<span class="score-label${score.cls==='score-live'?' live':''}">${score.label}</span></span>`
         : '';
       html += `<div class="match${cls}">
         <span class="grp ${m.grp}">${m.grp}</span>
@@ -947,10 +962,23 @@ function render(offset, team) {
     ? `UTC${sign}${Math.floor(offset)}:${Math.abs((offset%1)*60) === 30 ? '30':'00'}`
     : `UTC${sign}${offset}`;
   document.getElementById('footer-tz').innerHTML =
-    `All times ${lbl} \u2022 Source: FIFA / Fox Sports 2026 \u2022 <span id="version" style="color:var(--text-muted);font-style:italic">v1.3</span>`;
+    `All times ${lbl} \u2022 Source: FIFA / Fox Sports 2026 \u2022 <span id="version" style="color:var(--text-muted);font-style:italic">v1.31</span>`;
 
   document.getElementById('highlight-note').textContent =
     team === 'none' ? 'No team highlighted' : `Showing ${team}'s matches`;
+
+  // Update kickoff date label based on timezone
+  // First match is Mexico v South Africa: 2026-06-11T19:00:00Z
+  const firstMatchUTC = new Date('2026-06-11T19:00:00Z');
+  const localFirst = new Date(firstMatchUTC.getTime() + offset * 3600000);
+  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const d = localFirst.getUTCDate();
+  const m = months[localFirst.getUTCMonth()];
+  const y = localFirst.getUTCFullYear();
+  const tzLabel = document.getElementById('tz-select').options[document.getElementById('tz-select').selectedIndex].text.split('(')[1]?.replace(')','').trim() || `UTC${offset >= 0 ? '+' : ''}${offset}`;
+  const el = document.getElementById('kickoff-date');
+  if (el) el.textContent = `${d} ${m} ${y} (${tzLabel})`;
 }
 
 function getState() {
