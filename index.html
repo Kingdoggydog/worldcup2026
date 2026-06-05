@@ -989,7 +989,11 @@ function getState() {
 }
 
 document.getElementById('tz-select').addEventListener('change', () => { const s=getState(); render(s.offset,s.team); });
-document.getElementById('team-select').addEventListener('change', () => { const s=getState(); render(s.offset,s.team); });
+document.getElementById('team-select').addEventListener('change', () => {
+  const s=getState();
+  try { localStorage.setItem('wc2026_highlight', s.team); } catch(e) {}
+  render(s.offset,s.team);
+});
 
 // Mode toggle
 const btn = document.getElementById('mode-toggle');

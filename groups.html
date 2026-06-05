@@ -589,8 +589,19 @@ async function loadAndRender() {
 }
 
 document.getElementById('team-select').addEventListener('change', function() {
+  try { localStorage.setItem('wc2026_highlight', this.value); } catch(e) {}
   render(this.value, lastData);
 });
+
+// Restore saved highlight
+try {
+  const saved = localStorage.getItem('wc2026_highlight');
+  if (saved) {
+    const sel = document.getElementById('team-select');
+    const opt = Array.from(sel.options).find(o => o.value === saved);
+    if (opt) { sel.value = saved; currentHighlight = saved; }
+  }
+} catch(e) {}
 
 // Initial load + refresh every 60 seconds
 loadAndRender();
