@@ -423,6 +423,27 @@
   body.print-mode .footer p { font-size: 9px; }
 
   /* ── PRINT MEDIA ─────────────────────────────────────────────────────────── */
+  /* scores */
+  .score-ft {
+    font-family: 'Barlow Condensed', sans-serif; font-weight: 800;
+    font-size: clamp(12px, 1.8vw, 15px);
+    color: var(--text); white-space: nowrap; flex-shrink: 0;
+  }
+  .score-live {
+    font-family: 'Barlow Condensed', sans-serif; font-weight: 800;
+    font-size: clamp(12px, 1.8vw, 15px);
+    color: #2ECC71; white-space: nowrap; flex-shrink: 0;
+    animation: pulse-score 1.5s ease-in-out infinite;
+  }
+  .score-label {
+    font-family: 'Barlow Condensed', sans-serif; font-weight: 600;
+    font-size: 8px; letter-spacing: 1px; text-transform: uppercase;
+    margin-left: 3px; opacity: 0.7;
+  }
+  .score-label.live { color: #2ECC71; }
+  @keyframes pulse-score { 0%,100%{opacity:1} 50%{opacity:0.6} }
+  body.print-mode .score-live, body.print-mode .score-ft { font-size: 10px; }
+
   @media print {
     body { background: #fff !important; }
     .page { margin: 0; padding: 8mm 8mm 6mm 8mm; box-shadow: none; width: 210mm; max-width: 210mm; height: auto; overflow: visible; }
@@ -576,7 +597,7 @@
   <div class="schedule" id="schedule"></div>
 
   <div class="footer">
-    <p id="footer-tz">All times AEST (UTC+10) &bull; Source: FIFA / Fox Sports 2026 &bull; <span id="version">v1.22</span></p>
+    <p id="footer-tz">All times AEST (UTC+10) &bull; Source: FIFA / Fox Sports 2026 &bull; <span id="version">v1.3</span></p>
     <p>72 group stage matches &bull; 12 groups &bull; Top 2 per group + 8 best 3rd place advance</p>
   </div>
   <div id="bmc-mobile">
@@ -751,6 +772,65 @@ function teamsHtml(teamsStr) {
   return `${flagImg(home)} ${home} <span class="vs">v</span> ${away} ${flagImg(away)}`;
 }
 
+
+// ── LIVE SCORES FROM data.json ────────────────────────────────────────────────
+// Maps API shortName/name values to our display names in MATCHES array
+const API_NAME_MAP = {
+  'Korea Republic':'South Korea', 'United States':'USA',
+  'Bosnia-H.':'Bosnia','Bosnia-Herzegovina':'Bosnia',
+  'Curaçao':'Curacao', 'Turkey':'Turkiye',
+  'Cape Verde Islands':'Cape Verde', 'Cape Verde':'Cape Verde',
+  'Congo DR':'Congo DR', 'Ivory Coast':'Ivory Coast',
+};
+
+function normalise(name) {
+  return API_NAME_MAP[name] || name;
+}
+
+// scoreMap: keyed by "HomeTeam|AwayTeam" -> {home, away, status}
+let scoreMap = {};
+let lastFetch = null;
+
+async function loadScores() {
+  try {
+    const res = await fetch('data.json?t=' + Date.now());
+    const data = await res.json();
+    scoreMap = {};
+    (data.matches || []).forEach(m => {
+      if (m.stage !== 'GROUP_STAGE') return;
+      const home = normalise(m.homeTeam.shortName || m.homeTeam.name || '');
+      const away = normalise(m.awayTeam.shortName || m.awayTeam.name || '');
+      if (!home || !away) return;
+      const key = home + '|' + away;
+      const status = m.status; // TIMED, IN_PLAY, PAUSED, FINISHED
+      const hg = m.score?.fullTime?.home;
+      const ag = m.score?.fullTime?.away;
+      scoreMap[key] = { home: hg, away: ag, status };
+    });
+    lastFetch = new Date();
+  } catch(e) {
+    console.log('Could not load scores:', e.message);
+  }
+}
+
+function getScore(teamsStr) {
+  // teamsStr e.g. "Mexico v South Africa"
+  const parts = teamsStr.split(' v ');
+  if (parts.length !== 2) return null;
+  const home = parts[0].trim();
+  const away = parts[1].trim();
+  const key = home + '|' + away;
+  const s = scoreMap[key];
+  if (!s) return null;
+  if (s.status === 'FINISHED' && s.home !== null && s.away !== null) {
+    return { text: s.home + ' - ' + s.away, cls: 'score-ft', label: 'FT' };
+  }
+  if ((s.status === 'IN_PLAY' || s.status === 'PAUSED') && s.home !== null) {
+    return { text: s.home + ' - ' + s.away, cls: 'score-live', label: s.status === 'PAUSED' ? 'HT' : 'LIVE' };
+  }
+  return null;
+}
+
 const DAYS   = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
@@ -800,10 +880,15 @@ function render(offset, team) {
       const t   = formatTime(m.utc + offset);
       const hi  = team !== 'none' && m.teams.includes(team);
       const cls = hi ? ' highlighted' : '';
+      const score = getScore(m.teams);
+      const scoreHtml = score
+        ? `<span class="${score.cls}">${score.text}<span class="score-label${score.cls==='score-live'?' live':''}">${score.label}</span></span>`
+        : '';
       html += `<div class="match${cls}">
         <span class="grp ${m.grp}">${m.grp}</span>
         <span class="time">${t}</span>
         <span class="teams">${teamsHtml(m.teams)}</span>
+        ${scoreHtml}
         <span class="venue">${m.venue}</span>
       </div>`;
     });
@@ -862,7 +947,7 @@ function render(offset, team) {
     ? `UTC${sign}${Math.floor(offset)}:${Math.abs((offset%1)*60) === 30 ? '30':'00'}`
     : `UTC${sign}${offset}`;
   document.getElementById('footer-tz').innerHTML =
-    `All times ${lbl} \u2022 Source: FIFA / Fox Sports 2026 \u2022 <span id="version" style="color:var(--text-muted);font-style:italic">v1.22</span>`;
+    `All times ${lbl} \u2022 Source: FIFA / Fox Sports 2026 \u2022 <span id="version" style="color:var(--text-muted);font-style:italic">v1.3</span>`;
 
   document.getElementById('highlight-note').textContent =
     team === 'none' ? 'No team highlighted' : `Showing ${team}'s matches`;
@@ -988,7 +1073,16 @@ koBtn.addEventListener('click', () => {
   });
   sel.selectedIndex = bestIdx;
 
-  render(parseFloat(sel.options[bestIdx].value), 'none');
+  loadScores().then(() => {
+    render(parseFloat(sel.options[bestIdx].value), 'none');
+    // Refresh scores every 60 seconds
+    setInterval(() => {
+      loadScores().then(() => {
+        const s = getState();
+        render(s.offset, s.team);
+      });
+    }, 60000);
+  });
 })();
 </script>
 
