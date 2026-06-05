@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FIFA World Cup 2026 - Groups</title>
+<meta name="description" content="FIFA World Cup 2026 group stage draw. All 12 groups, 48 teams. Standings updated as the tournament progresses.">
+<meta property="og:title" content="FIFA World Cup 2026 - Groups">
+<meta property="og:description" content="All 12 groups and 48 teams for the 2026 FIFA World Cup. Standings updated live as the tournament progresses.">
+<meta property="og:url" content="https://kingdoggydog.github.io/worldcup2026/groups.html">
+<link rel="canonical" href="https://kingdoggydog.github.io/worldcup2026/groups.html">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-N0ENDBHCS4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-N0ENDBHCS4');
+</script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500&display=swap');
+
+  :root {
+    --bg:           #0A0E1A;
+    --bg-card:      #141829;
+    --bg-match:     #1C2235;
+    --border:       #2A3050;
+    --text:         #E8EAF2;
+    --text-sub:     #7A82A8;
+    --text-muted:   #4A5280;
+    --gold:         #C9A84C;
+    --highlight-bg: rgba(46,204,113,0.12);
+    --highlight-bl: #2ECC71;
+    --ctrl-bg:      #1C2235;
+    --ctrl-border:  #3A4060;
+    --ctrl-text:    #E8EAF2;
+    --footer-text:  #4A5280;
+  }
+
+  /* group colours */
+  :root {
+    --A:#E74C3C; --B:#E67E22; --C:#F0C040; --D:#2ECC71;
+    --E:#1ABC9C; --F:#5DADE2; --G:#A569BD; --H:#EC407A;
+    --I:#FF7043; --J:#26C6DA; --K:#9CCC65; --L:#FFA726;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: 'Barlow', sans-serif;
+    min-height: 100vh;
+  }
+
+  .page {
+    max-width: 900px; width: 100%;
+    margin: 0 auto; padding: 24px 20px 32px 20px;
+    display: flex; flex-direction: column;
+    background: var(--bg);
+    box-shadow: 0 0 60px rgba(0,0,0,0.8);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    border-bottom: 2.5px solid var(--gold);
+    padding-bottom: 12px; margin-bottom: 14px; flex-shrink: 0;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .header h1 {
+    font-family: 'Barlow Condensed', sans-serif; font-weight: 800;
+    font-size: clamp(22px, 5vw, 36px);
+    letter-spacing: 1px; text-transform: uppercase; line-height: 1;
+    color: var(--gold);
+  }
+  .header .sub {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(11px, 2vw, 14px); font-weight: 400;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text-sub); margin-top: 4px;
+  }
+  .header-right {
+    display: flex; flex-direction: column; gap: 8px; align-items: flex-end;
+  }
+
+  /* NAV + CONTROLS ROW */
+  .ctrl-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+  .nav-btn, .ctrl-btn {
+    font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+    font-size: clamp(11px, 1.5vw, 13px);
+    letter-spacing: 1px; text-transform: uppercase;
+    padding: 6px 14px; border-radius: 4px; cursor: pointer;
+    border: 1.5px solid var(--ctrl-border);
+    background: var(--ctrl-bg); color: var(--ctrl-text);
+    transition: all 0.2s; white-space: nowrap; text-decoration: none;
+    display: inline-block;
+  }
+  .nav-btn:hover, .ctrl-btn:hover { opacity: 0.8; }
+  .nav-btn.active {
+    background: var(--gold); color: #0A0E1A;
+    border-color: var(--gold);
+  }
+
+  .ctrl-label {
+    font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+    font-size: clamp(10px, 1.5vw, 13px);
+    letter-spacing: 1px; text-transform: uppercase;
+    color: var(--text-sub); white-space: nowrap;
+  }
+
+  select {
+    font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+    font-size: clamp(12px, 1.8vw, 15px);
+    border: 1.5px solid var(--ctrl-border); border-radius: 4px;
+    padding: 5px 8px; background: var(--ctrl-bg);
+    color: var(--ctrl-text); cursor: pointer;
+  }
+  select:focus { outline: 2px solid var(--highlight-bl); }
+
+  .highlight-note {
+    font-size: clamp(10px, 1.5vw, 12px); color: var(--text-muted);
+    font-family: 'Barlow Condensed', sans-serif; font-style: italic;
+  }
+
+  /* STANDINGS NOTE */
+  .standings-note {
+    background: var(--bg-match); border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    padding: 10px 14px; margin-bottom: 16px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(11px, 1.8vw, 13px);
+    color: var(--text-sub); letter-spacing: 0.5px;
+    border-radius: 3px; flex-shrink: 0;
+  }
+  .standings-note strong { color: var(--gold); }
+
+  /* GROUPS GRID */
+  .groups-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    flex: 1; align-content: start;
+  }
+
+  /* GROUP CARD */
+  .group-card {
+    background: var(--bg-match);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .group-header {
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .group-letter {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800; font-size: 20px;
+    letter-spacing: 1px; line-height: 1;
+  }
+  .group-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 400; font-size: 11px;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  /* STANDINGS TABLE */
+  .standings-table {
+    width: 100%; border-collapse: collapse;
+  }
+  .standings-table th {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600; font-size: 9px;
+    letter-spacing: 1px; text-transform: uppercase;
+    color: var(--text-muted); padding: 4px 6px;
+    text-align: center; border-bottom: 1px solid var(--border);
+  }
+  .standings-table th.team-col { text-align: left; padding-left: 12px; }
+  .standings-table td {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(12px, 1.8vw, 14px); font-weight: 600;
+    padding: 7px 6px; text-align: center;
+    border-bottom: 1px solid rgba(42,48,80,0.5);
+    color: var(--text);
+  }
+  .standings-table tr:last-child td { border-bottom: none; }
+  .standings-table td.team-name {
+    text-align: left; padding-left: 12px;
+    font-size: clamp(12px, 1.8vw, 14px);
+  }
+  .standings-table td.pts {
+    font-weight: 800; font-size: clamp(13px, 2vw, 15px);
+    color: var(--gold);
+  }
+  .standings-table tr.highlighted td { background: var(--highlight-bg); }
+  .standings-table tr.highlighted td.team-name {
+    border-left: 3px solid var(--highlight-bl);
+    padding-left: 9px;
+  }
+  .standings-table td.stat { color: var(--text-sub); font-size: 11px; font-weight: 400; }
+
+  /* FOOTER */
+  .footer {
+    margin-top: 20px; padding-top: 10px;
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between;
+    flex-shrink: 0; flex-wrap: wrap; gap: 4px;
+  }
+  .footer p {
+    font-size: clamp(10px, 1.4vw, 12px); color: var(--footer-text);
+    font-family: 'Barlow Condensed', sans-serif; letter-spacing: 0.5px;
+  }
+  #version { color: var(--text-muted); font-style: italic; }
+
+  /* mobile coffee button */
+  #bmc-mobile {
+    display: none; text-align: center;
+    margin-top: 16px; padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
+  #bmc-mobile a {
+    font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+    font-size: 14px; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--gold); text-decoration: none;
+    border: 1.5px solid var(--gold); padding: 8px 20px;
+    border-radius: 4px; display: inline-block;
+  }
+
+  /* RESPONSIVE */
+  @media screen and (max-width: 900px) {
+    .groups-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    #bmc-mobile { display: block; }
+    .header { flex-direction: column; align-items: flex-start; }
+    .header-right { align-items: flex-start; width: 100%; }
+    .ctrl-row { flex-wrap: wrap; }
+    select { width: 100%; }
+    .page { padding: 16px 14px 24px 14px; }
+  }
+  @media screen and (max-width: 480px) {
+    .groups-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div>
+      <h1>FIFA World Cup 2026</h1>
+      <div class="sub">Group Stage Draw &bull; 12 Groups &bull; 48 Teams</div>
+      <div style="margin-top:8px">
+        <a href="index.html" class="nav-btn">&#128197; Schedule</a>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="ctrl-row">
+        <span class="ctrl-label">Highlight</span>
+        <select id="team-select">
+          <option value="none" selected>No highlight</option>
+          <option value="Algeria">Algeria</option>
+          <option value="Argentina">Argentina</option>
+          <option value="Australia">Australia</option>
+          <option value="Austria">Austria</option>
+          <option value="Belgium">Belgium</option>
+          <option value="Bosnia">Bosnia</option>
+          <option value="Brazil">Brazil</option>
+          <option value="Canada">Canada</option>
+          <option value="Cape Verde">Cape Verde</option>
+          <option value="Colombia">Colombia</option>
+          <option value="Congo DR">Congo DR</option>
+          <option value="Croatia">Croatia</option>
+          <option value="Curacao">Curacao</option>
+          <option value="Czechia">Czechia</option>
+          <option value="Ecuador">Ecuador</option>
+          <option value="Egypt">Egypt</option>
+          <option value="England">England</option>
+          <option value="France">France</option>
+          <option value="Germany">Germany</option>
+          <option value="Ghana">Ghana</option>
+          <option value="Haiti">Haiti</option>
+          <option value="Iran">Iran</option>
+          <option value="Iraq">Iraq</option>
+          <option value="Ivory Coast">Ivory Coast</option>
+          <option value="Japan">Japan</option>
+          <option value="Jordan">Jordan</option>
+          <option value="Mexico">Mexico</option>
+          <option value="Morocco">Morocco</option>
+          <option value="Netherlands">Netherlands</option>
+          <option value="New Zealand">New Zealand</option>
+          <option value="Norway">Norway</option>
+          <option value="Panama">Panama</option>
+          <option value="Paraguay">Paraguay</option>
+          <option value="Portugal">Portugal</option>
+          <option value="Qatar">Qatar</option>
+          <option value="Saudi Arabia">Saudi Arabia</option>
+          <option value="Scotland">Scotland</option>
+          <option value="Senegal">Senegal</option>
+          <option value="South Africa">South Africa</option>
+          <option value="South Korea">South Korea</option>
+          <option value="Spain">Spain</option>
+          <option value="Sweden">Sweden</option>
+          <option value="Switzerland">Switzerland</option>
+          <option value="Tunisia">Tunisia</option>
+          <option value="Turkiye">Turkiye</option>
+          <option value="Uruguay">Uruguay</option>
+          <option value="USA">USA</option>
+          <option value="Uzbekistan">Uzbekistan</option>
+        </select>
+      </div>
+      <span class="highlight-note" id="highlight-note">No team highlighted</span>
+    </div>
+  </div>
+
+  <div class="standings-note">
+    <strong>Standings will be updated as the tournament progresses.</strong>
+    All records currently show 0 &mdash; check back once the group stage kicks off on 11 June 2026.
+  </div>
+
+  <div class="groups-grid" id="groups-grid"></div>
+
+  <div class="footer">
+    <p>FIFA World Cup 2026 &bull; USA / Canada / Mexico &bull; <span id="version">v1.22</span></p>
+    <p>Top 2 per group + 8 best 3rd place teams advance to Round of 32</p>
+  </div>
+
+  <div id="bmc-mobile">
+    <a href="https://www.buymeacoffee.com/coolcato" target="_blank">☕ Buy me a coffee</a>
+  </div>
+
+</div>
+
+<script>
+const GROUPS = {
+  A: ['Mexico','South Korea','South Africa','Czechia'],
+  B: ['Canada','Switzerland','Qatar','Bosnia'],
+  C: ['Brazil','Morocco','Scotland','Haiti'],
+  D: ['USA','Australia','Paraguay','Turkiye'],
+  E: ['Germany','Ivory Coast','Ecuador','Curacao'],
+  F: ['Netherlands','Japan','Tunisia','Sweden'],
+  G: ['Belgium','Iran','Egypt','New Zealand'],
+  H: ['Spain','Uruguay','Saudi Arabia','Cape Verde'],
+  I: ['France','Senegal','Norway','Iraq'],
+  J: ['Argentina','Algeria','Austria','Jordan'],
+  K: ['Portugal','Colombia','Uzbekistan','Congo DR'],
+  L: ['England','Croatia','Ghana','Panama'],
+};
+
+const GROUP_COLORS = {
+  A:'#E74C3C', B:'#E67E22', C:'#F0C040', D:'#2ECC71',
+  E:'#1ABC9C', F:'#5DADE2', G:'#A569BD', H:'#EC407A',
+  I:'#FF7043', J:'#26C6DA', K:'#9CCC65', L:'#FFA726',
+};
+
+// Standings data - update this as the tournament progresses
+// Format: [team, played, won, drawn, lost, gf, ga, points]
+const STANDINGS = {
+  A: [
+    ['Mexico',       0,0,0,0,0,0,0],
+    ['South Korea',  0,0,0,0,0,0,0],
+    ['South Africa', 0,0,0,0,0,0,0],
+    ['Czechia',      0,0,0,0,0,0,0],
+  ],
+  B: [
+    ['Canada',       0,0,0,0,0,0,0],
+    ['Switzerland',  0,0,0,0,0,0,0],
+    ['Qatar',        0,0,0,0,0,0,0],
+    ['Bosnia',       0,0,0,0,0,0,0],
+  ],
+  C: [
+    ['Brazil',       0,0,0,0,0,0,0],
+    ['Morocco',      0,0,0,0,0,0,0],
+    ['Scotland',     0,0,0,0,0,0,0],
+    ['Haiti',        0,0,0,0,0,0,0],
+  ],
+  D: [
+    ['USA',          0,0,0,0,0,0,0],
+    ['Australia',    0,0,0,0,0,0,0],
+    ['Paraguay',     0,0,0,0,0,0,0],
+    ['Turkiye',      0,0,0,0,0,0,0],
+  ],
+  E: [
+    ['Germany',      0,0,0,0,0,0,0],
+    ['Ivory Coast',  0,0,0,0,0,0,0],
+    ['Ecuador',      0,0,0,0,0,0,0],
+    ['Curacao',      0,0,0,0,0,0,0],
+  ],
+  F: [
+    ['Netherlands',  0,0,0,0,0,0,0],
+    ['Japan',        0,0,0,0,0,0,0],
+    ['Tunisia',      0,0,0,0,0,0,0],
+    ['Sweden',       0,0,0,0,0,0,0],
+  ],
+  G: [
+    ['Belgium',      0,0,0,0,0,0,0],
+    ['Iran',         0,0,0,0,0,0,0],
+    ['Egypt',        0,0,0,0,0,0,0],
+    ['New Zealand',  0,0,0,0,0,0,0],
+  ],
+  H: [
+    ['Spain',        0,0,0,0,0,0,0],
+    ['Uruguay',      0,0,0,0,0,0,0],
+    ['Saudi Arabia', 0,0,0,0,0,0,0],
+    ['Cape Verde',   0,0,0,0,0,0,0],
+  ],
+  I: [
+    ['France',       0,0,0,0,0,0,0],
+    ['Senegal',      0,0,0,0,0,0,0],
+    ['Norway',       0,0,0,0,0,0,0],
+    ['Iraq',         0,0,0,0,0,0,0],
+  ],
+  J: [
+    ['Argentina',    0,0,0,0,0,0,0],
+    ['Algeria',      0,0,0,0,0,0,0],
+    ['Austria',      0,0,0,0,0,0,0],
+    ['Jordan',       0,0,0,0,0,0,0],
+  ],
+  K: [
+    ['Portugal',     0,0,0,0,0,0,0],
+    ['Colombia',     0,0,0,0,0,0,0],
+    ['Uzbekistan',   0,0,0,0,0,0,0],
+    ['Congo DR',     0,0,0,0,0,0,0],
+  ],
+  L: [
+    ['England',      0,0,0,0,0,0,0],
+    ['Croatia',      0,0,0,0,0,0,0],
+    ['Ghana',        0,0,0,0,0,0,0],
+    ['Panama',       0,0,0,0,0,0,0],
+  ],
+};
+
+function render(highlightTeam) {
+  const grid = document.getElementById('groups-grid');
+  grid.innerHTML = '';
+
+  Object.entries(STANDINGS).forEach(([grp, teams]) => {
+    // Sort by points desc, then goal diff, then goals for
+    const sorted = [...teams].sort((a, b) => {
+      if (b[7] !== a[7]) return b[7] - a[7];       // points
+      const gdA = a[5] - a[6], gdB = b[5] - b[6];
+      if (gdB !== gdA) return gdB - gdA;            // goal diff
+      return b[5] - a[5];                           // goals for
+    });
+
+    const color = GROUP_COLORS[grp];
+    const card = document.createElement('div');
+    card.className = 'group-card';
+
+    let rows = '';
+    sorted.forEach((t, i) => {
+      const name = t[0];
+      const gd = t[5] - t[6];
+      const gdStr = gd > 0 ? '+' + gd : gd;
+      const isHi = highlightTeam !== 'none' && name === highlightTeam;
+      const hiCls = isHi ? ' highlighted' : '';
+      const pos = i + 1;
+      rows += `<tr class="${hiCls}">
+        <td class="stat" style="width:20px;padding-left:8px">${pos}</td>
+        <td class="team-name">${name}</td>
+        <td class="stat">${t[1]}</td>
+        <td class="stat">${t[2]}</td>
+        <td class="stat">${t[3]}</td>
+        <td class="stat">${t[4]}</td>
+        <td class="stat">${gdStr}</td>
+        <td class="pts">${t[7]}</td>
+      </tr>`;
+    });
+
+    card.innerHTML = `
+      <div class="group-header">
+        <span class="group-letter" style="color:${color}">Group ${grp}</span>
+      </div>
+      <table class="standings-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th class="team-col">Team</th>
+            <th title="Played">P</th>
+            <th title="Won">W</th>
+            <th title="Drawn">D</th>
+            <th title="Lost">L</th>
+            <th title="Goal Difference">GD</th>
+            <th title="Points">Pts</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>`;
+
+    grid.appendChild(card);
+  });
+
+  document.getElementById('highlight-note').textContent =
+    highlightTeam === 'none' ? 'No team highlighted' : `Showing ${highlightTeam}`;
+}
+
+document.getElementById('team-select').addEventListener('change', function() {
+  render(this.value);
+});
+
+render('none');
+</script>
+
+<!-- Buy Me a Coffee widget -->
+<script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="coolcato" data-description="Support me on Buy me a coffee!" data-message="Please consider buying me a coffee to help me to create more things like this. Enjoy the World Cup!" data-color="#C9A84C" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
+<style>
+  @media screen and (max-width: 900px) {
+    #bmc-wbtn, #bmc-iframe-wrapper, .bmc-btn-container { display: none !important; }
+  }
+</style>
+
+</body>
+</html>
