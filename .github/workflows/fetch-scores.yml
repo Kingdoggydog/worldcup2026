@@ -1,19 +1,24 @@
 name: Fetch World Cup Scores
-
+ 
 on:
   schedule:
-    # Every 5 minutes during tournament period (Jun 11 - Jul 19 2026)
     - cron: '*/5 * * * *'
-  workflow_dispatch: # Allow manual trigger
-
+  workflow_dispatch:
+ 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+ 
+permissions:
+  contents: write
+ 
 jobs:
   fetch-scores:
     runs-on: ubuntu-latest
     
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
-
+        uses: actions/checkout@v5
+ 
       - name: Fetch scores from API via Cloudflare Worker
         run: |
           curl -s "https://fancy-block-fde3.aking116.workers.dev/competitions/WC/matches?season=2026" \
@@ -21,7 +26,7 @@ jobs:
             --fail \
             --max-time 10
           echo "Fetched $(cat data.json | python3 -c "import json,sys; d=json.load(sys.stdin); print(len(d['matches']))" ) matches"
-
+ 
       - name: Commit and push if changed
         run: |
           git config user.name "github-actions[bot]"
@@ -29,3 +34,4 @@ jobs:
           git add data.json
           git diff --staged --quiet || git commit -m "Update scores $(date -u '+%Y-%m-%d %H:%M UTC')"
           git push
+ 
