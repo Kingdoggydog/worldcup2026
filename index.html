@@ -104,7 +104,7 @@
   /* ── PRINT MODE: lock to A4 ──────────────────────────────────────────────── */
   body.print-mode .page {
     width: 210mm; max-width: 210mm;
-    padding: 8mm 8mm 6mm 8mm;
+    padding: 6mm 7mm 4mm 7mm;
     min-height: unset;
     box-shadow: none;
   }
@@ -124,7 +124,7 @@
     letter-spacing: 1px; text-transform: uppercase; line-height: 1;
     color: var(--h1-color);
   }
-  body.print-mode .header h1 { font-size: 22px; }
+  body.print-mode .header h1 { font-size: 18px; }
 
   .header .sub {
     font-family: 'Barlow Condensed', sans-serif;
@@ -132,7 +132,7 @@
     font-weight: 400; letter-spacing: 2px;
     text-transform: uppercase; color: var(--text-sub); margin-top: 4px;
   }
-  body.print-mode .header .sub { font-size: 11px; margin-top: 2px; }
+  body.print-mode .header .sub { font-size: 9px; margin-top: 2px; }
 
   .header-right {
     text-align: right; display: flex; flex-direction: column;
@@ -274,7 +274,7 @@
     display: flex; flex-wrap: wrap; gap: 5px 12px;
     margin-bottom: 16px; flex-shrink: 0;
   }
-  body.print-mode .legend { gap: 3px 8px; margin-bottom: 5px; }
+  body.print-mode .legend { gap: 2px 6px; margin-bottom: 3px; }
 
   .legend-item {
     display: flex; align-items: center; gap: 5px;
@@ -359,7 +359,7 @@
     border-bottom: 1px solid var(--border-day);
     padding-bottom: 4px; margin-bottom: 6px;
   }
-  body.print-mode .day-header { padding-bottom: 1px; margin-bottom: 2px; gap: 4px; }
+  body.print-mode .day-header { padding-bottom: 1px; margin-bottom: 1px; gap: 4px; }
 
   .day-name {
     font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
@@ -484,9 +484,14 @@
   @keyframes pulse-score { 0%,100%{opacity:1} 50%{opacity:0.6} }
   body.print-mode .score-live, body.print-mode .score-ft { font-size: 10px; }
 
+  @page {
+    size: letter;
+    margin: 0.5in;
+  }
   @media print {
     body { background: #fff !important; }
-    .page { margin: 0; padding: 8mm 8mm 6mm 8mm; box-shadow: none; width: 210mm; max-width: 210mm; height: auto; overflow: visible; }
+    html { font-size: 90%; }
+    .page { margin: 0; padding: 6mm 7mm 4mm 7mm; box-shadow: none; width: 210mm; max-width: 210mm; height: auto; overflow: visible }
     * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     .nav-btn {
     font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
