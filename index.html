@@ -114,7 +114,7 @@
     display: flex; justify-content: space-between; align-items: flex-start;
     border-bottom: 2.5px solid var(--header-border);
     padding-bottom: 12px; margin-bottom: 14px; flex-shrink: 0;
-    gap: 16px; flex-wrap: wrap;
+    gap: 16px; flex-wrap: nowrap;
   }
   body.print-mode .header { padding-bottom: 3px; margin-bottom: 4px; align-items: flex-end; flex-wrap: nowrap; }
 
@@ -210,18 +210,34 @@
   }
   body.print-mode #knockout-toggle { font-size: 10px; padding: 3px 10px; border-radius: 3px; }
   #knockout-toggle:hover { opacity: 0.8; }
-  #time-toggle {
-    font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
-    font-size: clamp(11px, 1.5vw, 13px);
-    letter-spacing: 1px; text-transform: uppercase;
-    padding: 6px 14px; border-radius: 4px; cursor: pointer;
-    border: 1.5px solid var(--ctrl-border);
-    background: var(--ctrl-bg); color: var(--ctrl-text);
-    transition: all 0.2s; white-space: nowrap;
+  .time-switch {
+    display: flex; align-items: center; gap: 6px; cursor: pointer;
+    user-select: none;
   }
-  body.print-mode #time-toggle { font-size: 10px; padding: 3px 10px; border-radius: 3px; }
-  #time-toggle:hover { opacity: 0.8; }
-  #time-toggle.active { background: var(--gold); color: #0A0E1A; border-color: var(--gold); }
+  body.print-mode .time-switch { display: none; }
+  .time-switch-label {
+    font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+    font-size: clamp(11px, 1.5vw, 13px); letter-spacing: 1px;
+    text-transform: uppercase; color: var(--text-muted);
+    transition: color 0.2s;
+  }
+  .time-switch-label.active { color: var(--text); }
+  .time-switch-track {
+    width: 36px; height: 20px; border-radius: 10px;
+    background: var(--ctrl-bg); border: 1.5px solid var(--ctrl-border);
+    position: relative; transition: background 0.2s, border-color 0.2s;
+    flex-shrink: 0;
+  }
+  .time-switch-track.on { background: var(--gold); border-color: var(--gold); }
+  .time-switch-thumb {
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--text-muted); position: absolute;
+    top: 2px; left: 2px;
+    transition: transform 0.2s, background 0.2s;
+  }
+  .time-switch-track.on .time-switch-thumb {
+    transform: translateX(16px); background: #0A0E1A;
+  }
 
   /* knockout section heading */
   .knockout-heading {
@@ -514,7 +530,13 @@
       <div class="ctrl-row">
         <button id="mode-toggle">&#9788; Switch to Print Mode</button>
         <button id="knockout-toggle">Hide Knockout Stage</button>
-        <button id="time-toggle" class="active">24hr</button>
+        <div class="time-switch" id="time-switch" title="Toggle 12/24 hour time">
+          <span class="time-switch-label" id="ts-left">12hr</span>
+          <div class="time-switch-track" id="ts-track">
+            <div class="time-switch-thumb" id="ts-thumb"></div>
+          </div>
+          <span class="time-switch-label" id="ts-right">24hr</span>
+        </div>
       </div>
       <div class="ctrl-row">
         <span class="ctrl-label">Timezone</span>
@@ -626,7 +648,7 @@
   <div class="schedule" id="schedule"></div>
 
   <div class="footer">
-    <p id="footer-tz">All times AEST (UTC+10) &bull; Source: FIFA / Fox Sports 2026 &bull; <span id="version">v1.32</span></p>
+    <p id="footer-tz">All times AEST (UTC+10) &bull; Source: FIFA / Fox Sports 2026 &bull; <span id="version">v1.33</span></p>
     <p>72 group stage matches &bull; 12 groups &bull; Top 2 per group + 8 best 3rd place advance</p>
   </div>
   <div id="bmc-mobile">
@@ -982,7 +1004,7 @@ function render(offset, team) {
     ? `UTC${sign}${Math.floor(offset)}:${Math.abs((offset%1)*60) === 30 ? '30':'00'}`
     : `UTC${sign}${offset}`;
   document.getElementById('footer-tz').innerHTML =
-    `All times ${lbl} \u2022 Source: FIFA / Fox Sports 2026 \u2022 <span id="version" style="color:var(--text-muted);font-style:italic">v1.32</span>`;
+    `All times ${lbl} \u2022 Source: FIFA / Fox Sports 2026 \u2022 <span id="version" style="color:var(--text-muted);font-style:italic">v1.33</span>`;
 
   document.getElementById('highlight-note').textContent =
     team === 'none' ? 'No team highlighted' : `Showing ${team}'s matches`;
@@ -1008,7 +1030,11 @@ function getState() {
   };
 }
 
-document.getElementById('tz-select').addEventListener('change', () => { const s=getState(); render(s.offset,s.team); });
+document.getElementById('tz-select').addEventListener('change', () => {
+  const s = getState();
+  try { localStorage.setItem('wc2026_tz', s.offset); } catch(e) {}
+  render(s.offset, s.team);
+});
 document.getElementById('team-select').addEventListener('change', () => {
   const s=getState();
   try { localStorage.setItem('wc2026_highlight', s.team); } catch(e) {}
@@ -1022,12 +1048,26 @@ btn.addEventListener('click', () => {
   btn.textContent = isPrint ? '\u2600 Switch to Night Mode' : '\u2788 Switch to Print Mode';
 });
 
-// Time format toggle
-const timeBtn = document.getElementById('time-toggle');
-timeBtn.addEventListener('click', () => {
+// Time format switch
+function updateSwitch() {
+  const track = document.getElementById('ts-track');
+  const left  = document.getElementById('ts-left');
+  const right = document.getElementById('ts-right');
+  // 12hr = switch OFF (left active), 24hr = switch ON (right active)
+  if (use12hr) {
+    track.classList.remove('on');
+    left.classList.add('active');
+    right.classList.remove('active');
+  } else {
+    track.classList.add('on');
+    left.classList.remove('active');
+    right.classList.add('active');
+  }
+}
+
+document.getElementById('time-switch').addEventListener('click', () => {
   use12hr = !use12hr;
-  timeBtn.textContent = use12hr ? '24hr' : '12hr';
-  timeBtn.classList.toggle('active', use12hr);
+  updateSwitch();
   try { localStorage.setItem('wc2026_timeformat', use12hr ? '12' : '24'); } catch(e) {}
   const s = getState();
   render(s.offset, s.team);
@@ -1036,12 +1076,9 @@ timeBtn.addEventListener('click', () => {
 // Restore saved time format
 try {
   const saved = localStorage.getItem('wc2026_timeformat');
-  if (saved === '24') {
-    use12hr = false;
-    timeBtn.textContent = '12hr';
-    timeBtn.classList.remove('active');
-  }
+  if (saved === '24') { use12hr = false; }
 } catch(e) {}
+updateSwitch();
 
 // Knockout toggle
 const koBtn = document.getElementById('knockout-toggle');
@@ -1123,6 +1160,20 @@ koBtn.addEventListener('click', () => {
     'Pacific/Honolulu':    -10, 'Pacific/Tahiti':      -10,
   };
 
+  // Restore saved timezone preference
+  try {
+    const savedTz = localStorage.getItem('wc2026_tz');
+    if (savedTz !== null) {
+      const sel = document.getElementById('tz-select');
+      const opt = Array.from(sel.options).find(o => o.value === savedTz);
+      if (opt) {
+        sel.value = savedTz;
+        render(parseFloat(savedTz), document.getElementById('team-select').value);
+        return; // skip auto-detect
+      }
+    }
+  } catch(e) {}
+
   // Get user's IANA timezone
   let userTz = 0; // default to UTC+0 if no match
   try {
@@ -1146,8 +1197,19 @@ koBtn.addEventListener('click', () => {
   });
   sel.selectedIndex = bestIdx;
 
+  // Restore saved highlight before first render
+  try {
+    const savedTeam = localStorage.getItem('wc2026_highlight');
+    if (savedTeam) {
+      const teamSel = document.getElementById('team-select');
+      const opt = Array.from(teamSel.options).find(o => o.value === savedTeam);
+      if (opt) teamSel.value = savedTeam;
+    }
+  } catch(e) {}
+
   loadScores().then(() => {
-    render(parseFloat(sel.options[bestIdx].value), 'none');
+    const s = getState();
+    render(s.offset, s.team);
     // Refresh scores every 60 seconds
     setInterval(() => {
       loadScores().then(() => {
