@@ -281,9 +281,9 @@ function teams(m){
 
 function getExtra(m){
   if(m.status!=='FINISHED') return '';
-  const d=m.score?.duration;
-  if(d==='PENALTY_SHOOTOUT') return ' <span style="font-size:8px;color:#8A93B8">(pens)</span>';
-  if(d==='EXTRA_TIME') return ' <span style="font-size:8px;color:#8A93B8">(aet)</span>';
+  const d = m.score?.duration || m.duration || '';
+  if(d==='PENALTY_SHOOTOUT') return '&nbsp;<span style="font-size:9px;color:#8A93B8;font-style:italic">(pens)</span>';
+  if(d==='EXTRA_TIME') return '&nbsp;<span style="font-size:9px;color:#8A93B8;font-style:italic">(aet)</span>';
   return '';
 }
 
