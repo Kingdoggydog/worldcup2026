@@ -456,10 +456,7 @@ function render(){
     }
     finEl.innerHTML=html;
   }
-  Object.entries(stages).forEach(([id,ms])=>{
-    const el=document.getElementById(id);
-    if(el) el.innerHTML=ms.map(m=>mobMatch(m,off)).join('');
-  });
+
 
   // Footer
   const s=off>=0?'+':'', frac=off%1!==0;
