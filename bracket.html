@@ -295,10 +295,12 @@ function mbox(m, off){
   const aw=fin&&(winner==='AWAY_TEAM'||(winner==null&&ag!=null&&ag>hg));
   const num=mnums[m.id]||'';
   const dt=fmt(m.utcDate,off);
+  const dur=m.score?.duration||'';
+  const suf=dur==='PENALTY_SHOOTOUT'?'p':dur==='EXTRA_TIME'?'aet':'';
   const tr=(n,ph,w,sc)=>`<div class="mbt2${w?' w':''}${ph?' ph':''}">
     ${!ph?flag(n):''}
     <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${n}</span>
-    ${sc!=null?`<span class="sc">${sc}</span>`:''}
+    ${sc!=null?`<span class="sc">${sc}${w&&suf?`<span style="font-size:9px;color:#8A93B8;font-weight:600">${suf}</span>`:''}</span>`:''}
   </div>`;
   return `<div class="mb${fin?' fin':''}">
     <div class="mbnum"><span>${num}</span><span class="mbt">${dt}</span></div>
@@ -316,10 +318,12 @@ function mobMatch(m, off){
   const aw=fin&&(winner==='AWAY_TEAM'||(winner==null&&ag!=null&&ag>hg));
   const num=mnums[m.id]||'';
   const dt=fmt(m.utcDate,off);
+  const dur=m.score?.duration||'';
+  const suf=dur==='PENALTY_SHOOTOUT'?'p':dur==='EXTRA_TIME'?'aet':'';
   const tr=(n,ph,w,sc)=>`<div class="mmt${w?' w':''}${ph?' ph':''}">
     ${!ph?flag(n):''}
     <span style="flex:1">${n}</span>
-    ${sc!=null?`<span class="sc">${sc}</span>`:''}
+    ${sc!=null?`<span class="sc">${sc}${w&&suf?`<span style="font-size:10px;color:#8A93B8;font-weight:600">${suf}</span>`:''}</span>`:''}
   </div>`;
   return `<div class="mm${fin?' fin':''}">
     <div class="mmh"><span class="mnum">${num}</span><span>${dt}</span></div>
