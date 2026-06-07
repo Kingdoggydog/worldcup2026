@@ -21,7 +21,7 @@
   --ctrl:#1C2235; --cborder:#3A4060;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
-body{background:var(--bg);color:var(--text);font-family:'Barlow Condensed',sans-serif;min-height:100vh;}
+body{background:var(--bg);color:var(--text);font-family:'Barlow Condensed',sans-serif;min-height:100vh;font-weight:600;}
 .page{max-width:1400px;margin:0 auto;padding:20px 16px 40px;}
 
 /* HEADER */
@@ -60,7 +60,7 @@ select{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;
 .mbt2.w{color:var(--win);background:rgba(46,204,113,.1);}
 .mbt2.ph{color:#8A93B8;font-style:normal;font-size:13px;font-weight:700;}
 .mbt2 .sc{margin-left:auto;font-weight:800;flex-shrink:0;}
-.mbt2 img{width:12px;height:8px;object-fit:cover;border-radius:1px;flex-shrink:0;}
+.mbt2 img{width:18px;height:13px;object-fit:cover;border-radius:2px;flex-shrink:0;vertical-align:middle;}
 
 /* FINAL */
 .ftrophy{font-size:32px;text-align:center;}
@@ -81,7 +81,7 @@ select{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;
 .mmt.w{color:var(--win);background:rgba(46,204,113,.08);}
 .mmt.ph{color:#8A93B8;font-style:normal;font-weight:700;font-size:13px;}
 .mmt .sc{margin-left:auto;font-weight:800;}
-.mmt img{width:18px;height:13px;object-fit:cover;border-radius:2px;}
+.mmt img{width:18px;height:13px;object-fit:cover;border-radius:2px;vertical-align:middle;}
 
 /* FOOTER */
 .foot{margin-top:20px;padding-top:10px;border-top:1px solid var(--border);display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px;}
@@ -218,12 +218,11 @@ let matches = BASE.map(m => ({...m}));
 const mnums = {};
 
 function norm(n){ return n ? (NAME_MAP[n]||n) : null; }
-function flag(t,sm){
+function flag(t){
   if(!t) return '';
   const c=FLAGS[t]||FLAGS[norm(t)];
   if(!c) return '';
-  const w=sm?14:20, h=sm?10:14;
-  return `<img src="https://flagcdn.com/w20/${c}.png" alt="" style="width:${w}px;height:${h}px;object-fit:cover;border-radius:1px;flex-shrink:0">`;
+  return `<img src="https://flagcdn.com/w20/${c}.png" alt="" style="width:18px;height:13px;object-fit:cover;border-radius:2px;flex-shrink:0;vertical-align:middle">`;
 }
 function pad(n){ return String(Math.floor(Math.abs(n))).padStart(2,'0'); }
 function fmt(utc, off){
@@ -262,7 +261,7 @@ function mbox(m, off){
   const num=mnums[m.id]||'';
   const dt=fmt(m.utcDate,off);
   const tr=(n,ph,w,sc)=>`<div class="mbt2${w?' w':''}${ph?' ph':''}">
-    ${!ph?flag(n,true):''}
+    ${!ph?flag(n):''}
     <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${n}</span>
     ${sc!=null?`<span class="sc">${sc}</span>`:''}
   </div>`;
@@ -281,7 +280,7 @@ function mobMatch(m, off){
   const num=mnums[m.id]||'';
   const dt=fmt(m.utcDate,off);
   const tr=(n,ph,w,sc)=>`<div class="mmt${w?' w':''}${ph?' ph':''}">
-    ${!ph?flag(n,false):''}
+    ${!ph?flag(n):''}
     <span style="flex:1">${n}</span>
     ${sc!=null?`<span class="sc">${sc}</span>`:''}
   </div>`;
