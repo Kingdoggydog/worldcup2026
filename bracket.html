@@ -279,11 +279,10 @@ function teams(m){
   return { h:hn||phh, a:an||pha, hph:!hn, aph:!an };
 }
 
-function getExtra(m){
-  if(m.status!=='FINISHED') return '';
-  const d = m.score?.duration || m.duration || '';
-  if(d==='PENALTY_SHOOTOUT') return '&nbsp;<span style="font-size:9px;color:#8A93B8;font-style:italic">(pens)</span>';
-  if(d==='EXTRA_TIME') return '&nbsp;<span style="font-size:9px;color:#8A93B8;font-style:italic">(aet)</span>';
+function scoreSuffix(m){
+  const d = m.score?.duration || '';
+  if(d==='PENALTY_SHOOTOUT') return 'p';
+  if(d==='EXTRA_TIME') return 'aet';
   return '';
 }
 
@@ -302,7 +301,7 @@ function mbox(m, off){
     ${sc!=null?`<span class="sc">${sc}</span>`:''}
   </div>`;
   return `<div class="mb${fin?' fin':''}">
-    <div class="mbnum"><span>${num}${getExtra(m)}</span><span class="mbt">${dt}</span></div>
+    <div class="mbnum"><span>${num}</span><span class="mbt">${dt}</span></div>
     ${tr(h,hph,hw,fin?hg:null)}
     ${tr(a,aph,aw,fin?ag:null)}
   </div>`;
@@ -323,7 +322,7 @@ function mobMatch(m, off){
     ${sc!=null?`<span class="sc">${sc}</span>`:''}
   </div>`;
   return `<div class="mm${fin?' fin':''}">
-    <div class="mmh"><span class="mnum">${num}${getExtra(m)}</span><span>${dt}</span></div>
+    <div class="mmh"><span class="mnum">${num}</span><span>${dt}</span></div>
     ${tr(h,hph,hw,fin?hg:null)}
     ${tr(a,aph,aw,fin?ag:null)}
   </div>`;
