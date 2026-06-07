@@ -302,7 +302,7 @@ function mbox(m, off){
     ${sc!=null?`<span class="sc">${sc}</span>`:''}
   </div>`;
   return `<div class="mb${fin?' fin':''}">
-    <div class="mbnum"><span>${num}</span><span class="mbt">${dt}</span></div>
+    <div class="mbnum"><span>${num}${getExtra(m)}</span><span class="mbt">${dt}</span></div>
     ${tr(h,hph,hw,fin?hg:null)}
     ${tr(a,aph,aw,fin?ag:null)}
   </div>`;
@@ -323,7 +323,7 @@ function mobMatch(m, off){
     ${sc!=null?`<span class="sc">${sc}</span>`:''}
   </div>`;
   return `<div class="mm${fin?' fin':''}">
-    <div class="mmh"><span class="mnum">${num}</span><span>${dt}</span></div>
+    <div class="mmh"><span class="mnum">${num}${getExtra(m)}</span><span>${dt}</span></div>
     ${tr(h,hph,hw,fin?hg:null)}
     ${tr(a,aph,aw,fin?ag:null)}
   </div>`;
