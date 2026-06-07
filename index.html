@@ -484,6 +484,28 @@
   @keyframes pulse-score { 0%,100%{opacity:1} 50%{opacity:0.6} }
   body.print-mode .score-live, body.print-mode .score-ft { font-size: 10px; }
 
+  #jump-btn {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 13px;
+    letter-spacing: 1px; text-transform: uppercase;
+    background: var(--gold); color: #0A0E1A;
+    border: none; border-radius: 20px;
+    padding: 8px 20px; cursor: pointer;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+    z-index: 1000;
+    transition: opacity 0.3s;
+  }
+  #jump-btn:hover { opacity: 0.85; }
+  @media screen and (max-width: 900px) {
+    #jump-btn { display: block; }
+  }
+  @media print { #jump-btn { display: none !important; } }
+
   @page {
     size: letter;
     margin: 0.5in;
@@ -653,7 +675,7 @@
   <div class="schedule" id="schedule"></div>
 
   <div class="footer">
-    <p id="footer-tz">All times AEST (UTC+10) &bull; Source: FIFA / Fox Sports 2026 &bull; <span id="version">v1.33</span></p>
+    <p id="footer-tz">All times AEST (UTC+10) &bull; Source: FIFA / Fox Sports 2026 &bull; <span id="version">v1.34</span></p>
     <p>72 group stage matches &bull; 12 groups &bull; Top 2 per group + 8 best 3rd place advance</p>
   </div>
   <div id="bmc-mobile">
@@ -1009,7 +1031,7 @@ function render(offset, team) {
     ? `UTC${sign}${Math.floor(offset)}:${Math.abs((offset%1)*60) === 30 ? '30':'00'}`
     : `UTC${sign}${offset}`;
   document.getElementById('footer-tz').innerHTML =
-    `All times ${lbl} \u2022 Source: FIFA / Fox Sports 2026 \u2022 <span id="version" style="color:var(--text-muted);font-style:italic">v1.33</span>`;
+    `All times ${lbl} \u2022 Source: FIFA / Fox Sports 2026 \u2022 <span id="version" style="color:var(--text-muted);font-style:italic">v1.34</span>`;
 
   document.getElementById('highlight-note').textContent =
     team === 'none' ? 'No team highlighted' : `Showing ${team}'s matches`;
@@ -1040,6 +1062,48 @@ document.getElementById('tz-select').addEventListener('change', () => {
   try { localStorage.setItem('wc2026_tz', s.offset); } catch(e) {}
   render(s.offset, s.team);
 });
+
+function jumpToNextDay() {
+  // Find the first day block that contains a match that hasn't started yet
+  const now = Date.now();
+  const offset = parseFloat(document.getElementById('tz-select').value);
+  const days = document.querySelectorAll('#schedule .day');
+  let target = null;
+
+  for (const day of days) {
+    // Check if any match in this day is upcoming (TIMED) based on UTC match time
+    const timeEls = day.querySelectorAll('.time');
+    // We need to find the day date text and compare to now
+    // Simpler: find first day where the day-date corresponds to today or future
+    // We'll use the match data - find first day that has at least one future match
+    // by checking the day header date against local date
+    const dayDate = day.querySelector('.day-date');
+    if (!dayDate) continue;
+
+    // Parse the date from the header e.g. "12 Jun"
+    const dateText = dayDate.textContent.trim();
+    const months = {Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11};
+    const parts = dateText.split(' ');
+    if (parts.length < 2) continue;
+    const d = parseInt(parts[0]);
+    const m = months[parts[1]];
+    if (isNaN(d) || m === undefined) continue;
+
+    // Build a UTC date for this local day at midnight
+    const localMidnight = Date.UTC(2026, m, d) - offset * 3600000;
+    const localEndOfDay = localMidnight + 86400000;
+
+    // If this day's end of day is in the future, this is our target
+    if (localEndOfDay > now) {
+      target = day;
+      break;
+    }
+  }
+
+  if (target) {
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
 document.getElementById('team-select').addEventListener('change', () => {
   const s=getState();
   try { localStorage.setItem('wc2026_highlight', s.team); } catch(e) {}
