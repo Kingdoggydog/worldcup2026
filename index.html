@@ -684,6 +684,8 @@
 
 </div>
 
+<button id="jump-btn" onclick="jumpToNextDay()">&#9660; Today's matches</button>
+
 <script>
 // UTC times verified from kickoffclock.com CSV (cross-referenced FIFA/Fox Sports)
 const MATCHES = [
@@ -1064,44 +1066,38 @@ document.getElementById('tz-select').addEventListener('change', () => {
 });
 
 function jumpToNextDay() {
-  // Find the first day block that contains a match that hasn't started yet
-  const now = Date.now();
+  // Use MATCHES array to find first match that hasn't started yet in user's timezone
   const offset = parseFloat(document.getElementById('tz-select').value);
-  const days = document.querySelectorAll('#schedule .day');
-  let target = null;
+  const nowUTC = Date.now();
 
-  for (const day of days) {
-    // Check if any match in this day is upcoming (TIMED) based on UTC match time
-    const timeEls = day.querySelectorAll('.time');
-    // We need to find the day date text and compare to now
-    // Simpler: find first day where the day-date corresponds to today or future
-    // We'll use the match data - find first day that has at least one future match
-    // by checking the day header date against local date
-    const dayDate = day.querySelector('.day-date');
-    if (!dayDate) continue;
-
-    // Parse the date from the header e.g. "12 Jun"
-    const dateText = dayDate.textContent.trim();
-    const months = {Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11};
-    const parts = dateText.split(' ');
-    if (parts.length < 2) continue;
-    const d = parseInt(parts[0]);
-    const m = months[parts[1]];
-    if (isNaN(d) || m === undefined) continue;
-
-    // Build a UTC date for this local day at midnight
-    const localMidnight = Date.UTC(2026, m, d) - offset * 3600000;
-    const localEndOfDay = localMidnight + 86400000;
-
-    // If this day's end of day is in the future, this is our target
-    if (localEndOfDay > now) {
-      target = day;
+  // Find first upcoming match
+  let targetDateKey = null;
+  for (const m of MATCHES) {
+    const matchUTC = new Date(m.date + 'T00:00:00Z').getTime() + m.utc * 3600000;
+    if (matchUTC > nowUTC) {
+      // Get local date key for this match
+      targetDateKey = localDateKey(m.utc, m.date, offset);
       break;
     }
   }
 
-  if (target) {
-    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  if (!targetDateKey) return;
+
+  // Format the date key to match the day header text e.g. "12 Jun"
+  const [y, mo, d] = targetDateKey.split('-').map(Number);
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const targetText = d + ' ' + months[mo - 1];
+
+  // Find the day block with matching date header
+  const days = document.querySelectorAll('#schedule .day');
+  for (const day of days) {
+    const dateEl = day.querySelector('.day-date');
+    if (dateEl && dateEl.textContent.trim() === targetText) {
+      // Scroll with a small offset so the day header is visible below the page header
+      const top = day.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top, behavior: 'smooth' });
+      return;
+    }
   }
 }
 document.getElementById('team-select').addEventListener('change', () => {
