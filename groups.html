@@ -506,29 +506,30 @@ function sortGroup(teams, grp, results) {
 }
 
 function sortTeams(teamNames, grp, groupStats, results) {
-  // teamNames: array of team name strings
-  // groupStats: { teamName: {p,w,d,l,gf,ga,pts} }
+  // Official FIFA 2026 tiebreaker order:
+  // 1. Overall points
+  // 2. H2H points (among all tied teams)
+  // 3. H2H goal difference (among all tied teams)
+  // 4. H2H goals scored (among all tied teams)
+  // -- If still tied, repeat 2-4 exclusively between remaining tied teams --
+  // 5. Overall goal difference
+  // 6. Overall goals scored
+  // 7. Alphabetical (proxy - fair play/FIFA ranking not available via API)
 
-  return [...teamNames].sort((a, b) => {
+  // First pass: sort by overall points, then H2H, then overall GD/GF
+  const sorted = [...teamNames].sort((a, b) => {
     const sa = groupStats[a], sb = groupStats[b];
 
     // 1. Overall points
     if (sb.pts !== sa.pts) return sb.pts - sa.pts;
 
-    // 2-4. Head-to-head among tied teams
-    // Find all teams level on points with both a and b
-    const tiedWithBoth = teamNames.filter(t =>
-      groupStats[t].pts === sa.pts
-    );
-
-    if (tiedWithBoth.length > 1) {
-      const h2h = h2hStats(tiedWithBoth, grp, results);
+    // 2-4. H2H among all teams tied on same points
+    const tiedGroup = teamNames.filter(t => groupStats[t].pts === sa.pts);
+    if (tiedGroup.length > 1) {
+      const h2h = h2hStats(tiedGroup, grp, results);
       const ha = h2h[a], hb = h2h[b];
-      // H2H points
       if (hb.pts !== ha.pts) return hb.pts - ha.pts;
-      // H2H goal difference
       if (hb.gd !== ha.gd) return hb.gd - ha.gd;
-      // H2H goals scored
       if (hb.gf !== ha.gf) return hb.gf - ha.gf;
     }
 
@@ -539,9 +540,52 @@ function sortTeams(teamNames, grp, groupStats, results) {
     // 6. Overall goals scored
     if (sb.gf !== sa.gf) return sb.gf - sa.gf;
 
-    // 7. Alphabetical (proxy for fair play / FIFA ranking not available)
+    // 7. Alphabetical
     return a.localeCompare(b);
   });
+
+  // Second pass: for any teams still tied after step 4 (same pts, H2H inconclusive),
+  // re-apply H2H exclusively between just those still-tied teams (FIFA Article 13)
+  const result = [...sorted];
+  let i = 0;
+  while (i < result.length) {
+    const a = result[i];
+    const sa = groupStats[a];
+    // Find run of teams with same overall pts AND same H2H outcome
+    let j = i + 1;
+    while (j < result.length) {
+      const b = result[j];
+      const sb = groupStats[b];
+      if (sb.pts !== sa.pts) break;
+      // Check if H2H didn't separate them (same H2H pts, gd, gf between full tied group)
+      const tiedGroup = teamNames.filter(t => groupStats[t].pts === sa.pts);
+      const h2hFull = h2hStats(tiedGroup, grp, results);
+      const ha = h2hFull[a], hb = h2hFull[b];
+      if (hb.pts !== ha.pts || hb.gd !== ha.gd || hb.gf !== ha.gf) break;
+      j++;
+    }
+    if (j - i > 1) {
+      // These teams (result[i..j-1]) are still tied - re-apply H2H just between them
+      const stillTied = result.slice(i, j);
+      const h2hNarrow = h2hStats(stillTied, grp, results);
+      stillTied.sort((a, b) => {
+        const ha = h2hNarrow[a], hb = h2hNarrow[b];
+        if (hb.pts !== ha.pts) return hb.pts - ha.pts;
+        if (hb.gd !== ha.gd) return hb.gd - ha.gd;
+        if (hb.gf !== ha.gf) return hb.gf - ha.gf;
+        // Still tied - overall GD/GF/alphabetical
+        const sa = groupStats[a], sb = groupStats[b];
+        const gdA = sa.gf - sa.ga, gdB = sb.gf - sb.ga;
+        if (gdB !== gdA) return gdB - gdA;
+        if (sb.gf !== sa.gf) return sb.gf - sa.gf;
+        return a.localeCompare(b);
+      });
+      for (let k = 0; k < stillTied.length; k++) result[i + k] = stillTied[k];
+    }
+    i = j;
+  }
+
+  return result;
 }
 
 // ── RENDER ────────────────────────────────────────────────────────────────────
