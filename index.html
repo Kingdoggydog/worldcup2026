@@ -1120,7 +1120,7 @@ function getState() {
 
 document.getElementById('tz-select').addEventListener('change', () => {
   const s = getState();
-  try { localStorage.setItem('wc2026_tz', s.offset); } catch(e) {}
+  try { localStorage.setItem('wc2026_tz', document.getElementById('tz-select').selectedIndex); } catch(e) {}
   render(s.offset, s.team);
 });
 
@@ -1288,10 +1288,10 @@ koBtn.addEventListener('click', () => {
     const savedTz = localStorage.getItem('wc2026_tz');
     if (savedTz !== null) {
       const sel = document.getElementById('tz-select');
-      const opt = Array.from(sel.options).find(o => o.value === savedTz);
-      if (opt) {
-        sel.value = savedTz;
-        render(parseFloat(savedTz), document.getElementById('team-select').value);
+      const idx = parseInt(savedTz);
+      if (!isNaN(idx) && sel.options[idx]) {
+        sel.selectedIndex = idx;
+        render(parseFloat(sel.options[idx].value), document.getElementById('team-select').value);
         return; // skip auto-detect
       }
     }
@@ -1320,7 +1320,7 @@ koBtn.addEventListener('click', () => {
   });
   sel.selectedIndex = bestIdx;
   // Save auto-detected tz so other pages stay in sync
-  try { localStorage.setItem('wc2026_tz', sel.options[bestIdx].value); } catch(e) {}
+  try { localStorage.setItem('wc2026_tz', bestIdx); } catch(e) {}
 
   function restoreAndRender() {
     renderHighlightRows();

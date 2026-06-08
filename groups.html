@@ -678,13 +678,13 @@ try {
   const savedTz = localStorage.getItem('wc2026_tz');
   if (savedTz) {
     const sel = document.getElementById('tz-select');
-    const opt = Array.from(sel.options).find(o => parseFloat(o.value) === parseFloat(savedTz));
-    if (opt) sel.value = opt.value;
+    const idx = parseInt(savedTz);
+    if (!isNaN(idx) && sel.options[idx]) sel.selectedIndex = idx;
   }
 } catch(e) {}
 
 document.getElementById('tz-select').addEventListener('change', function() {
-  try { localStorage.setItem('wc2026_tz', this.value); } catch(e) {}
+  try { localStorage.setItem('wc2026_tz', this.selectedIndex); } catch(e) {}
   updateKickoffDate();
 });
 
