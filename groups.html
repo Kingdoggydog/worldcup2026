@@ -119,6 +119,13 @@
   }
   select:focus { outline: 2px solid var(--highlight-bl); }
 
+  .highlight-rows { display: flex; flex-direction: column; gap: 6px; }
+  .highlight-row { display: flex; align-items: center; gap: 6px; }
+  .hl-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .hl-remove { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 14px; padding: 0 2px; line-height: 1; }
+  .hl-remove:hover { color: var(--text); }
+  .hl-add { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: clamp(11px,1.5vw,13px); letter-spacing: 1px; text-transform: uppercase; padding: 5px 10px; border-radius: 4px; cursor: pointer; border: 1.5px dashed var(--ctrl-border); background: transparent; color: var(--text-muted); transition: all 0.2s; white-space: nowrap; }
+  .hl-add:hover { border-color: var(--gold); color: var(--gold); }
   .highlight-note {
     font-size: clamp(10px, 1.5vw, 12px); color: var(--text-muted);
     font-family: 'Barlow Condensed', sans-serif; font-style: italic;
@@ -200,8 +207,15 @@
   .standings-table tr.highlighted td { background: var(--highlight-bg); }
   .standings-table tr.highlighted td.team-name {
     border-left: 3px solid var(--highlight-bl);
-    padding-left: 9px;
   }
+  .standings-table tr.hi-1 td { background: rgba(46,204,113,0.12); }
+  .standings-table tr.hi-1 td.team-name { border-left: 3px solid #2ECC71; }
+  .standings-table tr.hi-2 td { background: rgba(100,210,255,0.12); }
+  .standings-table tr.hi-2 td.team-name { border-left: 3px solid #64D2FF; }
+  .standings-table tr.hi-3 td { background: rgba(155,89,182,0.12); }
+  .standings-table tr.hi-3 td.team-name { border-left: 3px solid #9B59B6; }
+  .standings-table tr.hi-4 td { background: rgba(255,159,64,0.12); }
+  .standings-table tr.hi-4 td.team-name { border-left: 3px solid #FF9F40; padding-left: 9px; }
   .standings-table td.stat { color: var(--text-sub); font-size: 11px; font-weight: 400; }
 
   /* FOOTER */
@@ -261,66 +275,60 @@
     </div>
     <div class="header-right">
       <div class="ctrl-row">
-        <span class="ctrl-label">Highlight</span>
-        <select id="team-select">
-          <option value="none" selected>No highlight</option>
-          <option value="Algeria">Algeria</option>
-          <option value="Argentina">Argentina</option>
-          <option value="Australia">Australia</option>
-          <option value="Austria">Austria</option>
-          <option value="Belgium">Belgium</option>
-          <option value="Bosnia">Bosnia</option>
-          <option value="Brazil">Brazil</option>
-          <option value="Canada">Canada</option>
-          <option value="Cape Verde">Cape Verde</option>
-          <option value="Colombia">Colombia</option>
-          <option value="Congo DR">Congo DR</option>
-          <option value="Croatia">Croatia</option>
-          <option value="Curacao">Curacao</option>
-          <option value="Czechia">Czechia</option>
-          <option value="Ecuador">Ecuador</option>
-          <option value="Egypt">Egypt</option>
-          <option value="England">England</option>
-          <option value="France">France</option>
-          <option value="Germany">Germany</option>
-          <option value="Ghana">Ghana</option>
-          <option value="Haiti">Haiti</option>
-          <option value="Iran">Iran</option>
-          <option value="Iraq">Iraq</option>
-          <option value="Ivory Coast">Ivory Coast</option>
-          <option value="Japan">Japan</option>
-          <option value="Jordan">Jordan</option>
-          <option value="Mexico">Mexico</option>
-          <option value="Morocco">Morocco</option>
-          <option value="Netherlands">Netherlands</option>
-          <option value="New Zealand">New Zealand</option>
-          <option value="Norway">Norway</option>
-          <option value="Panama">Panama</option>
-          <option value="Paraguay">Paraguay</option>
-          <option value="Portugal">Portugal</option>
-          <option value="Qatar">Qatar</option>
-          <option value="Saudi Arabia">Saudi Arabia</option>
-          <option value="Scotland">Scotland</option>
-          <option value="Senegal">Senegal</option>
-          <option value="South Africa">South Africa</option>
-          <option value="South Korea">South Korea</option>
-          <option value="Spain">Spain</option>
-          <option value="Sweden">Sweden</option>
-          <option value="Switzerland">Switzerland</option>
-          <option value="Tunisia">Tunisia</option>
-          <option value="Turkiye">Turkiye</option>
-          <option value="Uruguay">Uruguay</option>
-          <option value="USA">USA</option>
-          <option value="Uzbekistan">Uzbekistan</option>
+        <span class="ctrl-label">Timezone</span>
+        <select id="tz-select">
+          <option value="12">Auckland (NZST, UTC+12)</option>
+          <option value="11">Solomon Islands (UTC+11)</option>
+          <option value="10">Melbourne / Sydney (AEST, UTC+10)</option>
+          <option value="10">Brisbane (AEST, UTC+10)</option>
+          <option value="9.5">Adelaide (ACST, UTC+9:30)</option>
+          <option value="9.5">Darwin (ACST, UTC+9:30)</option>
+          <option value="9">Tokyo / Seoul (JST/KST, UTC+9)</option>
+          <option value="8">Perth (AWST, UTC+8)</option>
+          <option value="8">Singapore / Hong Kong (UTC+8)</option>
+          <option value="8">Beijing / Shanghai (CST, UTC+8)</option>
+          <option value="8">Kuala Lumpur (MYT, UTC+8)</option>
+          <option value="7">Bangkok / Jakarta (UTC+7)</option>
+          <option value="6">Dhaka (BST, UTC+6)</option>
+          <option value="5.5">India (IST, UTC+5:30)</option>
+          <option value="5">Karachi / Islamabad (PKT, UTC+5)</option>
+          <option value="4">Dubai / Abu Dhabi (GST, UTC+4)</option>
+          <option value="3">Nairobi / Riyadh (EAT/AST, UTC+3)</option>
+          <option value="3">Moscow (MSK, UTC+3)</option>
+          <option value="3">Istanbul (TRT, UTC+3)</option>
+          <option value="2">Cairo (EET, UTC+2)</option>
+          <option value="2">Johannesburg (SAST, UTC+2)</option>
+          <option value="2">Paris / Berlin / Rome (CEST, UTC+2)</option>
+          <option value="2">Athens / Helsinki (EEST, UTC+2)</option>
+          <option value="1">London (BST, UTC+1)</option>
+          <option value="1">Dublin (IST, UTC+1)</option>
+          <option value="1">Lagos / Casablanca (WAT, UTC+1)</option>
+          <option value="0">UTC+0 / Reykjavik</option>
+          <option value="0">Accra / Dakar (GMT, UTC+0)</option>
+          <option value="-3">Buenos Aires / Sao Paulo (UTC-3)</option>
+          <option value="-3">Santiago (CLT, UTC-3)</option>
+          <option value="-4">New York / Toronto (EDT, UTC-4)</option>
+          <option value="-4">Caracas / La Paz (UTC-4)</option>
+          <option value="-5">Chicago / Mexico City (CDT, UTC-5)</option>
+          <option value="-5">Lima / Bogota (PET/COT, UTC-5)</option>
+          <option value="-6">Denver / Calgary (MDT, UTC-6)</option>
+          <option value="-7">Los Angeles / Vancouver (PDT, UTC-7)</option>
+          <option value="-8">Anchorage (AKDT, UTC-8)</option>
+          <option value="-10">Honolulu (HST, UTC-10)</option>
         </select>
       </div>
-      <span class="highlight-note" id="highlight-note">No team highlighted</span>
+      <div class="ctrl-row" style="align-items:flex-start;flex-direction:column;gap:6px;">
+        <span class="ctrl-label">Highlight</span>
+        <div class="highlight-rows" id="highlight-rows"></div>
+        <button class="hl-add" id="hl-add-btn" onclick="addHighlightRow()">+ Add team</button>
+      </div>
+      <span class="highlight-note" id="highlight-note" style="display:none"></span>
     </div>
   </div>
 
   <div class="standings-note">
     <strong>Standings will be updated as the tournament progresses.</strong>
-    All records currently show 0 &mdash; check back once the group stage kicks off on 11 June 2026.
+    All records currently show 0 &mdash; check back once the group stage kicks off on <span id="kickoff-date">11 June 2026 (AEST, UTC+10)</span>.
   </div>
 
   <div class="groups-grid" id="groups-grid"></div>
@@ -514,11 +522,82 @@ function sortTeams(teamNames, grp, groupStats, results) {
 }
 
 // ── RENDER ────────────────────────────────────────────────────────────────────
-let currentHighlight = 'none';
+const HL_COLORS = ['#2ECC71','#64D2FF','#9B59B6','#FF9F40'];
+const ALL_TEAMS = ['Algeria','Argentina','Australia','Austria','Belgium','Bosnia','Brazil','Canada','Cape Verde','Colombia','Congo DR','Croatia','Curacao','Czechia','Ecuador','Egypt','England','France','Germany','Ghana','Haiti','Iran','Iraq','Ivory Coast','Japan','Jordan','Mexico','Morocco','Netherlands','New Zealand','Norway','Panama','Paraguay','Portugal','Qatar','Saudi Arabia','Scotland','Senegal','South Africa','South Korea','Spain','Sweden','Switzerland','Tunisia','Turkiye','Uruguay','USA','Uzbekistan'];
+
+let _highlightTeams = ['none','none','none','none'];
+try {
+  const _saved = localStorage.getItem('wc2026_highlights');
+  if (_saved) _highlightTeams = JSON.parse(_saved);
+  else {
+    const _single = localStorage.getItem('wc2026_highlight');
+    if (_single && _single !== 'none') _highlightTeams[0] = _single;
+  }
+} catch(e) {}
+
+function saveHighlights() {
+  try {
+    localStorage.setItem('wc2026_highlights', JSON.stringify(_highlightTeams));
+    localStorage.setItem('wc2026_highlight', _highlightTeams.find(t => t && t !== 'none') || 'none');
+  } catch(e) {}
+}
+
+function teamSelectHTML(selectedVal, rowIdx) {
+  const taken = _highlightTeams.filter((t,i) => t && t !== 'none' && i !== rowIdx);
+  return '<option value="none">— Remove —</option>' +
+    ALL_TEAMS.filter(t => !taken.includes(t) || t === selectedVal)
+      .map(t => `<option value="${t}"${t===selectedVal?' selected':''}>${t}</option>`).join('');
+}
+
+function renderHighlightRows() {
+  const container = document.getElementById('highlight-rows');
+  if (!container) return;
+  const rows = _highlightTeams.map((team,i) => ({team,i})).filter(({team}) => team && team !== 'none');
+  container.innerHTML = rows.map(({team,i}) => `
+    <div class="highlight-row">
+      <div class="hl-dot" style="background:${HL_COLORS[i]}"></div>
+      <select onchange="updateHighlight(${i}, this.value)" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(12px,1.8vw,15px);border:1.5px solid var(--ctrl-border);border-radius:4px;padding:4px 8px;background:var(--ctrl-bg);color:var(--ctrl-text);">
+        ${teamSelectHTML(team, i)}
+      </select>
+      <button class="hl-remove" onclick="removeHighlight(${i})" title="Remove">✕</button>
+    </div>`).join('');
+  const addBtn = document.getElementById('hl-add-btn');
+  if (addBtn) addBtn.style.display = rows.length >= 4 ? 'none' : 'inline-block';
+}
+
+function addHighlightRow() {
+  const idx = _highlightTeams.findIndex(t => !t || t === 'none');
+  if (idx === -1) return;
+  const taken = _highlightTeams.filter(t => t && t !== 'none');
+  const next = ALL_TEAMS.find(t => !taken.includes(t));
+  if (!next) return;
+  _highlightTeams[idx] = next;
+  saveHighlights();
+  renderHighlightRows();
+  if (lastData) render(null, lastData);
+}
+
+function updateHighlight(idx, val) {
+  if (val === 'none') { removeHighlight(idx); return; }
+  const existingIdx = _highlightTeams.findIndex((t,i) => t === val && i !== idx);
+  if (existingIdx >= 0) _highlightTeams[existingIdx] = _highlightTeams[idx];
+  _highlightTeams[idx] = val;
+  saveHighlights();
+  renderHighlightRows();
+  if (lastData) render(null, lastData);
+}
+
+function removeHighlight(idx) {
+  _highlightTeams[idx] = 'none';
+  _highlightTeams = [..._highlightTeams.filter(t => t && t !== 'none'), ...Array(4).fill('none')].slice(0,4);
+  saveHighlights();
+  renderHighlightRows();
+  if (lastData) render(null, lastData);
+}
+
 let lastData = null;
 
 function render(highlightTeam, data) {
-  currentHighlight = highlightTeam;
   const grid = document.getElementById('groups-grid');
   grid.innerHTML = '';
 
@@ -539,8 +618,9 @@ function render(highlightTeam, data) {
       const s = groupStats[name] || { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
       const gd = s.gf - s.ga;
       const gdStr = s.p > 0 ? (gd > 0 ? '+' + gd : String(gd)) : '-';
-      const isHi = highlightTeam !== 'none' && name === highlightTeam;
-      const hiCls = isHi ? ' highlighted' : '';
+      const hiIdx = _highlightTeams.findIndex(t => t && t !== 'none' && t === name);
+      const isHi = hiIdx >= 0;
+      const hiCls = isHi ? ` highlighted hi-${hiIdx+1}` : '';
 
       rows += `<tr class="${hiCls}">
         <td class="stat" style="width:20px;padding-left:8px">${i+1}</td>
@@ -573,8 +653,8 @@ function render(highlightTeam, data) {
     grid.appendChild(card);
   });
 
-  document.getElementById('highlight-note').textContent =
-    highlightTeam === 'none' ? 'No team highlighted' : `Showing ${highlightTeam}`;
+  const noteEl = document.getElementById('highlight-note');
+  if (noteEl) noteEl.style.display = 'none';
 }
 
 // ── LOAD DATA ─────────────────────────────────────────────────────────────────
@@ -587,23 +667,39 @@ async function loadAndRender() {
     console.log('Could not load data.json:', e.message);
     lastData = calcStandings([]);
   }
-  render(currentHighlight, lastData);
+  render(null, lastData);
 }
 
-document.getElementById('team-select').addEventListener('change', function() {
-  try { localStorage.setItem('wc2026_highlight', this.value); } catch(e) {}
-  render(this.value, lastData);
-});
+// Render highlight rows on load
+renderHighlightRows();
 
-// Restore saved highlight
+// Timezone selector
 try {
-  const saved = localStorage.getItem('wc2026_highlight');
-  if (saved) {
-    const sel = document.getElementById('team-select');
-    const opt = Array.from(sel.options).find(o => o.value === saved);
-    if (opt) { sel.value = saved; currentHighlight = saved; }
+  const savedTz = localStorage.getItem('wc2026_tz');
+  if (savedTz) {
+    const sel = document.getElementById('tz-select');
+    const opt = Array.from(sel.options).find(o => parseFloat(o.value) === parseFloat(savedTz));
+    if (opt) sel.value = opt.value;
   }
 } catch(e) {}
+
+document.getElementById('tz-select').addEventListener('change', function() {
+  try { localStorage.setItem('wc2026_tz', this.value); } catch(e) {}
+  updateKickoffDate();
+});
+
+function updateKickoffDate() {
+  const sel = document.getElementById('tz-select');
+  const offset = parseFloat(sel.value);
+  const firstMatchUTC = new Date('2026-06-11T19:00:00Z');
+  const local = new Date(firstMatchUTC.getTime() + offset * 3600000);
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const selText = sel.options[sel.selectedIndex].text;
+  const parenMatch = selText.match(/[(]([^)]+)[)]/);
+  const tzLabel = parenMatch ? parenMatch[1] : `UTC${offset >= 0 ? '+' : ''}${offset}`;
+  const el = document.getElementById('kickoff-date');
+  if (el) el.textContent = `${local.getUTCDate()} ${months[local.getUTCMonth()]} ${local.getUTCFullYear()} (${tzLabel})`;
+}
 
 // Initial load + refresh every 60 seconds
 loadAndRender();

@@ -142,7 +142,17 @@
 
   /* ── CONTROLS ────────────────────────────────────────────────────────────── */
   .ctrl-row { display: flex; align-items: center; gap: 8px; }
+  .highlight-rows { display: flex; flex-direction: column; gap: 6px; }
+  .highlight-row { display: flex; align-items: center; gap: 6px; }
+  .hl-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .hl-remove { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 14px; padding: 0 2px; line-height: 1; }
+  .hl-remove:hover { color: var(--text); }
+  .hl-add { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: clamp(11px,1.5vw,13px); letter-spacing: 1px; text-transform: uppercase; padding: 5px 10px; border-radius: 4px; cursor: pointer; border: 1.5px dashed var(--ctrl-border); background: transparent; color: var(--text-muted); transition: all 0.2s; white-space: nowrap; }
+  .hl-add:hover { border-color: var(--gold); color: var(--gold); }
+  /* Highlight colours - applied as border-left on match rows */
   body.print-mode .ctrl-row { gap: 6px; }
+  body.print-mode .highlight-rows,
+  body.print-mode #hl-add-btn { display: none !important; }
 
   .ctrl-label {
     font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
@@ -398,9 +408,12 @@
   }
 
   .match.highlighted {
-    background: var(--highlight-bg);
-    border-left-color: var(--highlight-bl);
+    /* colour applied by hi-1, hi-2, hi-3, hi-4 classes */
   }
+  .match.hi-1 { background: var(--highlight-bg);   border-left-color: var(--highlight-bl); }
+  .match.hi-2 { background: rgba(100,210,255,0.12); border-left-color: #64D2FF; }
+  .match.hi-3 { background: rgba(155,89,182,0.12);  border-left-color: #9B59B6; }
+  .match.hi-4 { background: rgba(255,159,64,0.12);  border-left-color: #FF9F40; }
 
   .grp {
     font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
@@ -615,61 +628,11 @@
           <option value="-10">Honolulu (HST, UTC-10)</option>
         </select>
       </div>
-      <div class="ctrl-row">
+      <div class="ctrl-row" style="align-items:flex-start;flex-direction:column;gap:6px;">
         <span class="ctrl-label">Highlight</span>
-        <select id="team-select">
-          <option value="none" selected>No highlight</option>
-          <option value="Algeria">Algeria</option>
-          <option value="Argentina">Argentina</option>
-          <option value="Australia">Australia</option>
-          <option value="Austria">Austria</option>
-          <option value="Belgium">Belgium</option>
-          <option value="Bosnia">Bosnia</option>
-          <option value="Brazil">Brazil</option>
-          <option value="Canada">Canada</option>
-          <option value="Cape Verde">Cape Verde</option>
-          <option value="Colombia">Colombia</option>
-          <option value="Congo DR">Congo DR</option>
-          <option value="Croatia">Croatia</option>
-          <option value="Curacao">Curacao</option>
-          <option value="Czechia">Czechia</option>
-          <option value="Ecuador">Ecuador</option>
-          <option value="Egypt">Egypt</option>
-          <option value="England">England</option>
-          <option value="France">France</option>
-          <option value="Germany">Germany</option>
-          <option value="Ghana">Ghana</option>
-          <option value="Haiti">Haiti</option>
-          <option value="Iran">Iran</option>
-          <option value="Iraq">Iraq</option>
-          <option value="Ivory Coast">Ivory Coast</option>
-          <option value="Japan">Japan</option>
-          <option value="Jordan">Jordan</option>
-          <option value="Mexico">Mexico</option>
-          <option value="Morocco">Morocco</option>
-          <option value="Netherlands">Netherlands</option>
-          <option value="New Zealand">New Zealand</option>
-          <option value="Norway">Norway</option>
-          <option value="Panama">Panama</option>
-          <option value="Paraguay">Paraguay</option>
-          <option value="Portugal">Portugal</option>
-          <option value="Qatar">Qatar</option>
-          <option value="Saudi Arabia">Saudi Arabia</option>
-          <option value="Scotland">Scotland</option>
-          <option value="Senegal">Senegal</option>
-          <option value="South Africa">South Africa</option>
-          <option value="South Korea">South Korea</option>
-          <option value="Spain">Spain</option>
-          <option value="Sweden">Sweden</option>
-          <option value="Switzerland">Switzerland</option>
-          <option value="Tunisia">Tunisia</option>
-          <option value="Turkiye">Turkiye</option>
-          <option value="Uruguay">Uruguay</option>
-          <option value="USA">USA</option>
-          <option value="Uzbekistan">Uzbekistan</option>
-        </select>
+        <div class="highlight-rows" id="highlight-rows"></div>
+        <button class="hl-add" id="hl-add-btn" onclick="addHighlightRow()">+ Add team</button>
       </div>
-      <span class="highlight-note" id="highlight-note">No team highlighted</span>
     </div>
   </div>
 
@@ -677,12 +640,13 @@
 
   <div class="schedule-note">
     <strong>Scores will be updated live during the tournament.</strong>
-    The group stage kicks off on <span id="kickoff-date">12 June 2026</span>. Check back then to see live and final scores updated automatically.
+    The group stage kicks off on <span id="kickoff-date">12 June 2026 (AEST, UTC+10)</span>. Check back then to see live and final scores updated automatically.<br>
+    <strong>&#10024; New:</strong> <span style="color:var(--text-sub)">Select multiple teams to highlight (up to 4)</span>
   </div>
   <div class="schedule" id="schedule"></div>
 
   <div class="footer">
-    <p id="footer-tz">All times AEST (UTC+10) &bull; Source: FIFA / Fox Sports 2026 &bull; <span id="version">v1.34</span></p>
+    <p id="footer-tz">All times AEST (UTC+10) &bull; Source: FIFA / Fox Sports 2026 &bull; <span id="version">v1.35</span></p>
     <p>72 group stage matches &bull; 12 groups &bull; Top 2 per group + 8 best 3rd place advance</p>
   </div>
   <div style="text-align:center;margin-top:12px;">
@@ -953,6 +917,7 @@ function fmtHeader(key) {
 }
 
 function render(offset, team) {
+  // team param kept for compat but we use _highlightTeams array
   const buckets = {};
   MATCHES.forEach(m => {
     const k = localDateKey(m.utc, m.date, offset);
@@ -974,8 +939,9 @@ function render(offset, team) {
     let html = `<div class="day-header"><span class="day-name">${hdr.name}</span><span class="day-date">${hdr.date}</span></div>`;
     buckets[k].forEach(m => {
       const t   = formatTime(m.utc + offset);
-      const hi  = team !== 'none' && m.teams.includes(team);
-      const cls = hi ? ' highlighted' : '';
+      const hiIdx = _highlightTeams.findIndex(t => t && t !== 'none' && m.teams.includes(t));
+      const hi = hiIdx >= 0;
+      const cls = hi ? ` highlighted hi-${hiIdx+1}` : '';
       const score = getScore(m.teams);
       const scoreHtml = score
         ? `<span class="${score.cls}">${score.home} - ${score.away}<span class="score-label${score.cls==='score-live'?' live':''}">${score.label}</span></span>`
@@ -1022,8 +988,9 @@ function render(offset, team) {
       let html = `<div class="day-header"><span class="day-name">${hdr.name}</span><span class="day-date">${hdr.date}</span></div>`;
       koBuckets[k].forEach(m => {
         const t  = formatTime(m.utc + offset);
-        const hi = team !== 'none' && m.teams.includes(team);
-        const cls = hi ? ' highlighted ko-match' : ' ko-match';
+        const hiIdx = _highlightTeams.findIndex(t => t && t !== 'none' && m.teams.includes(t));
+        const hi = hiIdx >= 0;
+        const cls = hi ? ` highlighted hi-${hiIdx+1} ko-match` : ' ko-match';
         const grpStyle = `style="color:var(--ko-${m.grp}, #7A82A8)"`;
         html += `<div class="match${cls}">
           <span style="font-family:'Barlow Condensed',sans-serif;flex-shrink:0;width:80px;color:${koColors[m.grp]||'#7A82A8'}"><span style="font-weight:700;font-size:17px">${m.grp}</span> <span style="font-weight:400;font-size:14px">${m.num}</span></span>
@@ -1043,10 +1010,7 @@ function render(offset, team) {
     ? `UTC${sign}${Math.floor(offset)}:${Math.abs((offset%1)*60) === 30 ? '30':'00'}`
     : `UTC${sign}${offset}`;
   document.getElementById('footer-tz').innerHTML =
-    `All times ${lbl} \u2022 Source: FIFA / Fox Sports 2026 \u2022 <span id="version" style="color:var(--text-muted);font-style:italic">v1.34</span>`;
-
-  document.getElementById('highlight-note').textContent =
-    team === 'none' ? 'No team highlighted' : `Showing ${team}'s matches`;
+    `All times ${lbl} \u2022 Source: FIFA / Fox Sports 2026 \u2022 <span id="version" style="color:var(--text-muted);font-style:italic">v1.35</span>`;
 
   // Update kickoff date label based on timezone
   // First match is Mexico v South Africa: 2026-06-11T19:00:00Z
@@ -1057,22 +1021,100 @@ function render(offset, team) {
   const d = localFirst.getUTCDate();
   const m = months[localFirst.getUTCMonth()];
   const y = localFirst.getUTCFullYear();
-  const tzLabel = document.getElementById('tz-select').options[document.getElementById('tz-select').selectedIndex].text.split('(')[1]?.replace(')','').trim() || `UTC${offset >= 0 ? '+' : ''}${offset}`;
+  // Build timezone label e.g. "AEST, UTC+10"
+  const selText = document.getElementById('tz-select').options[document.getElementById('tz-select').selectedIndex].text;
+  const parenMatch = selText.match(/\(([^)]+)\)/);
+  const tzLabel = parenMatch ? parenMatch[1] : `UTC${offset >= 0 ? '+' : ''}${offset}`;
   const el = document.getElementById('kickoff-date');
   if (el) el.textContent = `${d} ${m} ${y} (${tzLabel})`;
 }
 
-// Global highlight - source of truth, synced with localStorage
-let _highlightTeam = 'none';
+// Global highlights array - up to 4 teams
+const HL_COLORS = ['#2ECC71','#64D2FF','#9B59B6','#FF9F40'];
+let _highlightTeams = ['none','none','none','none'];
 try {
-  const _saved = localStorage.getItem('wc2026_highlight');
-  if (_saved) { _highlightTeam = _saved; }
+  const _saved = localStorage.getItem('wc2026_highlights');
+  if (_saved) _highlightTeams = JSON.parse(_saved);
 } catch(e) {}
+
+function saveHighlights() {
+  try { localStorage.setItem('wc2026_highlights', JSON.stringify(_highlightTeams)); } catch(e) {}
+  // Also save first team to wc2026_highlight for groups page compatibility
+  try { localStorage.setItem('wc2026_highlight', _highlightTeams[0]||'none'); } catch(e) {}
+}
+
+const ALL_TEAMS = ['Algeria','Argentina','Australia','Austria','Belgium','Bosnia','Brazil','Canada','Cape Verde','Colombia','Congo DR','Croatia','Curacao','Czechia','Ecuador','Egypt','England','France','Germany','Ghana','Haiti','Iran','Iraq','Ivory Coast','Japan','Jordan','Mexico','Morocco','Netherlands','New Zealand','Norway','Panama','Paraguay','Portugal','Qatar','Saudi Arabia','Scotland','Senegal','South Africa','South Korea','Spain','Sweden','Switzerland','Tunisia','Turkiye','Uruguay','USA','Uzbekistan'];
+
+function teamSelectHTML(selectedVal, rowIdx) {
+  const taken = _highlightTeams.filter((t,i) => t && t !== 'none' && i !== rowIdx);
+  return '<option value="none">— Remove —</option>' +
+    ALL_TEAMS.filter(t => !taken.includes(t) || t === selectedVal)
+      .map(t => `<option value="${t}"${t===selectedVal?' selected':''}>${t}</option>`).join('');
+}
+
+function renderHighlightRows() {
+  const container = document.getElementById('highlight-rows');
+  if (!container) return;
+  // Iterate _highlightTeams by actual index so colours always match
+  const rows = _highlightTeams
+    .map((team, i) => ({team, i}))
+    .filter(({team}) => team && team !== 'none');
+  container.innerHTML = rows.map(({team, i}) => `
+    <div class="highlight-row">
+      <div class="hl-dot" style="background:${HL_COLORS[i]}"></div>
+      <select onchange="updateHighlight(${i}, this.value)" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(12px,1.8vw,15px);border:1.5px solid var(--ctrl-border);border-radius:4px;padding:4px 8px;background:var(--ctrl-bg);color:var(--ctrl-text);">
+        ${teamSelectHTML(team, i)}
+      </select>
+      <button class="hl-remove" onclick="removeHighlight(${i})" title="Remove">✕</button>
+    </div>`).join('');
+  const addBtn = document.getElementById('hl-add-btn');
+  if (addBtn) addBtn.style.display = rows.length >= 4 ? 'none' : 'inline-block';
+}
+
+function addHighlightRow() {
+  const idx = _highlightTeams.findIndex(t => !t || t === 'none');
+  if (idx === -1) return;
+  const taken = _highlightTeams.filter(t => t && t !== 'none');
+  const next = ALL_TEAMS.find(t => !taken.includes(t));
+  if (!next) return;
+  _highlightTeams[idx] = next;
+  saveHighlights();
+  renderHighlightRows();
+  const s = getState();
+  render(s.offset, s.team);
+}
+
+function updateHighlight(idx, val) {
+  if (val === 'none') {
+    removeHighlight(idx);
+    return;
+  }
+  // Prevent duplicates - if already selected elsewhere, swap them
+  const existingIdx = _highlightTeams.findIndex((t,i) => t === val && i !== idx);
+  if (existingIdx >= 0) {
+    _highlightTeams[existingIdx] = _highlightTeams[idx]; // swap
+  }
+  _highlightTeams[idx] = val;
+  saveHighlights();
+  renderHighlightRows();
+  const s = getState();
+  render(s.offset, s.team);
+}
+
+function removeHighlight(idx) {
+  _highlightTeams[idx] = 'none';
+  // Compact array - move nones to end
+  _highlightTeams = [..._highlightTeams.filter(t => t && t !== 'none'), ...Array(4).fill('none')].slice(0,4);
+  saveHighlights();
+  renderHighlightRows();
+  const s = getState();
+  render(s.offset, s.team);
+}
 
 function getState() {
   return {
     offset: parseFloat(document.getElementById('tz-select').value),
-    team:   _highlightTeam
+    team: _highlightTeams[0] || 'none'  // kept for compatibility
   };
 }
 
@@ -1117,12 +1159,7 @@ function jumpToNextDay() {
     }
   }
 }
-document.getElementById('team-select').addEventListener('change', () => {
-  _highlightTeam = document.getElementById('team-select').value;
-  try { localStorage.setItem('wc2026_highlight', _highlightTeam); } catch(e) {}
-  const s = getState();
-  render(s.offset, s.team);
-});
+
 
 // Mode toggle
 const btn = document.getElementById('mode-toggle');
@@ -1243,12 +1280,8 @@ koBtn.addEventListener('click', () => {
     'Pacific/Honolulu':    -10, 'Pacific/Tahiti':      -10,
   };
 
-  // Sync dropdown to global highlight
-  try {
-    const teamSel = document.getElementById('team-select');
-    const opt = Array.from(teamSel.options).find(o => o.value === _highlightTeam);
-    if (opt) teamSel.value = _highlightTeam;
-  } catch(e) {}
+  // Render highlight rows from saved state
+  renderHighlightRows();
 
   // Restore saved timezone preference
   try {
@@ -1286,8 +1319,11 @@ koBtn.addEventListener('click', () => {
     if (diff < bestDiff) { bestDiff = diff; bestIdx = i; }
   });
   sel.selectedIndex = bestIdx;
+  // Save auto-detected tz so other pages stay in sync
+  try { localStorage.setItem('wc2026_tz', sel.options[bestIdx].value); } catch(e) {}
 
   function restoreAndRender() {
+    renderHighlightRows();
     const s = getState();
     render(s.offset, s.team);
   }
