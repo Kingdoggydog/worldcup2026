@@ -631,6 +631,7 @@ function render(highlightTeam, data) {
     const card = document.createElement('div');
     card.className = 'group-card';
     const isLive = liveGroups && liveGroups.has(grp);
+    console.log("Group:", grp, "isLive:", isLive, "liveGroups:", [...(liveGroups||[])]);
 
     // Check if any matches played in this group
     const played = teamList.some(t => groupStats[t]?.p > 0);
