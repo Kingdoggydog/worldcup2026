@@ -491,9 +491,9 @@
     animation: pulse-score 1.5s ease-in-out infinite;
   }
   .score-label {
-    font-family: 'Barlow Condensed', sans-serif; font-weight: 600;
-    font-size: 8px; letter-spacing: 1px; text-transform: uppercase;
-    margin-left: 3px; opacity: 0.7;
+    font-family: 'Barlow Condensed', sans-serif; font-weight: 400;
+    font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
+    margin-left: 3px;
   }
   .score-label.live { color: #2ECC71; }
   @keyframes pulse-score { 0%,100%{opacity:1} 50%{opacity:0.6} }
@@ -4412,7 +4412,7 @@ async function loadScores() {
       const status = m.status; // TIMED, IN_PLAY, PAUSED, FINISHED
       const hg = m.score?.fullTime?.home;
       const ag = m.score?.fullTime?.away;
-      scoreMap[key] = { home: hg, away: ag, status };
+      scoreMap[key] = { home: hg, away: ag, status, minute: m.minute, injuryTime: m.injuryTime };
     });
     lastFetch = new Date();
   } catch(e) {
@@ -4432,7 +4432,9 @@ function getScore(teamsStr) {
     return { home: s.home, away: s.away, cls: 'score-ft', label: 'FT' };
   }
   if ((s.status === 'IN_PLAY' || s.status === 'PAUSED') && s.home !== null) {
-    return { home: s.home, away: s.away, cls: 'score-live', label: s.status === 'PAUSED' ? 'HT' : 'LIVE' };
+    const minStr = s.minute ? `${s.minute}${s.injuryTime ? '+'+s.injuryTime : ''}'` : '';
+    const label = s.status === 'PAUSED' ? 'HT' : (minStr ? '' : 'LIVE');
+    return { home: s.home, away: s.away, cls: 'score-live', label, minute: minStr };
   }
   return null;
 }
@@ -4497,7 +4499,7 @@ function render(offset, team) {
       const cls = hi ? ` highlighted hi-${hiIdx+1}` : '';
       const score = getScore(m.teams);
       const scoreHtml = score
-        ? `<span class="${score.cls}">${score.home} - ${score.away}<span class="score-label${score.cls==='score-live'?' live':''}">${score.label}</span></span>`
+        ? `<span class="${score.cls}">${score.home} - ${score.away}<span class="score-label${score.cls==='score-live'?' live':''}">${score.label}${score.minute?' <span class="live-min">'+score.minute+'</span>':''}</span></span>`
         : '';
       html += `<div class="match${cls}">
         <span class="grp ${m.grp}">${m.grp}</span>

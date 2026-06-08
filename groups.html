@@ -159,6 +159,18 @@
     overflow: hidden;
   }
 
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.85)} }
+  .live-dot {
+    display: inline-block;
+    width: 9px; height: 9px;
+    background: #2ECC71;
+    border-radius: 50%;
+    margin-left: 8px;
+    animation: pulse 1.2s ease-in-out infinite;
+    vertical-align: middle;
+    flex-shrink: 0;
+    box-shadow: 0 0 6px #2ECC71;
+  }
   .group-header {
     display: flex; align-items: center; gap: 8px;
     padding: 8px 12px;
@@ -329,6 +341,7 @@
   <div class="standings-note">
     <strong>Standings will be updated as the tournament progresses.</strong>
     All records currently show 0 &mdash; check back once the group stage kicks off on <span id="kickoff-date">11 June 2026 (AEST, UTC+10)</span>.
+    Groups with a <span style="display:inline-block;width:8px;height:8px;background:#2ECC71;border-radius:50%;vertical-align:middle;margin:0 2px"></span> are live &mdash; standings shown are provisional.
   </div>
 
   <div class="groups-grid" id="groups-grid"></div>
@@ -418,7 +431,8 @@ function calcStandings(matches) {
 
   matches.forEach(m => {
     if (m.stage !== 'GROUP_STAGE') return;
-    if (m.status !== 'FINISHED') return;
+    if (m.status !== 'FINISHED' && m.status !== 'IN_PLAY') return;
+
     const hg = m.score?.fullTime?.home;
     const ag = m.score?.fullTime?.away;
     if (hg === null || ag === null) return;
@@ -446,7 +460,16 @@ function calcStandings(matches) {
     else              { ht.d++; ht.pts++;     at.d++; at.pts++; }
   });
 
-  return { groups, results };
+  // Track which groups have live matches
+  const liveGroups = new Set();
+  matches.forEach(m => {
+    if (m.status === 'IN_PLAY' && m.stage === 'GROUP_STAGE') {
+      const grp = m.group?.replace('GROUP_','');
+      if (grp) liveGroups.add(grp);
+    }
+  });
+
+  return { groups, results, liveGroups };
 }
 
 // ── HEAD-TO-HEAD TIEBREAKER (FIFA 2026 rules) ─────────────────────────────────
@@ -601,7 +624,7 @@ function render(highlightTeam, data) {
   const grid = document.getElementById('groups-grid');
   grid.innerHTML = '';
 
-  const { groups, results } = data || calcStandings([]);
+  const { groups, results, liveGroups } = data || calcStandings([]);
 
   Object.entries(GROUPS).forEach(([grp, teamList]) => {
     const groupStats = groups[grp] || {};
@@ -609,6 +632,7 @@ function render(highlightTeam, data) {
     const color = GROUP_COLORS[grp];
     const card = document.createElement('div');
     card.className = 'group-card';
+    const isLive = liveGroups && liveGroups.has(grp);
 
     // Check if any matches played in this group
     const played = teamList.some(t => groupStats[t]?.p > 0);
@@ -637,6 +661,7 @@ function render(highlightTeam, data) {
     card.innerHTML = `
       <div class="group-header">
         <span class="group-letter" style="color:${color}">Group ${grp}</span>
+        ${isLive ? '<span class="live-dot" title="Match in progress"></span>' : ''}
       </div>
       <table class="standings-table">
         <thead>
