@@ -111,26 +111,45 @@ select{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;
     <div class="ctrl">
       <span class="clbl">Timezone</span>
       <select id="tzsel">
-        <option value="12">Auckland (UTC+12)</option>
-        <option value="11">Solomon Islands (UTC+11)</option>
-        <option value="10" selected>Melbourne / Sydney (AEST, UTC+10)</option>
-        <option value="9.5">Adelaide (UTC+9:30)</option>
-        <option value="9">Tokyo / Seoul (UTC+9)</option>
-        <option value="8">Perth / Singapore / HK (UTC+8)</option>
-        <option value="7">Bangkok / Jakarta (UTC+7)</option>
-        <option value="5.5">India (UTC+5:30)</option>
-        <option value="4">Dubai (UTC+4)</option>
-        <option value="3">Moscow (UTC+3)</option>
-        <option value="2">Paris / Berlin (UTC+2)</option>
-        <option value="1">London (UTC+1)</option>
-        <option value="0">UTC+0</option>
-        <option value="-3">Buenos Aires (UTC-3)</option>
-        <option value="-4">New York (UTC-4)</option>
-        <option value="-5">Chicago / Mexico City (UTC-5)</option>
-        <option value="-6">Denver (UTC-6)</option>
-        <option value="-7">Los Angeles (UTC-7)</option>
-        <option value="-10">Honolulu (UTC-10)</option>
-      </select>
+          <option value="12">Auckland (NZST, UTC+12)</option>
+          <option value="11">Solomon Islands (UTC+11)</option>
+          <option value="10" selected>Melbourne / Sydney (AEST, UTC+10)</option>
+          <option value="10">Brisbane (AEST, UTC+10)</option>
+          <option value="9.5">Adelaide (ACST, UTC+9:30)</option>
+          <option value="9.5">Darwin (ACST, UTC+9:30)</option>
+          <option value="9">Tokyo / Seoul (JST/KST, UTC+9)</option>
+          <option value="8">Perth (AWST, UTC+8)</option>
+          <option value="8">Singapore / Hong Kong (UTC+8)</option>
+          <option value="8">Beijing / Shanghai (CST, UTC+8)</option>
+          <option value="8">Kuala Lumpur (MYT, UTC+8)</option>
+          <option value="7">Bangkok / Jakarta (UTC+7)</option>
+          <option value="6">Dhaka (BST, UTC+6)</option>
+          <option value="5.5">India (IST, UTC+5:30)</option>
+          <option value="5">Karachi / Islamabad (PKT, UTC+5)</option>
+          <option value="4">Dubai / Abu Dhabi (GST, UTC+4)</option>
+          <option value="3">Nairobi / Riyadh (EAT/AST, UTC+3)</option>
+          <option value="3">Moscow (MSK, UTC+3)</option>
+          <option value="3">Istanbul (TRT, UTC+3)</option>
+          <option value="2">Cairo (EET, UTC+2)</option>
+          <option value="2">Johannesburg (SAST, UTC+2)</option>
+          <option value="2">Paris / Berlin / Rome (CEST, UTC+2)</option>
+          <option value="2">Athens / Helsinki (EEST, UTC+2)</option>
+          <option value="1">London (BST, UTC+1)</option>
+          <option value="1">Dublin (IST, UTC+1)</option>
+          <option value="1">Lagos / Casablanca (WAT, UTC+1)</option>
+          <option value="0">UTC+0 / Reykjavik</option>
+          <option value="0">Accra / Dakar (GMT, UTC+0)</option>
+          <option value="-3">Buenos Aires / Sao Paulo (UTC-3)</option>
+          <option value="-3">Santiago (CLT, UTC-3)</option>
+          <option value="-4">New York / Toronto (EDT, UTC-4)</option>
+          <option value="-4">Caracas / La Paz (UTC-4)</option>
+          <option value="-5">Chicago / Mexico City (CDT, UTC-5)</option>
+          <option value="-5">Lima / Bogota (PET/COT, UTC-5)</option>
+          <option value="-6">Denver / Calgary (MDT, UTC-6)</option>
+          <option value="-7">Los Angeles / Vancouver (PDT, UTC-7)</option>
+          <option value="-8">Anchorage (AKDT, UTC-8)</option>
+          <option value="-10">Honolulu (HST, UTC-10)</option>
+        </select>
     </div>
   </div>
 </div>
@@ -555,10 +574,10 @@ document.querySelectorAll('.tab').forEach(b=>{
 // Timezone
 try{
   const sv=localStorage.getItem('wc2026_tz');
-  if(sv){const s=document.getElementById('tzsel');const o=Array.from(s.options).find(x=>x.value===sv);if(o)s.value=sv;}
+  if(sv!==null){const s=document.getElementById('tzsel');const idx=parseInt(sv);if(!isNaN(idx)&&s.options[idx])s.selectedIndex=idx;}
 }catch(e){}
 document.getElementById('tzsel').addEventListener('change',()=>{
-  try{localStorage.setItem('wc2026_tz',getOff());}catch(e){}
+  try{localStorage.setItem('wc2026_tz',document.getElementById('tzsel').selectedIndex);}catch(e){}
   render();
 });
 
