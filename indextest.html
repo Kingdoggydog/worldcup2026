@@ -1319,6 +1319,8 @@ koBtn.addEventListener('click', () => {
     if (diff < bestDiff) { bestDiff = diff; bestIdx = i; }
   });
   sel.selectedIndex = bestIdx;
+  // Save auto-detected tz so other pages stay in sync
+  try { localStorage.setItem('wc2026_tz', sel.options[bestIdx].value); } catch(e) {}
 
   function restoreAndRender() {
     renderHighlightRows();
