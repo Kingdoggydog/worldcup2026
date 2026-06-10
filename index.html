@@ -4304,10 +4304,10 @@
   </p>
 
   <div class="schedule-note">
+    <strong>&#9201; Next match: </strong><span id="countdown-text" style="color:var(--gold);font-weight:700;">Loading...</span><br>
     <strong>Scores will be updated live during the tournament.</strong>
     The group stage kicks off on <span id="kickoff-date">12 June 2026 (AEST, UTC+10)</span>. Check back then to see live and final scores updated automatically.<br>
-    <strong>&#10024; New:</strong> <span style="color:var(--text-sub)">Toggle option for 1 or 2 column display (if your screen is big enough) &bull; Filter by city, team and group</span><br>
-    <strong>&#128233; Like this page?</strong> <a href="https://forms.gle/SdgXv6VJLanh5JBJ6" target="_blank" style="color:var(--gold);text-decoration:none;font-weight:700;">Get notified about future tournaments and events &rarr;</a>
+    <strong>&#10024; New:</strong> <span style="color:var(--text-sub)">Toggle option for 1 or 2 column display (if your screen is big enough) &bull; Filter by city, team and group</span>
   </div>
   <div class="schedule" id="schedule"></div>
 
@@ -4318,6 +4318,7 @@
   <div style="text-align:center;margin-top:12px;">
     <a href="https://forms.gle/GHQH8NMe436BL8t48" target="_blank" style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;color:var(--text-muted);text-decoration:none;letter-spacing:1px;">💬 Feedback &amp; suggestions</a>
     <a href="https://www.reddit.com/user/coolcato" target="_blank" style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;color:var(--text-muted);text-decoration:none;letter-spacing:1px;">👋 Made by u/coolcato</a>
+    <a href="https://forms.gle/SdgXv6VJLanh5JBJ6" target="_blank" style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;color:var(--text-muted);text-decoration:none;letter-spacing:1px;">&#128233; Get notified for future tournaments</a>
   </div>
   <div id="bmc-mobile">
     <a href="https://www.buymeacoffee.com/coolcato" target="_blank">☕ Buy me a coffee</a>
@@ -4697,6 +4698,45 @@ function render(offset, team) {
     : `UTC${sign}${offset}`;
   document.getElementById('footer-tz').innerHTML =
     `All times ${lbl} \u2022 Source: FIFA / Fox Sports 2026 \u2022 <span id="version" style="color:var(--text-muted);font-style:italic">v1.38</span>`;
+
+  // Countdown to next match
+  function updateCountdown() {
+    const now = new Date();
+    const el = document.getElementById('countdown-text');
+    if (!el) return;
+
+    // Find next upcoming match from MATCHES array
+    let nextMatch = null;
+    let nextTime = null;
+    for (const m of MATCHES) {
+      const utcH = Math.floor(m.utc);
+      const utcM = Math.round((m.utc % 1) * 60);
+      const matchTime = new Date(`${m.date}T${String(utcH).padStart(2,'0')}:${String(utcM).padStart(2,'0')}:00Z`);
+      if (matchTime > now) {
+        if (!nextTime || matchTime < nextTime) {
+          nextTime = matchTime;
+          nextMatch = m;
+        }
+      }
+    }
+
+    if (!nextMatch) { el.textContent = 'Tournament complete'; return; }
+
+    const diff = nextTime - now;
+    const days = Math.floor(diff / 86400000);
+    const hrs  = Math.floor((diff % 86400000) / 3600000);
+    const mins = Math.floor((diff % 3600000) / 60000);
+    const secs = Math.floor((diff % 60000) / 1000);
+
+    let timeStr = '';
+    if (days > 0) timeStr = `${days}d ${hrs}h ${mins}m`;
+    else if (hrs > 0) timeStr = `${hrs}h ${mins}m ${secs}s`;
+    else timeStr = `${mins}m ${secs}s`;
+
+    el.textContent = `${nextMatch.teams} in ${timeStr}`;
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
 
   // Update kickoff date label based on timezone
   // First match is Mexico v South Africa: 2026-06-11T19:00:00Z
