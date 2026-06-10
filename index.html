@@ -4213,6 +4213,26 @@
             <option value="Toronto">Toronto</option>
             <option value="Vancouver">Vancouver</option>
           </select>
+          <select id="group-filter" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(12px,1.8vw,15px);border:1.5px solid var(--ctrl-border);border-radius:4px;padding:5px 8px;background:var(--ctrl-bg);color:var(--ctrl-text);cursor:pointer;margin-top:6px;">
+            <option value="all">All groups</option>
+            <option value="A">Group A</option>
+            <option value="B">Group B</option>
+            <option value="C">Group C</option>
+            <option value="D">Group D</option>
+            <option value="E">Group E</option>
+            <option value="F">Group F</option>
+            <option value="G">Group G</option>
+            <option value="H">Group H</option>
+            <option value="I">Group I</option>
+            <option value="J">Group J</option>
+            <option value="K">Group K</option>
+            <option value="L">Group L</option>
+            <option value="R32">Round of 32</option>
+            <option value="R16">Round of 16</option>
+            <option value="QF">Quarter Finals</option>
+            <option value="SF">Semi Finals</option>
+            <option value="F">Final</option>
+          </select>
           <select id="team-filter" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(12px,1.8vw,15px);border:1.5px solid var(--ctrl-border);border-radius:4px;padding:5px 8px;background:var(--ctrl-bg);color:var(--ctrl-text);cursor:pointer;margin-top:6px;">
             <option value="all">All teams</option>
             <option value="Algeria">Algeria</option>
@@ -4285,7 +4305,7 @@
   <div class="schedule-note">
     <strong>Scores will be updated live during the tournament.</strong>
     The group stage kicks off on <span id="kickoff-date">12 June 2026 (AEST, UTC+10)</span>. Check back then to see live and final scores updated automatically.<br>
-    <strong>&#10024; New:</strong> <span style="color:var(--text-sub)">Toggle option for 1 or 2 column display (if your screen is big enough) &bull; Filter by city and team</span><br>
+    <strong>&#10024; New:</strong> <span style="color:var(--text-sub)">Toggle option for 1 or 2 column display (if your screen is big enough) &bull; Filter by city, team and group</span><br>
     <strong>&#128233; Like this page?</strong> <a href="https://forms.gle/SdgXv6VJLanh5JBJ6" target="_blank" style="color:var(--gold);text-decoration:none;font-weight:700;">Get notified about future tournaments and events &rarr;</a>
   </div>
   <div class="schedule" id="schedule"></div>
@@ -4582,9 +4602,15 @@ function render(offset, team) {
   // --- GROUP STAGE ---
   const cityFilter = document.getElementById('city-filter')?.value || 'all';
   const teamFilter = document.getElementById('team-filter')?.value || 'all';
+  const groupFilter = document.getElementById('group-filter')?.value || 'all';
+  // If group filter is set to a knockout round, skip group stage entirely
+  const koRounds = ['R32','R16','QF','SF','F'];
+  const skipGroupStage = groupFilter !== 'all' && koRounds.includes(groupFilter);
   keys.forEach(k => {
+    if (skipGroupStage) return;
     let filteredMatches = cityFilter === 'all' ? buckets[k] : buckets[k].filter(m => m.venue === cityFilter);
     if (teamFilter !== 'all') filteredMatches = filteredMatches.filter(m => m.teams.includes(teamFilter));
+    if (groupFilter !== 'all') filteredMatches = filteredMatches.filter(m => m.grp === groupFilter);
     if (filteredMatches.length === 0) return;
     const hdr = fmtHeader(k);
     const div = document.createElement('div');
@@ -4635,8 +4661,11 @@ function render(offset, team) {
     const koPrintColors = { R32:'#555', R16:'#1a5276', QF:'#6c3483', SF:'#b03a7c', '3rd':'#148f77', F:'#b7950b' };
 
     koKeys.forEach(k => {
+      // If group filter is a group stage letter, skip knockout stage
+      if (groupFilter !== 'all' && !koRounds.includes(groupFilter)) return;
       let koFiltered = cityFilter === 'all' ? koBuckets[k] : koBuckets[k].filter(m => m.venue === cityFilter);
       if (teamFilter !== 'all') koFiltered = koFiltered.filter(m => m.teams.includes(teamFilter));
+      if (groupFilter !== 'all' && koRounds.includes(groupFilter)) koFiltered = koFiltered.filter(m => m.grp === groupFilter);
       if (koFiltered.length === 0) return;
       const hdr = fmtHeader(k);
       const div = document.createElement('div');
@@ -4782,14 +4811,21 @@ document.getElementById('tz-select').addEventListener('change', () => {
 
 function clearFilters() {
   document.getElementById('city-filter').value = 'all';
+  document.getElementById('group-filter').value = 'all';
   document.getElementById('team-filter').value = 'all';
-  try { localStorage.removeItem('wc2026_city'); localStorage.removeItem('wc2026_teamfilter'); } catch(e) {}
+  try { localStorage.removeItem('wc2026_city'); localStorage.removeItem('wc2026_groupfilter'); localStorage.removeItem('wc2026_teamfilter'); } catch(e) {}
   const s = getState();
   render(s.offset, s.team);
 }
 
 document.getElementById('city-filter').addEventListener('change', () => {
   try { localStorage.setItem('wc2026_city', document.getElementById('city-filter').value); } catch(e) {}
+  const s = getState();
+  render(s.offset, s.team);
+});
+
+document.getElementById('group-filter').addEventListener('change', () => {
+  try { localStorage.setItem('wc2026_groupfilter', document.getElementById('group-filter').value); } catch(e) {}
   const s = getState();
   render(s.offset, s.team);
 });
@@ -4807,6 +4843,14 @@ try {
     const sel = document.getElementById('city-filter');
     const opt = Array.from(sel.options).find(o => o.value === savedCity);
     if (opt) sel.value = savedCity;
+  }
+} catch(e) {}
+try {
+  const savedGroupFilter = localStorage.getItem('wc2026_groupfilter');
+  if (savedGroupFilter) {
+    const sel = document.getElementById('group-filter');
+    const opt = Array.from(sel.options).find(o => o.value === savedGroupFilter);
+    if (opt) sel.value = savedGroupFilter;
   }
 } catch(e) {}
 try {
