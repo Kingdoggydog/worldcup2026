@@ -306,8 +306,8 @@
   }
   body.print-mode .schedule { gap: 4px 6px; }
   body.single-col .schedule { grid-template-columns: 1fr !important; }
-  @media screen and (max-width: 900px) { #col-switch { display: none !important; } }
-  @media screen and (max-width: 900px) { #col-switch { display: none !important; } }
+  @media screen and (max-width: 900px) { #col-switch { display: none !important; } #col-switch-row { display: none !important; } }
+  @media screen and (max-width: 900px) { #col-switch { display: none !important; } #col-switch-row { display: none !important; } }
 
   /* coffee buttons + version (defined once, cleanly) */
   #bmc-header {
@@ -4123,19 +4123,21 @@
       <div class="ctrl-row">
         <button id="mode-toggle">&#9788; Switch to Print Mode</button>
         <button id="knockout-toggle">Hide Knockout Stage</button>
-        <div class="time-switch" id="col-switch" title="Toggle single/double column" style="margin-right:8px">
-          <span class="time-switch-label" id="cs-left">1 col</span>
-          <div class="time-switch-track" id="cs-track">
-            <div class="time-switch-thumb" id="cs-thumb"></div>
-          </div>
-          <span class="time-switch-label" id="cs-right">2 col</span>
-        </div>
         <div class="time-switch" id="time-switch" title="Toggle 12/24 hour time">
           <span class="time-switch-label" id="ts-left">12hr</span>
           <div class="time-switch-track" id="ts-track">
             <div class="time-switch-thumb" id="ts-thumb"></div>
           </div>
           <span class="time-switch-label" id="ts-right">24hr</span>
+        </div>
+      </div>
+      <div class="ctrl-row" id="col-switch-row">
+        <div class="time-switch" id="col-switch" title="Toggle single/double column">
+          <span class="time-switch-label" id="cs-left">1 col</span>
+          <div class="time-switch-track" id="cs-track">
+            <div class="time-switch-thumb" id="cs-thumb"></div>
+          </div>
+          <span class="time-switch-label" id="cs-right">2 col</span>
         </div>
       </div>
       <div class="ctrl-row">
