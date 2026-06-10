@@ -404,6 +404,7 @@
     background: transparent; padding: 1.5px 2px;
     margin-bottom: 1.5px; border-radius: 1px;
     border-left-width: 2.5px; gap: 4px;
+    page-break-inside: avoid;
   }
   body.print-mode .match.highlighted {
     background: #e0e0e0;
@@ -533,6 +534,8 @@
     html { font-size: 90%; }
     .page { margin: 0; padding: 6mm 7mm 4mm 7mm; box-shadow: none; width: 210mm; max-width: 210mm; height: auto; overflow: visible }
     * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .match { page-break-inside: avoid; }
+    .day-header { page-break-after: avoid; }
     .nav-btn {
     font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
     font-size: clamp(11px, 1.5vw, 13px);
