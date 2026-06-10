@@ -4186,10 +4186,34 @@
           <option value="-10">Honolulu (HST, UTC-10)</option>
         </select>
       </div>
-      <div class="ctrl-row" style="align-items:flex-start;flex-direction:column;gap:6px;">
-        <span class="ctrl-label">Highlight</span>
-        <div class="highlight-rows" id="highlight-rows"></div>
-        <button class="hl-add" id="hl-add-btn" onclick="addHighlightRow()">+ Add team</button>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start;">
+        <div class="ctrl-row" style="align-items:flex-start;flex-direction:column;gap:6px;">
+          <span class="ctrl-label">Highlight</span>
+          <div class="highlight-rows" id="highlight-rows"></div>
+          <button class="hl-add" id="hl-add-btn" onclick="addHighlightRow()">+ Add team</button>
+        </div>
+        <div class="ctrl-row" style="align-items:flex-start;flex-direction:column;gap:6px;">
+          <span class="ctrl-label">Filter by city</span>
+          <select id="city-filter" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(12px,1.8vw,15px);border:1.5px solid var(--ctrl-border);border-radius:4px;padding:5px 8px;background:var(--ctrl-bg);color:var(--ctrl-text);cursor:pointer;">
+            <option value="all">All cities</option>
+            <option value="Atlanta">Atlanta</option>
+            <option value="Boston">Boston</option>
+            <option value="Dallas">Dallas</option>
+            <option value="Guadalajara">Guadalajara</option>
+            <option value="Houston">Houston</option>
+            <option value="Kansas City">Kansas City</option>
+            <option value="Los Angeles">Los Angeles</option>
+            <option value="Mexico City">Mexico City</option>
+            <option value="Miami">Miami</option>
+            <option value="Monterrey">Monterrey</option>
+            <option value="New York/NJ">New York/NJ</option>
+            <option value="Philadelphia">Philadelphia</option>
+            <option value="San Francisco">San Francisco</option>
+            <option value="Seattle">Seattle</option>
+            <option value="Toronto">Toronto</option>
+            <option value="Vancouver">Vancouver</option>
+          </select>
+        </div>
       </div>
     </div>
   </div>
@@ -4209,13 +4233,13 @@
   <div class="schedule-note">
     <strong>Scores will be updated live during the tournament.</strong>
     The group stage kicks off on <span id="kickoff-date">12 June 2026 (AEST, UTC+10)</span>. Check back then to see live and final scores updated automatically.<br>
-    <strong>&#10024; New:</strong> <span style="color:var(--text-sub)">Toggle option for 1 or 2 column display (if your screen is big enough)</span><br>
+    <strong>&#10024; New:</strong> <span style="color:var(--text-sub)">Toggle option for 1 or 2 column display (if your screen is big enough) &bull; Filter by city</span><br>
     <strong>&#128233; Like this page?</strong> <a href="https://forms.gle/SdgXv6VJLanh5JBJ6" target="_blank" style="color:var(--gold);text-decoration:none;font-weight:700;">Get notified about future tournaments and events &rarr;</a>
   </div>
   <div class="schedule" id="schedule"></div>
 
   <div class="footer">
-    <p id="footer-tz">All times AEST (UTC+10) &bull; Source: FIFA / Fox Sports 2026 &bull; <span id="version">v1.36</span></p>
+    <p id="footer-tz">All times AEST (UTC+10) &bull; Source: FIFA / Fox Sports 2026 &bull; <span id="version">v1.37</span></p>
     <p>72 group stage matches &bull; 12 groups &bull; Top 2 per group + 8 best 3rd place advance</p>
   </div>
   <div style="text-align:center;margin-top:12px;">
@@ -4336,8 +4360,8 @@ const KNOCKOUT_MATCHES = [
   { grp:'R32', num:'M80', utc:16,   date:'2026-07-01', teams:'Win L v 3rd E/H/I/J/K', venue:'Atlanta'       },
   { grp:'R32', num:'M82', utc:20,   date:'2026-07-01', teams:'Win G v 3rd A/E/H/I/J', venue:'Seattle'       },
   { grp:'R32', num:'M81', utc:0,    date:'2026-07-02', teams:'Win D v 3rd B/E/F/I/J', venue:'San Francisco' },
-  { grp:'R32', num:'M84', utc:19,   date:'2026-07-02', teams:'Win H v 2nd J',         venue:'Los Angeles'   },
-  { grp:'R32', num:'M83', utc:23,   date:'2026-07-02', teams:'2nd K v 2nd L',         venue:'Toronto'       },
+  { grp:'R32', num:'M84', utc:19,   date:'2026-07-02', teams:'Win H v 2nd J',         venue:'Toronto'       },
+  { grp:'R32', num:'M83', utc:23,   date:'2026-07-02', teams:'2nd K v 2nd L',         venue:'Los Angeles'   },
   { grp:'R32', num:'M85', utc:3,    date:'2026-07-03', teams:'Win B v 3rd E/F/G/I/J', venue:'Vancouver'     },
   { grp:'R32', num:'M86', utc:22,   date:'2026-07-03', teams:'Win J v 2nd H',         venue:'Miami'         },
   { grp:'R32', num:'M87', utc:1.5,  date:'2026-07-04', teams:'Win K v 3rd D/E/I/J/L', venue:'Kansas City'   },
@@ -4504,12 +4528,15 @@ function render(offset, team) {
   sched.innerHTML = '';
 
   // --- GROUP STAGE ---
+  const cityFilter = document.getElementById('city-filter')?.value || 'all';
   keys.forEach(k => {
+    const filteredMatches = cityFilter === 'all' ? buckets[k] : buckets[k].filter(m => m.venue === cityFilter);
+    if (filteredMatches.length === 0) return;
     const hdr = fmtHeader(k);
     const div = document.createElement('div');
     div.className = 'day';
     let html = `<div class="day-header"><span class="day-name">${hdr.name}</span><span class="day-date">${hdr.date}</span></div>`;
-    buckets[k].forEach(m => {
+    filteredMatches.forEach(m => {
       const t   = formatTime(m.utc + offset);
       const hiIdx = _highlightTeams.findIndex(t => t && t !== 'none' && m.teams.includes(t));
       const hi = hiIdx >= 0;
@@ -4554,11 +4581,13 @@ function render(offset, team) {
     const koPrintColors = { R32:'#555', R16:'#1a5276', QF:'#6c3483', SF:'#b03a7c', '3rd':'#148f77', F:'#b7950b' };
 
     koKeys.forEach(k => {
+      const koFiltered = cityFilter === 'all' ? koBuckets[k] : koBuckets[k].filter(m => m.venue === cityFilter);
+      if (koFiltered.length === 0) return;
       const hdr = fmtHeader(k);
       const div = document.createElement('div');
       div.className = 'day';
       let html = `<div class="day-header"><span class="day-name">${hdr.name}</span><span class="day-date">${hdr.date}</span></div>`;
-      koBuckets[k].forEach(m => {
+      koFiltered.forEach(m => {
         const t  = formatTime(m.utc + offset);
         const hiIdx = _highlightTeams.findIndex(t => t && t !== 'none' && m.teams.includes(t));
         const hi = hiIdx >= 0;
@@ -4582,7 +4611,7 @@ function render(offset, team) {
     ? `UTC${sign}${Math.floor(offset)}:${Math.abs((offset%1)*60) === 30 ? '30':'00'}`
     : `UTC${sign}${offset}`;
   document.getElementById('footer-tz').innerHTML =
-    `All times ${lbl} \u2022 Source: FIFA / Fox Sports 2026 \u2022 <span id="version" style="color:var(--text-muted);font-style:italic">v1.36</span>`;
+    `All times ${lbl} \u2022 Source: FIFA / Fox Sports 2026 \u2022 <span id="version" style="color:var(--text-muted);font-style:italic">v1.37</span>`;
 
   // Update kickoff date label based on timezone
   // First match is Mexico v South Africa: 2026-06-11T19:00:00Z
@@ -4695,6 +4724,22 @@ document.getElementById('tz-select').addEventListener('change', () => {
   try { localStorage.setItem('wc2026_tz', document.getElementById('tz-select').selectedIndex); } catch(e) {}
   render(s.offset, s.team);
 });
+
+document.getElementById('city-filter').addEventListener('change', () => {
+  try { localStorage.setItem('wc2026_city', document.getElementById('city-filter').value); } catch(e) {}
+  const s = getState();
+  render(s.offset, s.team);
+});
+
+// Restore saved city filter
+try {
+  const savedCity = localStorage.getItem('wc2026_city');
+  if (savedCity) {
+    const sel = document.getElementById('city-filter');
+    const opt = Array.from(sel.options).find(o => o.value === savedCity);
+    if (opt) sel.value = savedCity;
+  }
+} catch(e) {}
 
 function jumpToNextDay() {
   // Use MATCHES array to find first match that hasn't started yet in user's timezone
