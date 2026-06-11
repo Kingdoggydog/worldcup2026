@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Сетка плей-офф ЧМ-2026</title>
 <meta name="description" content="Полная сетка от 1/16 финала до финала. Время матчей указано в вашем часовом поясе.">
-<link rel="canonical" href="https://worldcup2026.viktoor.ru/bracket.html">
+<link rel="canonical" href="https://worldcup2026.viktoor.ru/bracket/">
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
     (function(m,e,t,r,i,k,a){
@@ -105,7 +105,7 @@ select{font-family:'Roboto Condensed',sans-serif;font-weight:700;font-size:13px;
   <meta property="og:site_name" content="Расписание ЧМ-2026">
   <meta property="og:title" content="Сетка плей-офф ЧМ-2026">
   <meta property="og:description" content="Полная сетка от 1/16 финала до финала. Время матчей указано в вашем часовом поясе.">
-  <meta property="og:url" content="https://worldcup2026.viktoor.ru/bracket.html">
+  <meta property="og:url" content="https://worldcup2026.viktoor.ru/bracket/">
   <meta property="og:image" content="https://worldcup2026.viktoor.ru/preview.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -122,8 +122,8 @@ select{font-family:'Roboto Condensed',sans-serif;font-weight:700;font-size:13px;
     <h1>FIFA World Cup 2026</h1>
     <div class="sub">Плей-офф · от 1/16 финала до финала</div>
     <div class="nav">
-      <a href="./" class="nbtn">Расписание</a>
-      <a href="groups.html" class="nbtn">Группы</a>
+      <a href="../" class="nbtn">Расписание</a>
+      <a href="../groups/" class="nbtn">Группы</a>
       <span class="nbtn on" aria-current="page">Плей-офф</span>
     </div>
   </div>
@@ -620,7 +620,7 @@ async function load(){
   buildNums();
   render(); // render immediately with base data
   try{
-    const r=await fetch('data.json?t='+Date.now());
+    const r=await fetch('../data.json?t='+Date.now());
     const d=await r.json();
     const ko=d.matches.filter(m=>m.stage!=='GROUP_STAGE');
     if(ko.length>0){

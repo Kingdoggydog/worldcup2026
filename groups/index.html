@@ -7,8 +7,8 @@
 <meta name="description" content="Турнирные таблицы обновляются по ходу матчей. Все 12 групп с учетом правил FIFA при равенстве очков.">
 <meta property="og:title" content="Турнирные таблицы ЧМ-2026 - live-обновления">
 <meta property="og:description" content="Турнирные таблицы обновляются по ходу матчей. Все 12 групп с учетом правил FIFA при равенстве очков.">
-<meta property="og:url" content="https://worldcup2026.viktoor.ru/groups.html">
-<link rel="canonical" href="https://worldcup2026.viktoor.ru/groups.html">
+<meta property="og:url" content="https://worldcup2026.viktoor.ru/groups/">
+<link rel="canonical" href="https://worldcup2026.viktoor.ru/groups/">
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
     (function(m,e,t,r,i,k,a){
@@ -281,7 +281,7 @@
   <meta property="og:site_name" content="Расписание ЧМ-2026">
   <meta property="og:title" content="Турнирные таблицы ЧМ-2026 - live-обновления">
   <meta property="og:description" content="Турнирные таблицы обновляются по ходу матчей. Все 12 групп с учетом правил FIFA при равенстве очков.">
-  <meta property="og:url" content="https://worldcup2026.viktoor.ru/groups.html">
+  <meta property="og:url" content="https://worldcup2026.viktoor.ru/groups/">
   <meta property="og:image" content="https://worldcup2026.viktoor.ru/preview.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -298,9 +298,9 @@
       <h1>FIFA World Cup 2026</h1>
       <div class="sub">Групповой этап &bull; 12 групп &bull; 48 команд</div>
       <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;">
-        <a href="./" class="nav-btn">&#128197; Расписание</a>
+        <a href="../" class="nav-btn">&#128197; Расписание</a>
         <span class="nav-btn active" aria-current="page">&#128202; Группы</span>
-        <a href="bracket.html" class="nav-btn">&#127942; Плей-офф</a>
+        <a href="../bracket/" class="nav-btn">&#127942; Плей-офф</a>
       </div>
     </div>
     <div class="header-right">
@@ -751,7 +751,7 @@ function render(highlightTeam, data) {
 // ── LOAD DATA ─────────────────────────────────────────────────────────────────
 async function loadAndRender() {
   try {
-    const res = await fetch('data.json?t=' + Date.now());
+    const res = await fetch('../data.json?t=' + Date.now());
     const data = await res.json();
     lastData = calcStandings(data.matches || []);
   } catch(e) {
