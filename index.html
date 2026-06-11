@@ -4209,9 +4209,9 @@
           <div class="highlight-rows" id="highlight-rows"></div>
           <button class="hl-add" id="hl-add-btn" onclick="addHighlightRow()">+ Add team</button>
         </div>
-        <div class="ctrl-row" id="filters-row" style="align-items:flex-start;flex-direction:column;gap:6px;">
+        <div class="ctrl-row" id="filters-row" style="align-items:flex-start;flex-direction:column;gap:6px;display:flex;">
           <span class="ctrl-label">Filters</span>
-          <select id="city-filter" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(12px,1.8vw,15px);border:1.5px solid var(--ctrl-border);border-radius:4px;padding:5px 8px;background:var(--ctrl-bg);color:var(--ctrl-text);cursor:pointer;">
+          <select id="city-filter" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(12px,1.8vw,15px);border:1.5px solid var(--ctrl-border);border-radius:4px;padding:4px 8px;background:var(--ctrl-bg);color:var(--ctrl-text);cursor:pointer;">
             <option value="all">All cities</option>
             <option value="Atlanta">Atlanta</option>
             <option value="Boston">Boston</option>
@@ -4230,7 +4230,7 @@
             <option value="Toronto">Toronto</option>
             <option value="Vancouver">Vancouver</option>
           </select>
-          <select id="group-filter" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(12px,1.8vw,15px);border:1.5px solid var(--ctrl-border);border-radius:4px;padding:5px 8px;background:var(--ctrl-bg);color:var(--ctrl-text);cursor:pointer;margin-top:6px;">
+          <select id="group-filter" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(12px,1.8vw,15px);border:1.5px solid var(--ctrl-border);border-radius:4px;padding:4px 8px;background:var(--ctrl-bg);color:var(--ctrl-text);cursor:pointer;">
             <option value="all">All groups</option>
             <option value="A">Group A</option>
             <option value="B">Group B</option>
@@ -4250,7 +4250,7 @@
             <option value="SF">Semi Finals</option>
             <option value="Final">Final</option>
           </select>
-          <select id="team-filter" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(12px,1.8vw,15px);border:1.5px solid var(--ctrl-border);border-radius:4px;padding:5px 8px;background:var(--ctrl-bg);color:var(--ctrl-text);cursor:pointer;margin-top:6px;">
+          <select id="team-filter" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(12px,1.8vw,15px);border:1.5px solid var(--ctrl-border);border-radius:4px;padding:4px 8px;background:var(--ctrl-bg);color:var(--ctrl-text);cursor:pointer;">
             <option value="all">All teams</option>
             <option value="Algeria">Algeria</option>
             <option value="Argentina">Argentina</option>
@@ -4301,7 +4301,7 @@
             <option value="USA">USA</option>
             <option value="Uzbekistan">Uzbekistan</option>
           </select>
-          <button onclick="clearFilters()" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;padding:5px 10px;border-radius:4px;cursor:pointer;border:1.5px solid var(--ctrl-border);background:transparent;color:var(--text-muted);margin-top:6px;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'" onmouseout="this.style.borderColor='var(--ctrl-border)';this.style.color='var(--text-muted)'">✕ Clear filters</button>
+          <button onclick="clearFilters()" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:4px;cursor:pointer;border:1.5px solid var(--ctrl-border);background:transparent;color:var(--text-muted);transition:all 0.2s;" onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'" onmouseout="this.style.borderColor='var(--ctrl-border)';this.style.color='var(--text-muted)'">✕ Clear filters</button>
         </div>
       </div>
     </div>
