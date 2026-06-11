@@ -151,11 +151,14 @@
   .hl-add:hover { border-color: var(--gold); color: var(--gold); }
   /* Highlight colours - applied as border-left on match rows */
   body.print-mode .ctrl-row { gap: 6px; }
+  body.print-mode #col-switch-row,
+  body.print-mode .header-right .ctrl-row:not(:first-child) { display: none !important; }
   body.print-mode .highlight-rows,
   body.print-mode #hl-add-btn { display: none !important; }
   body.print-mode #filters-row,
   body.print-mode #col-switch-row,
   body.print-mode .hl-ctrl-row { display: none !important; }
+  body.print-mode .ctrl-label { display: none !important; }
 
   .ctrl-label {
     font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
@@ -223,7 +226,7 @@
     background: var(--ctrl-bg); color: var(--ctrl-text);
     transition: all 0.2s; white-space: nowrap;
   }
-  body.print-mode #knockout-toggle { font-size: 10px; padding: 3px 10px; border-radius: 3px; }
+  body.print-mode #knockout-toggle { display: none !important; }
   #knockout-toggle:hover { opacity: 0.8; }
   .time-switch {
     display: flex; align-items: center; gap: 6px; cursor: pointer;
@@ -484,7 +487,7 @@
     border-radius: 3px; flex-shrink: 0;
   }
   .schedule-note strong { color: var(--gold); }
-  body.print-mode .schedule-note { display: none; }
+  body.print-mode .schedule-note { display: none !important; }
 
   /* scores */
   .score-ft {
@@ -4321,8 +4324,7 @@
 
   <div class="schedule-note">
     <strong>&#9201; Next match: </strong><span id="countdown-text" style="color:var(--gold);font-weight:700;">Loading...</span><br>
-    <strong>Scores will be updated live during the tournament.</strong>
-    The group stage kicks off on <span id="kickoff-date">12 June 2026 (AEST, UTC+10)</span>. Check back then to see live and final scores updated automatically.<br>
+
     <strong>&#10024; New:</strong> <span style="color:var(--text-sub)">Toggle option for 1 or 2 column display (if your screen is big enough) &bull; Filter by city, team and group</span>
   </div>
   <div class="schedule" id="schedule"></div>
