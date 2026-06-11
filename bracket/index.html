@@ -302,10 +302,9 @@ function flag(t){
 function pad(n){ return String(Math.floor(Math.abs(n))).padStart(2,'0'); }
 function fmt(utc, off){
   const d = new Date(new Date(utc).getTime() + off*3600000);
-  const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const mo=['янв','фев','мар','апр','мая','июн','июл','авг','сен','окт','ноя','дек'];
   const h=d.getUTCHours(), mi=d.getUTCMinutes();
-  const p=h>=12?'pm':'am', h12=h%12||12;
-  return `${d.getUTCDate()} ${mo[d.getUTCMonth()]} ${h12}:${pad(mi)}${p}`;
+  return `${d.getUTCDate()} ${mo[d.getUTCMonth()]} ${pad(h)}:${pad(mi)}`;
 }
 function getOff(){ return parseFloat(document.getElementById('tzsel').value); }
 
