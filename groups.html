@@ -444,7 +444,7 @@ function calcStandings(matches) {
 
   matches.forEach(m => {
     if (m.stage !== 'GROUP_STAGE') return;
-    if (m.status !== 'FINISHED' && m.status !== 'IN_PLAY') return;
+    if (m.status !== 'FINISHED' && m.status !== 'IN_PLAY' && m.status !== 'PAUSED') return;
 
     // Use fullTime if available, fall back to halfTime (during PAUSED/half time)
     const hg = m.score?.fullTime?.home ?? m.score?.halfTime?.home;
