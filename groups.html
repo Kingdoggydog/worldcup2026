@@ -446,9 +446,10 @@ function calcStandings(matches) {
     if (m.stage !== 'GROUP_STAGE') return;
     if (m.status !== 'FINISHED' && m.status !== 'IN_PLAY') return;
 
-    const hg = m.score?.fullTime?.home;
-    const ag = m.score?.fullTime?.away;
-    if (hg === null || ag === null) return;
+    // Use fullTime if available, fall back to halfTime (during PAUSED/half time)
+    const hg = m.score?.fullTime?.home ?? m.score?.halfTime?.home;
+    const ag = m.score?.fullTime?.away ?? m.score?.halfTime?.away;
+    if (hg === null || hg === undefined || ag === null || ag === undefined) return;
 
     const grp = m.group?.replace('GROUP_','');
     if (!grp || !groups[grp]) return;
