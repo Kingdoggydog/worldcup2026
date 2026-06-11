@@ -1,19 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>World Cup 2026 Knockout Bracket</title>
-<meta name="description" content="Full bracket from Round of 32 to the Final. Match times in your local timezone.">
-<link rel="canonical" href="https://kingdoggydog.github.io/worldcup2026/bracket.html">
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-N0ENDBHCS4"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date()); gtag('config', 'G-N0ENDBHCS4');
+<title>Сетка плей-офф ЧМ-2026</title>
+<meta name="description" content="Полная сетка от 1/16 финала до финала. Время матчей указано в вашем часовом поясе.">
+<link rel="canonical" href="https://viktormalyuchenko.github.io/worldcup2026/bracket.html">
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=109775727', 'ym');
+
+    ym(109775727, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
 </script>
+<noscript><div><img src="https://mc.yandex.ru/watch/109775727" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto+Condensed:wght@400;600;700;800&display=swap');
 :root {
   --bg:#0A0E1A; --card:#1C2235; --border:#2A3050;
   --text:#E8EAF2; --sub:#7A82A8; --muted:#4A5280;
@@ -21,7 +28,7 @@
   --ctrl:#1C2235; --cborder:#3A4060;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
-body{background:var(--bg);color:var(--text);font-family:'Barlow Condensed',sans-serif;min-height:100vh;font-weight:600;}
+body{background:var(--bg);color:var(--text);font-family:'Roboto Condensed',sans-serif;min-height:100vh;font-weight:600;}
 .page{max-width:1400px;margin:0 auto;padding:20px 16px 40px;}
 
 /* HEADER */
@@ -29,17 +36,17 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow Condensed',sans-
 .hdr h1{font-size:clamp(18px,4vw,30px);font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--gold);line-height:1;}
 .hdr .sub{font-size:clamp(9px,1.5vw,12px);letter-spacing:2px;text-transform:uppercase;color:var(--sub);margin-top:3px;}
 .nav{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;}
-.nbtn{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;padding:5px 12px;border-radius:4px;border:1.5px solid var(--cborder);background:var(--ctrl);color:var(--text);text-decoration:none;display:inline-block;transition:opacity .2s;}
+.nbtn{font-family:'Roboto Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;padding:5px 12px;border-radius:4px;border:1.5px solid var(--cborder);background:var(--ctrl);color:var(--text);text-decoration:none;display:inline-block;transition:opacity .2s;}
 .nbtn:hover{opacity:.8;}
 .nbtn.on{background:var(--gold);color:#0A0E1A;border-color:var(--gold);}
 .hdr-r{display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex-shrink:0;}
 .ctrl{display:flex;align-items:center;gap:8px;}
 .clbl{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--sub);white-space:nowrap;}
-select{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;border:1.5px solid var(--cborder);border-radius:4px;padding:4px 8px;background:var(--ctrl);color:var(--text);cursor:pointer;}
+select{font-family:'Roboto Condensed',sans-serif;font-weight:700;font-size:13px;border:1.5px solid var(--cborder);border-radius:4px;padding:4px 8px;background:var(--ctrl);color:var(--text);cursor:pointer;}
 
 /* MOBILE TABS */
 .tabs{display:none;gap:6px;flex-wrap:wrap;margin-bottom:14px;}
-.tab{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;padding:7px 14px;border-radius:4px;border:1.5px solid var(--cborder);background:var(--ctrl);color:var(--sub);cursor:pointer;transition:all .2s;}
+.tab{font-family:'Roboto Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;padding:7px 14px;border-radius:4px;border:1.5px solid var(--cborder);background:var(--ctrl);color:var(--sub);cursor:pointer;transition:all .2s;}
 .tab.on{background:var(--gold);color:#0A0E1A;border-color:var(--gold);}
 
 /* DESKTOP BRACKET */
@@ -95,17 +102,17 @@ select{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;
 </style>
   <!-- Open Graph / Social sharing -->
   <meta property="og:type" content="website">
-  <meta property="og:site_name" content="World Cup 2026 Schedule">
-  <meta property="og:title" content="World Cup 2026 Knockout Bracket">
-  <meta property="og:description" content="Full bracket from Round of 32 to the Final. Match times in your local timezone.">
-  <meta property="og:url" content="https://kingdoggydog.github.io/worldcup2026/bracket.html">
-  <meta property="og:image" content="https://kingdoggydog.github.io/worldcup2026/preview.png">
+  <meta property="og:site_name" content="Расписание ЧМ-2026">
+  <meta property="og:title" content="Сетка плей-офф ЧМ-2026">
+  <meta property="og:description" content="Полная сетка от 1/16 финала до финала. Время матчей указано в вашем часовом поясе.">
+  <meta property="og:url" content="https://viktormalyuchenko.github.io/worldcup2026/bracket.html">
+  <meta property="og:image" content="https://viktormalyuchenko.github.io/worldcup2026/preview.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="World Cup 2026 Knockout Bracket">
-  <meta name="twitter:description" content="Full bracket from Round of 32 to the Final. Match times in your local timezone.">
-  <meta name="twitter:image" content="https://kingdoggydog.github.io/worldcup2026/preview.png">
+  <meta name="twitter:title" content="Сетка плей-офф ЧМ-2026">
+  <meta name="twitter:description" content="Полная сетка от 1/16 финала до финала. Время матчей указано в вашем часовом поясе.">
+  <meta name="twitter:image" content="https://viktormalyuchenko.github.io/worldcup2026/preview.png">
 </head>
 <body>
 <div class="page">
@@ -113,55 +120,41 @@ select{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;
 <div class="hdr">
   <div>
     <h1>FIFA World Cup 2026</h1>
-    <div class="sub">Knockout · Round of 32 to Final</div>
+    <div class="sub">Плей-офф · от 1/16 финала до финала</div>
     <div class="nav">
-      <a href="https://kingdoggydog.github.io/worldcup2026/" class="nbtn">📅 Schedule</a>
-      <a href="https://kingdoggydog.github.io/worldcup2026/groups.html" class="nbtn">📊 Groups</a>
-      <a href="bracket.html" class="nbtn on">🏆 Knockout</a>
+      <a href="index.html" class="nbtn">Расписание</a>
+      <a href="groups.html" class="nbtn">Группы</a>
+      <span class="nbtn on" aria-current="page">Плей-офф</span>
     </div>
   </div>
   <div class="hdr-r">
     <div class="ctrl">
-      <span class="clbl">Timezone</span>
+      <span class="clbl">Часовой пояс</span>
       <select id="tzsel">
-          <option value="12">Auckland (NZST, UTC+12)</option>
-          <option value="11">Solomon Islands (UTC+11)</option>
-          <option value="10" selected>Melbourne / Sydney (AEST, UTC+10)</option>
-          <option value="10">Brisbane (AEST, UTC+10)</option>
-          <option value="9.5">Adelaide (ACST, UTC+9:30)</option>
-          <option value="9.5">Darwin (ACST, UTC+9:30)</option>
-          <option value="9">Tokyo / Seoul (JST/KST, UTC+9)</option>
-          <option value="8">Perth (AWST, UTC+8)</option>
-          <option value="8">Singapore / Hong Kong (UTC+8)</option>
-          <option value="8">Beijing / Shanghai (CST, UTC+8)</option>
-          <option value="8">Kuala Lumpur (MYT, UTC+8)</option>
-          <option value="7">Bangkok / Jakarta (UTC+7)</option>
-          <option value="6">Dhaka (BST, UTC+6)</option>
-          <option value="5.5">India (IST, UTC+5:30)</option>
-          <option value="5">Karachi / Islamabad (PKT, UTC+5)</option>
-          <option value="4">Dubai / Abu Dhabi (GST, UTC+4)</option>
-          <option value="3">Nairobi / Riyadh (EAT/AST, UTC+3)</option>
-          <option value="3">Moscow (MSK, UTC+3)</option>
-          <option value="3">Istanbul (TRT, UTC+3)</option>
-          <option value="2">Cairo (EET, UTC+2)</option>
-          <option value="2">Johannesburg (SAST, UTC+2)</option>
-          <option value="2">Paris / Berlin / Rome (CEST, UTC+2)</option>
-          <option value="2">Athens / Helsinki (EEST, UTC+2)</option>
-          <option value="1">London (BST, UTC+1)</option>
-          <option value="1">Dublin (IST, UTC+1)</option>
-          <option value="1">Lagos / Casablanca (WAT, UTC+1)</option>
-          <option value="0">UTC+0 / Reykjavik</option>
-          <option value="0">Accra / Dakar (GMT, UTC+0)</option>
-          <option value="-3">Buenos Aires / Sao Paulo (UTC-3)</option>
-          <option value="-4">Santiago (CLT, UTC-4)</option>
-          <option value="-4">New York / Toronto (EDT, UTC-4)</option>
-          <option value="-4">Caracas / La Paz (UTC-4)</option>
-          <option value="-5">Chicago (CDT, UTC-5)</option>
-          <option value="-5">Lima / Bogota / Cancun (PET/COT/EST, UTC-5)</option>
-          <option value="-6">Mexico City / Denver / Calgary (CST/MDT, UTC-6)</option>
-          <option value="-7">Los Angeles / Vancouver / Baja California (PDT, UTC-7)</option>
-          <option value="-8">Anchorage (AKDT, UTC-8)</option>
-          <option value="-10">Honolulu (HST, UTC-10)</option>
+          <option value="3">Москва / Минск (МСК, UTC+3)</option>
+          <option value="3">Киев / Кишинев (UTC+3)</option>
+          <option value="5">Астана / Алматы (UTC+5)</option>
+          <option value="5">Ташкент / Душанбе / Ашхабад (UTC+5)</option>
+          <option value="6">Бишкек (UTC+6)</option>
+          <option value="4">Баку / Ереван / Тбилиси (UTC+4)</option>
+          <option value="2">Калининград (UTC+2)</option>
+          <option value="4">Самара / Ульяновск (UTC+4)</option>
+          <option value="5">Екатеринбург / Уфа / Пермь (UTC+5)</option>
+          <option value="6">Омск (UTC+6)</option>
+          <option value="7">Красноярск / Новосибирск (UTC+7)</option>
+          <option value="8">Иркутск (UTC+8)</option>
+          <option value="9">Якутск (UTC+9)</option>
+          <option value="10">Владивосток (UTC+10)</option>
+          <option value="11">Магадан / Сахалин (UTC+11)</option>
+          <option value="12">Камчатка (UTC+12)</option>
+          <option value="2">Берлин / Париж / Рим (UTC+2)</option>
+          <option value="1">Лондон (UTC+1)</option>
+          <option value="0">UTC+0</option>
+          <option value="-4">Нью-Йорк / Торонто (UTC-4)</option>
+          <option value="-5">Чикаго / Канкун / Богота (UTC-5)</option>
+          <option value="-6">Мехико / Денвер (UTC-6)</option>
+          <option value="-7">Лос-Анджелес / Ванкувер (UTC-7)</option>
+          <option value="9">Токио / Сеул (UTC+9)</option>
         </select>
     </div>
   </div>
@@ -173,7 +166,7 @@ select{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;
   <button class="tab" data-r="16">R16</button>
   <button class="tab" data-r="qf">QF</button>
   <button class="tab" data-r="sf">SF</button>
-  <button class="tab" data-r="fin">Final</button>
+  <button class="tab" data-r="fin">Финал</button>
 </div>
 
 <!-- DESKTOP -->
@@ -189,8 +182,8 @@ select{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;
 </div>
 
 <div class="foot">
-  <p>Teams TBD until group stage ends 28 Jun 2026 · Updated live</p>
-  <p id="ftz">All times AEST (UTC+10)</p>
+  <p>Команды определятся после группового этапа 28 июня 2026 · обновляется live</p>
+  <p id="ftz">Все время: AEST (UTC+10)</p>
 </div>
 </div>
 
@@ -212,6 +205,32 @@ const FLAGS = {
   'South Korea':'kr','Spain':'es','Sweden':'se','Switzerland':'ch','Tunisia':'tn',
   'Turkiye':'tr','Uruguay':'uy','USA':'us','Uzbekistan':'uz'
 };
+const TEAM_RU = {
+  'Algeria':'Алжир','Argentina':'Аргентина','Australia':'Австралия','Austria':'Австрия',
+  'Belgium':'Бельгия','Bosnia':'Босния и Герцеговина','Brazil':'Бразилия','Canada':'Канада',
+  'Cape Verde':'Кабо-Верде','Colombia':'Колумбия','Congo DR':'ДР Конго','Croatia':'Хорватия',
+  'Curacao':'Кюрасао','Czechia':'Чехия','Ecuador':'Эквадор','Egypt':'Египет',
+  'England':'Англия','France':'Франция','Germany':'Германия','Ghana':'Гана',
+  'Haiti':'Гаити','Iran':'Иран','Iraq':'Ирак','Ivory Coast':'Кот-д’Ивуар',
+  'Japan':'Япония','Jordan':'Иордания','Mexico':'Мексика','Morocco':'Марокко',
+  'Netherlands':'Нидерланды','New Zealand':'Новая Зеландия','Norway':'Норвегия',
+  'Panama':'Панама','Paraguay':'Парагвай','Portugal':'Португалия','Qatar':'Катар',
+  'Saudi Arabia':'Саудовская Аравия','Scotland':'Шотландия','Senegal':'Сенегал',
+  'South Africa':'ЮАР','South Korea':'Южная Корея','Spain':'Испания','Sweden':'Швеция',
+  'Switzerland':'Швейцария','Tunisia':'Тунис','Turkiye':'Турция','Uruguay':'Уругвай',
+  'USA':'США','Uzbekistan':'Узбекистан'
+};
+function teamName(team){ return TEAM_RU[team] || team; }
+function labelName(label){
+  return teamName(label)
+    .replace(/^TBD$/, 'Будет определено')
+    .replace(/\bWin Group ([A-L])\b/g, 'Победитель группы $1')
+    .replace(/\bWin (M\d+)\b/g, 'Победитель $1')
+    .replace(/\bLoss (M\d+)\b/g, 'Проигравший $1')
+    .replace(/\b2nd Group ([A-L])\b/g, '2-е место группы $1')
+    .replace(/\b2nd ([A-L])\b/g, '2-е место группы $1')
+    .replace(/\b3rd ([A-L/]+)\b/g, '3-е место $1');
+}
 const FEEDERS = {
   537376:['M74','M77'],537375:['M73','M75'],537377:['M76','M78'],537378:['M79','M80'],
   537379:['M83','M84'],537380:['M81','M82'],537381:['M86','M88'],537382:['M85','M87'],
@@ -331,7 +350,7 @@ function mbox(m, off){
   const suf=dur==='PENALTY_SHOOTOUT'?'p':dur==='EXTRA_TIME'?'aet':'';
   const tr=(n,ph,w,sc)=>`<div class="mbt2${w?' w':''}${ph?' ph':''}">
     ${!ph?flag(n):''}
-    <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${n}</span>
+    <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${labelName(n)}</span>
     ${sc!=null?`<span class="sc">${sc}${w&&suf?suf:''}</span>`:''}
   </div>`;
   return `<div class="mb${fin?' fin':''}">
@@ -354,7 +373,7 @@ function mobMatch(m, off){
   const suf=dur==='PENALTY_SHOOTOUT'?'p':dur==='EXTRA_TIME'?'aet':'';
   const tr=(n,ph,w,sc)=>`<div class="mmt${w?' w':''}${ph?' ph':''}">
     ${!ph?flag(n):''}
-    <span style="flex:1">${n}</span>
+    <span style="flex:1">${labelName(n)}</span>
     ${sc!=null?`<span class="sc">${sc}${w&&suf?`<span style="font-size:10px;color:#8A93B8;font-weight:600">${suf}</span>`:''}</span>`:''}
   </div>`;
   return `<div class="mm${fin?' fin':''}">
@@ -434,23 +453,23 @@ function render(){
        finM.score.fullTime.home>finM.score.fullTime.away ? finT.h : finT.a) : '';
 
   const fcol=`<div class="bcol fcol">
-    <div class="blbl">Final</div>
+    <div class="blbl">Финал</div>
     <div class="ftrophy">🏆</div>
-    ${finM?mbox(finM,off):'<div class="mb"><div class="mbt2 ph"><span>TBD</span></div><div class="mbt2 ph"><span>TBD</span></div></div>'}
+    ${finM?mbox(finM,off):'<div class="mb"><div class="mbt2 ph"><span>Будет определено</span></div><div class="mbt2 ph"><span>Будет определено</span></div></div>'}
     ${champ?`<div class="champ">🥇 ${champ}</div>`:''}
-    ${tpM?`<div class="tplbl">3rd Place</div>${mbox(tpM,off)}`:''}
+    ${tpM?`<div class="tplbl">3-е место</div>${mbox(tpM,off)}`:''}
   </div>`;
 
   document.getElementById('bdesk').innerHTML =
-    col(r32L,'Round of 32') +
-    col(r16L,'Round of 16') +
-    col(qfL,'Quarter-finals') +
-    col(sf.slice(0,1),'Semi-finals') +
+    col(r32L,'1/16 финала') +
+    col(r16L,'1/8 финала') +
+    col(qfL,'Четвертьфиналы') +
+    col(sf.slice(0,1),'Полуфиналы') +
     fcol +
-    col(sf.slice(1),'Semi-finals') +
-    col(qfR,'Quarter-finals') +
-    col(r16R,'Round of 16') +
-    col(r32R,'Round of 32');
+    col(sf.slice(1),'Полуфиналы') +
+    col(qfR,'Четвертьфиналы') +
+    col(r16R,'1/8 финала') +
+    col(r32R,'1/16 финала');
 
   // Mobile
   // R32 - render as pairs that feed same R16 match
@@ -470,13 +489,13 @@ function render(){
       const [m1, m2] = pair.matches.map(id => mById(id)).filter(Boolean);
       if(!m1 && !m2) return '';
       return `<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:4px;">
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);padding:4px 10px;border-bottom:1px solid var(--border);text-align:right;">
-          winners meet in <span style="color:var(--gold)">${pair.r16}</span>
+        <div style="font-family:'Roboto Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);padding:4px 10px;border-bottom:1px solid var(--border);text-align:right;">
+          Победители встретятся в <span style="color:var(--gold)">${pair.r16}</span>
         </div>
         ${m1 ? mobMatch(m1, off) : ''}
         <div style="display:flex;align-items:center;padding:0 0 0 12px;border-top:1px solid var(--border);background:rgba(42,48,80,0.4);">
           <div style="width:2px;height:28px;background:var(--gold);border-radius:1px;flex-shrink:0;margin-right:8px;"></div>
-          <span style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;color:var(--gold);letter-spacing:1px;">Winners play each other in <span style="color:#E8EAF2">${pair.r16}</span></span>
+          <span style="font-family:'Roboto Condensed',sans-serif;font-size:10px;font-weight:700;color:var(--gold);letter-spacing:1px;">Победители сыграют между собой в <span style="color:#E8EAF2">${pair.r16}</span></span>
         </div>
         ${m2 ? mobMatch(m2, off) : ''}
       </div>`;
@@ -496,13 +515,13 @@ function render(){
       const [m1, m2] = pair.matches.map(id => mById(id)).filter(Boolean);
       if(!m1 && !m2) return '';
       return `<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:4px;">
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);padding:4px 10px;border-bottom:1px solid var(--border);text-align:right;">
-          Winners meet in <span style="color:var(--gold)">${pair.next}</span>
+        <div style="font-family:'Roboto Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);padding:4px 10px;border-bottom:1px solid var(--border);text-align:right;">
+          Победители встретятся в <span style="color:var(--gold)">${pair.next}</span>
         </div>
         ${m1 ? mobMatch(m1, off) : ''}
         <div style="display:flex;align-items:center;padding:0 0 0 12px;border-top:1px solid var(--border);background:rgba(42,48,80,0.4);">
           <div style="width:2px;height:28px;background:var(--gold);border-radius:1px;flex-shrink:0;margin-right:8px;"></div>
-          <span style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;color:var(--gold);letter-spacing:1px;">Winners play each other in <span style="color:#E8EAF2">${pair.next}</span></span>
+          <span style="font-family:'Roboto Condensed',sans-serif;font-size:10px;font-weight:700;color:var(--gold);letter-spacing:1px;">Победители сыграют между собой в <span style="color:#E8EAF2">${pair.next}</span></span>
         </div>
         ${m2 ? mobMatch(m2, off) : ''}
       </div>`;
@@ -520,13 +539,13 @@ function render(){
       const [m1, m2] = pair.matches.map(id => mById(id)).filter(Boolean);
       if(!m1 && !m2) return '';
       return `<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:4px;">
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);padding:4px 10px;border-bottom:1px solid var(--border);text-align:right;">
-          Winners meet in <span style="color:var(--gold)">${pair.next}</span>
+        <div style="font-family:'Roboto Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);padding:4px 10px;border-bottom:1px solid var(--border);text-align:right;">
+          Победители встретятся в <span style="color:var(--gold)">${pair.next}</span>
         </div>
         ${m1 ? mobMatch(m1, off) : ''}
         <div style="display:flex;align-items:center;padding:0 0 0 12px;border-top:1px solid var(--border);background:rgba(42,48,80,0.4);">
           <div style="width:2px;height:28px;background:var(--gold);border-radius:1px;flex-shrink:0;margin-right:8px;"></div>
-          <span style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;color:var(--gold);letter-spacing:1px;">Winners play each other in <span style="color:#E8EAF2">${pair.next}</span></span>
+          <span style="font-family:'Roboto Condensed',sans-serif;font-size:10px;font-weight:700;color:var(--gold);letter-spacing:1px;">Победители сыграют между собой в <span style="color:#E8EAF2">${pair.next}</span></span>
         </div>
         ${m2 ? mobMatch(m2, off) : ''}
       </div>`;
@@ -538,13 +557,13 @@ function render(){
   if(sfEl){
     const m1 = mById(537387), m2 = mById(537388);
     sfEl.innerHTML = `<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:4px;">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);padding:4px 10px;border-bottom:1px solid var(--border);text-align:right;">
-        Winners meet in <span style="color:var(--gold)">M104 The Final</span>
+      <div style="font-family:'Roboto Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);padding:4px 10px;border-bottom:1px solid var(--border);text-align:right;">
+        Победители встретятся в <span style="color:var(--gold)">M104 Финал</span>
       </div>
       ${m1 ? mobMatch(m1, off) : ''}
       <div style="display:flex;align-items:center;padding:0 0 0 12px;border-top:1px solid var(--border);background:rgba(42,48,80,0.4);">
         <div style="width:2px;height:28px;background:var(--gold);border-radius:1px;flex-shrink:0;margin-right:8px;"></div>
-        <span style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;color:var(--gold);letter-spacing:1px;">Winners play each other in <span style="color:#E8EAF2">M104 The Final</span></span>
+        <span style="font-family:'Roboto Condensed',sans-serif;font-size:10px;font-weight:700;color:var(--gold);letter-spacing:1px;">Победители сыграют между собой в <span style="color:#E8EAF2">M104 Финал</span></span>
       </div>
       ${m2 ? mobMatch(m2, off) : ''}
     </div>`;
@@ -556,11 +575,11 @@ function render(){
     const finMatches=byStage('FINAL'), tpMatches=byStage('THIRD_PLACE');
     let html='';
     if(finMatches.length){
-      html+=`<div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--gold);padding:4px 0;border-bottom:1px solid var(--border);margin-bottom:4px;">🏆 Final</div>`;
+      html+=`<div style="font-family:'Roboto Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--gold);padding:4px 0;border-bottom:1px solid var(--border);margin-bottom:4px;">🏆 Финал</div>`;
       html+=finMatches.map(m=>mobMatch(m,off)).join('');
     }
     if(tpMatches.length){
-      html+=`<div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--sub);padding:4px 0;border-bottom:1px solid var(--border);margin-bottom:4px;margin-top:12px;">3rd Place Play-off</div>`;
+      html+=`<div style="font-family:'Roboto Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--sub);padding:4px 0;border-bottom:1px solid var(--border);margin-bottom:4px;margin-top:12px;">Матч за 3-е место</div>`;
       html+=tpMatches.map(m=>mobMatch(m,off)).join('');
     }
     finEl.innerHTML=html;
@@ -569,7 +588,7 @@ function render(){
 
   // Footer
   const s=off>=0?'+':'', frac=off%1!==0;
-  document.getElementById('ftz').textContent=`All times UTC${s}${frac?Math.floor(off)+':30':off}`;
+  document.getElementById('ftz').textContent=`Все время: UTC${s}${frac?Math.floor(off)+':30':off}`;
 }
 
 // Mobile tabs
@@ -586,11 +605,13 @@ document.querySelectorAll('.tab').forEach(b=>{
 
 // Timezone
 try{
-  const sv=localStorage.getItem('wc2026_tz');
-  if(sv!==null){const s=document.getElementById('tzsel');const idx=parseInt(sv);if(!isNaN(idx)&&s.options[idx])s.selectedIndex=idx;}
+  const sv=localStorage.getItem('wc2026_tz_ru');
+  const s=document.getElementById('tzsel');
+  if(sv!==null){const idx=parseInt(sv);if(!isNaN(idx)&&s.options[idx])s.selectedIndex=idx;}
+  else{const mi=Array.from(s.options).findIndex(o=>o.textContent.includes('Москва'));if(mi>=0)s.selectedIndex=mi;}
 }catch(e){}
 document.getElementById('tzsel').addEventListener('change',()=>{
-  try{localStorage.setItem('wc2026_tz',document.getElementById('tzsel').selectedIndex);}catch(e){}
+  try{localStorage.setItem('wc2026_tz_ru',document.getElementById('tzsel').selectedIndex);}catch(e){}
   render();
 });
 

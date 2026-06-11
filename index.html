@@ -1,26 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>World Cup 2026 Schedule - Live Scores & Local Times</title>
-<meta name="description" content="All 104 matches with live scores, standings and bracket. Times in your timezone. Free, no ads.">
-<meta name="keywords" content="FIFA World Cup 2026 schedule, World Cup 2026 fixtures, World Cup 2026 times, World Cup 2026 AEST, World Cup 2026 Melbourne, World Cup 2026 Australia, World Cup 2026 group stage, World Cup 2026 knockout">
-<meta name="author" content="kingdoggydog">
-<link rel="canonical" href="https://kingdoggydog.github.io/worldcup2026/">
+<title>Расписание ЧМ-2026 - live-счет и местное время</title>
+<meta name="description" content="Все 104 матча: live-счет, таблицы и сетка плей-офф. Время указано для вашего часового пояса. Бесплатно, без рекламы.">
+<meta name="keywords" content="ЧМ-2026 расписание, матчи ЧМ-2026, время матчей ЧМ-2026, групповой этап ЧМ-2026, плей-офф ЧМ-2026">
+<meta name="author" content="viktormalyuchenko">
+<link rel="canonical" href="https://viktormalyuchenko.github.io/worldcup2026/">
 
 <!-- Open Graph (for Facebook, Reddit, LinkedIn previews) -->
-<meta property="og:title" content="World Cup 2026 Schedule - Live Scores & Local Times">
-<meta property="og:description" content="All 104 matches with live scores, standings and bracket. Times in your timezone. Free, no ads.">
+<meta property="og:title" content="Расписание ЧМ-2026 - live-счет и местное время">
+<meta property="og:description" content="Все 104 матча: live-счет, таблицы и сетка плей-офф. Время указано для вашего часового пояса. Бесплатно, без рекламы.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://kingdoggydog.github.io/worldcup2026/">
+<meta property="og:url" content="https://viktormalyuchenko.github.io/worldcup2026/">
 
 <!-- Twitter/X card -->
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="World Cup 2026 Schedule - Live Scores & Local Times">
-<meta name="twitter:description" content="All 104 matches with live scores, standings and bracket. Times in your timezone. Free, no ads.">
+<meta name="twitter:title" content="Расписание ЧМ-2026 - live-счет и местное время">
+<meta name="twitter:description" content="Все 104 матча: live-счет, таблицы и сетка плей-офф. Время указано для вашего часового пояса. Бесплатно, без рекламы.">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto+Condensed:wght@400;600;700;800&display=swap');
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -84,7 +84,7 @@
   body {
     background: var(--bg);
     color: var(--text);
-    font-family: 'Barlow', sans-serif;
+    font-family: 'Inter', sans-serif;
     transition: background 0.3s, color 0.3s;
   }
 
@@ -119,7 +119,7 @@
   body.print-mode .header { padding-bottom: 3px; margin-bottom: 4px; align-items: flex-end; flex-wrap: nowrap; }
 
   .header h1 {
-    font-family: 'Barlow Condensed', sans-serif; font-weight: 800;
+    font-family: 'Roboto Condensed', sans-serif; font-weight: 800;
     font-size: clamp(22px, 5vw, 36px);
     letter-spacing: 1px; text-transform: uppercase; line-height: 1;
     color: var(--h1-color);
@@ -127,7 +127,7 @@
   body.print-mode .header h1 { font-size: 18px; }
 
   .header .sub {
-    font-family: 'Barlow Condensed', sans-serif;
+    font-family: 'Roboto Condensed', sans-serif;
     font-size: clamp(11px, 2vw, 14px);
     font-weight: 400; letter-spacing: 2px;
     text-transform: uppercase; color: var(--text-sub); margin-top: 4px;
@@ -147,7 +147,7 @@
   .hl-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
   .hl-remove { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 14px; padding: 0 2px; line-height: 1; }
   .hl-remove:hover { color: var(--text); }
-  .hl-add { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: clamp(11px,1.5vw,13px); letter-spacing: 1px; text-transform: uppercase; padding: 5px 10px; border-radius: 4px; cursor: pointer; border: 1.5px dashed var(--ctrl-border); background: transparent; color: var(--text-muted); transition: all 0.2s; white-space: nowrap; }
+  .hl-add { font-family: 'Roboto Condensed', sans-serif; font-weight: 700; font-size: clamp(11px,1.5vw,13px); letter-spacing: 1px; text-transform: uppercase; padding: 5px 10px; border-radius: 4px; cursor: pointer; border: 1.5px dashed var(--ctrl-border); background: transparent; color: var(--text-muted); transition: all 0.2s; white-space: nowrap; }
   .hl-add:hover { border-color: var(--gold); color: var(--gold); }
   /* Highlight colours - applied as border-left on match rows */
   body.print-mode .ctrl-row { gap: 6px; }
@@ -158,14 +158,14 @@
   body.print-mode .hl-ctrl-row { display: none !important; }
 
   .ctrl-label {
-    font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+    font-family: 'Roboto Condensed', sans-serif; font-weight: 700;
     font-size: clamp(10px, 1.5vw, 13px);
     letter-spacing: 1px; text-transform: uppercase; color: var(--text-sub); white-space: nowrap;
   }
   body.print-mode .ctrl-label { font-size: 10px; }
 
   select {
-    font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+    font-family: 'Roboto Condensed', sans-serif; font-weight: 700;
     font-size: clamp(12px, 1.8vw, 15px);
     border: 1.5px solid var(--ctrl-border); border-radius: 4px;
     padding: 5px 8px;
@@ -176,7 +176,7 @@
   select:focus { outline: 2px solid var(--highlight-bl); }
 
   .nav-btn {
-    font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+    font-family: 'Roboto Condensed', sans-serif; font-weight: 700;
     font-size: clamp(11px, 1.5vw, 13px);
     letter-spacing: 1px; text-transform: uppercase;
     padding: 6px 14px; border-radius: 4px; cursor: pointer;
@@ -190,7 +190,7 @@
   body.print-mode .nav-btn { display: none; }
 
   .nav-btn {
-    font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+    font-family: 'Roboto Condensed', sans-serif; font-weight: 700;
     font-size: clamp(11px, 1.5vw, 13px);
     letter-spacing: 1px; text-transform: uppercase;
     padding: 6px 14px; border-radius: 4px; cursor: pointer;
@@ -204,7 +204,7 @@
   body.print-mode .nav-btn { display: none; }
 
   #mode-toggle {
-    font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+    font-family: 'Roboto Condensed', sans-serif; font-weight: 700;
     font-size: clamp(11px, 1.5vw, 13px);
     letter-spacing: 1px; text-transform: uppercase;
     padding: 6px 14px; border-radius: 4px; cursor: pointer;
@@ -215,7 +215,7 @@
   body.print-mode #mode-toggle { font-size: 10px; padding: 3px 10px; border-radius: 3px; }
   #mode-toggle:hover { opacity: 0.8; }
   #knockout-toggle {
-    font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+    font-family: 'Roboto Condensed', sans-serif; font-weight: 700;
     font-size: clamp(11px, 1.5vw, 13px);
     letter-spacing: 1px; text-transform: uppercase;
     padding: 6px 14px; border-radius: 4px; cursor: pointer;
@@ -231,7 +231,7 @@
   }
   body.print-mode .time-switch { display: none; }
   .time-switch-label {
-    font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+    font-family: 'Roboto Condensed', sans-serif; font-weight: 700;
     font-size: clamp(11px, 1.5vw, 13px); letter-spacing: 1px;
     text-transform: uppercase; color: var(--text-muted);
     transition: color 0.2s;
@@ -263,14 +263,14 @@
     display: flex; align-items: baseline; gap: 10px;
   }
   .knockout-heading h2 {
-    font-family: 'Barlow Condensed', sans-serif; font-weight: 800;
+    font-family: 'Roboto Condensed', sans-serif; font-weight: 800;
     font-size: clamp(14px, 2.5vw, 18px);
     text-transform: uppercase; letter-spacing: 2px; color: var(--gold);
   }
   body.print-mode .knockout-heading { margin-top: 4px; border-bottom-width: 1.5px; break-before: page; padding-top: 8mm; }
   body.print-mode .knockout-heading h2 { font-size: 12px; }
   .knockout-heading .ko-sub {
-    font-family: 'Barlow Condensed', sans-serif; font-size: clamp(10px, 1.5vw, 12px);
+    font-family: 'Roboto Condensed', sans-serif; font-size: clamp(10px, 1.5vw, 12px);
     color: var(--text-sub); letter-spacing: 1px; text-transform: uppercase;
   }
 
@@ -280,7 +280,7 @@
   .highlight-note {
     font-size: clamp(10px, 1.5vw, 12px);
     color: var(--text-muted);
-    font-family: 'Barlow Condensed', sans-serif; font-style: italic;
+    font-family: 'Roboto Condensed', sans-serif; font-style: italic;
   }
   body.print-mode .highlight-note { font-size: 8px; }
 
@@ -293,7 +293,7 @@
 
   .legend-item {
     display: flex; align-items: center; gap: 5px;
-    font-family: 'Barlow Condensed', sans-serif;
+    font-family: 'Roboto Condensed', sans-serif;
     font-size: clamp(11px, 1.6vw, 13px);
     color: var(--text-sub); letter-spacing: 0.3px;
   }
@@ -304,8 +304,9 @@
 
   /* ── SCHEDULE GRID ───────────────────────────────────────────────────────── */
   .schedule {
-    display: grid; grid-template-columns: 1fr 1fr;
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 14px 16px; flex: 1; align-content: start;
+    width: 100%; min-width: 0;
   }
   body.print-mode .schedule { gap: 4px 6px; }
   body.single-col:not(.print-mode) .schedule { grid-template-columns: 1fr !important; }
@@ -314,7 +315,7 @@
 
   /* coffee buttons + version (defined once, cleanly) */
   #bmc-header {
-    font-family: 'Barlow Condensed', sans-serif;
+    font-family: 'Roboto Condensed', sans-serif;
     font-weight: 700; font-size: clamp(11px, 1.5vw, 13px);
     letter-spacing: 1px; text-transform: uppercase;
     color: var(--gold); text-decoration: none;
@@ -336,7 +337,7 @@
     padding-bottom: 60px;
   }
   #bmc-mobile a {
-    font-family: 'Barlow Condensed', sans-serif;
+    font-family: 'Roboto Condensed', sans-serif;
     font-weight: 700; font-size: 14px;
     letter-spacing: 1px; text-transform: uppercase;
     color: var(--gold); text-decoration: none;
@@ -372,7 +373,7 @@
   }
 
   /* ── DAY BLOCK ───────────────────────────────────────────────────────────── */
-  .day { break-inside: avoid; }
+  .day { break-inside: avoid; min-width: 0; }
   .day-header {
     display: flex; align-items: baseline; gap: 6px;
     border-bottom: 1px solid var(--border-day);
@@ -381,14 +382,14 @@
   body.print-mode .day-header { padding-bottom: 1px; margin-bottom: 1px; gap: 4px; }
 
   .day-name {
-    font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+    font-family: 'Roboto Condensed', sans-serif; font-weight: 700;
     font-size: clamp(13px, 2vw, 16px);
     text-transform: uppercase; letter-spacing: 1px; color: var(--gold);
   }
   body.print-mode .day-name { font-size: 11px; }
 
   .day-date {
-    font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+    font-family: 'Roboto Condensed', sans-serif; font-weight: 700;
     font-size: clamp(12px, 1.8vw, 14px);
     color: var(--text); letter-spacing: 0.5px;
   }
@@ -403,6 +404,7 @@
     border-radius: 4px;
     line-height: 1.3;
     transition: background 0.3s;
+    min-width: 0;
   }
   body.print-mode .match {
     background: transparent; padding: 1.5px 2px;
@@ -424,21 +426,21 @@
   .match.hi-4 { background: rgba(255,159,64,0.12);  border-left-color: #FF9F40; }
 
   .grp {
-    font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+    font-family: 'Roboto Condensed', sans-serif; font-weight: 700;
     font-size: clamp(10px, 1.5vw, 12px);
     width: 16px; flex-shrink: 0; text-align: center;
   }
   body.print-mode .grp { font-size: 9px; width: 13px; }
 
   .time {
-    font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+    font-family: 'Roboto Condensed', sans-serif; font-weight: 700;
     font-size: clamp(14px, 2vw, 17px);
     width: 46px; flex-shrink: 0; color: var(--text);
   }
   body.print-mode .time { font-size: 11px; width: 38px; }
 
   .teams {
-    flex: 1; font-family: 'Barlow Condensed', sans-serif; font-weight: 600;
+    flex: 1 1 auto; min-width: 0; font-family: 'Roboto Condensed', sans-serif; font-weight: 600;
     font-size: clamp(13px, 2vw, 16px);
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text);
   }
@@ -446,8 +448,9 @@
 
   .venue {
     font-size: clamp(10px, 1.4vw, 12px);
-    color: var(--text-muted); flex-shrink: 0;
-    text-align: right; font-family: 'Barlow', sans-serif;
+    color: var(--text-muted); flex: 0 1 32%;
+    min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    text-align: right; font-family: 'Inter', sans-serif;
   }
   body.print-mode .venue { font-size: 8.5px; color: #111 !important; }
 
@@ -469,7 +472,7 @@
   .footer p {
     font-size: clamp(10px, 1.4vw, 12px);
     color: var(--footer-text);
-    font-family: 'Barlow Condensed', sans-serif; letter-spacing: 0.5px;
+    font-family: 'Roboto Condensed', sans-serif; letter-spacing: 0.5px;
   }
   body.print-mode .footer p { font-size: 9px; }
 
@@ -478,7 +481,7 @@
     background: var(--bg-match); border: 1px solid var(--border);
     border-left: 3px solid var(--gold);
     padding: 10px 14px; margin-bottom: 16px;
-    font-family: 'Barlow Condensed', sans-serif;
+    font-family: 'Roboto Condensed', sans-serif;
     font-size: clamp(11px, 1.8vw, 13px);
     color: var(--text-sub); letter-spacing: 0.5px;
     border-radius: 3px; flex-shrink: 0;
@@ -488,18 +491,18 @@
 
   /* scores */
   .score-ft {
-    font-family: 'Barlow Condensed', sans-serif; font-weight: 800;
+    font-family: 'Roboto Condensed', sans-serif; font-weight: 800;
     font-size: clamp(12px, 1.8vw, 15px);
     color: var(--text); white-space: nowrap; flex-shrink: 0;
   }
   .score-live {
-    font-family: 'Barlow Condensed', sans-serif; font-weight: 800;
+    font-family: 'Roboto Condensed', sans-serif; font-weight: 800;
     font-size: clamp(12px, 1.8vw, 15px);
     color: #2ECC71; white-space: nowrap; flex-shrink: 0;
     animation: pulse-score 1.5s ease-in-out infinite;
   }
   .score-label {
-    font-family: 'Barlow Condensed', sans-serif; font-weight: 400;
+    font-family: 'Roboto Condensed', sans-serif; font-weight: 400;
     font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
     margin-left: 3px;
   }
@@ -513,7 +516,7 @@
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
-    font-family: 'Barlow Condensed', sans-serif;
+    font-family: 'Roboto Condensed', sans-serif;
     font-weight: 700; font-size: 13px;
     letter-spacing: 1px; text-transform: uppercase;
     background: var(--gold); color: #0A0E1A;
@@ -541,7 +544,7 @@
     .match { page-break-inside: avoid; }
     .day-header { page-break-after: avoid; }
     .nav-btn {
-    font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+    font-family: 'Roboto Condensed', sans-serif; font-weight: 700;
     font-size: clamp(11px, 1.5vw, 13px);
     letter-spacing: 1px; text-transform: uppercase;
     padding: 6px 14px; border-radius: 4px; cursor: pointer;
@@ -557,14 +560,19 @@
   #mode-toggle { display: none; }
   }
 </style>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-N0ENDBHCS4"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-N0ENDBHCS4');
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=109775727', 'ym');
+
+    ym(109775727, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
 </script>
+<noscript><div><img src="https://mc.yandex.ru/watch/109775727" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -572,13 +580,13 @@
     {
       "@type": "SportsEvent",
       "name": "Mexico v South Africa - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group A match: Mexico v South Africa at Mexico City.",
+      "description": "ЧМ-2026, группа A: Mexico - South Africa, Mexico City.",
       "startDate": "2026-06-11T19:00:00Z",
       "endDate": "2026-06-11T21:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Mexico City",
@@ -606,13 +614,13 @@
     {
       "@type": "SportsEvent",
       "name": "South Korea v Czechia - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group A match: South Korea v Czechia at Guadalajara.",
+      "description": "ЧМ-2026, группа A: South Korea - Czechia, Guadalajara.",
       "startDate": "2026-06-12T02:00:00Z",
       "endDate": "2026-06-12T04:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Guadalajara",
@@ -640,13 +648,13 @@
     {
       "@type": "SportsEvent",
       "name": "Czechia v South Africa - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group A match: Czechia v South Africa at Atlanta.",
+      "description": "ЧМ-2026, группа A: Czechia - South Africa, Atlanta.",
       "startDate": "2026-06-18T16:00:00Z",
       "endDate": "2026-06-18T18:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Atlanta",
@@ -674,13 +682,13 @@
     {
       "@type": "SportsEvent",
       "name": "Mexico v South Korea - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group A match: Mexico v South Korea at Guadalajara.",
+      "description": "ЧМ-2026, группа A: Mexico - South Korea, Guadalajara.",
       "startDate": "2026-06-19T01:00:00Z",
       "endDate": "2026-06-19T03:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Guadalajara",
@@ -708,13 +716,13 @@
     {
       "@type": "SportsEvent",
       "name": "Czechia v Mexico - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group A match: Czechia v Mexico at Mexico City.",
+      "description": "ЧМ-2026, группа A: Czechia - Mexico, Mexico City.",
       "startDate": "2026-06-25T01:00:00Z",
       "endDate": "2026-06-25T03:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Mexico City",
@@ -742,13 +750,13 @@
     {
       "@type": "SportsEvent",
       "name": "South Africa v South Korea - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group A match: South Africa v South Korea at Monterrey.",
+      "description": "ЧМ-2026, группа A: South Africa - South Korea, Monterrey.",
       "startDate": "2026-06-25T01:00:00Z",
       "endDate": "2026-06-25T03:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Monterrey",
@@ -776,13 +784,13 @@
     {
       "@type": "SportsEvent",
       "name": "Canada v Bosnia & Herz. - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group B match: Canada v Bosnia & Herz. at Toronto.",
+      "description": "ЧМ-2026, группа B: Canada - Bosnia & Herz., Toronto.",
       "startDate": "2026-06-12T19:00:00Z",
       "endDate": "2026-06-12T21:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Toronto",
@@ -810,13 +818,13 @@
     {
       "@type": "SportsEvent",
       "name": "Qatar v Switzerland - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group B match: Qatar v Switzerland at San Francisco.",
+      "description": "ЧМ-2026, группа B: Qatar - Switzerland, San Francisco.",
       "startDate": "2026-06-13T19:00:00Z",
       "endDate": "2026-06-13T21:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "San Francisco",
@@ -844,13 +852,13 @@
     {
       "@type": "SportsEvent",
       "name": "Switzerland v Bosnia - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group B match: Switzerland v Bosnia at Los Angeles.",
+      "description": "ЧМ-2026, группа B: Switzerland - Bosnia, Los Angeles.",
       "startDate": "2026-06-18T19:00:00Z",
       "endDate": "2026-06-18T21:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Los Angeles",
@@ -878,13 +886,13 @@
     {
       "@type": "SportsEvent",
       "name": "Canada v Qatar - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group B match: Canada v Qatar at Vancouver.",
+      "description": "ЧМ-2026, группа B: Canada - Qatar, Vancouver.",
       "startDate": "2026-06-18T22:00:00Z",
       "endDate": "2026-06-19T00:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Vancouver",
@@ -912,13 +920,13 @@
     {
       "@type": "SportsEvent",
       "name": "Switzerland v Canada - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group B match: Switzerland v Canada at Vancouver.",
+      "description": "ЧМ-2026, группа B: Switzerland - Canada, Vancouver.",
       "startDate": "2026-06-24T19:00:00Z",
       "endDate": "2026-06-24T21:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Vancouver",
@@ -946,13 +954,13 @@
     {
       "@type": "SportsEvent",
       "name": "Bosnia v Qatar - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group B match: Bosnia v Qatar at Seattle.",
+      "description": "ЧМ-2026, группа B: Bosnia - Qatar, Seattle.",
       "startDate": "2026-06-24T19:00:00Z",
       "endDate": "2026-06-24T21:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Seattle",
@@ -980,13 +988,13 @@
     {
       "@type": "SportsEvent",
       "name": "Brazil v Morocco - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group C match: Brazil v Morocco at New York/NJ.",
+      "description": "ЧМ-2026, группа C: Brazil - Morocco, New York/NJ.",
       "startDate": "2026-06-13T22:00:00Z",
       "endDate": "2026-06-14T00:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "New York/NJ",
@@ -1014,13 +1022,13 @@
     {
       "@type": "SportsEvent",
       "name": "Haiti v Scotland - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group C match: Haiti v Scotland at Boston.",
+      "description": "ЧМ-2026, группа C: Haiti - Scotland, Boston.",
       "startDate": "2026-06-14T01:00:00Z",
       "endDate": "2026-06-14T03:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Boston",
@@ -1048,13 +1056,13 @@
     {
       "@type": "SportsEvent",
       "name": "Scotland v Morocco - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group C match: Scotland v Morocco at Boston.",
+      "description": "ЧМ-2026, группа C: Scotland - Morocco, Boston.",
       "startDate": "2026-06-19T22:00:00Z",
       "endDate": "2026-06-20T00:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Boston",
@@ -1082,13 +1090,13 @@
     {
       "@type": "SportsEvent",
       "name": "Brazil v Haiti - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group C match: Brazil v Haiti at Philadelphia.",
+      "description": "ЧМ-2026, группа C: Brazil - Haiti, Philadelphia.",
       "startDate": "2026-06-20T00:30:00Z",
       "endDate": "2026-06-20T02:30:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Philadelphia",
@@ -1116,13 +1124,13 @@
     {
       "@type": "SportsEvent",
       "name": "Scotland v Brazil - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group C match: Scotland v Brazil at Miami.",
+      "description": "ЧМ-2026, группа C: Scotland - Brazil, Miami.",
       "startDate": "2026-06-24T22:00:00Z",
       "endDate": "2026-06-25T00:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Miami",
@@ -1150,13 +1158,13 @@
     {
       "@type": "SportsEvent",
       "name": "Morocco v Haiti - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group C match: Morocco v Haiti at Atlanta.",
+      "description": "ЧМ-2026, группа C: Morocco - Haiti, Atlanta.",
       "startDate": "2026-06-24T22:00:00Z",
       "endDate": "2026-06-25T00:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Atlanta",
@@ -1184,13 +1192,13 @@
     {
       "@type": "SportsEvent",
       "name": "USA v Paraguay - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group D match: USA v Paraguay at Los Angeles.",
+      "description": "ЧМ-2026, группа D: USA - Paraguay, Los Angeles.",
       "startDate": "2026-06-13T01:00:00Z",
       "endDate": "2026-06-13T03:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Los Angeles",
@@ -1218,13 +1226,13 @@
     {
       "@type": "SportsEvent",
       "name": "Australia v Turkiye - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group D match: Australia v Turkiye at Vancouver.",
+      "description": "ЧМ-2026, группа D: Australia - Turkiye, Vancouver.",
       "startDate": "2026-06-14T04:00:00Z",
       "endDate": "2026-06-14T06:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Vancouver",
@@ -1252,13 +1260,13 @@
     {
       "@type": "SportsEvent",
       "name": "USA v Australia - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group D match: USA v Australia at Seattle.",
+      "description": "ЧМ-2026, группа D: USA - Australia, Seattle.",
       "startDate": "2026-06-19T19:00:00Z",
       "endDate": "2026-06-19T21:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Seattle",
@@ -1286,13 +1294,13 @@
     {
       "@type": "SportsEvent",
       "name": "Turkiye v Paraguay - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group D match: Turkiye v Paraguay at San Francisco.",
+      "description": "ЧМ-2026, группа D: Turkiye - Paraguay, San Francisco.",
       "startDate": "2026-06-20T03:00:00Z",
       "endDate": "2026-06-20T05:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "San Francisco",
@@ -1320,13 +1328,13 @@
     {
       "@type": "SportsEvent",
       "name": "Turkiye v USA - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group D match: Turkiye v USA at Los Angeles.",
+      "description": "ЧМ-2026, группа D: Turkiye - USA, Los Angeles.",
       "startDate": "2026-06-26T02:00:00Z",
       "endDate": "2026-06-26T04:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Los Angeles",
@@ -1354,13 +1362,13 @@
     {
       "@type": "SportsEvent",
       "name": "Paraguay v Australia - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group D match: Paraguay v Australia at San Francisco.",
+      "description": "ЧМ-2026, группа D: Paraguay - Australia, San Francisco.",
       "startDate": "2026-06-26T02:00:00Z",
       "endDate": "2026-06-26T04:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "San Francisco",
@@ -1388,13 +1396,13 @@
     {
       "@type": "SportsEvent",
       "name": "Germany v Curacao - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group E match: Germany v Curacao at Houston.",
+      "description": "ЧМ-2026, группа E: Germany - Curacao, Houston.",
       "startDate": "2026-06-14T17:00:00Z",
       "endDate": "2026-06-14T19:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Houston",
@@ -1422,13 +1430,13 @@
     {
       "@type": "SportsEvent",
       "name": "Ivory Coast v Ecuador - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group E match: Ivory Coast v Ecuador at Philadelphia.",
+      "description": "ЧМ-2026, группа E: Ivory Coast - Ecuador, Philadelphia.",
       "startDate": "2026-06-14T23:00:00Z",
       "endDate": "2026-06-15T01:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Philadelphia",
@@ -1456,13 +1464,13 @@
     {
       "@type": "SportsEvent",
       "name": "Germany v Ivory Coast - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group E match: Germany v Ivory Coast at Toronto.",
+      "description": "ЧМ-2026, группа E: Germany - Ivory Coast, Toronto.",
       "startDate": "2026-06-20T20:00:00Z",
       "endDate": "2026-06-20T22:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Toronto",
@@ -1490,13 +1498,13 @@
     {
       "@type": "SportsEvent",
       "name": "Ecuador v Curacao - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group E match: Ecuador v Curacao at Kansas City.",
+      "description": "ЧМ-2026, группа E: Ecuador - Curacao, Kansas City.",
       "startDate": "2026-06-21T00:00:00Z",
       "endDate": "2026-06-21T02:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Kansas City",
@@ -1524,13 +1532,13 @@
     {
       "@type": "SportsEvent",
       "name": "Curacao v Ivory Coast - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group E match: Curacao v Ivory Coast at Philadelphia.",
+      "description": "ЧМ-2026, группа E: Curacao - Ivory Coast, Philadelphia.",
       "startDate": "2026-06-25T20:00:00Z",
       "endDate": "2026-06-25T22:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Philadelphia",
@@ -1558,13 +1566,13 @@
     {
       "@type": "SportsEvent",
       "name": "Ecuador v Germany - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group E match: Ecuador v Germany at New York/NJ.",
+      "description": "ЧМ-2026, группа E: Ecuador - Germany, New York/NJ.",
       "startDate": "2026-06-25T20:00:00Z",
       "endDate": "2026-06-25T22:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "New York/NJ",
@@ -1592,13 +1600,13 @@
     {
       "@type": "SportsEvent",
       "name": "Netherlands v Japan - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group F match: Netherlands v Japan at Dallas.",
+      "description": "ЧМ-2026, группа F: Netherlands - Japan, Dallas.",
       "startDate": "2026-06-14T20:00:00Z",
       "endDate": "2026-06-14T22:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Dallas",
@@ -1626,13 +1634,13 @@
     {
       "@type": "SportsEvent",
       "name": "Sweden v Tunisia - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group F match: Sweden v Tunisia at Monterrey.",
+      "description": "ЧМ-2026, группа F: Sweden - Tunisia, Monterrey.",
       "startDate": "2026-06-15T02:00:00Z",
       "endDate": "2026-06-15T04:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Monterrey",
@@ -1660,13 +1668,13 @@
     {
       "@type": "SportsEvent",
       "name": "Netherlands v Sweden - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group F match: Netherlands v Sweden at Houston.",
+      "description": "ЧМ-2026, группа F: Netherlands - Sweden, Houston.",
       "startDate": "2026-06-20T17:00:00Z",
       "endDate": "2026-06-20T19:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Houston",
@@ -1694,13 +1702,13 @@
     {
       "@type": "SportsEvent",
       "name": "Tunisia v Japan - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group F match: Tunisia v Japan at Monterrey.",
+      "description": "ЧМ-2026, группа F: Tunisia - Japan, Monterrey.",
       "startDate": "2026-06-21T04:00:00Z",
       "endDate": "2026-06-21T06:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Monterrey",
@@ -1728,13 +1736,13 @@
     {
       "@type": "SportsEvent",
       "name": "Japan v Sweden - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group F match: Japan v Sweden at Dallas.",
+      "description": "ЧМ-2026, группа F: Japan - Sweden, Dallas.",
       "startDate": "2026-06-25T23:00:00Z",
       "endDate": "2026-06-26T01:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Dallas",
@@ -1762,13 +1770,13 @@
     {
       "@type": "SportsEvent",
       "name": "Tunisia v Netherlands - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group F match: Tunisia v Netherlands at Kansas City.",
+      "description": "ЧМ-2026, группа F: Tunisia - Netherlands, Kansas City.",
       "startDate": "2026-06-25T23:00:00Z",
       "endDate": "2026-06-26T01:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Kansas City",
@@ -1796,13 +1804,13 @@
     {
       "@type": "SportsEvent",
       "name": "Belgium v Egypt - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group G match: Belgium v Egypt at Seattle.",
+      "description": "ЧМ-2026, группа G: Belgium - Egypt, Seattle.",
       "startDate": "2026-06-15T19:00:00Z",
       "endDate": "2026-06-15T21:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Seattle",
@@ -1830,13 +1838,13 @@
     {
       "@type": "SportsEvent",
       "name": "Iran v New Zealand - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group G match: Iran v New Zealand at Los Angeles.",
+      "description": "ЧМ-2026, группа G: Iran - New Zealand, Los Angeles.",
       "startDate": "2026-06-16T01:00:00Z",
       "endDate": "2026-06-16T03:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Los Angeles",
@@ -1864,13 +1872,13 @@
     {
       "@type": "SportsEvent",
       "name": "Belgium v Iran - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group G match: Belgium v Iran at Los Angeles.",
+      "description": "ЧМ-2026, группа G: Belgium - Iran, Los Angeles.",
       "startDate": "2026-06-21T19:00:00Z",
       "endDate": "2026-06-21T21:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Los Angeles",
@@ -1898,13 +1906,13 @@
     {
       "@type": "SportsEvent",
       "name": "New Zealand v Egypt - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group G match: New Zealand v Egypt at Vancouver.",
+      "description": "ЧМ-2026, группа G: New Zealand - Egypt, Vancouver.",
       "startDate": "2026-06-22T01:00:00Z",
       "endDate": "2026-06-22T03:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Vancouver",
@@ -1932,13 +1940,13 @@
     {
       "@type": "SportsEvent",
       "name": "Egypt v Iran - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group G match: Egypt v Iran at Seattle.",
+      "description": "ЧМ-2026, группа G: Egypt - Iran, Seattle.",
       "startDate": "2026-06-27T03:00:00Z",
       "endDate": "2026-06-27T05:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Seattle",
@@ -1966,13 +1974,13 @@
     {
       "@type": "SportsEvent",
       "name": "New Zealand v Belgium - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group G match: New Zealand v Belgium at Vancouver.",
+      "description": "ЧМ-2026, группа G: New Zealand - Belgium, Vancouver.",
       "startDate": "2026-06-27T03:00:00Z",
       "endDate": "2026-06-27T05:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Vancouver",
@@ -2000,13 +2008,13 @@
     {
       "@type": "SportsEvent",
       "name": "Spain v Cape Verde - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group H match: Spain v Cape Verde at Atlanta.",
+      "description": "ЧМ-2026, группа H: Spain - Cape Verde, Atlanta.",
       "startDate": "2026-06-15T16:00:00Z",
       "endDate": "2026-06-15T18:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Atlanta",
@@ -2034,13 +2042,13 @@
     {
       "@type": "SportsEvent",
       "name": "Saudi Arabia v Uruguay - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group H match: Saudi Arabia v Uruguay at Miami.",
+      "description": "ЧМ-2026, группа H: Saudi Arabia - Uruguay, Miami.",
       "startDate": "2026-06-15T22:00:00Z",
       "endDate": "2026-06-16T00:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Miami",
@@ -2068,13 +2076,13 @@
     {
       "@type": "SportsEvent",
       "name": "Spain v Saudi Arabia - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group H match: Spain v Saudi Arabia at Atlanta.",
+      "description": "ЧМ-2026, группа H: Spain - Saudi Arabia, Atlanta.",
       "startDate": "2026-06-21T16:00:00Z",
       "endDate": "2026-06-21T18:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Atlanta",
@@ -2102,13 +2110,13 @@
     {
       "@type": "SportsEvent",
       "name": "Uruguay v Cape Verde - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group H match: Uruguay v Cape Verde at Miami.",
+      "description": "ЧМ-2026, группа H: Uruguay - Cape Verde, Miami.",
       "startDate": "2026-06-21T22:00:00Z",
       "endDate": "2026-06-22T00:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Miami",
@@ -2136,13 +2144,13 @@
     {
       "@type": "SportsEvent",
       "name": "Cape Verde v Saudi Arabia - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group H match: Cape Verde v Saudi Arabia at Houston.",
+      "description": "ЧМ-2026, группа H: Cape Verde - Saudi Arabia, Houston.",
       "startDate": "2026-06-27T00:00:00Z",
       "endDate": "2026-06-27T02:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Houston",
@@ -2170,13 +2178,13 @@
     {
       "@type": "SportsEvent",
       "name": "Uruguay v Spain - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group H match: Uruguay v Spain at Guadalajara.",
+      "description": "ЧМ-2026, группа H: Uruguay - Spain, Guadalajara.",
       "startDate": "2026-06-27T00:00:00Z",
       "endDate": "2026-06-27T02:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Guadalajara",
@@ -2204,13 +2212,13 @@
     {
       "@type": "SportsEvent",
       "name": "France v Senegal - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group I match: France v Senegal at New York/NJ.",
+      "description": "ЧМ-2026, группа I: France - Senegal, New York/NJ.",
       "startDate": "2026-06-16T19:00:00Z",
       "endDate": "2026-06-16T21:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "New York/NJ",
@@ -2238,13 +2246,13 @@
     {
       "@type": "SportsEvent",
       "name": "Iraq v Norway - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group I match: Iraq v Norway at Boston.",
+      "description": "ЧМ-2026, группа I: Iraq - Norway, Boston.",
       "startDate": "2026-06-16T22:00:00Z",
       "endDate": "2026-06-17T00:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Boston",
@@ -2272,13 +2280,13 @@
     {
       "@type": "SportsEvent",
       "name": "France v Iraq - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group I match: France v Iraq at Philadelphia.",
+      "description": "ЧМ-2026, группа I: France - Iraq, Philadelphia.",
       "startDate": "2026-06-22T21:00:00Z",
       "endDate": "2026-06-22T23:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Philadelphia",
@@ -2306,13 +2314,13 @@
     {
       "@type": "SportsEvent",
       "name": "Norway v Senegal - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group I match: Norway v Senegal at New York/NJ.",
+      "description": "ЧМ-2026, группа I: Norway - Senegal, New York/NJ.",
       "startDate": "2026-06-23T00:00:00Z",
       "endDate": "2026-06-23T02:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "New York/NJ",
@@ -2340,13 +2348,13 @@
     {
       "@type": "SportsEvent",
       "name": "Norway v France - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group I match: Norway v France at Boston.",
+      "description": "ЧМ-2026, группа I: Norway - France, Boston.",
       "startDate": "2026-06-26T19:00:00Z",
       "endDate": "2026-06-26T21:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Boston",
@@ -2374,13 +2382,13 @@
     {
       "@type": "SportsEvent",
       "name": "Senegal v Iraq - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group I match: Senegal v Iraq at Toronto.",
+      "description": "ЧМ-2026, группа I: Senegal - Iraq, Toronto.",
       "startDate": "2026-06-26T19:00:00Z",
       "endDate": "2026-06-26T21:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Toronto",
@@ -2408,13 +2416,13 @@
     {
       "@type": "SportsEvent",
       "name": "Argentina v Algeria - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group J match: Argentina v Algeria at Kansas City.",
+      "description": "ЧМ-2026, группа J: Argentina - Algeria, Kansas City.",
       "startDate": "2026-06-17T01:00:00Z",
       "endDate": "2026-06-17T03:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Kansas City",
@@ -2442,13 +2450,13 @@
     {
       "@type": "SportsEvent",
       "name": "Austria v Jordan - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group J match: Austria v Jordan at San Francisco.",
+      "description": "ЧМ-2026, группа J: Austria - Jordan, San Francisco.",
       "startDate": "2026-06-17T04:00:00Z",
       "endDate": "2026-06-17T06:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "San Francisco",
@@ -2476,13 +2484,13 @@
     {
       "@type": "SportsEvent",
       "name": "Argentina v Austria - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group J match: Argentina v Austria at Dallas.",
+      "description": "ЧМ-2026, группа J: Argentina - Austria, Dallas.",
       "startDate": "2026-06-22T17:00:00Z",
       "endDate": "2026-06-22T19:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Dallas",
@@ -2510,13 +2518,13 @@
     {
       "@type": "SportsEvent",
       "name": "Jordan v Algeria - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group J match: Jordan v Algeria at San Francisco.",
+      "description": "ЧМ-2026, группа J: Jordan - Algeria, San Francisco.",
       "startDate": "2026-06-23T03:00:00Z",
       "endDate": "2026-06-23T05:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "San Francisco",
@@ -2544,13 +2552,13 @@
     {
       "@type": "SportsEvent",
       "name": "Jordan v Argentina - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group J match: Jordan v Argentina at Dallas.",
+      "description": "ЧМ-2026, группа J: Jordan - Argentina, Dallas.",
       "startDate": "2026-06-28T02:00:00Z",
       "endDate": "2026-06-28T04:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Dallas",
@@ -2578,13 +2586,13 @@
     {
       "@type": "SportsEvent",
       "name": "Algeria v Austria - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group J match: Algeria v Austria at Kansas City.",
+      "description": "ЧМ-2026, группа J: Algeria - Austria, Kansas City.",
       "startDate": "2026-06-28T02:00:00Z",
       "endDate": "2026-06-28T04:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Kansas City",
@@ -2612,13 +2620,13 @@
     {
       "@type": "SportsEvent",
       "name": "Portugal v Congo DR - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group K match: Portugal v Congo DR at Houston.",
+      "description": "ЧМ-2026, группа K: Portugal - Congo DR, Houston.",
       "startDate": "2026-06-17T17:00:00Z",
       "endDate": "2026-06-17T19:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Houston",
@@ -2646,13 +2654,13 @@
     {
       "@type": "SportsEvent",
       "name": "Uzbekistan v Colombia - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group K match: Uzbekistan v Colombia at Mexico City.",
+      "description": "ЧМ-2026, группа K: Uzbekistan - Colombia, Mexico City.",
       "startDate": "2026-06-18T02:00:00Z",
       "endDate": "2026-06-18T04:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Mexico City",
@@ -2680,13 +2688,13 @@
     {
       "@type": "SportsEvent",
       "name": "Portugal v Uzbekistan - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group K match: Portugal v Uzbekistan at Houston.",
+      "description": "ЧМ-2026, группа K: Portugal - Uzbekistan, Houston.",
       "startDate": "2026-06-23T17:00:00Z",
       "endDate": "2026-06-23T19:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Houston",
@@ -2714,13 +2722,13 @@
     {
       "@type": "SportsEvent",
       "name": "Colombia v Congo DR - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group K match: Colombia v Congo DR at Guadalajara.",
+      "description": "ЧМ-2026, группа K: Colombia - Congo DR, Guadalajara.",
       "startDate": "2026-06-24T02:00:00Z",
       "endDate": "2026-06-24T04:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Guadalajara",
@@ -2748,13 +2756,13 @@
     {
       "@type": "SportsEvent",
       "name": "Colombia v Portugal - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group K match: Colombia v Portugal at Miami.",
+      "description": "ЧМ-2026, группа K: Colombia - Portugal, Miami.",
       "startDate": "2026-06-27T23:30:00Z",
       "endDate": "2026-06-28T01:30:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Miami",
@@ -2782,13 +2790,13 @@
     {
       "@type": "SportsEvent",
       "name": "Congo DR v Uzbekistan - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group K match: Congo DR v Uzbekistan at Atlanta.",
+      "description": "ЧМ-2026, группа K: Congo DR - Uzbekistan, Atlanta.",
       "startDate": "2026-06-27T23:30:00Z",
       "endDate": "2026-06-28T01:30:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Atlanta",
@@ -2816,13 +2824,13 @@
     {
       "@type": "SportsEvent",
       "name": "England v Croatia - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group L match: England v Croatia at Dallas.",
+      "description": "ЧМ-2026, группа L: England - Croatia, Dallas.",
       "startDate": "2026-06-17T20:00:00Z",
       "endDate": "2026-06-17T22:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Dallas",
@@ -2850,13 +2858,13 @@
     {
       "@type": "SportsEvent",
       "name": "Ghana v Panama - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group L match: Ghana v Panama at Toronto.",
+      "description": "ЧМ-2026, группа L: Ghana - Panama, Toronto.",
       "startDate": "2026-06-17T23:00:00Z",
       "endDate": "2026-06-18T01:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Toronto",
@@ -2884,13 +2892,13 @@
     {
       "@type": "SportsEvent",
       "name": "England v Ghana - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group L match: England v Ghana at Boston.",
+      "description": "ЧМ-2026, группа L: England - Ghana, Boston.",
       "startDate": "2026-06-23T20:00:00Z",
       "endDate": "2026-06-23T22:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Boston",
@@ -2918,13 +2926,13 @@
     {
       "@type": "SportsEvent",
       "name": "Panama v Croatia - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group L match: Panama v Croatia at Toronto.",
+      "description": "ЧМ-2026, группа L: Panama - Croatia, Toronto.",
       "startDate": "2026-06-23T23:00:00Z",
       "endDate": "2026-06-24T01:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Toronto",
@@ -2952,13 +2960,13 @@
     {
       "@type": "SportsEvent",
       "name": "Panama v England - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group L match: Panama v England at New York/NJ.",
+      "description": "ЧМ-2026, группа L: Panama - England, New York/NJ.",
       "startDate": "2026-06-27T21:00:00Z",
       "endDate": "2026-06-27T23:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "New York/NJ",
@@ -2986,13 +2994,13 @@
     {
       "@type": "SportsEvent",
       "name": "Croatia v Ghana - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group L match: Croatia v Ghana at Philadelphia.",
+      "description": "ЧМ-2026, группа L: Croatia - Ghana, Philadelphia.",
       "startDate": "2026-06-27T21:00:00Z",
       "endDate": "2026-06-27T23:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Philadelphia",
@@ -3026,7 +3034,7 @@
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Los Angeles",
@@ -3060,7 +3068,7 @@
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Houston",
@@ -3094,7 +3102,7 @@
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Boston",
@@ -3128,7 +3136,7 @@
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Monterrey",
@@ -3162,7 +3170,7 @@
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Dallas",
@@ -3196,7 +3204,7 @@
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "New York/NJ",
@@ -3230,7 +3238,7 @@
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Mexico City",
@@ -3264,7 +3272,7 @@
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Atlanta",
@@ -3298,7 +3306,7 @@
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Seattle",
@@ -3332,7 +3340,7 @@
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "San Francisco",
@@ -3366,7 +3374,7 @@
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Los Angeles",
@@ -3400,7 +3408,7 @@
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Toronto",
@@ -3434,7 +3442,7 @@
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Vancouver",
@@ -3468,7 +3476,7 @@
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Miami",
@@ -3502,7 +3510,7 @@
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Kansas City",
@@ -3536,7 +3544,7 @@
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Dallas",
@@ -3570,7 +3578,7 @@
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Houston",
@@ -3604,7 +3612,7 @@
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Philadelphia",
@@ -3638,7 +3646,7 @@
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "New York/NJ",
@@ -3672,7 +3680,7 @@
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Mexico City",
@@ -3706,7 +3714,7 @@
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Seattle",
@@ -3740,7 +3748,7 @@
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Dallas",
@@ -3774,7 +3782,7 @@
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Atlanta",
@@ -3808,7 +3816,7 @@
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Vancouver",
@@ -3842,7 +3850,7 @@
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Boston",
@@ -3876,7 +3884,7 @@
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Los Angeles",
@@ -3910,7 +3918,7 @@
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Miami",
@@ -3944,7 +3952,7 @@
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Kansas City",
@@ -3978,7 +3986,7 @@
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Dallas",
@@ -4012,7 +4020,7 @@
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Atlanta",
@@ -4046,7 +4054,7 @@
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "Miami",
@@ -4074,13 +4082,13 @@
     {
       "@type": "SportsEvent",
       "name": "FINAL: Win M101 v Win M102 - FIFA World Cup 2026",
-      "description": "FIFA World Cup 2026 Group F match: FINAL: Win M101 v Win M102 at New York/NJ.",
+      "description": "ЧМ-2026, группа F: FINAL: Win M101 - Win M102, New York/NJ.",
       "startDate": "2026-07-19T19:00:00Z",
       "endDate": "2026-07-19T21:00:00Z",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "sport": "Association Football",
-      "url": "https://kingdoggydog.github.io/worldcup2026/",
+      "url": "index.html",
       "location": {
         "@type": "Place",
         "name": "New York/NJ",
@@ -4110,17 +4118,17 @@
 </script>
   <!-- Open Graph / Social sharing -->
   <meta property="og:type" content="website">
-  <meta property="og:site_name" content="World Cup 2026 Schedule">
-  <meta property="og:title" content="World Cup 2026 Schedule - Live Scores & Local Times">
-  <meta property="og:description" content="All 104 matches with live scores, standings and bracket. Times in your timezone. Free, no ads.">
-  <meta property="og:url" content="https://kingdoggydog.github.io/worldcup2026/">
-  <meta property="og:image" content="https://kingdoggydog.github.io/worldcup2026/preview.png">
+  <meta property="og:site_name" content="Расписание ЧМ-2026 - live-счет и местное время">
+  <meta property="og:title" content="Расписание ЧМ-2026 - live-счет и местное время">
+  <meta property="og:description" content="Все 104 матча: live-счет, таблицы и сетка плей-офф. Время указано для вашего часового пояса. Бесплатно, без рекламы.">
+  <meta property="og:url" content="https://viktormalyuchenko.github.io/worldcup2026/">
+  <meta property="og:image" content="https://viktormalyuchenko.github.io/worldcup2026/preview.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="World Cup 2026 Schedule - Live Scores & Local Times">
-  <meta name="twitter:description" content="All 104 matches with live scores, standings and bracket. Times in your timezone. Free, no ads.">
-  <meta name="twitter:image" content="https://kingdoggydog.github.io/worldcup2026/preview.png">
+  <meta name="twitter:title" content="Расписание ЧМ-2026 - live-счет и местное время">
+  <meta name="twitter:description" content="Все 104 матча: live-счет, таблицы и сетка плей-офф. Время указано для вашего часового пояса. Бесплатно, без рекламы.">
+  <meta name="twitter:image" content="https://viktormalyuchenko.github.io/worldcup2026/preview.png">
 </head>
 <body>
 <!-- dark mode is default; .print-mode toggled by JS -->
@@ -4129,179 +4137,158 @@
   <div class="header">
     <div>
       <h1>FIFA World Cup 2026</h1>
-      <div class="sub">All 104 matches &bull; 11 June &ndash; 19 July &bull; USA / Canada / Mexico</div>
+      <div class="sub">Все 104 матча &bull; 11 июня &ndash; 19 июля &bull; США / Канада / Мексика</div>
       <div style="margin-top:8px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;">
-        <a href="https://www.buymeacoffee.com/coolcato" target="_blank" id="bmc-header">☕ Buy me a coffee</a>
+        <a href="https://yoomoney.ru/to/410016256312437" target="_blank" id="bmc-header">Поддержать автора</a>
         <div style="display:flex;gap:8px;flex-wrap:wrap;">
-          <a href="https://kingdoggydog.github.io/worldcup2026/" class="nav-btn active">&#128197; Schedule</a>
-          <a href="https://kingdoggydog.github.io/worldcup2026/groups.html" class="nav-btn">&#128202; Groups</a>
-          <a href="https://kingdoggydog.github.io/worldcup2026/bracket.html" class="nav-btn">&#127942; Knockout</a>
+          <span class="nav-btn active" aria-current="page">&#128197; Расписание</span>
+          <a href="groups.html" class="nav-btn">&#128202; Группы</a>
+          <a href="bracket.html" class="nav-btn">&#127942; Плей-офф</a>
         </div>
       </div>
     </div>
     <div class="header-right">
       <div class="ctrl-row">
-        <button id="mode-toggle">&#9788; Switch to Print Mode</button>
-        <button id="knockout-toggle">Hide Knockout Stage</button>
+        <button id="mode-toggle">&#9788; Версия для печати</button>
+        <button id="knockout-toggle">Скрыть плей-офф</button>
       </div>
       <div class="ctrl-row" id="col-switch-row">
-        <div class="time-switch" id="time-switch" title="Toggle 12/24 hour time">
-          <span class="time-switch-label" id="ts-left">12hr</span>
-          <div class="time-switch-track" id="ts-track">
-            <div class="time-switch-thumb" id="ts-thumb"></div>
-          </div>
-          <span class="time-switch-label" id="ts-right">24hr</span>
-        </div>
-        <div class="time-switch" id="col-switch" title="Toggle single/double column">
-          <span class="time-switch-label" id="cs-left">1 col</span>
+        <div class="time-switch" id="col-switch" title="Переключить одну/две колонки">
+          <span class="time-switch-label" id="cs-left">1 колонка</span>
           <div class="time-switch-track" id="cs-track">
             <div class="time-switch-thumb" id="cs-thumb"></div>
           </div>
-          <span class="time-switch-label" id="cs-right">2 col</span>
+          <span class="time-switch-label" id="cs-right">2 колонки</span>
         </div>
       </div>
       <div class="ctrl-row">
-        <span class="ctrl-label">Timezone</span>
+        <span class="ctrl-label">Часовой пояс</span>
         <select id="tz-select">
-          <option value="12">Auckland (NZST, UTC+12)</option>
-          <option value="11">Solomon Islands (UTC+11)</option>
-          <option value="10">Melbourne / Sydney (AEST, UTC+10)</option>
-          <option value="10">Brisbane (AEST, UTC+10)</option>
-          <option value="9.5">Adelaide (ACST, UTC+9:30)</option>
-          <option value="9.5">Darwin (ACST, UTC+9:30)</option>
-          <option value="9">Tokyo / Seoul (JST/KST, UTC+9)</option>
-          <option value="8">Perth (AWST, UTC+8)</option>
-          <option value="8">Singapore / Hong Kong (UTC+8)</option>
-          <option value="8">Beijing / Shanghai (CST, UTC+8)</option>
-          <option value="8">Kuala Lumpur (MYT, UTC+8)</option>
-          <option value="7">Bangkok / Jakarta (UTC+7)</option>
-          <option value="6">Dhaka (BST, UTC+6)</option>
-          <option value="5.5">India (IST, UTC+5:30)</option>
-          <option value="5">Karachi / Islamabad (PKT, UTC+5)</option>
-          <option value="4">Dubai / Abu Dhabi (GST, UTC+4)</option>
-          <option value="3">Nairobi / Riyadh (EAT/AST, UTC+3)</option>
-          <option value="3">Moscow (MSK, UTC+3)</option>
-          <option value="3">Istanbul (TRT, UTC+3)</option>
-          <option value="2">Cairo (EET, UTC+2)</option>
-          <option value="2">Johannesburg (SAST, UTC+2)</option>
-          <option value="2">Paris / Berlin / Rome (CEST, UTC+2)</option>
-          <option value="2">Athens / Helsinki (EEST, UTC+2)</option>
-          <option value="1">London (BST, UTC+1)</option>
-          <option value="1">Dublin (IST, UTC+1)</option>
-          <option value="1">Lagos / Casablanca (WAT, UTC+1)</option>
-          <option value="0">UTC+0 / Reykjavik</option>
-          <option value="0">Accra / Dakar (GMT, UTC+0)</option>
-          <option value="-3">Buenos Aires / Sao Paulo (UTC-3)</option>
-          <option value="-4">Santiago (CLT, UTC-4)</option>
-          <option value="-4">New York / Toronto (EDT, UTC-4)</option>
-          <option value="-4">Caracas / La Paz (UTC-4)</option>
-          <option value="-5">Chicago (CDT, UTC-5)</option>
-          <option value="-5">Lima / Bogota / Cancun (PET/COT/EST, UTC-5)</option>
-          <option value="-6">Mexico City / Denver / Calgary (CST/MDT, UTC-6)</option>
-          <option value="-7">Los Angeles / Vancouver / Baja California (PDT, UTC-7)</option>
-          <option value="-8">Anchorage (AKDT, UTC-8)</option>
-          <option value="-10">Honolulu (HST, UTC-10)</option>
+          <option value="3">Москва / Минск (МСК, UTC+3)</option>
+          <option value="3">Киев / Кишинев (UTC+3)</option>
+          <option value="5">Астана / Алматы (UTC+5)</option>
+          <option value="5">Ташкент / Душанбе / Ашхабад (UTC+5)</option>
+          <option value="6">Бишкек (UTC+6)</option>
+          <option value="4">Баку / Ереван / Тбилиси (UTC+4)</option>
+          <option value="2">Калининград (UTC+2)</option>
+          <option value="4">Самара / Ульяновск (UTC+4)</option>
+          <option value="5">Екатеринбург / Уфа / Пермь (UTC+5)</option>
+          <option value="6">Омск (UTC+6)</option>
+          <option value="7">Красноярск / Новосибирск (UTC+7)</option>
+          <option value="8">Иркутск (UTC+8)</option>
+          <option value="9">Якутск (UTC+9)</option>
+          <option value="10">Владивосток (UTC+10)</option>
+          <option value="11">Магадан / Сахалин (UTC+11)</option>
+          <option value="12">Камчатка (UTC+12)</option>
+          <option value="2">Берлин / Париж / Рим (UTC+2)</option>
+          <option value="1">Лондон (UTC+1)</option>
+          <option value="0">UTC+0</option>
+          <option value="-4">Нью-Йорк / Торонто (UTC-4)</option>
+          <option value="-5">Чикаго / Канкун / Богота (UTC-5)</option>
+          <option value="-6">Мехико / Денвер (UTC-6)</option>
+          <option value="-7">Лос-Анджелес / Ванкувер (UTC-7)</option>
+          <option value="9">Токио / Сеул (UTC+9)</option>
         </select>
       </div>
       <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start;">
         <div class="ctrl-row" style="align-items:flex-start;flex-direction:column;gap:6px;">
-          <span class="ctrl-label">Highlight</span>
+          <span class="ctrl-label">Подсветка</span>
           <div class="highlight-rows" id="highlight-rows"></div>
-          <button class="hl-add" id="hl-add-btn" onclick="addHighlightRow()">+ Add team</button>
+          <button class="hl-add" id="hl-add-btn" onclick="addHighlightRow()">+ Добавить команду</button>
         </div>
         <div class="ctrl-row" id="filters-row" style="align-items:flex-start;flex-direction:column;gap:6px;">
-          <span class="ctrl-label">Filters</span>
-          <select id="city-filter" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(12px,1.8vw,15px);border:1.5px solid var(--ctrl-border);border-radius:4px;padding:5px 8px;background:var(--ctrl-bg);color:var(--ctrl-text);cursor:pointer;">
-            <option value="all">All cities</option>
-            <option value="Atlanta">Atlanta</option>
-            <option value="Boston">Boston</option>
-            <option value="Dallas">Dallas</option>
-            <option value="Guadalajara">Guadalajara</option>
-            <option value="Houston">Houston</option>
-            <option value="Kansas City">Kansas City</option>
-            <option value="Los Angeles">Los Angeles</option>
-            <option value="Mexico City">Mexico City</option>
-            <option value="Miami">Miami</option>
-            <option value="Monterrey">Monterrey</option>
-            <option value="New York/NJ">New York/NJ</option>
-            <option value="Philadelphia">Philadelphia</option>
-            <option value="San Francisco">San Francisco</option>
-            <option value="Seattle">Seattle</option>
-            <option value="Toronto">Toronto</option>
-            <option value="Vancouver">Vancouver</option>
+          <span class="ctrl-label">Фильтры</span>
+          <select id="city-filter" style="font-family:'Roboto Condensed',sans-serif;font-weight:700;font-size:clamp(12px,1.8vw,15px);border:1.5px solid var(--ctrl-border);border-radius:4px;padding:5px 8px;background:var(--ctrl-bg);color:var(--ctrl-text);cursor:pointer;">
+            <option value="all">Все города</option>
+            <option value="Atlanta">Атланта</option>
+            <option value="Boston">Бостон</option>
+            <option value="Dallas">Даллас</option>
+            <option value="Guadalajara">Гвадалахара</option>
+            <option value="Houston">Хьюстон</option>
+            <option value="Kansas City">Канзас-Сити</option>
+            <option value="Los Angeles">Лос-Анджелес</option>
+            <option value="Mexico City">Мехико</option>
+            <option value="Miami">Майами</option>
+            <option value="Monterrey">Монтеррей</option>
+            <option value="New York/NJ">Нью-Йорк / Нью-Джерси</option>
+            <option value="Philadelphia">Филадельфия</option>
+            <option value="San Francisco">Сан-Франциско</option>
+            <option value="Seattle">Сиэтл</option>
+            <option value="Toronto">Торонто</option>
+            <option value="Vancouver">Ванкувер</option>
           </select>
-          <select id="group-filter" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(12px,1.8vw,15px);border:1.5px solid var(--ctrl-border);border-radius:4px;padding:5px 8px;background:var(--ctrl-bg);color:var(--ctrl-text);cursor:pointer;margin-top:6px;">
-            <option value="all">All groups</option>
-            <option value="A">Group A</option>
-            <option value="B">Group B</option>
-            <option value="C">Group C</option>
-            <option value="D">Group D</option>
-            <option value="E">Group E</option>
-            <option value="F">Group F</option>
-            <option value="G">Group G</option>
-            <option value="H">Group H</option>
-            <option value="I">Group I</option>
-            <option value="J">Group J</option>
-            <option value="K">Group K</option>
-            <option value="L">Group L</option>
-            <option value="R32">Round of 32</option>
-            <option value="R16">Round of 16</option>
-            <option value="QF">Quarter Finals</option>
-            <option value="SF">Semi Finals</option>
-            <option value="Final">Final</option>
+          <select id="group-filter" style="font-family:'Roboto Condensed',sans-serif;font-weight:700;font-size:clamp(12px,1.8vw,15px);border:1.5px solid var(--ctrl-border);border-radius:4px;padding:5px 8px;background:var(--ctrl-bg);color:var(--ctrl-text);cursor:pointer;margin-top:6px;">
+            <option value="all">Все группы</option>
+            <option value="A">Группа A</option>
+            <option value="B">Группа B</option>
+            <option value="C">Группа C</option>
+            <option value="D">Группа D</option>
+            <option value="E">Группа E</option>
+            <option value="F">Группа F</option>
+            <option value="G">Группа G</option>
+            <option value="H">Группа H</option>
+            <option value="I">Группа I</option>
+            <option value="J">Группа J</option>
+            <option value="K">Группа K</option>
+            <option value="L">Группа L</option>
+            <option value="R32">1/16 финала</option>
+            <option value="R16">1/8 финала</option>
+            <option value="QF">Четвертьфиналы</option>
+            <option value="SF">Полуфиналы</option>
+            <option value="Final">Финал</option>
           </select>
-          <select id="team-filter" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(12px,1.8vw,15px);border:1.5px solid var(--ctrl-border);border-radius:4px;padding:5px 8px;background:var(--ctrl-bg);color:var(--ctrl-text);cursor:pointer;margin-top:6px;">
-            <option value="all">All teams</option>
-            <option value="Algeria">Algeria</option>
-            <option value="Argentina">Argentina</option>
-            <option value="Australia">Australia</option>
-            <option value="Austria">Austria</option>
-            <option value="Belgium">Belgium</option>
-            <option value="Bosnia">Bosnia</option>
-            <option value="Brazil">Brazil</option>
-            <option value="Canada">Canada</option>
-            <option value="Cape Verde">Cape Verde</option>
-            <option value="Colombia">Colombia</option>
-            <option value="Congo DR">Congo DR</option>
-            <option value="Croatia">Croatia</option>
-            <option value="Curacao">Curacao</option>
-            <option value="Czechia">Czechia</option>
-            <option value="Ecuador">Ecuador</option>
-            <option value="Egypt">Egypt</option>
-            <option value="England">England</option>
-            <option value="France">France</option>
-            <option value="Germany">Germany</option>
-            <option value="Ghana">Ghana</option>
-            <option value="Haiti">Haiti</option>
-            <option value="Iran">Iran</option>
-            <option value="Iraq">Iraq</option>
-            <option value="Ivory Coast">Ivory Coast</option>
-            <option value="Japan">Japan</option>
-            <option value="Jordan">Jordan</option>
-            <option value="Mexico">Mexico</option>
-            <option value="Morocco">Morocco</option>
-            <option value="Netherlands">Netherlands</option>
-            <option value="New Zealand">New Zealand</option>
-            <option value="Norway">Norway</option>
-            <option value="Panama">Panama</option>
-            <option value="Paraguay">Paraguay</option>
-            <option value="Portugal">Portugal</option>
-            <option value="Qatar">Qatar</option>
-            <option value="Saudi Arabia">Saudi Arabia</option>
-            <option value="Scotland">Scotland</option>
-            <option value="Senegal">Senegal</option>
-            <option value="South Africa">South Africa</option>
-            <option value="South Korea">South Korea</option>
-            <option value="Spain">Spain</option>
-            <option value="Sweden">Sweden</option>
-            <option value="Switzerland">Switzerland</option>
-            <option value="Tunisia">Tunisia</option>
-            <option value="Turkiye">Turkiye</option>
-            <option value="Uruguay">Uruguay</option>
-            <option value="USA">USA</option>
-            <option value="Uzbekistan">Uzbekistan</option>
+          <select id="team-filter" style="font-family:'Roboto Condensed',sans-serif;font-weight:700;font-size:clamp(12px,1.8vw,15px);border:1.5px solid var(--ctrl-border);border-radius:4px;padding:5px 8px;background:var(--ctrl-bg);color:var(--ctrl-text);cursor:pointer;margin-top:6px;">
+            <option value="all">Все команды</option>
+            <option value="Algeria">Алжир</option>
+            <option value="Argentina">Аргентина</option>
+            <option value="Australia">Австралия</option>
+            <option value="Austria">Австрия</option>
+            <option value="Belgium">Бельгия</option>
+            <option value="Bosnia">Босния и Герцеговина</option>
+            <option value="Brazil">Бразилия</option>
+            <option value="Canada">Канада</option>
+            <option value="Cape Verde">Кабо-Верде</option>
+            <option value="Colombia">Колумбия</option>
+            <option value="Congo DR">ДР Конго</option>
+            <option value="Croatia">Хорватия</option>
+            <option value="Curacao">Кюрасао</option>
+            <option value="Czechia">Чехия</option>
+            <option value="Ecuador">Эквадор</option>
+            <option value="Egypt">Египет</option>
+            <option value="England">Англия</option>
+            <option value="France">Франция</option>
+            <option value="Germany">Германия</option>
+            <option value="Ghana">Гана</option>
+            <option value="Haiti">Гаити</option>
+            <option value="Iran">Иран</option>
+            <option value="Iraq">Ирак</option>
+            <option value="Ivory Coast">Кот-д’Ивуар</option>
+            <option value="Japan">Япония</option>
+            <option value="Jordan">Иордания</option>
+            <option value="Mexico">Мексика</option>
+            <option value="Morocco">Марокко</option>
+            <option value="Netherlands">Нидерланды</option>
+            <option value="New Zealand">Новая Зеландия</option>
+            <option value="Norway">Норвегия</option>
+            <option value="Panama">Панама</option>
+            <option value="Paraguay">Парагвай</option>
+            <option value="Portugal">Португалия</option>
+            <option value="Qatar">Катар</option>
+            <option value="Saudi Arabia">Саудовская Аравия</option>
+            <option value="Scotland">Шотландия</option>
+            <option value="Senegal">Сенегал</option>
+            <option value="South Africa">ЮАР</option>
+            <option value="South Korea">Южная Корея</option>
+            <option value="Spain">Испания</option>
+            <option value="Sweden">Швеция</option>
+            <option value="Switzerland">Швейцария</option>
+            <option value="Tunisia">Тунис</option>
+            <option value="Turkiye">Турция</option>
+            <option value="Uruguay">Уругвай</option>
+            <option value="USA">США</option>
+            <option value="Uzbekistan">Узбекистан</option>
           </select>
-          <button onclick="clearFilters()" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;padding:5px 10px;border-radius:4px;cursor:pointer;border:1.5px solid var(--ctrl-border);background:transparent;color:var(--text-muted);margin-top:6px;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'" onmouseout="this.style.borderColor='var(--ctrl-border)';this.style.color='var(--text-muted)'">✕ Clear filters</button>
+          <button onclick="clearFilters()" style="font-family:'Roboto Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;padding:5px 10px;border-radius:4px;cursor:pointer;border:1.5px solid var(--ctrl-border);background:transparent;color:var(--text-muted);margin-top:6px;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'" onmouseout="this.style.borderColor='var(--ctrl-border)';this.style.color='var(--text-muted)'">Сбросить фильтры</button>
         </div>
       </div>
     </div>
@@ -4320,29 +4307,24 @@
   </p>
 
   <div class="schedule-note">
-    <strong>&#9201; Next match: </strong><span id="countdown-text" style="color:var(--gold);font-weight:700;">Loading...</span><br>
-    <strong>Scores will be updated live during the tournament.</strong>
-    The group stage kicks off on <span id="kickoff-date">12 June 2026 (AEST, UTC+10)</span>. Check back then to see live and final scores updated automatically.<br>
-    <strong>&#10024; New:</strong> <span style="color:var(--text-sub)">Toggle option for 1 or 2 column display (if your screen is big enough) &bull; Filter by city, team and group</span>
+    <strong>&#9201; Следующий матч: </strong><span id="countdown-text" style="color:var(--gold);font-weight:700;">Загрузка...</span><br>
+    <strong>Счет будет обновляться live во время турнира.</strong>
+    Групповой этап стартует <span id="kickoff-date">12 июня 2026 (AEST, UTC+10)</span>. После начала матчей здесь появятся live- и финальные счета.<br>
+    <strong>&#10024; Новое:</strong> <span style="color:var(--text-sub)">переключение 1/2 колонок на широких экранах &bull; фильтры по городу, команде и группе</span>
   </div>
   <div class="schedule" id="schedule"></div>
 
   <div class="footer">
-    <p id="footer-tz">All times AEST (UTC+10) &bull; Source: FIFA / Fox Sports 2026 &bull; <span id="version">v1.38</span></p>
-    <p>72 group stage matches &bull; 12 groups &bull; Top 2 per group + 8 best 3rd place advance</p>
-  </div>
-  <div style="text-align:center;margin-top:12px;">
-    <a href="https://forms.gle/GHQH8NMe436BL8t48" target="_blank" style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;color:var(--text-muted);text-decoration:none;letter-spacing:1px;">💬 Feedback &amp; suggestions</a>
-    <a href="https://www.reddit.com/user/coolcato" target="_blank" style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;color:var(--text-muted);text-decoration:none;letter-spacing:1px;">👋 Made by u/coolcato</a>
-    <a href="https://forms.gle/SdgXv6VJLanh5JBJ6" target="_blank" style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;color:var(--text-muted);text-decoration:none;letter-spacing:1px;">&#128233; Get notified for future tournaments</a>
+    <p id="footer-tz">Все время: AEST (UTC+10) &bull; Источник: FIFA / Fox Sports 2026 &bull; <span id="version">v1.38</span></p>
+    <p>72 матча группового этапа &bull; 12 групп &bull; выходят топ-2 и 8 лучших третьих мест</p>
   </div>
   <div id="bmc-mobile">
-    <a href="https://www.buymeacoffee.com/coolcato" target="_blank">☕ Buy me a coffee</a>
+    <a href="https://yoomoney.ru/to/410016256312437" target="_blank">Поддержать автора</a>
   </div>
 
 </div>
 
-<button id="jump-btn" onclick="jumpToNextDay()">&#9660; Today's matches</button>
+<button id="jump-btn" onclick="jumpToNextDay()">&#9660; Матчи сегодня</button>
 
 <script>
 // UTC times verified from kickoffclock.com CSV (cross-referenced FIFA/Fox Sports)
@@ -4496,6 +4478,47 @@ const FLAGS = {
   'Turkiye':'tr','Uruguay':'uy','USA':'us','Uzbekistan':'uz',
 };
 
+const TEAM_RU = {
+  'Algeria':'Алжир','Argentina':'Аргентина','Australia':'Австралия','Austria':'Австрия',
+  'Belgium':'Бельгия','Bosnia':'Босния и Герцеговина','Bosnia & Herz.':'Босния и Герцеговина',
+  'Brazil':'Бразилия','Canada':'Канада','Cape Verde':'Кабо-Верде','Colombia':'Колумбия',
+  'Congo DR':'ДР Конго','Croatia':'Хорватия','Curacao':'Кюрасао','Czechia':'Чехия',
+  'Ecuador':'Эквадор','Egypt':'Египет','England':'Англия','France':'Франция',
+  'Germany':'Германия','Ghana':'Гана','Haiti':'Гаити','Iran':'Иран','Iraq':'Ирак',
+  'Ivory Coast':'Кот-д’Ивуар','Japan':'Япония','Jordan':'Иордания','Mexico':'Мексика',
+  'Morocco':'Марокко','Netherlands':'Нидерланды','New Zealand':'Новая Зеландия',
+  'Norway':'Норвегия','Panama':'Панама','Paraguay':'Парагвай','Portugal':'Португалия',
+  'Qatar':'Катар','Saudi Arabia':'Саудовская Аравия','Scotland':'Шотландия',
+  'Senegal':'Сенегал','South Africa':'ЮАР','South Korea':'Южная Корея',
+  'S. Korea':'Южная Корея','Spain':'Испания','Sweden':'Швеция','Switzerland':'Швейцария',
+  'Tunisia':'Тунис','Turkiye':'Турция','Uruguay':'Уругвай','USA':'США','Uzbekistan':'Узбекистан'
+};
+
+const VENUE_RU = {
+  'Atlanta':'Атланта','Boston':'Бостон','Dallas':'Даллас','Guadalajara':'Гвадалахара',
+  'Houston':'Хьюстон','Kansas City':'Канзас-Сити','Los Angeles':'Лос-Анджелес',
+  'Mexico City':'Мехико','Miami':'Майами','Monterrey':'Монтеррей',
+  'New York/NJ':'Нью-Йорк / Нью-Джерси','Philadelphia':'Филадельфия',
+  'San Francisco':'Сан-Франциско','Seattle':'Сиэтл','Toronto':'Торонто','Vancouver':'Ванкувер'
+};
+
+function teamName(team) { return TEAM_RU[team] || team; }
+function venueName(venue) { return VENUE_RU[venue] || venue; }
+
+function localizeFilterOptions() {
+  const city = document.getElementById('city-filter');
+  if (city) Array.from(city.options).forEach(o => { o.textContent = o.value === 'all' ? 'Все города' : venueName(o.value); });
+  const team = document.getElementById('team-filter');
+  if (team) Array.from(team.options).forEach(o => { o.textContent = o.value === 'all' ? 'Все команды' : teamName(o.value); });
+  const group = document.getElementById('group-filter');
+  const groupLabels = {
+    all:'Все группы', A:'Группа A', B:'Группа B', C:'Группа C', D:'Группа D', E:'Группа E', F:'Группа F',
+    G:'Группа G', H:'Группа H', I:'Группа I', J:'Группа J', K:'Группа K', L:'Группа L',
+    R32:'1/16 финала', R16:'1/8 финала', QF:'Четвертьфиналы', SF:'Полуфиналы', Final:'Финал'
+  };
+  if (group) Array.from(group.options).forEach(o => { o.textContent = groupLabels[o.value] || o.textContent; });
+}
+
 function flagImg(team) {
   const code = FLAGS[team];
   if (!code) return '';
@@ -4507,8 +4530,23 @@ function teamsHtml(teamsStr) {
   if (parts.length !== 2) return teamsStr;
   const home = parts[0].trim();
   const away = parts[1].trim();
-  return `${flagImg(home)} ${home} <span class="vs">v</span> ${away} ${flagImg(away)}`;
+  return `${flagImg(home)} ${teamName(home)} <span class="vs">—</span> ${teamName(away)} ${flagImg(away)}`;
 }
+
+function teamsText(teamsStr) {
+  return teamsStr
+    .replace(/^FINAL:\s*/, 'Финал: ')
+    .replace(/\bWin\b/g, 'Победитель')
+    .replace(/\bLoss\b/g, 'Проигравший')
+    .replace(/\b2nd\b/g, '2-е место')
+    .replace(/\b3rd\b/g, '3-е место')
+    .replace(/\bv\b/g, '—')
+    .split(' — ')
+    .map(part => teamName(part.trim()))
+    .join(' — ');
+}
+
+localizeFilterOptions();
 
 
 // ── LIVE SCORES FROM data.json ────────────────────────────────────────────────
@@ -4570,22 +4608,15 @@ function getScore(teamsStr) {
   return null;
 }
 
-const DAYS   = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const DAYS   = ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
+const MONTHS = ['янв','фев','мар','апр','мая','июн','июл','авг','сен','окт','ноя','дек'];
 
 function pad(n) { return String(Math.floor(Math.abs(n))).padStart(2,'0'); }
-
-let use12hr = true;
 
 function formatTime(h) {
   const norm = ((h % 24) + 24) % 24;
   const hrs  = Math.floor(norm);
   const mins = Math.round((norm - hrs) * 60);
-  if (use12hr) {
-    const period = hrs >= 12 ? 'pm' : 'am';
-    const h12 = hrs % 12 === 0 ? 12 : hrs % 12;
-    return h12 + ':' + pad(mins) + period;
-  }
   return pad(hrs) + ':' + pad(mins);
 }
 
@@ -4633,6 +4664,7 @@ function render(offset, team) {
     const hdr = fmtHeader(k);
     const div = document.createElement('div');
     div.className = 'day';
+    div.dataset.date = k;
     let html = `<div class="day-header"><span class="day-name">${hdr.name}</span><span class="day-date">${hdr.date}</span></div>`;
     filteredMatches.forEach(m => {
       const t   = formatTime(m.utc + offset);
@@ -4648,7 +4680,7 @@ function render(offset, team) {
         <span class="time">${t}</span>
         <span class="teams">${teamsHtml(m.teams)}</span>
         ${scoreHtml}
-        <span class="venue">${m.venue}</span>
+        <span class="venue">${venueName(m.venue)}</span>
       </div>`;
     });
     div.innerHTML = html;
@@ -4660,7 +4692,7 @@ function render(offset, team) {
     // Heading spanning both columns
     const heading = document.createElement('div');
     heading.className = 'knockout-heading';
-    heading.innerHTML = '<h2>Knockout Stage</h2><span class="ko-sub">Round of 32 &bull; R16 &bull; QF &bull; SF &bull; Final</span>';
+    heading.innerHTML = '<h2>Плей-офф</h2><span class="ko-sub">1/16 финала &bull; 1/8 &bull; 1/4 &bull; 1/2 &bull; финал</span>';
     sched.appendChild(heading);
 
     // Bucket knockout matches by local date
@@ -4696,10 +4728,10 @@ function render(offset, team) {
         const cls = hi ? ` highlighted hi-${hiIdx+1} ko-match` : ' ko-match';
         const grpStyle = `style="color:var(--ko-${m.grp}, #7A82A8)"`;
         html += `<div class="match${cls}">
-          <span style="font-family:'Barlow Condensed',sans-serif;flex-shrink:0;width:80px;color:${koColors[m.grp]||'#7A82A8'}"><span style="font-weight:700;font-size:17px">${m.grp}</span> <span style="font-weight:400;font-size:14px">${m.num}</span></span>
+          <span style="font-family:'Roboto Condensed',sans-serif;flex-shrink:0;width:80px;color:${koColors[m.grp]||'#7A82A8'}"><span style="font-weight:700;font-size:17px">${m.grp}</span> <span style="font-weight:400;font-size:14px">${m.num}</span></span>
           <span class="time">${t}</span>
-          <span class="teams">${m.teams}</span>
-          <span class="venue">${m.venue}</span>
+          <span class="teams">${teamsText(m.teams)}</span>
+          <span class="venue">${venueName(m.venue)}</span>
         </div>`;
       });
       div.innerHTML = html;
@@ -4713,7 +4745,7 @@ function render(offset, team) {
     ? `UTC${sign}${Math.floor(offset)}:${Math.abs((offset%1)*60) === 30 ? '30':'00'}`
     : `UTC${sign}${offset}`;
   document.getElementById('footer-tz').innerHTML =
-    `All times ${lbl} \u2022 Source: FIFA / Fox Sports 2026 \u2022 <span id="version" style="color:var(--text-muted);font-style:italic">v1.38</span>`;
+    `Все время: ${lbl} \u2022 Источник: FIFA / Fox Sports 2026 \u2022 <span id="version" style="color:var(--text-muted);font-style:italic">v1.38</span>`;
 
   // Countdown to next match
   function updateCountdown() {
@@ -4736,7 +4768,7 @@ function render(offset, team) {
       }
     }
 
-    if (!nextMatch) { el.textContent = 'Tournament complete'; return; }
+    if (!nextMatch) { el.textContent = 'Турнир завершен'; return; }
 
     const diff = nextTime - now;
     const days = Math.floor(diff / 86400000);
@@ -4745,11 +4777,11 @@ function render(offset, team) {
     const secs = Math.floor((diff % 60000) / 1000);
 
     let timeStr = '';
-    if (days > 0) timeStr = `${days}d ${hrs}h ${mins}m`;
-    else if (hrs > 0) timeStr = `${hrs}h ${mins}m ${secs}s`;
-    else timeStr = `${mins}m ${secs}s`;
+    if (days > 0) timeStr = `${days} д ${hrs} ч ${mins} мин`;
+    else if (hrs > 0) timeStr = `${hrs} ч ${mins} мин ${secs} с`;
+    else timeStr = `${mins} мин ${secs} с`;
 
-    el.textContent = `${nextMatch.teams} in ${timeStr}`;
+    el.textContent = `${teamsText(nextMatch.teams)} через ${timeStr}`;
   }
   updateCountdown();
   setInterval(updateCountdown, 1000);
@@ -4759,7 +4791,7 @@ function render(offset, team) {
   const firstMatchUTC = new Date('2026-06-11T19:00:00Z');
   const localFirst = new Date(firstMatchUTC.getTime() + offset * 3600000);
   const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const months = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
   const d = localFirst.getUTCDate();
   const m = months[localFirst.getUTCMonth()];
   const y = localFirst.getUTCFullYear();
@@ -4789,9 +4821,9 @@ const ALL_TEAMS = ['Algeria','Argentina','Australia','Austria','Belgium','Bosnia
 
 function teamSelectHTML(selectedVal, rowIdx) {
   const taken = _highlightTeams.filter((t,i) => t && t !== 'none' && i !== rowIdx);
-  return '<option value="none">— Remove —</option>' +
+  return '<option value="none">— Убрать —</option>' +
     ALL_TEAMS.filter(t => !taken.includes(t) || t === selectedVal)
-      .map(t => `<option value="${t}"${t===selectedVal?' selected':''}>${t}</option>`).join('');
+      .map(t => `<option value="${t}"${t===selectedVal?' selected':''}>${teamName(t)}</option>`).join('');
 }
 
 function renderHighlightRows() {
@@ -4804,10 +4836,10 @@ function renderHighlightRows() {
   container.innerHTML = rows.map(({team, i}) => `
     <div class="highlight-row">
       <div class="hl-dot" style="background:${HL_COLORS[i]}"></div>
-      <select onchange="updateHighlight(${i}, this.value)" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(12px,1.8vw,15px);border:1.5px solid var(--ctrl-border);border-radius:4px;padding:4px 8px;background:var(--ctrl-bg);color:var(--ctrl-text);">
+      <select onchange="updateHighlight(${i}, this.value)" style="font-family:'Roboto Condensed',sans-serif;font-weight:700;font-size:clamp(12px,1.8vw,15px);border:1.5px solid var(--ctrl-border);border-radius:4px;padding:4px 8px;background:var(--ctrl-bg);color:var(--ctrl-text);">
         ${teamSelectHTML(team, i)}
       </select>
-      <button class="hl-remove" onclick="removeHighlight(${i})" title="Remove">✕</button>
+      <button class="hl-remove" onclick="removeHighlight(${i})" title="Убрать">✕</button>
     </div>`).join('');
   const addBtn = document.getElementById('hl-add-btn');
   if (addBtn) addBtn.style.display = rows.length >= 4 ? 'none' : 'inline-block';
@@ -4862,7 +4894,7 @@ function getState() {
 
 document.getElementById('tz-select').addEventListener('change', () => {
   const s = getState();
-  try { localStorage.setItem('wc2026_tz', document.getElementById('tz-select').selectedIndex); } catch(e) {}
+  try { localStorage.setItem('wc2026_tz_ru', document.getElementById('tz-select').selectedIndex); } catch(e) {}
   render(s.offset, s.team);
 });
 
@@ -4893,43 +4925,20 @@ document.getElementById('team-filter').addEventListener('change', () => {
   render(s.offset, s.team);
 });
 
-// Restore saved filters
-try {
-  const savedCity = localStorage.getItem('wc2026_city');
-  if (savedCity) {
-    const sel = document.getElementById('city-filter');
-    const opt = Array.from(sel.options).find(o => o.value === savedCity);
-    if (opt) sel.value = savedCity;
-  }
-} catch(e) {}
-try {
-  const savedGroupFilter = localStorage.getItem('wc2026_groupfilter');
-  if (savedGroupFilter) {
-    const sel = document.getElementById('group-filter');
-    const opt = Array.from(sel.options).find(o => o.value === savedGroupFilter);
-    if (opt) sel.value = savedGroupFilter;
-  }
-} catch(e) {}
-try {
-  const savedTeamFilter = localStorage.getItem('wc2026_teamfilter');
-  if (savedTeamFilter) {
-    const sel = document.getElementById('team-filter');
-    const opt = Array.from(sel.options).find(o => o.value === savedTeamFilter);
-    if (opt) sel.value = savedTeamFilter;
-  }
-} catch(e) {}
-
 function jumpToNextDay() {
-  // Use MATCHES array to find first match that hasn't started yet in user's timezone
   const offset = parseFloat(document.getElementById('tz-select').value);
   const nowUTC = Date.now();
+  const cityFilter = document.getElementById('city-filter')?.value || 'all';
+  const teamFilter = document.getElementById('team-filter')?.value || 'all';
+  const groupFilter = document.getElementById('group-filter')?.value || 'all';
 
-  // Find first upcoming match
   let targetDateKey = null;
   for (const m of MATCHES) {
+    if (cityFilter !== 'all' && m.venue !== cityFilter) continue;
+    if (teamFilter !== 'all' && !m.teams.includes(teamFilter)) continue;
+    if (groupFilter !== 'all' && m.grp !== groupFilter) continue;
     const matchUTC = new Date(m.date + 'T00:00:00Z').getTime() + m.utc * 3600000;
     if (matchUTC > nowUTC) {
-      // Get local date key for this match
       targetDateKey = localDateKey(m.utc, m.date, offset);
       break;
     }
@@ -4937,22 +4946,10 @@ function jumpToNextDay() {
 
   if (!targetDateKey) return;
 
-  // Format the date key to match the day header text e.g. "12 Jun"
-  const [y, mo, d] = targetDateKey.split('-').map(Number);
-  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  const targetText = d + ' ' + months[mo - 1];
-
-  // Find the day block with matching date header
-  const days = document.querySelectorAll('#schedule .day');
-  for (const day of days) {
-    const dateEl = day.querySelector('.day-date');
-    if (dateEl && dateEl.textContent.trim() === targetText) {
-      // Scroll with a small offset so the day header is visible below the page header
-      const top = day.getBoundingClientRect().top + window.scrollY - 80;
-      window.scrollTo({ top, behavior: 'smooth' });
-      return;
-    }
-  }
+  const day = document.querySelector(`#schedule .day[data-date="${targetDateKey}"]`);
+  if (!day) return;
+  const top = day.getBoundingClientRect().top + window.scrollY - 80;
+  window.scrollTo({ top, behavior: 'smooth' });
 }
 
 
@@ -4960,7 +4957,7 @@ function jumpToNextDay() {
 const btn = document.getElementById('mode-toggle');
 btn.addEventListener('click', () => {
   const isPrint = document.body.classList.toggle('print-mode');
-  btn.textContent = isPrint ? '\u2600 Switch to Night Mode' : '\u2788 Switch to Print Mode';
+  btn.textContent = isPrint ? '\u2600 Ночной режим' : '\u2788 Версия для печати';
 });
 
 // Column layout toggle
@@ -4994,43 +4991,11 @@ document.getElementById('col-switch').addEventListener('click', () => {
 });
 updateColSwitch();
 
-// Time format switch
-function updateSwitch() {
-  const track = document.getElementById('ts-track');
-  const left  = document.getElementById('ts-left');
-  const right = document.getElementById('ts-right');
-  // 12hr = switch OFF (left active), 24hr = switch ON (right active)
-  if (use12hr) {
-    track.classList.remove('on');
-    left.classList.add('active');
-    right.classList.remove('active');
-  } else {
-    track.classList.add('on');
-    left.classList.remove('active');
-    right.classList.add('active');
-  }
-}
-
-document.getElementById('time-switch').addEventListener('click', () => {
-  use12hr = !use12hr;
-  updateSwitch();
-  try { localStorage.setItem('wc2026_timeformat', use12hr ? '12' : '24'); } catch(e) {}
-  const s = getState();
-  render(s.offset, s.team);
-});
-
-// Restore saved time format
-try {
-  const saved = localStorage.getItem('wc2026_timeformat');
-  if (saved === '24') { use12hr = false; }
-} catch(e) {}
-updateSwitch();
-
 // Knockout toggle
 const koBtn = document.getElementById('knockout-toggle');
 koBtn.addEventListener('click', () => {
   showKnockout = !showKnockout;
-  koBtn.textContent = showKnockout ? 'Hide Knockout Stage' : 'Show Knockout Stage';
+  koBtn.textContent = showKnockout ? 'Скрыть плей-офф' : 'Показать плей-офф';
   const s = getState();
   render(s.offset, s.team);
 });
@@ -5110,43 +5075,51 @@ koBtn.addEventListener('click', () => {
   renderHighlightRows();
 
   // Restore saved timezone preference
+  let hasSavedTz = false;
   try {
-    const savedTz = localStorage.getItem('wc2026_tz');
+    const savedTz = localStorage.getItem('wc2026_tz_ru');
     if (savedTz !== null) {
       const sel = document.getElementById('tz-select');
       const idx = parseInt(savedTz);
       if (!isNaN(idx) && sel.options[idx]) {
         sel.selectedIndex = idx;
-        render(parseFloat(sel.options[idx].value), document.getElementById('team-select').value);
-        return; // skip auto-detect
+        hasSavedTz = true;
       }
     }
   } catch(e) {}
 
-  // Get user's IANA timezone
-  let userTz = 0; // default to UTC+0 if no match
-  try {
-    const ianaZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    if (TZ_MAP[ianaZone] !== undefined) {
-      userTz = TZ_MAP[ianaZone];
-    } else {
-      // Fallback: calculate offset from browser directly
-      const offsetMins = -new Date().getTimezoneOffset();
-      userTz = offsetMins / 60;
+  if (!hasSavedTz) {
+    // Get user's IANA timezone
+    let userTz = 3; // default to Moscow time if no match
+    try {
+      const ianaZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      if (TZ_MAP[ianaZone] !== undefined) {
+        userTz = TZ_MAP[ianaZone];
+      } else {
+        // Fallback: calculate offset from browser directly
+        const offsetMins = -new Date().getTimezoneOffset();
+        userTz = offsetMins / 60;
+      }
+    } catch(e) {
+      userTz = 3;
     }
-  } catch(e) {}
 
-  // Select the matching dropdown option (pick closest if no exact match)
-  const sel = document.getElementById('tz-select');
-  const opts = Array.from(sel.options);
-  let bestIdx = 0, bestDiff = Infinity;
-  opts.forEach((o, i) => {
-    const diff = Math.abs(parseFloat(o.value) - userTz);
-    if (diff < bestDiff) { bestDiff = diff; bestIdx = i; }
-  });
-  sel.selectedIndex = bestIdx;
-  // Save auto-detected tz so other pages stay in sync
-  try { localStorage.setItem('wc2026_tz', bestIdx); } catch(e) {}
+    // Select the matching dropdown option (pick closest if no exact match)
+    const sel = document.getElementById('tz-select');
+    const opts = Array.from(sel.options);
+    let bestIdx = 0, bestDiff = Infinity;
+    opts.forEach((o, i) => {
+      const diff = Math.abs(parseFloat(o.value) - userTz);
+      if (diff < bestDiff) { bestDiff = diff; bestIdx = i; }
+    });
+    if (userTz === 3) {
+      const moscowIdx = opts.findIndex(o => o.textContent.includes('Москва'));
+      if (moscowIdx >= 0) bestIdx = moscowIdx;
+    }
+    sel.selectedIndex = bestIdx;
+    // Save auto-detected tz so other pages stay in sync
+    try { localStorage.setItem('wc2026_tz_ru', bestIdx); } catch(e) {}
+  }
 
   function restoreAndRender() {
     renderHighlightRows();
@@ -5167,7 +5140,5 @@ koBtn.addEventListener('click', () => {
 </script>
 
 <!-- Buy Me a Coffee widget -->
-<script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="coolcato" data-description="Support me on Buy me a coffee!" data-message="" data-color="#C9A84C" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
-
 </body>
 </html>

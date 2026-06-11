@@ -1,24 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>World Cup 2026 Group Standings - Live & Updated</title>
-<meta name="description" content="Live standings updated as matches are played. All 12 groups with FIFA tiebreaker logic.">
-<meta property="og:title" content="World Cup 2026 Group Standings - Live & Updated">
-<meta property="og:description" content="Live standings updated as matches are played. All 12 groups with FIFA tiebreaker logic.">
-<meta property="og:url" content="https://kingdoggydog.github.io/worldcup2026/groups.html">
-<link rel="canonical" href="https://kingdoggydog.github.io/worldcup2026/groups.html">
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-N0ENDBHCS4"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-N0ENDBHCS4');
+<title>Турнирные таблицы ЧМ-2026 - live-обновления</title>
+<meta name="description" content="Турнирные таблицы обновляются по ходу матчей. Все 12 групп с учетом правил FIFA при равенстве очков.">
+<meta property="og:title" content="Турнирные таблицы ЧМ-2026 - live-обновления">
+<meta property="og:description" content="Турнирные таблицы обновляются по ходу матчей. Все 12 групп с учетом правил FIFA при равенстве очков.">
+<meta property="og:url" content="https://viktormalyuchenko.github.io/worldcup2026/groups.html">
+<link rel="canonical" href="https://viktormalyuchenko.github.io/worldcup2026/groups.html">
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=109775727', 'ym');
+
+    ym(109775727, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
 </script>
+<noscript><div><img src="https://mc.yandex.ru/watch/109775727" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto+Condensed:wght@400;600;700;800&display=swap');
 
   :root {
     --bg:           #0A0E1A;
@@ -48,7 +53,7 @@
 
   body {
     background: var(--bg); color: var(--text);
-    font-family: 'Barlow', sans-serif;
+    font-family: 'Inter', sans-serif;
     min-height: 100vh;
   }
 
@@ -69,13 +74,13 @@
     gap: 16px; flex-wrap: wrap;
   }
   .header h1 {
-    font-family: 'Barlow Condensed', sans-serif; font-weight: 800;
+    font-family: 'Roboto Condensed', sans-serif; font-weight: 800;
     font-size: clamp(22px, 5vw, 36px);
     letter-spacing: 1px; text-transform: uppercase; line-height: 1;
     color: var(--gold);
   }
   .header .sub {
-    font-family: 'Barlow Condensed', sans-serif;
+    font-family: 'Roboto Condensed', sans-serif;
     font-size: clamp(11px, 2vw, 14px); font-weight: 400;
     letter-spacing: 2px; text-transform: uppercase;
     color: var(--text-sub); margin-top: 4px;
@@ -88,7 +93,7 @@
   .ctrl-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 
   .nav-btn, .ctrl-btn {
-    font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+    font-family: 'Roboto Condensed', sans-serif; font-weight: 700;
     font-size: clamp(11px, 1.5vw, 13px);
     letter-spacing: 1px; text-transform: uppercase;
     padding: 6px 14px; border-radius: 4px; cursor: pointer;
@@ -104,14 +109,14 @@
   }
 
   .ctrl-label {
-    font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+    font-family: 'Roboto Condensed', sans-serif; font-weight: 700;
     font-size: clamp(10px, 1.5vw, 13px);
     letter-spacing: 1px; text-transform: uppercase;
     color: var(--text-sub); white-space: nowrap;
   }
 
   select {
-    font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+    font-family: 'Roboto Condensed', sans-serif; font-weight: 700;
     font-size: clamp(12px, 1.8vw, 15px);
     border: 1.5px solid var(--ctrl-border); border-radius: 4px;
     padding: 5px 8px; background: var(--ctrl-bg);
@@ -124,11 +129,11 @@
   .hl-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
   .hl-remove { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 14px; padding: 0 2px; line-height: 1; }
   .hl-remove:hover { color: var(--text); }
-  .hl-add { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: clamp(11px,1.5vw,13px); letter-spacing: 1px; text-transform: uppercase; padding: 5px 10px; border-radius: 4px; cursor: pointer; border: 1.5px dashed var(--ctrl-border); background: transparent; color: var(--text-muted); transition: all 0.2s; white-space: nowrap; }
+  .hl-add { font-family: 'Roboto Condensed', sans-serif; font-weight: 700; font-size: clamp(11px,1.5vw,13px); letter-spacing: 1px; text-transform: uppercase; padding: 5px 10px; border-radius: 4px; cursor: pointer; border: 1.5px dashed var(--ctrl-border); background: transparent; color: var(--text-muted); transition: all 0.2s; white-space: nowrap; }
   .hl-add:hover { border-color: var(--gold); color: var(--gold); }
   .highlight-note {
     font-size: clamp(10px, 1.5vw, 12px); color: var(--text-muted);
-    font-family: 'Barlow Condensed', sans-serif; font-style: italic;
+    font-family: 'Roboto Condensed', sans-serif; font-style: italic;
   }
 
   /* STANDINGS NOTE */
@@ -136,7 +141,7 @@
     background: var(--bg-match); border: 1px solid var(--border);
     border-left: 3px solid var(--gold);
     padding: 10px 14px; margin-bottom: 16px;
-    font-family: 'Barlow Condensed', sans-serif;
+    font-family: 'Roboto Condensed', sans-serif;
     font-size: clamp(11px, 1.8vw, 13px);
     color: var(--text-sub); letter-spacing: 0.5px;
     border-radius: 3px; flex-shrink: 0;
@@ -177,12 +182,12 @@
     border-bottom: 1px solid var(--border);
   }
   .group-letter {
-    font-family: 'Barlow Condensed', sans-serif;
+    font-family: 'Roboto Condensed', sans-serif;
     font-weight: 800; font-size: 20px;
     letter-spacing: 1px; line-height: 1;
   }
   .group-label {
-    font-family: 'Barlow Condensed', sans-serif;
+    font-family: 'Roboto Condensed', sans-serif;
     font-weight: 400; font-size: 11px;
     letter-spacing: 2px; text-transform: uppercase;
     color: var(--text-muted);
@@ -193,7 +198,7 @@
     width: 100%; border-collapse: collapse;
   }
   .standings-table th {
-    font-family: 'Barlow Condensed', sans-serif;
+    font-family: 'Roboto Condensed', sans-serif;
     font-weight: 600; font-size: 9px;
     letter-spacing: 1px; text-transform: uppercase;
     color: var(--text-muted); padding: 4px 6px;
@@ -201,7 +206,7 @@
   }
   .standings-table th.team-col { text-align: left; padding-left: 12px; }
   .standings-table td {
-    font-family: 'Barlow Condensed', sans-serif;
+    font-family: 'Roboto Condensed', sans-serif;
     font-size: clamp(12px, 1.8vw, 14px); font-weight: 600;
     padding: 7px 6px; text-align: center;
     border-bottom: 1px solid rgba(42,48,80,0.5);
@@ -239,7 +244,7 @@
   }
   .footer p {
     font-size: clamp(10px, 1.4vw, 12px); color: var(--footer-text);
-    font-family: 'Barlow Condensed', sans-serif; letter-spacing: 0.5px;
+    font-family: 'Roboto Condensed', sans-serif; letter-spacing: 0.5px;
   }
   #version { color: var(--text-muted); font-style: italic; }
 
@@ -250,7 +255,7 @@
     border-top: 1px solid var(--border);
   }
   #bmc-mobile a {
-    font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+    font-family: 'Roboto Condensed', sans-serif; font-weight: 700;
     font-size: 14px; letter-spacing: 1px; text-transform: uppercase;
     color: var(--gold); text-decoration: none;
     border: 1.5px solid var(--gold); padding: 8px 20px;
@@ -273,17 +278,17 @@
 </style>
   <!-- Open Graph / Social sharing -->
   <meta property="og:type" content="website">
-  <meta property="og:site_name" content="World Cup 2026 Schedule">
-  <meta property="og:title" content="World Cup 2026 Group Standings - Live & Updated">
-  <meta property="og:description" content="Live standings updated as matches are played. All 12 groups with FIFA tiebreaker logic.">
-  <meta property="og:url" content="https://kingdoggydog.github.io/worldcup2026/groups.html">
-  <meta property="og:image" content="https://kingdoggydog.github.io/worldcup2026/preview.png">
+  <meta property="og:site_name" content="Расписание ЧМ-2026">
+  <meta property="og:title" content="Турнирные таблицы ЧМ-2026 - live-обновления">
+  <meta property="og:description" content="Турнирные таблицы обновляются по ходу матчей. Все 12 групп с учетом правил FIFA при равенстве очков.">
+  <meta property="og:url" content="https://viktormalyuchenko.github.io/worldcup2026/groups.html">
+  <meta property="og:image" content="https://viktormalyuchenko.github.io/worldcup2026/preview.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="World Cup 2026 Group Standings - Live & Updated">
-  <meta name="twitter:description" content="Live standings updated as matches are played. All 12 groups with FIFA tiebreaker logic.">
-  <meta name="twitter:image" content="https://kingdoggydog.github.io/worldcup2026/preview.png">
+  <meta name="twitter:title" content="Турнирные таблицы ЧМ-2026 - live-обновления">
+  <meta name="twitter:description" content="Турнирные таблицы обновляются по ходу матчей. Все 12 групп с учетом правил FIFA при равенстве очков.">
+  <meta name="twitter:image" content="https://viktormalyuchenko.github.io/worldcup2026/preview.png">
 </head>
 <body>
 <div class="page">
@@ -291,81 +296,67 @@
   <div class="header">
     <div>
       <h1>FIFA World Cup 2026</h1>
-      <div class="sub">Group Stage Draw &bull; 12 Groups &bull; 48 Teams</div>
+      <div class="sub">Групповой этап &bull; 12 групп &bull; 48 команд</div>
       <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;">
-        <a href="https://kingdoggydog.github.io/worldcup2026/" class="nav-btn">&#128197; Schedule</a>
-        <a href="https://kingdoggydog.github.io/worldcup2026/groups.html" class="nav-btn active">&#128202; Groups</a>
-        <a href="https://kingdoggydog.github.io/worldcup2026/bracket.html" class="nav-btn">&#127942; Knockout</a>
+        <a href="index.html" class="nav-btn">&#128197; Расписание</a>
+        <span class="nav-btn active" aria-current="page">&#128202; Группы</span>
+        <a href="bracket.html" class="nav-btn">&#127942; Плей-офф</a>
       </div>
     </div>
     <div class="header-right">
       <div class="ctrl-row">
-        <span class="ctrl-label">Timezone</span>
+        <span class="ctrl-label">Часовой пояс</span>
         <select id="tz-select">
-          <option value="12">Auckland (NZST, UTC+12)</option>
-          <option value="11">Solomon Islands (UTC+11)</option>
-          <option value="10">Melbourne / Sydney (AEST, UTC+10)</option>
-          <option value="10">Brisbane (AEST, UTC+10)</option>
-          <option value="9.5">Adelaide (ACST, UTC+9:30)</option>
-          <option value="9.5">Darwin (ACST, UTC+9:30)</option>
-          <option value="9">Tokyo / Seoul (JST/KST, UTC+9)</option>
-          <option value="8">Perth (AWST, UTC+8)</option>
-          <option value="8">Singapore / Hong Kong (UTC+8)</option>
-          <option value="8">Beijing / Shanghai (CST, UTC+8)</option>
-          <option value="8">Kuala Lumpur (MYT, UTC+8)</option>
-          <option value="7">Bangkok / Jakarta (UTC+7)</option>
-          <option value="6">Dhaka (BST, UTC+6)</option>
-          <option value="5.5">India (IST, UTC+5:30)</option>
-          <option value="5">Karachi / Islamabad (PKT, UTC+5)</option>
-          <option value="4">Dubai / Abu Dhabi (GST, UTC+4)</option>
-          <option value="3">Nairobi / Riyadh (EAT/AST, UTC+3)</option>
-          <option value="3">Moscow (MSK, UTC+3)</option>
-          <option value="3">Istanbul (TRT, UTC+3)</option>
-          <option value="2">Cairo (EET, UTC+2)</option>
-          <option value="2">Johannesburg (SAST, UTC+2)</option>
-          <option value="2">Paris / Berlin / Rome (CEST, UTC+2)</option>
-          <option value="2">Athens / Helsinki (EEST, UTC+2)</option>
-          <option value="1">London (BST, UTC+1)</option>
-          <option value="1">Dublin (IST, UTC+1)</option>
-          <option value="1">Lagos / Casablanca (WAT, UTC+1)</option>
-          <option value="0">UTC+0 / Reykjavik</option>
-          <option value="0">Accra / Dakar (GMT, UTC+0)</option>
-          <option value="-3">Buenos Aires / Sao Paulo (UTC-3)</option>
-          <option value="-4">Santiago (CLT, UTC-4)</option>
-          <option value="-4">New York / Toronto (EDT, UTC-4)</option>
-          <option value="-4">Caracas / La Paz (UTC-4)</option>
-          <option value="-5">Chicago (CDT, UTC-5)</option>
-          <option value="-5">Lima / Bogota / Cancun (PET/COT/EST, UTC-5)</option>
-          <option value="-6">Mexico City / Denver / Calgary (CST/MDT, UTC-6)</option>
-          <option value="-7">Los Angeles / Vancouver / Baja California (PDT, UTC-7)</option>
-          <option value="-8">Anchorage (AKDT, UTC-8)</option>
-          <option value="-10">Honolulu (HST, UTC-10)</option>
+          <option value="3">Москва / Минск (МСК, UTC+3)</option>
+          <option value="3">Киев / Кишинев (UTC+3)</option>
+          <option value="5">Астана / Алматы (UTC+5)</option>
+          <option value="5">Ташкент / Душанбе / Ашхабад (UTC+5)</option>
+          <option value="6">Бишкек (UTC+6)</option>
+          <option value="4">Баку / Ереван / Тбилиси (UTC+4)</option>
+          <option value="2">Калининград (UTC+2)</option>
+          <option value="4">Самара / Ульяновск (UTC+4)</option>
+          <option value="5">Екатеринбург / Уфа / Пермь (UTC+5)</option>
+          <option value="6">Омск (UTC+6)</option>
+          <option value="7">Красноярск / Новосибирск (UTC+7)</option>
+          <option value="8">Иркутск (UTC+8)</option>
+          <option value="9">Якутск (UTC+9)</option>
+          <option value="10">Владивосток (UTC+10)</option>
+          <option value="11">Магадан / Сахалин (UTC+11)</option>
+          <option value="12">Камчатка (UTC+12)</option>
+          <option value="2">Берлин / Париж / Рим (UTC+2)</option>
+          <option value="1">Лондон (UTC+1)</option>
+          <option value="0">UTC+0</option>
+          <option value="-4">Нью-Йорк / Торонто (UTC-4)</option>
+          <option value="-5">Чикаго / Канкун / Богота (UTC-5)</option>
+          <option value="-6">Мехико / Денвер (UTC-6)</option>
+          <option value="-7">Лос-Анджелес / Ванкувер (UTC-7)</option>
+          <option value="9">Токио / Сеул (UTC+9)</option>
         </select>
       </div>
       <div class="ctrl-row" style="align-items:flex-start;flex-direction:column;gap:6px;">
-        <span class="ctrl-label">Highlight</span>
+        <span class="ctrl-label">Подсветка</span>
         <div class="highlight-rows" id="highlight-rows"></div>
-        <button class="hl-add" id="hl-add-btn" onclick="addHighlightRow()">+ Add team</button>
+        <button class="hl-add" id="hl-add-btn" onclick="addHighlightRow()">+ Добавить команду</button>
       </div>
       <span class="highlight-note" id="highlight-note" style="display:none"></span>
     </div>
   </div>
 
   <div class="standings-note">
-    <strong>Standings will be updated as the tournament progresses.</strong>
-    All records currently show 0 &mdash; check back once the group stage kicks off on <span id="kickoff-date">11 June 2026 (AEST, UTC+10)</span>.
-    Groups with a <span style="display:inline-block;width:8px;height:8px;background:#2ECC71;border-radius:50%;vertical-align:middle;margin:0 2px"></span> are live &mdash; standings shown are provisional.
+    <strong>Таблицы будут обновляться по ходу турнира.</strong>
+    Сейчас у всех команд нули &mdash; возвращайтесь после старта группового этапа: <span id="kickoff-date">11 июня 2026 (AEST, UTC+10)</span>.
+    Группы со значком <span style="display:inline-block;width:8px;height:8px;background:#2ECC71;border-radius:50%;vertical-align:middle;margin:0 2px"></span> идут live &mdash; таблицы показаны предварительно.
   </div>
 
   <div class="groups-grid" id="groups-grid"></div>
 
   <div class="footer">
     <p>FIFA World Cup 2026 &bull; USA / Canada / Mexico &bull; <span id="version">v1.22</span></p>
-    <p>Top 2 per group + 8 best 3rd place teams advance to Round of 32</p>
+    <p>В 1/16 финала выходят топ-2 каждой группы и 8 лучших команд с третьих мест</p>
   </div>
 
   <div id="bmc-mobile">
-    <a href="https://www.buymeacoffee.com/coolcato" target="_blank">☕ Buy me a coffee</a>
+    <a href="https://yoomoney.ru/to/410016256312437" target="_blank">Поддержать автора</a>
   </div>
 
 </div>
@@ -419,6 +410,24 @@ const FLAGS = {
   'Tunisia':'tn','Turkiye':'tr','Uruguay':'uy','USA':'us',
   'Uzbekistan':'uz',
 };
+
+const TEAM_RU = {
+  'Algeria':'Алжир','Argentina':'Аргентина','Australia':'Австралия','Austria':'Австрия',
+  'Belgium':'Бельгия','Bosnia':'Босния и Герцеговина','Brazil':'Бразилия','Canada':'Канада',
+  'Cape Verde':'Кабо-Верде','Colombia':'Колумбия','Congo DR':'ДР Конго','Croatia':'Хорватия',
+  'Curacao':'Кюрасао','Czechia':'Чехия','Ecuador':'Эквадор','Egypt':'Египет',
+  'England':'Англия','France':'Франция','Germany':'Германия','Ghana':'Гана',
+  'Haiti':'Гаити','Iran':'Иран','Iraq':'Ирак','Ivory Coast':'Кот-д’Ивуар',
+  'Japan':'Япония','Jordan':'Иордания','Mexico':'Мексика','Morocco':'Марокко',
+  'Netherlands':'Нидерланды','New Zealand':'Новая Зеландия','Norway':'Норвегия',
+  'Panama':'Панама','Paraguay':'Парагвай','Portugal':'Португалия','Qatar':'Катар',
+  'Saudi Arabia':'Саудовская Аравия','Scotland':'Шотландия','Senegal':'Сенегал',
+  'South Africa':'ЮАР','South Korea':'Южная Корея','Spain':'Испания','Sweden':'Швеция',
+  'Switzerland':'Швейцария','Tunisia':'Тунис','Turkiye':'Турция','Uruguay':'Уругвай',
+  'USA':'США','Uzbekistan':'Узбекистан'
+};
+
+function teamName(team) { return TEAM_RU[team] || team; }
 
 function flagImg(team) {
   const code = FLAGS[team];
@@ -624,9 +633,9 @@ function saveHighlights() {
 
 function teamSelectHTML(selectedVal, rowIdx) {
   const taken = _highlightTeams.filter((t,i) => t && t !== 'none' && i !== rowIdx);
-  return '<option value="none">— Remove —</option>' +
+  return '<option value="none">— Убрать —</option>' +
     ALL_TEAMS.filter(t => !taken.includes(t) || t === selectedVal)
-      .map(t => `<option value="${t}"${t===selectedVal?' selected':''}>${t}</option>`).join('');
+      .map(t => `<option value="${t}"${t===selectedVal?' selected':''}>${teamName(t)}</option>`).join('');
 }
 
 function renderHighlightRows() {
@@ -636,10 +645,10 @@ function renderHighlightRows() {
   container.innerHTML = rows.map(({team,i}) => `
     <div class="highlight-row">
       <div class="hl-dot" style="background:${HL_COLORS[i]}"></div>
-      <select onchange="updateHighlight(${i}, this.value)" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(12px,1.8vw,15px);border:1.5px solid var(--ctrl-border);border-radius:4px;padding:4px 8px;background:var(--ctrl-bg);color:var(--ctrl-text);">
+      <select onchange="updateHighlight(${i}, this.value)" style="font-family:'Roboto Condensed',sans-serif;font-weight:700;font-size:clamp(12px,1.8vw,15px);border:1.5px solid var(--ctrl-border);border-radius:4px;padding:4px 8px;background:var(--ctrl-bg);color:var(--ctrl-text);">
         ${teamSelectHTML(team, i)}
       </select>
-      <button class="hl-remove" onclick="removeHighlight(${i})" title="Remove">✕</button>
+      <button class="hl-remove" onclick="removeHighlight(${i})" title="Убрать">✕</button>
     </div>`).join('');
   const addBtn = document.getElementById('hl-add-btn');
   if (addBtn) addBtn.style.display = rows.length >= 4 ? 'none' : 'inline-block';
@@ -705,7 +714,7 @@ function render(highlightTeam, data) {
 
       rows += `<tr class="${hiCls}">
         <td class="stat" style="width:20px;padding-left:8px">${i+1}</td>
-        <td class="team-name">${flagImg(name)}${name}</td>
+        <td class="team-name">${flagImg(name)}${teamName(name)}</td>
         <td class="stat">${s.p}</td>
         <td class="stat">${s.p > 0 ? s.w : '-'}</td>
         <td class="stat">${s.p > 0 ? s.d : '-'}</td>
@@ -717,16 +726,16 @@ function render(highlightTeam, data) {
 
     card.innerHTML = `
       <div class="group-header">
-        <span class="group-letter" style="color:${color}">Group ${grp}</span>
-        ${isLive ? '<span class="live-dot" title="Match in progress"></span>' : ''}
+        <span class="group-letter" style="color:${color}">Группа ${grp}</span>
+        ${isLive ? '<span class="live-dot" title="Матч идет"></span>' : ''}
       </div>
       <table class="standings-table">
         <thead>
           <tr>
-            <th></th><th class="team-col">Team</th>
-            <th title="Played">P</th><th title="Won">W</th>
-            <th title="Drawn">D</th><th title="Lost">L</th>
-            <th title="Goal Difference">GD</th><th title="Points">Pts</th>
+            <th></th><th class="team-col">Команда</th>
+            <th title="Игры">И</th><th title="Победы">В</th>
+            <th title="Ничьи">Н</th><th title="Поражения">П</th>
+            <th title="Разница мячей">РМ</th><th title="Очки">О</th>
           </tr>
         </thead>
         <tbody>${rows}</tbody>
@@ -757,16 +766,19 @@ renderHighlightRows();
 
 // Timezone selector
 try {
-  const savedTz = localStorage.getItem('wc2026_tz');
-  if (savedTz) {
-    const sel = document.getElementById('tz-select');
+  const savedTz = localStorage.getItem('wc2026_tz_ru');
+  const sel = document.getElementById('tz-select');
+  if (savedTz !== null) {
     const idx = parseInt(savedTz);
     if (!isNaN(idx) && sel.options[idx]) sel.selectedIndex = idx;
+  } else {
+    const moscowIdx = Array.from(sel.options).findIndex(o => o.textContent.includes('Москва'));
+    if (moscowIdx >= 0) sel.selectedIndex = moscowIdx;
   }
 } catch(e) {}
 
 document.getElementById('tz-select').addEventListener('change', function() {
-  try { localStorage.setItem('wc2026_tz', this.selectedIndex); } catch(e) {}
+  try { localStorage.setItem('wc2026_tz_ru', this.selectedIndex); } catch(e) {}
   updateKickoffDate();
 });
 
@@ -775,7 +787,7 @@ function updateKickoffDate() {
   const offset = parseFloat(sel.value);
   const firstMatchUTC = new Date('2026-06-11T19:00:00Z');
   const local = new Date(firstMatchUTC.getTime() + offset * 3600000);
-  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const months = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
   const selText = sel.options[sel.selectedIndex].text;
   const parenMatch = selText.match(/[(]([^)]+)[)]/);
   const tzLabel = parenMatch ? parenMatch[1] : `UTC${offset >= 0 ? '+' : ''}${offset}`;
