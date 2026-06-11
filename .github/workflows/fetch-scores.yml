@@ -2,7 +2,9 @@ name: Fetch World Cup Scores
 
 on:
   schedule:
-    - cron: '*/5 * * * *'
+    # Before the tournament starts, once per day is enough.
+    # During live matches, switch back to something like '*/15 * * * *'.
+    - cron: '17 3 * * *'
   workflow_dispatch:
 
 env:
@@ -27,7 +29,16 @@ jobs:
             --max-time 25 \
             --retry 1 \
             --retry-delay 3
-          echo "Fetched $(cat data.json | python3 -c "import json,sys; d=json.load(sys.stdin); print(len(d['matches']))" ) matches"
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(Path("data.json").read_text())
+          matches = data.get("matches")
+          if not isinstance(matches, list) or len(matches) != 104:
+              raise SystemExit(f"Unexpected data.json: matches={len(matches) if isinstance(matches, list) else type(matches).__name__}")
+          print(f"Fetched {len(matches)} matches")
+          PY
 
       - name: Commit and push if changed
         run: |
