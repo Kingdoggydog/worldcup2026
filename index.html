@@ -4214,7 +4214,7 @@
         </div>
         <div class="ctrl-row" id="filters-row" style="align-items:flex-start;flex-direction:column;gap:6px;display:flex;">
           <span class="ctrl-label">Filters</span>
-          <select id="city-filter" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(12px,1.8vw,15px);border:1.5px solid var(--ctrl-border);border-radius:4px;padding:4px 8px;background:var(--ctrl-bg);color:var(--ctrl-text);cursor:pointer;">
+          <select id="city-filter" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(12px,1.8vw,15px);border:1.5px solid var(--ctrl-border);border-radius:4px;padding:4px 8px;background:var(--ctrl-bg);color:var(--ctrl-text);cursor:pointer;min-width:160px;">
             <option value="all">All cities</option>
             <option value="Atlanta">Atlanta</option>
             <option value="Boston">Boston</option>
@@ -4233,7 +4233,7 @@
             <option value="Toronto">Toronto</option>
             <option value="Vancouver">Vancouver</option>
           </select>
-          <select id="group-filter" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(12px,1.8vw,15px);border:1.5px solid var(--ctrl-border);border-radius:4px;padding:4px 8px;background:var(--ctrl-bg);color:var(--ctrl-text);cursor:pointer;">
+          <select id="group-filter" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(12px,1.8vw,15px);border:1.5px solid var(--ctrl-border);border-radius:4px;padding:4px 8px;background:var(--ctrl-bg);color:var(--ctrl-text);cursor:pointer;min-width:160px;">
             <option value="all">All groups</option>
             <option value="A">Group A</option>
             <option value="B">Group B</option>
@@ -4253,7 +4253,7 @@
             <option value="SF">Semi Finals</option>
             <option value="Final">Final</option>
           </select>
-          <select id="team-filter" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(12px,1.8vw,15px);border:1.5px solid var(--ctrl-border);border-radius:4px;padding:4px 8px;background:var(--ctrl-bg);color:var(--ctrl-text);cursor:pointer;">
+          <select id="team-filter" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(12px,1.8vw,15px);border:1.5px solid var(--ctrl-border);border-radius:4px;padding:4px 8px;background:var(--ctrl-bg);color:var(--ctrl-text);cursor:pointer;min-width:160px;">
             <option value="all">All teams</option>
             <option value="Algeria">Algeria</option>
             <option value="Argentina">Argentina</option>
@@ -4304,9 +4304,13 @@
             <option value="USA">USA</option>
             <option value="Uzbekistan">Uzbekistan</option>
           </select>
-          <button onclick="clearFilters()" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:4px;cursor:pointer;border:1.5px solid var(--ctrl-border);background:transparent;color:var(--text-muted);transition:all 0.2s;" onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'" onmouseout="this.style.borderColor='var(--ctrl-border)';this.style.color='var(--text-muted)'">✕ Clear filters</button>
+          <div style="display:flex;gap:6px;">
+            <button onclick="clearFilters()" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:4px;cursor:pointer;border:1.5px solid var(--ctrl-border);background:transparent;color:var(--text-muted);transition:all 0.2s;" onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'" onmouseout="this.style.borderColor='var(--ctrl-border)';this.style.color='var(--text-muted)'">✕ Clear</button>
+            <button onclick="downloadICS()" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:4px;cursor:pointer;border:1.5px solid var(--ctrl-border);background:transparent;color:var(--text-muted);transition:all 0.2s;" onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'" onmouseout="this.style.borderColor='var(--ctrl-border)';this.style.color='var(--text-muted)'">📅 Calendar</button>
+          </div>
         </div>
       </div>
+
     </div>
   </div>
 
@@ -4325,7 +4329,7 @@
   <div class="schedule-note">
     <strong>&#9201; Next match: </strong><span id="countdown-text" style="color:var(--gold);font-weight:700;">Loading...</span><br>
 
-    <strong>&#10024; New:</strong> <span style="color:var(--text-sub)">Toggle option for 1 or 2 column display (if your screen is big enough) &bull; Filter by city, team and group</span>
+    <strong>&#10024; New:</strong> <span style="color:var(--text-sub)">Filter by city, team and group &bull; Download a personalised .ics calendar file to add matches to Outlook, iPhone or Android calendar</span>
   </div>
   <div class="schedule" id="schedule"></div>
 
@@ -4867,6 +4871,97 @@ document.getElementById('tz-select').addEventListener('change', () => {
   try { localStorage.setItem('wc2026_tz', document.getElementById('tz-select').selectedIndex); } catch(e) {}
   render(s.offset, s.team);
 });
+
+function downloadICS() {
+  const cityFilter = document.getElementById('city-filter')?.value || 'all';
+  const groupFilter = document.getElementById('group-filter')?.value || 'all';
+  const teamFilter = document.getElementById('team-filter')?.value || 'all';
+  const koRounds = ['R32','R16','QF','SF','Final'];
+
+  // Get all matches (group + knockout) that pass current filters
+  const allMatches = [...MATCHES, ...KNOCKOUT_MATCHES];
+  const filtered = allMatches.filter(m => {
+    if (cityFilter !== 'all' && m.venue !== cityFilter) return false;
+    if (teamFilter !== 'all' && !m.teams.includes(teamFilter)) return false;
+    if (groupFilter !== 'all') {
+      const isKoRound = koRounds.includes(groupFilter);
+      if (isKoRound && m.grp !== groupFilter) return false;
+      if (!isKoRound && koRounds.includes(m.grp)) return false;
+      if (!isKoRound && m.grp !== groupFilter) return false;
+    }
+    return true;
+  });
+
+  if (filtered.length === 0) {
+    alert('No matches match your current filters.');
+    return;
+  }
+
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  function toICSDate(dateStr, utcFloat) {
+    const utcH = Math.floor(utcFloat);
+    const utcM = Math.round((utcFloat % 1) * 60);
+    const d = new Date(`${dateStr}T${pad(utcH)}:${pad(utcM)}:00Z`);
+    return d.getUTCFullYear() +
+      pad(d.getUTCMonth() + 1) +
+      pad(d.getUTCDate()) + 'T' +
+      pad(d.getUTCHours()) +
+      pad(d.getUTCMinutes()) + '00Z';
+  }
+
+  function toICSDateEnd(dateStr, utcFloat) {
+    const utcH = Math.floor(utcFloat);
+    const utcM = Math.round((utcFloat % 1) * 60);
+    const d = new Date(`${dateStr}T${pad(utcH)}:${pad(utcM)}:00Z`);
+    d.setTime(d.getTime() + 2 * 60 * 60 * 1000); // +2 hours
+    return d.getUTCFullYear() +
+      pad(d.getUTCMonth() + 1) +
+      pad(d.getUTCDate()) + 'T' +
+      pad(d.getUTCHours()) +
+      pad(d.getUTCMinutes()) + '00Z';
+  }
+
+  const lines = [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//World Cup 2026 Schedule//EN',
+    'CALSCALE:GREGORIAN',
+    'METHOD:PUBLISH',
+    'X-WR-CALNAME:FIFA World Cup 2026',
+    'X-WR-TIMEZONE:UTC',
+  ];
+
+  filtered.forEach((m, i) => {
+    const grpLabel = koRounds.includes(m.grp) ? m.grp : `Group ${m.grp}`;
+    const num = m.num ? ` (${m.num})` : '';
+    lines.push('BEGIN:VEVENT');
+    lines.push('UID:wc2026-' + m.date + '-' + i + '@kingdoggydog.github.io');
+    lines.push('DTSTAMP:' + toICSDate(m.date, m.utc));
+    lines.push('DTSTART:' + toICSDate(m.date, m.utc));
+    lines.push('DTEND:' + toICSDateEnd(m.date, m.utc));
+    lines.push('SUMMARY:' + m.teams + ' - FIFA World Cup 2026');
+    lines.push('LOCATION:' + m.venue);
+    lines.push('DESCRIPTION:' + grpLabel + num + ' - ' + m.venue + ' - kingdoggydog.github.io/worldcup2026');
+    lines.push('END:VEVENT');
+  });
+
+  lines.push('END:VCALENDAR');
+
+  const blob = new Blob([lines.join('\r\n')], { type: 'text/calendar;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+
+  // Build filename from filters
+  let fname = 'worldcup2026';
+  if (teamFilter !== 'all') fname += `-${teamFilter.replace(/ /g,'')}`;
+  if (cityFilter !== 'all') fname += `-${cityFilter.replace(/ /g,'')}`;
+  if (groupFilter !== 'all') fname += `-${groupFilter}`;
+  a.download = `${fname}.ics`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
 
 function clearFilters() {
   document.getElementById('city-filter').value = 'all';
