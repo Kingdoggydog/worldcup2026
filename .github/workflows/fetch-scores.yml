@@ -2,9 +2,8 @@ name: Fetch World Cup Scores
 
 on:
   schedule:
-    # Before the tournament starts, once per day is enough.
-    # During live matches, switch back to something like '*/15 * * * *'.
-    - cron: '*/15 * * * *'
+    # Every 15 minutes, offset from crowded :00/:15/:30/:45 slots.
+    - cron: '7,22,37,52 * * * *'
   workflow_dispatch:
 
 env:
