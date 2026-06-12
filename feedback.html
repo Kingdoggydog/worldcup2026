@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responses to Suggestions - World Cup 2026 Schedule</title>
+  <meta name="description" content="Responses to user suggestions and feedback for the World Cup 2026 Schedule site.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:           #0A0E1A;
+      --surface:      #111827;
+      --border:       #1E2840;
+      --text:         #E8EAF0;
+      --text-sub:     #7A82A8;
+      --text-muted:   #4A5568;
+      --gold:         #C9A84C;
+      --ctrl-bg:      #1A2235;
+      --ctrl-border:  #2A3A55;
+      --ctrl-text:    #C8D0E0;
+      --win:          #2ECC71;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: 'Barlow Condensed', sans-serif;
+      min-height: 100vh;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 20px 16px 60px; }
+
+    /* Header */
+    .header {
+      display: flex; justify-content: space-between;
+      align-items: flex-start; margin-bottom: 20px;
+      padding-bottom: 16px; border-bottom: 1px solid var(--border);
+    }
+    .header h1 {
+      font-weight: 800; font-size: clamp(22px, 5vw, 36px);
+      letter-spacing: 1px; text-transform: uppercase; line-height: 1;
+      color: var(--gold);
+    }
+    .header .sub {
+      font-size: clamp(11px, 2vw, 14px); font-weight: 400;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--text-sub); margin-top: 4px;
+    }
+
+    /* Nav */
+    .nav-btn {
+      font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+      font-size: clamp(11px, 1.8vw, 14px); letter-spacing: 1px;
+      text-transform: uppercase; padding: 7px 14px; border-radius: 4px;
+      cursor: pointer; border: 1.5px solid var(--ctrl-border);
+      background: var(--ctrl-bg); color: var(--ctrl-text);
+      text-decoration: none; transition: all 0.2s; white-space: nowrap;
+    }
+    .nav-btn:hover { border-color: var(--gold); color: var(--gold); }
+    .nav-btn.active { background: var(--gold); color: #0A0E1A; border-color: var(--gold); }
+    .nav-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+
+    /* Intro note */
+    .page-note {
+      background: var(--surface); border: 1px solid var(--border);
+      border-left: 3px solid var(--gold); border-radius: 0 4px 4px 0;
+      padding: 12px 16px; margin-bottom: 24px;
+      font-size: 15px; color: var(--text-sub); line-height: 1.5;
+    }
+    .page-note strong { color: var(--gold); }
+
+    /* Table */
+    .feedback-table {
+      width: 100%; border-collapse: collapse;
+    }
+    .feedback-table th {
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--text-muted);
+      padding: 8px 12px; border-bottom: 2px solid var(--border);
+      text-align: left;
+    }
+    .feedback-table th.center { text-align: center; }
+    .feedback-table td {
+      padding: 14px 12px; border-bottom: 1px solid var(--border);
+      vertical-align: top; font-size: 15px; line-height: 1.5;
+      color: var(--text);
+    }
+    .feedback-table td.status { text-align: center; font-size: 20px; }
+    .feedback-table td.date {
+      color: var(--text-muted); font-size: 13px;
+      white-space: nowrap; width: 90px;
+    }
+    .feedback-table td.suggestion { color: var(--text); }
+    .feedback-table td.response { color: var(--text-sub); font-size: 14px; }
+    .feedback-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* Section headers */
+    .section-header {
+      font-size: 11px; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--gold);
+      padding: 20px 12px 8px; border-bottom: 1px solid var(--border);
+    }
+
+    /* Footer */
+    .footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--border); }
+    .footer p { font-size: 12px; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; }
+
+    @media (max-width: 600px) {
+      .feedback-table td.date { display: none; }
+      .feedback-table th.date { display: none; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div>
+      <h1>FIFA World Cup 2026</h1>
+      <div class="sub">Responses to suggestions</div>
+      <div class="nav-row">
+        <a href="https://kingdoggydog.github.io/worldcup2026/" class="nav-btn">📅 Schedule</a>
+        <a href="https://kingdoggydog.github.io/worldcup2026/groups.html" class="nav-btn">📊 Groups</a>
+        <a href="https://kingdoggydog.github.io/worldcup2026/bracket.html" class="nav-btn">🏆 Knockout</a>
+        <a href="https://kingdoggydog.github.io/worldcup2026/feedback.html" class="nav-btn active">💬 Feedback</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-note">
+    <strong>Thanks for all the suggestions!</strong> I read every one. Here's where things stand — what's been done, what I'm thinking about, and what's not planned. Keep the feedback coming via the link below.
+  </div>
+
+  <table class="feedback-table">
+    <thead>
+      <tr>
+        <th class="center" style="width:40px;"></th>
+        <th>Suggestion</th>
+        <th>My response</th>
+        <th class="date">Date</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <!-- DONE -->
+      <tr><td colspan="4" class="section-header">✅ Done</td></tr>
+
+      <tr>
+        <td class="status">✅</td>
+        <td class="suggestion">Allow for multiple "Highlight" countries</td>
+        <td class="response">Done! You can now highlight up to 4 teams in different colours — green, blue, purple and orange. Your selections persist across pages and sessions.</td>
+        <td class="date">6 Jun</td>
+      </tr>
+
+      <tr>
+        <td class="status">✅</td>
+        <td class="suggestion">ICS / calendar event exporter so people can filter by team and get calendar events</td>
+        <td class="response">Done! Use the Filters section to select your team, city or group, then hit the 📅 Calendar button to download a personalised .ics file. Works with Outlook, iPhone and Android calendar.</td>
+        <td class="date">10 Jun</td>
+      </tr>
+
+      <tr>
+        <td class="status">✅</td>
+        <td class="suggestion">Option to see all games in one single column</td>
+        <td class="response">Done! On wider screens you'll see a 1 col / 2 col toggle next to the 12hr/24hr switch. Defaults to 2 columns on desktop, always 1 column on mobile.</td>
+        <td class="date">10 Jun</td>
+      </tr>
+
+      <tr>
+        <td class="status">✅</td>
+        <td class="suggestion">Add localStorage support so timezone and team preferences persist across sessions</td>
+        <td class="response">Done! Your highlights, filters and time format all persist in your browser until you change them. Note: the timezone auto-detects from your device on each page load on the schedule page — so if you manually change it, a refresh will revert it to your local timezone.</td>
+        <td class="date">12 Jun</td>
+      </tr>
+
+      <tr>
+        <td class="status">✅</td>
+        <td class="suggestion">Toggle to hide scores / hide results button</td>
+        <td class="response">Done! Hit the "Hide Scores" button at the top of the schedule page. Your preference persists until you change it — so you can browse upcoming fixtures safely.</td>
+        <td class="date">12 Jun</td>
+      </tr>
+
+      <tr>
+        <td class="status">✅</td>
+        <td class="suggestion">Print layout — eliminate the top right corner controls when printing</td>
+        <td class="response">Done! The controls, filters and info boxes are all hidden in print mode. Switch to Print Mode first, then print — you'll get a clean 2-column schedule.</td>
+        <td class="date">11 Jun</td>
+      </tr>
+
+      <!-- CONSIDERING -->
+      <tr><td colspan="4" class="section-header">🤔 Considering</td></tr>
+
+      <tr>
+        <td class="status">🤔</td>
+        <td class="suggestion">Ability to print the 1 column view in light mode</td>
+        <td class="response">I'm considering this — though you'd have to accept it won't fit onto one page. A full tournament schedule in a single column would run to many pages. Still thinking about the best way to handle this.</td>
+        <td class="date">12 Jun</td>
+      </tr>
+
+      <tr>
+        <td class="status">🤔</td>
+        <td class="suggestion">Show each team's FIFA ranking</td>
+        <td class="response">I'm considering adding this as a toggleable column on the groups page. Watch this space.</td>
+        <td class="date">12 Jun</td>
+      </tr>
+
+      <!-- NOT PLANNED -->
+      <tr><td colspan="4" class="section-header">❌ Not planned</td></tr>
+
+      <tr>
+        <td class="status">❌</td>
+        <td class="suggestion">Have knockout stage matches auto-fill based on current group stage scores</td>
+        <td class="response">I won't show provisional team placeholders mid-group-stage to avoid confusion. The knockout bracket will populate automatically once group positions are mathematically confirmed.</td>
+        <td class="date">12 Jun</td>
+      </tr>
+
+      <tr>
+        <td class="status">❌</td>
+        <td class="suggestion">Add TV broadcast channels, filterable by country</td>
+        <td class="response">I'd love to add this but broadcasting rights vary so much by country and change frequently — it would be nearly impossible to keep accurate. I'd suggest checking your local listings.</td>
+        <td class="date">10 Jun</td>
+      </tr>
+
+      <tr>
+        <td class="status">❌</td>
+        <td class="suggestion">Choose the colour of highlighted teams so they match their kit or flag</td>
+        <td class="response">Love this idea but many national teams share very similar colours, which would make highlights hard to distinguish on screen. I've gone with a fixed set of colours that work well on the dark background.</td>
+        <td class="date">12 Jun</td>
+      </tr>
+
+    </tbody>
+  </table>
+
+  <div class="footer">
+    <p>Have a suggestion? <a href="https://forms.gle/GHQH8NMe436BL8t48" target="_blank" style="color:var(--gold);text-decoration:none;">Submit feedback →</a> &nbsp;·&nbsp; <a href="https://www.reddit.com/user/coolcato" target="_blank" style="color:var(--text-muted);text-decoration:none;">👋 Made by u/coolcato</a></p>
+  </div>
+
+</div>
+</body>
+</html>
