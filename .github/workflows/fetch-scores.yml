@@ -4,7 +4,7 @@ on:
   schedule:
     # Before the tournament starts, once per day is enough.
     # During live matches, switch back to something like '*/15 * * * *'.
-    - cron: '17 3 * * *'
+    - cron: "*/15 * * * *"
   workflow_dispatch:
 
 env:
