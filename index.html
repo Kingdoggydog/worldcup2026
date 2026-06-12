@@ -4358,9 +4358,25 @@
     World Cup 2026 results, scores and standings updated live during the tournament.
   </p>
 
+  <div id="next-match-card" style="background:#111827;border:1px solid #1E2840;border-left:3px solid #C9A84C;border-radius:0 6px 6px 0;padding:7px 16px;margin-bottom:12px;display:flex;align-items:center;gap:12px;">
+    <span style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#C9A84C;white-space:nowrap;">Next Match</span>
+    <div style="display:flex;align-items:center;gap:10px;flex:1;justify-content:center;">
+      <div style="display:flex;align-items:center;gap:6px;justify-content:flex-end;flex:1;">
+        <span id="nm-home" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;color:#E8EAF0;"></span>
+        <img id="nm-home-flag" src="" alt="" style="width:24px;height:17px;object-fit:contain;border-radius:2px;">
+      </div>
+      <div style="text-align:center;white-space:nowrap;">
+        <span id="nm-kickoff" style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:16px;color:#C9A84C;letter-spacing:1px;"></span>
+        <span id="nm-countdown" style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;color:#7A82A8;margin-left:8px;letter-spacing:1px;"></span>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;justify-content:flex-start;flex:1;">
+        <img id="nm-away-flag" src="" alt="" style="width:24px;height:17px;object-fit:contain;border-radius:2px;">
+        <span id="nm-away" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;color:#E8EAF0;"></span>
+      </div>
+    </div>
+    <span id="nm-venue" style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#7A82A8;white-space:nowrap;text-align:right;"></span>
+  </div>
   <div class="schedule-note">
-    <strong>&#9201; Next match: </strong><span id="countdown-text" style="color:var(--gold);font-weight:700;">Loading...</span><br>
-
     <strong>&#10024; New:</strong> <span style="color:var(--text-sub)">Hide scores &bull; Hide completed matches - preferences persist until changed</span>
   </div>
   <div class="schedule" id="schedule"></div>
@@ -4755,16 +4771,33 @@ function render(offset, team) {
   document.getElementById('footer-tz').innerHTML =
     `All times ${lbl} \u2022 Source: FIFA / Fox Sports 2026 \u2022 <span id="version" style="color:var(--text-muted);font-style:italic">v1.38</span>`;
 
-  // Countdown to next match
-  function updateCountdown() {
-    const now = new Date();
-    const el = document.getElementById('countdown-text');
-    if (!el) return;
+  // Next match card + countdown
+  const FLAGS = {
+    'Algeria':'dz','Argentina':'ar','Australia':'au','Austria':'at','Belgium':'be',
+    'Bosnia':'ba','Brazil':'br','Canada':'ca','Cape Verde':'cv','Colombia':'co',
+    'Congo DR':'cd','Croatia':'hr','Curacao':'cw','Czechia':'cz','Ecuador':'ec',
+    'Egypt':'eg','England':'gb-eng','France':'fr','Germany':'de','Ghana':'gh',
+    'Haiti':'ht','Iran':'ir','Iraq':'iq','Ivory Coast':'ci','Japan':'jp',
+    'Jordan':'jo','Mexico':'mx','Morocco':'ma','Netherlands':'nl','New Zealand':'nz',
+    'Norway':'no','Panama':'pa','Paraguay':'py','Portugal':'pt','Qatar':'qa',
+    'Saudi Arabia':'sa','Scotland':'gb-sct','Senegal':'sn','South Africa':'za',
+    'South Korea':'kr','Spain':'es','Sweden':'se','Switzerland':'ch','Tunisia':'tn',
+    'Turkiye':'tr','Uruguay':'uy','USA':'us','Uzbekistan':'uz'
+  };
 
-    // Find next upcoming match from MATCHES array
+  function flagUrl(team) {
+    const normalised = team.replace(/&amp;/g, '&').trim();
+    const code = FLAGS[normalised] || FLAGS[normalised.split(' ')[0]];
+    return code ? `https://flagcdn.com/w40/${code}.png` : '';
+  }
+
+  function updateNextMatch() {
+    const now = new Date();
+    const offset = parseFloat(document.getElementById('tz-select').value);
     let nextMatch = null;
     let nextTime = null;
-    for (const m of MATCHES) {
+
+    for (const m of [...MATCHES, ...KNOCKOUT_MATCHES]) {
       const utcH = Math.floor(m.utc);
       const utcM = Math.round((m.utc % 1) * 60);
       const matchTime = new Date(`${m.date}T${String(utcH).padStart(2,'0')}:${String(utcM).padStart(2,'0')}:00Z`);
@@ -4776,23 +4809,54 @@ function render(offset, team) {
       }
     }
 
-    if (!nextMatch) { el.textContent = 'Tournament complete'; return; }
+    const card = document.getElementById('next-match-card');
+    if (!nextMatch) { if (card) card.style.display = 'none'; return; }
 
+    // Local kickoff time
+    const localTime = new Date(nextTime.getTime() + offset * 3600000);
+    const hh = localTime.getUTCHours();
+    const mm = localTime.getUTCMinutes();
+    const ampm = offset % 1 === 0 ? (document.body.classList.contains('time24') ? '' : (hh >= 12 ? 'pm' : 'am')) : '';
+    let displayH = hh;
+    const is24 = document.body.classList.contains('time24') || localStorage.getItem('wc2026_timeformat') === '24';
+    if (!is24) { displayH = hh % 12 || 12; }
+    const timeStr = `${displayH}:${String(mm).padStart(2,'0')}${is24 ? '' : (hh >= 12 ? 'pm' : 'am')}`;
+
+    // Teams
+    const parts = nextMatch.teams.split(' v ');
+    const home = parts[0]?.trim() || '';
+    const away = parts[1]?.trim() || nextMatch.teams;
+
+    document.getElementById('nm-home').textContent = home;
+    document.getElementById('nm-away').textContent = away;
+    document.getElementById('nm-kickoff').textContent = timeStr;
+    const grpColors = {
+      A:'#E74C3C',B:'#E67E22',C:'#F0C040',D:'#2ECC71',
+      E:'#1ABC9C',F:'#5DADE2',G:'#A569BD',H:'#EC407A',
+      I:'#FF7043',J:'#26C6DA',K:'#9CCC65',L:'#FFA726'
+    };
+    const grpColor = grpColors[nextMatch.grp] || '#C9A84C';
+    document.getElementById('nm-venue').innerHTML = `<span style="color:${grpColor};font-weight:800;">Group ${nextMatch.grp}</span> · ${nextMatch.venue}`;
+    document.getElementById('nm-home-flag').src = flagUrl(home);
+    document.getElementById('nm-home-flag').alt = home;
+    document.getElementById('nm-away-flag').src = flagUrl(away);
+    document.getElementById('nm-away-flag').alt = away;
+
+    // Countdown
     const diff = nextTime - now;
     const days = Math.floor(diff / 86400000);
     const hrs  = Math.floor((diff % 86400000) / 3600000);
     const mins = Math.floor((diff % 3600000) / 60000);
     const secs = Math.floor((diff % 60000) / 1000);
-
-    let timeStr = '';
-    if (days > 0) timeStr = `${days}d ${hrs}h ${mins}m`;
-    else if (hrs > 0) timeStr = `${hrs}h ${mins}m ${secs}s`;
-    else timeStr = `${mins}m ${secs}s`;
-
-    el.textContent = `${nextMatch.teams} in ${timeStr}`;
+    let countdown = '';
+    if (days > 0) countdown = `${days}d ${hrs}h ${mins}m`;
+    else if (hrs > 0) countdown = `${hrs}h ${mins}m ${secs}s`;
+    else countdown = `${mins}m ${secs}s`;
+    document.getElementById('nm-countdown').textContent = countdown;
   }
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
+
+  updateNextMatch();
+  setInterval(updateNextMatch, 1000);
 
   // Update kickoff date label based on timezone
   // First match is Mexico v South Africa: 2026-06-11T19:00:00Z
