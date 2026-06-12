@@ -541,8 +541,10 @@
     display: none;
     position: fixed;
     bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: fit-content;
     font-family: 'Barlow Condensed', sans-serif;
     font-weight: 700; font-size: 13px;
     letter-spacing: 1px; text-transform: uppercase;
@@ -4663,7 +4665,7 @@ function render(offset, team) {
     let filteredMatches = cityFilter === 'all' ? buckets[k] : buckets[k].filter(m => m.venue === cityFilter);
     if (teamFilter !== 'all') filteredMatches = filteredMatches.filter(m => m.teams.includes(teamFilter));
     if (groupFilter !== 'all') filteredMatches = filteredMatches.filter(m => m.grp === groupFilter);
-    if (hideFinished) filteredMatches = filteredMatches.filter(m => { const sc = scores[m.id] || scoreMap[m.teams.split(' v ')[0].trim() + '|' + m.teams.split(' v ')[1].trim()]; return !sc || sc.status !== 'FINISHED'; });
+    if (hideFinished) filteredMatches = filteredMatches.filter(m => { const sc = getScore(m.teams); return !sc || sc.cls !== 'score-ft'; });
     if (filteredMatches.length === 0) return;
     const hdr = fmtHeader(k);
     const div = document.createElement('div');
@@ -4718,7 +4720,7 @@ function render(offset, team) {
       if (groupFilter !== 'all' && !koRounds.includes(groupFilter)) return;
       let koFiltered = cityFilter === 'all' ? koBuckets[k] : koBuckets[k].filter(m => m.venue === cityFilter);
       if (teamFilter !== 'all') koFiltered = koFiltered.filter(m => m.teams.includes(teamFilter));
-      if (hideFinished) koFiltered = koFiltered.filter(m => { const sc = scoreMap[m.teams.split(' v ')[0].trim() + '|' + m.teams.split(' v ')[1].trim()]; return !sc || sc.status !== 'FINISHED'; });
+      if (hideFinished) koFiltered = koFiltered.filter(m => { const sc = getScore(m.teams); return !sc || sc.cls !== 'score-ft'; });
       if (groupFilter !== 'all' && koRounds.includes(groupFilter)) koFiltered = koFiltered.filter(m => m.grp === groupFilter);
       if (koFiltered.length === 0) return;
       const hdr = fmtHeader(k);
@@ -5047,37 +5049,42 @@ try {
 } catch(e) {}
 
 function jumpToNextDay() {
-  // Use MATCHES array to find first match that hasn't started yet in user's timezone
   const offset = parseFloat(document.getElementById('tz-select').value);
-  const nowUTC = Date.now();
-
-  // Find first upcoming match
-  let targetDateKey = null;
-  for (const m of MATCHES) {
-    const matchUTC = new Date(m.date + 'T00:00:00Z').getTime() + m.utc * 3600000;
-    if (matchUTC > nowUTC) {
-      // Get local date key for this match
-      targetDateKey = localDateKey(m.utc, m.date, offset);
-      break;
-    }
-  }
-
-  if (!targetDateKey) return;
-
-  // Format the date key to match the day header text e.g. "12 Jun"
-  const [y, mo, d] = targetDateKey.split('-').map(Number);
   const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  const targetText = d + ' ' + months[mo - 1];
 
-  // Find the day block with matching date header
+  // Get today's local date in the selected timezone
+  const now = new Date();
+  const localNow = new Date(now.getTime() + offset * 3600000);
+  const todayText = localNow.getUTCDate() + ' ' + months[localNow.getUTCMonth()];
+
+  // Find the day block matching today first
   const days = document.querySelectorAll('#schedule .day');
   for (const day of days) {
     const dateEl = day.querySelector('.day-date');
-    if (dateEl && dateEl.textContent.trim() === targetText) {
-      // Scroll with a small offset so the day header is visible below the page header
+    if (!dateEl) continue;
+    if (dateEl.textContent.trim() === todayText) {
       const top = day.getBoundingClientRect().top + window.scrollY - 80;
       window.scrollTo({ top, behavior: 'smooth' });
       return;
+    }
+  }
+
+  // If today not found (hide completed etc), fall back to first visible day with upcoming match
+  const nowUTC = Date.now();
+  for (const day of days) {
+    const dateEl = day.querySelector('.day-date');
+    if (!dateEl) continue;
+    const dateText = dateEl.textContent.trim();
+    for (const m of [...MATCHES, ...KNOCKOUT_MATCHES]) {
+      const matchUTC = new Date(m.date + 'T' + String(Math.floor(m.utc)).padStart(2,'0') + ':' + String(Math.round((m.utc%1)*60)).padStart(2,'0') + ':00Z').getTime();
+      const localKey = localDateKey(m.utc, m.date, offset);
+      const [y, mo, d] = localKey.split('-').map(Number);
+      const localText = d + ' ' + months[mo-1];
+      if (localText === dateText && matchUTC > nowUTC) {
+        const top = day.getBoundingClientRect().top + window.scrollY - 80;
+        window.scrollTo({ top, behavior: 'smooth' });
+        return;
+      }
     }
   }
 }
