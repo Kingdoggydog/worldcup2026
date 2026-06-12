@@ -239,6 +239,17 @@
   }
   body.print-mode #scores-toggle { display: none !important; }
   #scores-toggle:hover { opacity: 0.8; }
+  #finished-toggle {
+    font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+    font-size: clamp(11px, 1.5vw, 13px);
+    letter-spacing: 1px; text-transform: uppercase;
+    padding: 6px 14px; border-radius: 4px; cursor: pointer;
+    border: 1.5px solid var(--ctrl-border);
+    background: var(--ctrl-bg); color: var(--ctrl-text);
+    transition: all 0.2s; white-space: nowrap;
+  }
+  body.print-mode #finished-toggle { display: none !important; }
+  #finished-toggle:hover { opacity: 0.8; }
   .time-switch {
     display: flex; align-items: center; gap: 6px; cursor: pointer;
     user-select: none;
@@ -374,7 +385,8 @@
     body:not(.print-mode) select { font-size: 14px; padding: 6px 8px; width: 100%; }
     body:not(.print-mode) #mode-toggle,
     body:not(.print-mode) #knockout-toggle,
-    body:not(.print-mode) #scores-toggle { font-size: 12px; padding: 6px 12px; }
+    body:not(.print-mode) #scores-toggle,
+    body:not(.print-mode) #finished-toggle { font-size: 12px; padding: 6px 12px; }
     body:not(.print-mode) .match { padding: 8px 10px; margin-bottom: 3px; }
     body:not(.print-mode) .time { font-size: 16px; width: 44px; }
     body:not(.print-mode) .teams { font-size: 14px; }
@@ -529,8 +541,10 @@
     display: none;
     position: fixed;
     bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: fit-content;
     font-family: 'Barlow Condensed', sans-serif;
     font-weight: 700; font-size: 13px;
     letter-spacing: 1px; text-transform: uppercase;
@@ -4161,6 +4175,7 @@
       <div class="ctrl-row">
         <button id="mode-toggle">&#9788; Switch to Print Mode</button>
         <button id="scores-toggle">Hide Scores</button>
+        <button id="finished-toggle">Hide Completed</button>
       </div>
       <div class="ctrl-row" id="col-switch-row">
         <div class="time-switch" id="time-switch" title="Toggle 12/24 hour time">
@@ -4344,7 +4359,7 @@
   <div class="schedule-note">
     <strong>&#9201; Next match: </strong><span id="countdown-text" style="color:var(--gold);font-weight:700;">Loading...</span><br>
 
-    <strong>&#10024; New:</strong> <span style="color:var(--text-sub)">Hide scores toggle - your preference will persist until changed</span>
+    <strong>&#10024; New:</strong> <span style="color:var(--text-sub)">Hide scores &bull; Hide completed matches - preferences persist until changed</span>
   </div>
   <div class="schedule" id="schedule"></div>
 
@@ -4650,6 +4665,7 @@ function render(offset, team) {
     let filteredMatches = cityFilter === 'all' ? buckets[k] : buckets[k].filter(m => m.venue === cityFilter);
     if (teamFilter !== 'all') filteredMatches = filteredMatches.filter(m => m.teams.includes(teamFilter));
     if (groupFilter !== 'all') filteredMatches = filteredMatches.filter(m => m.grp === groupFilter);
+    if (hideFinished) filteredMatches = filteredMatches.filter(m => { const sc = getScore(m.teams); return !sc || sc.cls !== 'score-ft'; });
     if (filteredMatches.length === 0) return;
     const hdr = fmtHeader(k);
     const div = document.createElement('div');
@@ -4704,6 +4720,7 @@ function render(offset, team) {
       if (groupFilter !== 'all' && !koRounds.includes(groupFilter)) return;
       let koFiltered = cityFilter === 'all' ? koBuckets[k] : koBuckets[k].filter(m => m.venue === cityFilter);
       if (teamFilter !== 'all') koFiltered = koFiltered.filter(m => m.teams.includes(teamFilter));
+      if (hideFinished) koFiltered = koFiltered.filter(m => { const sc = getScore(m.teams); return !sc || sc.cls !== 'score-ft'; });
       if (groupFilter !== 'all' && koRounds.includes(groupFilter)) koFiltered = koFiltered.filter(m => m.grp === groupFilter);
       if (koFiltered.length === 0) return;
       const hdr = fmtHeader(k);
@@ -5032,43 +5049,61 @@ try {
 } catch(e) {}
 
 function jumpToNextDay() {
-  // Use MATCHES array to find first match that hasn't started yet in user's timezone
   const offset = parseFloat(document.getElementById('tz-select').value);
-  const nowUTC = Date.now();
-
-  // Find first upcoming match
-  let targetDateKey = null;
-  for (const m of MATCHES) {
-    const matchUTC = new Date(m.date + 'T00:00:00Z').getTime() + m.utc * 3600000;
-    if (matchUTC > nowUTC) {
-      // Get local date key for this match
-      targetDateKey = localDateKey(m.utc, m.date, offset);
-      break;
-    }
-  }
-
-  if (!targetDateKey) return;
-
-  // Format the date key to match the day header text e.g. "12 Jun"
-  const [y, mo, d] = targetDateKey.split('-').map(Number);
   const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  const targetText = d + ' ' + months[mo - 1];
 
-  // Find the day block with matching date header
+  // Get today's local date in the selected timezone
+  const now = new Date();
+  const localNow = new Date(now.getTime() + offset * 3600000);
+  const todayText = localNow.getUTCDate() + ' ' + months[localNow.getUTCMonth()];
+
+  // Find the day block matching today first
   const days = document.querySelectorAll('#schedule .day');
   for (const day of days) {
     const dateEl = day.querySelector('.day-date');
-    if (dateEl && dateEl.textContent.trim() === targetText) {
-      // Scroll with a small offset so the day header is visible below the page header
+    if (!dateEl) continue;
+    if (dateEl.textContent.trim() === todayText) {
       const top = day.getBoundingClientRect().top + window.scrollY - 80;
       window.scrollTo({ top, behavior: 'smooth' });
       return;
+    }
+  }
+
+  // If today not found (hide completed etc), fall back to first visible day with upcoming match
+  const nowUTC = Date.now();
+  for (const day of days) {
+    const dateEl = day.querySelector('.day-date');
+    if (!dateEl) continue;
+    const dateText = dateEl.textContent.trim();
+    for (const m of [...MATCHES, ...KNOCKOUT_MATCHES]) {
+      const matchUTC = new Date(m.date + 'T' + String(Math.floor(m.utc)).padStart(2,'0') + ':' + String(Math.round((m.utc%1)*60)).padStart(2,'0') + ':00Z').getTime();
+      const localKey = localDateKey(m.utc, m.date, offset);
+      const [y, mo, d] = localKey.split('-').map(Number);
+      const localText = d + ' ' + months[mo-1];
+      if (localText === dateText && matchUTC > nowUTC) {
+        const top = day.getBoundingClientRect().top + window.scrollY - 80;
+        window.scrollTo({ top, behavior: 'smooth' });
+        return;
+      }
     }
   }
 }
 
 
 // Mode toggle
+// Hide completed toggle
+const finishedBtn = document.getElementById('finished-toggle');
+let hideFinished = false;
+try { hideFinished = localStorage.getItem('wc2026_hidefinished') === '1'; } catch(e) {}
+if (hideFinished) finishedBtn.textContent = 'Show Completed';
+finishedBtn.addEventListener('click', () => {
+  hideFinished = !hideFinished;
+  finishedBtn.textContent = hideFinished ? 'Show Completed' : 'Hide Completed';
+  try { localStorage.setItem('wc2026_hidefinished', hideFinished ? '1' : '0'); } catch(e) {}
+  const s = getState();
+  render(s.offset, s.team);
+});
+
 // Scores toggle
 const scoresBtn = document.getElementById('scores-toggle');
 let scoresHidden = false;
