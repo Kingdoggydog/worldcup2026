@@ -111,7 +111,7 @@
 
   body.print-mode #next-match-card { display: none !important; }
   @media (max-width: 600px) {
-    #next-match-card { flex-wrap: wrap !important; justify-content: center !important; }
+    #next-match-card { flex-wrap: wrap !important; justify-content: center !important; gap: 4px !important; }
     #next-match-card > span:first-child { width: 100% !important; text-align: center !important; order: 1; }
     #next-match-card > div { order: 2; width: 100% !important; justify-content: center !important; }
     #next-match-card > span#nm-venue { order: 3; width: 100% !important; text-align: center !important; }
@@ -4374,8 +4374,8 @@
         <img id="nm-home-flag" src="" alt="" style="width:24px;height:17px;object-fit:contain;border-radius:2px;">
       </div>
       <div style="text-align:center;white-space:nowrap;">
-        <span id="nm-kickoff" style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:16px;color:#C9A84C;letter-spacing:1px;"></span>
-        <span id="nm-countdown" style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;color:#7A82A8;margin-left:8px;letter-spacing:1px;"></span>
+        <div id="nm-kickoff" style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:16px;color:#C9A84C;letter-spacing:1px;line-height:1.1;"></div>
+        <div id="nm-countdown" style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;color:#7A82A8;letter-spacing:1px;line-height:1.1;"></div>
       </div>
       <div style="display:flex;align-items:center;gap:6px;justify-content:flex-start;flex:1;">
         <img id="nm-away-flag" src="" alt="" style="width:24px;height:17px;object-fit:contain;border-radius:2px;">
