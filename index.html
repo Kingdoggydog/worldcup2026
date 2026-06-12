@@ -228,6 +228,17 @@
   }
   body.print-mode #knockout-toggle { display: none !important; }
   #knockout-toggle:hover { opacity: 0.8; }
+  #scores-toggle {
+    font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+    font-size: clamp(11px, 1.5vw, 13px);
+    letter-spacing: 1px; text-transform: uppercase;
+    padding: 6px 14px; border-radius: 4px; cursor: pointer;
+    border: 1.5px solid var(--ctrl-border);
+    background: var(--ctrl-bg); color: var(--ctrl-text);
+    transition: all 0.2s; white-space: nowrap;
+  }
+  body.print-mode #scores-toggle { display: none !important; }
+  #scores-toggle:hover { opacity: 0.8; }
   .time-switch {
     display: flex; align-items: center; gap: 6px; cursor: pointer;
     user-select: none;
@@ -362,7 +373,8 @@
     body:not(.print-mode) .ctrl-row { flex-wrap: wrap; gap: 6px; }
     body:not(.print-mode) select { font-size: 14px; padding: 6px 8px; width: 100%; }
     body:not(.print-mode) #mode-toggle,
-    body:not(.print-mode) #knockout-toggle { font-size: 12px; padding: 6px 12px; }
+    body:not(.print-mode) #knockout-toggle,
+    body:not(.print-mode) #scores-toggle { font-size: 12px; padding: 6px 12px; }
     body:not(.print-mode) .match { padding: 8px 10px; margin-bottom: 3px; }
     body:not(.print-mode) .time { font-size: 16px; width: 44px; }
     body:not(.print-mode) .teams { font-size: 14px; }
@@ -490,6 +502,9 @@
   body.print-mode .schedule-note { display: none !important; }
 
   /* scores */
+  body.hide-scores .score-ft,
+  body.hide-scores .score-live { display: none !important; }
+
   .score-ft {
     font-family: 'Barlow Condensed', sans-serif; font-weight: 800;
     font-size: clamp(12px, 1.8vw, 15px);
@@ -4145,7 +4160,7 @@
     <div class="header-right">
       <div class="ctrl-row">
         <button id="mode-toggle">&#9788; Switch to Print Mode</button>
-        <button id="knockout-toggle">Hide Knockout Stage</button>
+        <button id="scores-toggle">Hide Scores</button>
       </div>
       <div class="ctrl-row" id="col-switch-row">
         <div class="time-switch" id="time-switch" title="Toggle 12/24 hour time">
@@ -4329,7 +4344,7 @@
   <div class="schedule-note">
     <strong>&#9201; Next match: </strong><span id="countdown-text" style="color:var(--gold);font-weight:700;">Loading...</span><br>
 
-    <strong>&#10024; New:</strong> <span style="color:var(--text-sub)">Filter by city, team and group &bull; Download a personalised .ics calendar file to add matches to Outlook, iPhone or Android calendar</span>
+    <strong>&#10024; New:</strong> <span style="color:var(--text-sub)">Hide scores toggle - your preference will persist until changed</span>
   </div>
   <div class="schedule" id="schedule"></div>
 
@@ -5054,6 +5069,18 @@ function jumpToNextDay() {
 
 
 // Mode toggle
+// Scores toggle
+const scoresBtn = document.getElementById('scores-toggle');
+let scoresHidden = false;
+try { scoresHidden = localStorage.getItem('wc2026_hidescores') === '1'; } catch(e) {}
+if (scoresHidden) { document.body.classList.add('hide-scores'); scoresBtn.textContent = 'Show Scores'; }
+scoresBtn.addEventListener('click', () => {
+  scoresHidden = !scoresHidden;
+  document.body.classList.toggle('hide-scores', scoresHidden);
+  scoresBtn.textContent = scoresHidden ? 'Show Scores' : 'Hide Scores';
+  try { localStorage.setItem('wc2026_hidescores', scoresHidden ? '1' : '0'); } catch(e) {}
+});
+
 const btn = document.getElementById('mode-toggle');
 btn.addEventListener('click', () => {
   const isPrint = document.body.classList.toggle('print-mode');
@@ -5125,7 +5152,7 @@ updateSwitch();
 
 // Knockout toggle
 const koBtn = document.getElementById('knockout-toggle');
-koBtn.addEventListener('click', () => {
+if (koBtn) koBtn.addEventListener('click', () => {
   showKnockout = !showKnockout;
   koBtn.textContent = showKnockout ? 'Hide Knockout Stage' : 'Show Knockout Stage';
   const s = getState();
