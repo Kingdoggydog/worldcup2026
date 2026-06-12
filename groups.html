@@ -132,6 +132,49 @@
   }
 
   /* STANDINGS NOTE */
+  .third-place-section {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+  .third-place-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800; font-size: clamp(16px,3vw,22px);
+    letter-spacing: 1px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 6px;
+  }
+  .third-place-sub {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px; color: var(--text-muted);
+    letter-spacing: 1px; text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .third-place-table {
+    width: 100%; border-collapse: collapse;
+    font-family: 'Barlow Condensed', sans-serif;
+  }
+  .third-place-table th {
+    font-size: 11px; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--text-muted);
+    padding: 4px 8px; border-bottom: 1px solid var(--border);
+    text-align: center;
+  }
+  .third-place-table th.team-col { text-align: left; }
+  .third-place-table td {
+    font-size: 15px; font-weight: 600;
+    padding: 6px 8px; border-bottom: 1px solid var(--border);
+    text-align: center; color: var(--text);
+  }
+  .third-place-table td.team-name { text-align: left; }
+  .third-place-table td.pts { font-weight: 800; color: var(--gold); }
+  .third-place-table tr.advances td { background: rgba(46,204,113,0.08); }
+  .third-place-table tr.advances td.pos { color: #2ECC71; font-weight: 800; }
+  .third-place-table .grp-badge {
+    display: inline-block; font-size: 11px; font-weight: 700;
+    color: var(--text-muted); margin-left: 4px;
+  }
+  body.print-mode .third-place-section { margin-top: 12px; }
+
   .standings-note {
     background: var(--bg-match); border: 1px solid var(--border);
     border-left: 3px solid var(--gold);
@@ -356,6 +399,27 @@
   </div>
 
   <div class="groups-grid" id="groups-grid"></div>
+  <div class="third-place-section" id="third-place-section" style="display:none;">
+    <div class="third-place-title">Best Third-Place Teams</div>
+    <div class="third-place-sub">Top 8 of 12 advance to Round of 32 &bull; Ranked by: Points &rarr; Goal Diff &rarr; Goals Scored &rarr; Fair Play &rarr; FIFA Ranking</div>
+    <table class="third-place-table">
+      <thead>
+        <tr>
+          <th style="width:24px"></th>
+          <th class="team-col">Team</th>
+          <th title="Played">P</th>
+          <th title="Won">W</th>
+          <th title="Drawn">D</th>
+          <th title="Lost">L</th>
+          <th title="Goal Difference">GD</th>
+          <th title="Goals Scored">GF</th>
+          <th title="Points">Pts</th>
+          <th title="Status">Status</th>
+        </tr>
+      </thead>
+      <tbody id="third-place-body"></tbody>
+    </table>
+  </div>
 
   <div class="footer">
     <p>FIFA World Cup 2026 &bull; USA / Canada / Mexico &bull; <span id="version">v1.22</span></p>
@@ -736,6 +800,71 @@ function render(highlightTeam, data) {
 
   const noteEl = document.getElementById('highlight-note');
   if (noteEl) noteEl.style.display = 'none';
+
+  // Render third place table - need sorted arrays per group
+  const sortedGroups = {};
+  Object.entries(GROUPS).forEach(([grp, teamList]) => {
+    sortedGroups[grp] = sortTeams(teamList, grp, groups[grp] || {}, results);
+  });
+  renderThirdPlace(sortedGroups, groups);
+}
+
+// ── THIRD PLACE TABLE ────────────────────────────────────────────────────────
+function renderThirdPlace(groups, groupStats) {
+  const thirds = [];
+
+  // Get the 3rd place team from each group
+  Object.entries(groups).forEach(([grp, sorted]) => {
+    if (!sorted || sorted.length < 3) return;
+    const team = sorted[2]; // 3rd place
+    const s = groupStats[grp]?.[team];
+    if (!s) return;
+    const gd = s.gf - s.ga;
+    thirds.push({ team, grp, p:s.p, w:s.w, d:s.d, l:s.l, gf:s.gf, ga:s.ga, gd, pts:s.pts });
+  });
+
+  // Sort by FIFA 2026 third-place tiebreaker rules:
+  // 1. Points, 2. GD, 3. GF, 4. Fair play (not available), 5. FIFA ranking (not available)
+  // For 4+5 we fall back to alphabetical
+  thirds.sort((a, b) => {
+    if (b.pts !== a.pts) return b.pts - a.pts;
+    if (b.gd  !== a.gd)  return b.gd  - a.gd;
+    if (b.gf  !== a.gf)  return b.gf  - a.gf;
+    return a.team.localeCompare(b.team);
+  });
+
+  const section = document.getElementById('third-place-section');
+  const tbody = document.getElementById('third-place-body');
+
+  // Always show section
+  if (thirds.length === 0) { section.style.display = 'none'; return; }
+  section.style.display = 'block';
+
+  // Only show advance/eliminated when all 12 third-place teams have played all 3 games
+  const groupStageComplete = thirds.every(t => t.p === 3);
+
+  tbody.innerHTML = thirds.map((t, i) => {
+    const advances = i < 8;
+    const cls = advances ? 'advances' : '';
+    const gdStr = t.p > 0 ? (t.gd > 0 ? '+' + t.gd : String(t.gd)) : '-';
+    let statusCell = '-';
+    if (groupStageComplete) {
+      statusCell = advances ? '✅ Advance' : '❌ Eliminated';
+    }
+    const posColor = groupStageComplete ? (advances ? '#2ECC71' : 'var(--text-muted)') : 'var(--text-muted)';
+    return `<tr class="${cls}">
+      <td class="pos" style="color:${posColor};">${i+1}</td>
+      <td class="team-name">${flagImg(t.team)}${t.team}<span class="grp-badge">Grp ${t.grp}</span></td>
+      <td>${t.p > 0 ? t.p : '-'}</td>
+      <td>${t.p > 0 ? t.w : '-'}</td>
+      <td>${t.p > 0 ? t.d : '-'}</td>
+      <td>${t.p > 0 ? t.l : '-'}</td>
+      <td>${gdStr}</td>
+      <td>${t.p > 0 ? t.gf : '-'}</td>
+      <td class="pts">${t.p > 0 ? t.pts : '-'}</td>
+      <td style="font-size:13px;color:${groupStageComplete?(advances?'#2ECC71':'#E74C3C'):'var(--text-muted)'};">${statusCell}</td>
+    </tr>`;
+  }).join('');
 }
 
 // ── LOAD DATA ─────────────────────────────────────────────────────────────────
