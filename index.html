@@ -4616,8 +4616,10 @@ async function loadScores() {
 function getScore(teamsStr) {
   const parts = teamsStr.split(' v ');
   if (parts.length !== 2) return null;
-  const home = parts[0].trim();
-  const away = parts[1].trim();
+  // Normalise our display names to match API normalised names
+  const DISPLAY_MAP = { 'Bosnia & Herz.': 'Bosnia' };
+  const home = DISPLAY_MAP[parts[0].trim()] || parts[0].trim();
+  const away = DISPLAY_MAP[parts[1].trim()] || parts[1].trim();
   const key = home + '|' + away;
   const s = scoreMap[key];
   if (!s) return null;
