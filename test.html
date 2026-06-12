@@ -840,13 +840,20 @@ function renderThirdPlace(groups, groupStats) {
   if (thirds.length === 0) { section.style.display = 'none'; return; }
   section.style.display = 'block';
 
+  // Only show advance/eliminated when all 12 third-place teams have played all 3 games
+  const groupStageComplete = thirds.every(t => t.p === 3);
+
   tbody.innerHTML = thirds.map((t, i) => {
     const advances = i < 8;
-    const cls = advances ? 'advances' : '';
-    const status = t.p === 0 ? '-' : (advances ? '✅ Advance' : '❌ Eliminated');
+    const cls = groupStageComplete && advances ? 'advances' : '';
     const gdStr = t.p > 0 ? (t.gd > 0 ? '+' + t.gd : String(t.gd)) : '-';
+    let statusCell = '-';
+    if (groupStageComplete) {
+      statusCell = advances ? '✅ Advance' : '❌ Eliminated';
+    }
+    const posColor = groupStageComplete ? (advances ? '#2ECC71' : 'var(--text-muted)') : 'var(--text-muted)';
     return `<tr class="${cls}">
-      <td class="pos" style="color:${advances?'#2ECC71':'var(--text-muted)'};">${i+1}</td>
+      <td class="pos" style="color:${posColor};">${i+1}</td>
       <td class="team-name">${flagImg(t.team)}${t.team}<span class="grp-badge">Grp ${t.grp}</span></td>
       <td>${t.p > 0 ? t.p : '-'}</td>
       <td>${t.p > 0 ? t.w : '-'}</td>
@@ -855,7 +862,7 @@ function renderThirdPlace(groups, groupStats) {
       <td>${gdStr}</td>
       <td>${t.p > 0 ? t.gf : '-'}</td>
       <td class="pts">${t.p > 0 ? t.pts : '-'}</td>
-      <td style="font-size:13px;color:${advances?'#2ECC71':'#E74C3C'}">${t.p > 0 ? status : '-'}</td>
+      <td style="font-size:13px;color:${groupStageComplete?(advances?'#2ECC71':'#E74C3C'):'var(--text-muted)'};">${statusCell}</td>
     </tr>`;
   }).join('');
 }
