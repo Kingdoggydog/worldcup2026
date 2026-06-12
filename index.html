@@ -109,6 +109,14 @@
     box-shadow: none;
   }
 
+  body.print-mode #next-match-card { display: none !important; }
+  @media (max-width: 600px) {
+    #next-match-card { flex-wrap: wrap !important; justify-content: center !important; }
+    #next-match-card > span:first-child { width: 100% !important; text-align: center !important; order: 1; }
+    #next-match-card > div { order: 2; width: 100% !important; justify-content: center !important; }
+    #next-match-card > span#nm-venue { order: 3; width: 100% !important; text-align: center !important; }
+  }
+
   /* ── HEADER ──────────────────────────────────────────────────────────────── */
   .header {
     display: flex; justify-content: space-between; align-items: flex-start;
