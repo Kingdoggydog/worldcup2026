@@ -4561,7 +4561,8 @@ const FLAGS = {
 function flagImg(team) {
   const code = FLAGS[team];
   if (!code) return '';
-  return `<img class="flag" src="https://flagcdn.com/w20/${code}.png" alt="">`;
+  const size = team === 'Jordan' ? 'w80' : 'w20';
+  return `<img class="flag" src="https://flagcdn.com/${size}/${code}.png" alt="">`;
 }
 
 function teamsHtml(teamsStr) {
@@ -4577,7 +4578,7 @@ function teamsHtml(teamsStr) {
 // Maps API shortName/name values to our display names in MATCHES array
 const API_NAME_MAP = {
   'Korea Republic':'South Korea', 'United States':'USA',
-  'Bosnia-H.':'Bosnia','Bosnia-Herzegovina':'Bosnia',
+  'Bosnia-H.':'Bosnia','Bosnia-Herzegovina':'Bosnia','Bosnia & Herz.':'Bosnia',
   'Curaçao':'Curacao', 'Turkey':'Turkiye',
   'Cape Verde Islands':'Cape Verde', 'Cape Verde':'Cape Verde',
   'Congo DR':'Congo DR', 'Ivory Coast':'Ivory Coast',
@@ -4798,7 +4799,7 @@ function render(offset, team) {
   function flagUrl(team) {
     const normalised = team.replace(/&amp;/g, '&').trim();
     const code = FLAGS[normalised] || FLAGS[normalised.split(' ')[0]];
-    return code ? `https://flagcdn.com/w40/${code}.png` : '';
+    return code ? `https://flagcdn.com/w20/${code}.png` : '';
   }
 
   function updateNextMatch() {
