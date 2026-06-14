@@ -4159,11 +4159,14 @@
   <meta property="og:site_name" content="World Cup 2026 Schedule">
   <meta property="og:title" content="World Cup 2026 Schedule - Live Scores & Local Times">
   <meta property="og:description" content="All 104 matches with live scores, standings and bracket. Times in your timezone. Free, no ads.">
+  <meta property="og:url" content="https://kingdoggydog.github.io/worldcup2026/">
+  <meta property="og:image" content="https://kingdoggydog.github.io/worldcup2026/preview.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="World Cup 2026 Schedule - Live Scores & Local Times">
   <meta name="twitter:description" content="All 104 matches with live scores, standings and bracket. Times in your timezone. Free, no ads.">
+  <meta name="twitter:image" content="https://kingdoggydog.github.io/worldcup2026/preview.png">
 </head>
 <body>
 <!-- dark mode is default; .print-mode toggled by JS -->
@@ -4179,7 +4182,7 @@
           <a href="./" class="nav-btn active" id="nav-schedule">&#128197; Schedule</a>
           <a href="groups.html" class="nav-btn" id="nav-groups">&#128202; Groups</a>
           <a href="bracket.html" class="nav-btn" id="nav-knockout">&#127942; Knockout</a>
-          <a href="feedback.html" class="nav-btn" id="nav-feedback">&#128172; Feedback</a>
+          <a href="feedback.html" class="nav-btn" id="feedback-nav">&#128172; Feedback</a>
         </div>
       </div>
     </div>
@@ -5203,13 +5206,13 @@ function downloadICS() {
     const grpLabel = koRounds.includes(m.grp) ? m.grp : `Group ${m.grp}`;
     const num = m.num ? ` (${m.num})` : '';
     lines.push('BEGIN:VEVENT');
-    lines.push('UID:wc2026-' + m.date + '-' + i + '@worldcup2026');
+    lines.push('UID:wc2026-' + m.date + '-' + i + '@kingdoggydog.github.io');
     lines.push('DTSTAMP:' + toICSDate(m.date, m.utc));
     lines.push('DTSTART:' + toICSDate(m.date, m.utc));
     lines.push('DTEND:' + toICSDateEnd(m.date, m.utc));
     lines.push('SUMMARY:' + m.teams + ' - FIFA World Cup 2026');
     lines.push('LOCATION:' + m.venue);
-    lines.push('DESCRIPTION:' + grpLabel + num + ' - ' + m.venue + '');
+    lines.push('DESCRIPTION:' + grpLabel + num + ' - ' + m.venue + ' - kingdoggydog.github.io/worldcup2026');
     lines.push('END:VEVENT');
   });
 
