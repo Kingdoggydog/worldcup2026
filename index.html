@@ -4367,7 +4367,7 @@
   </p>
 
   <div id="live-match-card" style="display:none;background:#0D1A10;border:1px solid #1E3A22;border-left:3px solid #2ECC71;border-radius:0 6px 6px 0;padding:6px 16px;margin-bottom:8px;flex-direction:column;align-items:center;gap:4px;">
-    <span style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#2ECC71;display:flex;align-items:center;gap:6px;"><span style="display:inline-block;width:7px;height:7px;background:#2ECC71;border-radius:50%;animation:pulse-score 1.5s ease-in-out infinite;flex-shrink:0;"></span><span style="animation:pulse-score 1.5s ease-in-out infinite;">LIVE</span></span>
+    <span style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#2ECC71;display:flex;align-items:center;gap:6px;"><span style="display:inline-block;width:7px;height:7px;background:#2ECC71;border-radius:50%;animation:pulse-score 1.5s ease-in-out infinite;flex-shrink:0;"></span><span id="lm-live-label" style="animation:pulse-score 1.5s ease-in-out infinite;">LIVE</span></span>
     <div id="lm-matches" style="display:flex;flex-direction:column;gap:6px;width:100%;"></div>
   </div>
 
@@ -4575,6 +4575,13 @@ function flagUrl(team) {
   return code ? `https://flagcdn.com/w20/${code}.png` : '';
 }
 
+const CARD_LABELS = {
+  en: { live_label: 'LIVE', ht_label: 'HT' },
+  pt: { live_label: 'AO VIVO', ht_label: 'INT' },
+  es: { live_label: 'EN VIVO', ht_label: 'ET' },
+};
+let _cardLang = localStorage.getItem('lang') || 'en';
+
 function teamsHtml(teamsStr) {
   const parts = teamsStr.split(' v ');
   if (parts.length !== 2) return teamsStr;
@@ -4630,6 +4637,9 @@ function updateLiveCard(matches) {
   if (!card) return;
   const liveMatches = matches.filter(m => m.status === 'IN_PLAY' || m.status === 'PAUSED');
   if (!liveMatches.length) { card.style.display = 'none'; return; }
+  const cardLbl = CARD_LABELS[_cardLang] || CARD_LABELS.en;
+  const liveLabel = document.getElementById('lm-live-label');
+  if (liveLabel) liveLabel.textContent = cardLbl.live_label;
   const gc = {A:'#E74C3C',B:'#E67E22',C:'#F0C040',D:'#2ECC71',E:'#1ABC9C',F:'#5DADE2',G:'#A569BD',H:'#EC407A',I:'#FF7043',J:'#26C6DA',K:'#9CCC65',L:'#FFA726'};
   const rows = liveMatches.map((live, i) => {
     const homeKey = normalise(live.homeTeam.shortName || live.homeTeam.name || '');
@@ -4637,7 +4647,7 @@ function updateLiveCard(matches) {
     const hg = live.score?.fullTime?.home ?? '–';
     const ag = live.score?.fullTime?.away ?? '–';
     const minStr = live.minute ? `${live.minute}${live.injuryTime ? '+' + live.injuryTime : ''}'` : '';
-    const minute = live.status === 'PAUSED' ? 'HT' : minStr;
+    const minute = live.status === 'PAUSED' ? cardLbl.ht_label : minStr;
     const grpMatch = MATCHES.find(m => normalise(m.teams.split(' v ')[0]?.trim()) === homeKey);
     const venueHtml = grpMatch
       ? `<span style="color:${gc[grpMatch.grp]||'#2ECC71'};font-weight:800;">Group ${grpMatch.grp}</span> &middot; ${grpMatch.venue}`
@@ -4679,7 +4689,8 @@ function getScore(teamsStr) {
   }
   if ((s.status === 'IN_PLAY' || s.status === 'PAUSED') && s.home !== null) {
     const minStr = s.minute ? `${s.minute}${s.injuryTime ? '+'+s.injuryTime : ''}'` : '';
-    const label = s.status === 'PAUSED' ? 'HT' : (minStr ? '' : 'LIVE');
+    const cl = CARD_LABELS[_cardLang] || CARD_LABELS.en;
+    const label = s.status === 'PAUSED' ? cl.ht_label : (minStr ? '' : cl.live_label);
     return { home: s.home, away: s.away, cls: 'score-live', label, minute: minStr };
   }
   return null;
