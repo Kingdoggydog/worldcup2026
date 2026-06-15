@@ -23,15 +23,23 @@
       --ctrl-bg: #1A2235; --ctrl-border: #2A3A55; --ctrl-text: #C8D0E0;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { overflow-x: hidden; width: 100%; }
     body { background: var(--bg); color: var(--text); font-family: 'Barlow Condensed', sans-serif; min-height: 100vh; }
     .page { max-width: 800px; margin: 0 auto; padding: 20px 16px 60px; }
-    @media (max-width: 600px) { .page { padding: 12px 4px 40px; } .scorers-table td, .scorers-table th { padding: 8px 4px; } .scorers-table { font-size: 13px; } .player-name { font-size: 14px; } }
+    @media (max-width: 600px) {
+      .page { padding: 12px 4px 40px; }
+      .scorers-table td, .scorers-table th { padding: 8px 4px; }
+      .scorers-table { font-size: 13px; table-layout: fixed; width: 100%; }
+      .player-name { font-size: 13px; }
+      .col-mp { display: none; }
+      .col-player { width: 45%; }
+    }
 
     .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
     .header h1 { font-weight: 800; font-size: clamp(22px,5vw,36px); letter-spacing: 1px; text-transform: uppercase; line-height: 1; color: var(--gold); }
     .header .sub { font-size: clamp(11px,2vw,14px); font-weight: 400; letter-spacing: 2px; text-transform: uppercase; color: var(--text-sub); margin-top: 4px; }
     .nav-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
-    .nav-btn { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: clamp(11px,1.5vw,13px); letter-spacing: 1px; text-transform: uppercase; padding: 6px 14px; border-radius: 4px; cursor: pointer; border: 1.5px solid var(--ctrl-border); background: var(--ctrl-bg); color: var(--ctrl-text); text-decoration: none; transition: all 0.2s; white-space: nowrap; display: inline-block; }
+    .nav-btn { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: clamp(10px,1.5vw,13px); letter-spacing: 0.5px; text-transform: uppercase; padding: 5px 10px; border-radius: 4px; cursor: pointer; border: 1.5px solid var(--ctrl-border); background: var(--ctrl-bg); color: var(--ctrl-text); text-decoration: none; transition: all 0.2s; white-space: nowrap; display: inline-block; }
     .nav-btn:hover { opacity: 0.8; }
     .nav-btn.active { background: var(--gold); color: #0A0E1A; border-color: var(--gold); }
 
@@ -144,7 +152,7 @@ async function loadScorers() {
           <th class="center">⚽<br><span style="font-size:9px;letter-spacing:1px;">GOALS</span></th>
           <th class="center">🅰️<br><span style="font-size:9px;letter-spacing:1px;">ASSISTS</span></th>
           <th class="center">🎯<br><span style="font-size:9px;letter-spacing:1px;">PENS</span></th>
-          <th class="center"><span style="font-size:11px;letter-spacing:1px;">MP</span><br><span style="font-size:9px;letter-spacing:1px;">PLAYED</span></th>
+          <th class="center col-mp"><span style="font-size:11px;letter-spacing:1px;">MP</span><br><span style="font-size:9px;letter-spacing:1px;">PLAYED</span></th>
         </tr>
       </thead>
       <tbody>`;
@@ -166,7 +174,7 @@ async function loadScorers() {
         <td class="goals">${s.goals ?? '-'}</td>
         <td class="stat">${s.assists ?? '-'}</td>
         <td class="stat">${s.penalties ?? '-'}</td>
-        <td class="stat">${s.playedMatches ?? '-'}</td>
+        <td class="stat col-mp">${s.playedMatches ?? '-'}</td>
       </tr>`;
     });
 
