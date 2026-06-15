@@ -35,9 +35,9 @@
     .nav-btn.active { background: var(--gold); color: #0A0E1A; border-color: var(--gold); }
 
     .scorers-table { width: 100%; border-collapse: collapse; }
-    .scorers-table th { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); padding: 8px 12px; border-bottom: 2px solid var(--border); text-align: left; }
+    .scorers-table th { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); padding: 8px 12px; border-bottom: 2px solid var(--border); text-align: center; }
     .scorers-table th.center { text-align: center; }
-    .scorers-table td { padding: 12px 12px; border-bottom: 1px solid var(--border); font-size: 16px; color: var(--text); vertical-align: middle; }
+    .scorers-table td { padding: 12px 12px; border-bottom: 1px solid var(--border); font-size: 16px; color: var(--text); vertical-align: middle; text-align: center; }
     .scorers-table td.center { text-align: center; }
     .scorers-table td.goals { font-weight: 800; font-size: 20px; color: var(--gold); text-align: center; }
     .scorers-table td.stat { text-align: center; color: var(--text-sub); font-size: 15px; }
@@ -49,8 +49,8 @@
     .pos.silver { color: #C0C0C0; }
     .pos.bronze { color: #CD7F32; }
 
-    .player-name { font-weight: 700; font-size: 17px; }
-    .player-team { font-size: 13px; color: var(--text-sub); margin-top: 2px; display: flex; align-items: center; gap: 4px; }
+    .player-name { font-weight: 700; font-size: 17px; text-align: left; }
+    .player-team { font-size: 13px; color: var(--text-sub); margin-top: 2px; display: flex; align-items: center; gap: 4px; justify-content: flex-start; }
     .player-team img { width: 16px; height: 12px; object-fit: contain; }
 
     .last-updated { font-size: 12px; color: var(--text-muted); text-align: right; margin-top: 12px; letter-spacing: 1px; }
@@ -135,10 +135,10 @@ async function loadScorers() {
         <tr>
           <th class="center">#</th>
           <th>Player</th>
-          <th class="center" title="Goals">⚽</th>
-          <th class="center" title="Assists">🅰️</th>
-          <th class="center" title="Penalties">🎯</th>
-          <th class="center" title="Matches Played">MP</th>
+          <th class="center">⚽<br><span style="font-size:9px;letter-spacing:1px;">GOALS</span></th>
+          <th class="center">🅰️<br><span style="font-size:9px;letter-spacing:1px;">ASSISTS</span></th>
+          <th class="center">🎯<br><span style="font-size:9px;letter-spacing:1px;">PENS</span></th>
+          <th class="center"><span style="font-size:11px;letter-spacing:1px;">MP</span><br><span style="font-size:9px;letter-spacing:1px;">PLAYED</span></th>
         </tr>
       </thead>
       <tbody>`;
@@ -149,7 +149,7 @@ async function loadScorers() {
       const flag = flagImg(team.shortName);
       html += `<tr>
         <td class="pos ${posClass(i)}">${i + 1}</td>
-        <td>
+        <td style="text-align:left;">
           <div class="player-name">${player.name}</div>
           <div class="player-team">${flag} ${team.shortName}</div>
         </td>
