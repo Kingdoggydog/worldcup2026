@@ -147,8 +147,11 @@ async function loadScorers() {
       const player = s.player;
       const team = s.team;
       const flag = flagImg(team.shortName);
+      // Show = for tied positions
+      const prevGoals = i > 0 ? scorers[i-1].goals : null;
+      const posDisplay = (prevGoals !== null && s.goals === prevGoals) ? '=' : (i + 1);
       html += `<tr>
-        <td class="pos ${posClass(i)}">${i + 1}</td>
+        <td class="pos ${posClass(i)}">${posDisplay}</td>
         <td style="text-align:left;">
           <div class="player-name">${player.name}</div>
           <div class="player-team">${flag} ${team.shortName}</div>
