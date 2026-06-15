@@ -4668,6 +4668,7 @@ function cycleLang() {
   _lang = order[(order.indexOf(_lang) + 1) % order.length];
   try { localStorage.setItem('wc2026_lang', _lang); } catch(e) {}
   applyLang();
+  if (typeof updateLiveCard === 'function') updateLiveCard(lastMatches);
   const s = getState();
   render(s.offset, s.team);
 }
