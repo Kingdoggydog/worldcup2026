@@ -123,7 +123,10 @@ async function loadScorers() {
   try {
     const res = await fetch('scorers.json?t=' + Date.now());
     const data = await res.json();
-    const scorers = data.scorers || [];
+    const scorers = (data.scorers || []).sort((a, b) => {
+      if (b.goals !== a.goals) return b.goals - a.goals;
+      return (b.assists ?? 0) - (a.assists ?? 0);
+    });
 
     if (scorers.length === 0) {
       document.getElementById('scorers-container').innerHTML = '<div class="loading">No scorers yet — check back once matches are played.</div>';
@@ -148,8 +151,9 @@ async function loadScorers() {
       const team = s.team;
       const flag = flagImg(team.shortName);
       // Show = for tied positions
-      const prevGoals = i > 0 ? scorers[i-1].goals : null;
-      const posDisplay = (prevGoals !== null && s.goals === prevGoals) ? '=' : (i + 1);
+      const prev = i > 0 ? scorers[i-1] : null;
+      const tied = prev && s.goals === prev.goals && (s.assists ?? 0) === (prev.assists ?? 0);
+      const posDisplay = tied ? '=' : (i + 1);
       html += `<tr>
         <td class="pos ${posClass(i)}">${posDisplay}</td>
         <td style="text-align:left;">
