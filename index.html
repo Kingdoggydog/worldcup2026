@@ -4608,6 +4608,7 @@ function normalise(name) {
 // scoreMap: keyed by "HomeTeam|AwayTeam" -> {home, away, status}
 let scoreMap = {};
 let lastFetch = null;
+let lastMatches = [];
 
 async function loadScores() {
   try {
@@ -4626,7 +4627,8 @@ async function loadScores() {
       scoreMap[key] = { home: hg, away: ag, status, minute: m.minute, injuryTime: m.injuryTime };
     });
     lastFetch = new Date();
-    updateLiveCard(data.matches || []);
+    lastMatches = data.matches || [];
+    updateLiveCard(lastMatches);
   } catch(e) {
     console.log('Could not load scores:', e.message);
   }
