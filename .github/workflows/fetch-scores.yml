@@ -31,7 +31,7 @@ jobs:
         id: fetch_scorers
         continue-on-error: true
         run: |
-          curl -s "https://fancy-block-fde3.aking116.workers.dev/competitions/WC/scorers?season=2026&limit=10" \
+          curl -s "https://fancy-block-fde3.aking116.workers.dev/competitions/WC/scorers?season=2026&limit=200" \
             -o scorers.json \
             --fail --max-time 25 --retry 1 --retry-delay 3
 
