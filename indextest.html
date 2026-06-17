@@ -4621,7 +4621,7 @@ let lastFetch = null;
 
 async function loadScores() {
   try {
-    const res = await fetch('data.json?t=' + Date.now());
+    const res = await fetch('dummy.json?t=' + Date.now());
     const data = await res.json();
     scoreMap = {};
     (data.matches || []).forEach(m => {
