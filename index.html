@@ -531,6 +531,34 @@
   body.hide-scores .score-ft,
   body.hide-scores .score-live { display: none !important; }
 
+  .score-inline {
+    display: flex; align-items: center; gap: 6px; flex: 1;
+    font-family: 'Barlow Condensed', sans-serif; justify-content: flex-start;
+  }
+  .score-home {
+    display: flex; align-items: center; gap: 4px;
+    font-weight: 700; font-size: clamp(12px,1.8vw,15px);
+    color: var(--text); justify-content: flex-start; white-space: nowrap;
+  }
+  .score-away {
+    display: flex; align-items: center; gap: 4px;
+    font-weight: 700; font-size: clamp(12px,1.8vw,15px);
+    color: var(--text); justify-content: flex-start; flex: 1;
+  }
+  .score-nums {
+    font-weight: 800; font-size: clamp(13px,2vw,16px);
+    white-space: nowrap; min-width: 40px; text-align: center;
+    color: var(--gold);
+  }
+  .score-right {
+    display: flex; align-items: center; gap: 4px;
+    font-size: 11px; white-space: nowrap;
+  }
+  .score-status { color: var(--text-muted); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+  .score-status.live { color: #2ECC71; }
+  .score-ft .score-nums { color: var(--gold); }
+  .score-live .score-nums { color: #2ECC71; animation: pulse-score 1.5s ease-in-out infinite; }
+
   .score-ft {
     font-family: 'Barlow Condensed', sans-serif; font-weight: 800;
     font-size: clamp(12px, 1.8vw, 15px);
@@ -4179,10 +4207,12 @@
       <div style="margin-top:8px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;">
         <a href="https://www.buymeacoffee.com/coolcato" target="_blank" id="bmc-header">☕ Buy me a coffee</a>
         <div style="display:flex;gap:8px;flex-wrap:nowrap;">
-          <a href="https://kingdoggydog.github.io/worldcup2026/" class="nav-btn active" id="nav-schedule">&#128197; Schedule</a>
-          <a href="https://kingdoggydog.github.io/worldcup2026/groups.html" class="nav-btn" id="nav-groups">&#128202; Groups</a>
-          <a href="https://kingdoggydog.github.io/worldcup2026/bracket.html" class="nav-btn" id="nav-knockout">&#127942; Knockout</a>
-          <a href="https://kingdoggydog.github.io/worldcup2026/feedback.html" class="nav-btn" id="feedback-nav">&#128172; Feedback</a>
+          <a href="https://kingdoggydog.github.io/worldcup2026/" class="nav-btn active">&#128197; Schedule</a>
+          <a href="https://kingdoggydog.github.io/worldcup2026/groups.html" class="nav-btn">&#128202; Groups</a>
+          <a href="https://kingdoggydog.github.io/worldcup2026/bracket.html" class="nav-btn">&#127942; Knockout</a>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:nowrap;margin-top:6px;">
+          <a href="https://kingdoggydog.github.io/worldcup2026/scorers.html" class="nav-btn" id="scorers-nav">&#9917; Top Scorers</a>
         </div>
       </div>
     </div>
@@ -4389,9 +4419,6 @@
       </div>
     </div>
     <span id="nm-venue" style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#7A82A8;white-space:nowrap;text-align:right;"></span>
-  </div>
-  <div class="schedule-note" id="schedule-note">
-    <strong>&#10024; New:</strong> <span style="color:var(--text-sub)">Hide scores &bull; Hide completed matches - preferences persist until changed</span>
   </div>
   <div class="schedule" id="schedule"></div>
 
@@ -4866,13 +4893,25 @@ function render(offset, team) {
       const hi = hiIdx >= 0;
       const cls = hi ? ` highlighted hi-${hiIdx+1}` : '';
       const score = getScore(m.teams);
-      const scoreHtml = score
-        ? `<span class="${score.cls}">${score.home} - ${score.away}<span class="score-label${score.cls==='score-live'?' live':''}">${score.label}${score.minute?' <span class="live-min">'+score.minute+'</span>':''}</span></span>`
-        : '';
+      const parts = m.teams.split(' v ');
+      const home = parts[0]?.trim() || '';
+      const away = parts[1]?.trim() || '';
+      let scoreHtml;
+      if (score) {
+        const statusStr = score.label ? `<span class="score-status${score.cls==='score-live'?' live':''}">${score.label}</span>` : '';
+        const minStr = score.minute ? `<span class="live-min">${score.minute}</span>` : '';
+        scoreHtml = `<span class="${score.cls} score-inline">
+          <span class="score-home">${flagImg(home)}${home}</span>
+          <span class="score-nums">${score.home} - ${score.away}</span>
+          <span class="score-away">${away}${flagImg(away)}</span>
+          <span class="score-right">${statusStr}${minStr}</span>
+        </span>`;
+      } else {
+        scoreHtml = `<span class="teams">${teamsHtml(m.teams)}</span>`;
+      }
       html += `<div class="match${cls}">
         <span class="grp ${m.grp}">${m.grp}</span>
         <span class="time">${t}</span>
-        <span class="teams">${teamsHtml(m.teams)}</span>
         ${scoreHtml}
         <span class="venue">${m.venue}</span>
       </div>`;

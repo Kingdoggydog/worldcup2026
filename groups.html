@@ -81,7 +81,7 @@
     color: var(--text-sub); margin-top: 4px;
   }
   .header-right {
-    display: flex; flex-direction: column; gap: 8px; align-items: flex-end;
+    display: flex; flex-direction: column; gap: 8px; align-items: flex-end; flex-shrink: 0;
   }
 
   /* NAV + CONTROLS ROW */
@@ -334,14 +334,15 @@
 <div class="page">
 
   <div class="header">
-    <div>
+    <div style="flex:1;min-width:0;">
       <h1>FIFA World Cup 2026</h1>
       <div class="sub" data-i18n="sub_groups">Group Stage Draw &bull; 12 Groups &bull; 48 Teams</div>
       <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;">
-        <a href="https://kingdoggydog.github.io/worldcup2026/" class="nav-btn" id="nav-schedule">&#128197; Schedule</a>
-        <a href="https://kingdoggydog.github.io/worldcup2026/groups.html" class="nav-btn active" id="nav-groups">&#128202; Groups</a>
-        <a href="https://kingdoggydog.github.io/worldcup2026/bracket.html" class="nav-btn" id="nav-knockout">&#127942; Knockout</a>
-        <a href="https://kingdoggydog.github.io/worldcup2026/feedback.html" class="nav-btn" id="nav-feedback">&#128172; Feedback</a>
+        <a href="https://kingdoggydog.github.io/worldcup2026/" class="nav-btn">&#128197; Schedule</a>
+        <a href="https://kingdoggydog.github.io/worldcup2026/groups.html" class="nav-btn active">&#128202; Groups</a>
+        <a href="https://kingdoggydog.github.io/worldcup2026/bracket.html" class="nav-btn">&#127942; Knockout</a>
+        <a href="https://kingdoggydog.github.io/worldcup2026/scorers.html" class="nav-btn">&#9917; Top Scorers</a>
+        <a href="https://kingdoggydog.github.io/worldcup2026/feedback.html" class="nav-btn">&#128172; Feedback</a>
       </div>
     </div>
     <div class="header-right">
