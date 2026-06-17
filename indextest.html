@@ -528,12 +528,12 @@
 
   .score-inline {
     display: flex; align-items: center; gap: 6px; flex: 1;
-    font-family: 'Barlow Condensed', sans-serif;
+    font-family: 'Barlow Condensed', sans-serif; justify-content: flex-start;
   }
   .score-home {
     display: flex; align-items: center; gap: 4px;
     font-weight: 700; font-size: clamp(12px,1.8vw,15px);
-    color: var(--text); justify-content: flex-end; flex: 1;
+    color: var(--text); justify-content: flex-start; white-space: nowrap;
   }
   .score-away {
     display: flex; align-items: center; gap: 4px;
@@ -543,6 +543,7 @@
   .score-nums {
     font-weight: 800; font-size: clamp(13px,2vw,16px);
     white-space: nowrap; min-width: 40px; text-align: center;
+    color: var(--gold);
   }
   .score-right {
     display: flex; align-items: center; gap: 4px;
@@ -4412,9 +4413,6 @@
       </div>
     </div>
     <span id="nm-venue" style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#7A82A8;white-space:nowrap;text-align:right;"></span>
-  </div>
-  <div class="schedule-note">
-    <strong>&#10024; New:</strong> <span style="color:var(--text-sub)"><a href="https://kingdoggydog.github.io/worldcup2026/scorers.html" style="color:var(--gold);text-decoration:none;">Top Scorers / Golden Boot race</a> now available</span>
   </div>
   <div class="schedule" id="schedule"></div>
 
