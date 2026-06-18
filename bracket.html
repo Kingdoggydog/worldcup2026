@@ -253,15 +253,15 @@ const PH = {
 
 // Hardcoded matches - always renders even without data.json
 const BASE = [
-  {id:537417,stage:'LAST_32',utcDate:'2026-06-28T19:00:00Z'},{id:537423,stage:'LAST_32',utcDate:'2026-06-29T17:00:00Z'},
-  {id:537415,stage:'LAST_32',utcDate:'2026-06-29T20:30:00Z'},{id:537418,stage:'LAST_32',utcDate:'2026-06-30T01:00:00Z'},
-  {id:537424,stage:'LAST_32',utcDate:'2026-06-30T17:00:00Z'},{id:537416,stage:'LAST_32',utcDate:'2026-06-30T21:00:00Z'},
+  {id:537417,stage:'LAST_32',utcDate:'2026-06-28T19:00:00Z'},{id:537423,stage:'LAST_32',utcDate:'2026-06-29T20:30:00Z'},
+  {id:537415,stage:'LAST_32',utcDate:'2026-06-30T01:00:00Z'},{id:537418,stage:'LAST_32',utcDate:'2026-06-29T17:00:00Z'},
+  {id:537424,stage:'LAST_32',utcDate:'2026-06-30T21:00:00Z'},{id:537416,stage:'LAST_32',utcDate:'2026-06-30T17:00:00Z'},
   {id:537425,stage:'LAST_32',utcDate:'2026-07-01T01:00:00Z'},{id:537426,stage:'LAST_32',utcDate:'2026-07-01T16:00:00Z'},
-  {id:537422,stage:'LAST_32',utcDate:'2026-07-01T20:00:00Z'},{id:537421,stage:'LAST_32',utcDate:'2026-07-02T00:00:00Z'},
-  {id:537420,stage:'LAST_32',utcDate:'2026-07-02T19:00:00Z'},{id:537419,stage:'LAST_32',utcDate:'2026-07-02T23:00:00Z'},
-  {id:537429,stage:'LAST_32',utcDate:'2026-07-03T03:00:00Z'},{id:537428,stage:'LAST_32',utcDate:'2026-07-03T18:00:00Z'},
-  {id:537427,stage:'LAST_32',utcDate:'2026-07-03T22:00:00Z'},{id:537430,stage:'LAST_32',utcDate:'2026-07-04T01:30:00Z'},
-  {id:537376,stage:'LAST_16',utcDate:'2026-07-04T17:00:00Z'},{id:537375,stage:'LAST_16',utcDate:'2026-07-04T21:00:00Z'},
+  {id:537422,stage:'LAST_32',utcDate:'2026-07-02T00:00:00Z'},{id:537421,stage:'LAST_32',utcDate:'2026-07-01T20:00:00Z'},
+  {id:537420,stage:'LAST_32',utcDate:'2026-07-02T23:00:00Z'},{id:537419,stage:'LAST_32',utcDate:'2026-07-02T19:00:00Z'},
+  {id:537429,stage:'LAST_32',utcDate:'2026-07-03T03:00:00Z'},{id:537428,stage:'LAST_32',utcDate:'2026-07-03T22:00:00Z'},
+  {id:537427,stage:'LAST_32',utcDate:'2026-07-04T01:30:00Z'},{id:537430,stage:'LAST_32',utcDate:'2026-07-03T18:00:00Z'},
+  {id:537376,stage:'LAST_16',utcDate:'2026-07-04T21:00:00Z'},{id:537375,stage:'LAST_16',utcDate:'2026-07-04T17:00:00Z'},
   {id:537377,stage:'LAST_16',utcDate:'2026-07-05T20:00:00Z'},{id:537378,stage:'LAST_16',utcDate:'2026-07-06T00:00:00Z'},
   {id:537379,stage:'LAST_16',utcDate:'2026-07-06T19:00:00Z'},{id:537380,stage:'LAST_16',utcDate:'2026-07-07T00:00:00Z'},
   {id:537381,stage:'LAST_16',utcDate:'2026-07-07T16:00:00Z'},{id:537382,stage:'LAST_16',utcDate:'2026-07-07T20:00:00Z'},
@@ -369,8 +369,11 @@ function mobMatch(m, off){
 function byStage(s){ return matches.filter(m=>m.stage===s).sort((a,b)=>new Date(a.utcDate)-new Date(b.utcDate)); }
 
 function buildNums(){
-  let n=73;
-  ['LAST_32','LAST_16','QUARTER_FINALS','SEMI_FINALS','THIRD_PLACE','FINAL'].forEach(s=>{
+  // R32: use BASE array order to preserve official match numbers regardless of utcDate
+  BASE.filter(m=>m.stage==='LAST_32').forEach((m,i)=>{ mnums[m.id]='M'+(73+i); });
+  // All other rounds: sort by date
+  let n=89;
+  ['LAST_16','QUARTER_FINALS','SEMI_FINALS','THIRD_PLACE','FINAL'].forEach(s=>{
     byStage(s).forEach(m=>{ mnums[m.id]='M'+n++; });
   });
 }
