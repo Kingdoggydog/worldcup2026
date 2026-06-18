@@ -22,20 +22,20 @@
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 body{background:var(--bg);color:var(--text);font-family:'Barlow Condensed',sans-serif;min-height:100vh;font-weight:600;}
-.page{max-width:1400px;margin:0 auto;padding:20px 16px 40px;}
+.page{max-width:1400px;margin:0 auto;padding:24px 20px 40px;}
 
 /* HEADER */
-.hdr{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2px solid var(--gold);padding-bottom:12px;margin-bottom:18px;gap:12px;}
-.hdr h1{font-size:clamp(18px,4vw,30px);font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--gold);line-height:1;}
-.hdr .sub{font-size:clamp(9px,1.5vw,12px);letter-spacing:2px;text-transform:uppercase;color:var(--sub);margin-top:3px;}
-.nav{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;}
-.nbtn{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;padding:5px 12px;border-radius:4px;border:1.5px solid var(--cborder);background:var(--ctrl);color:var(--text);text-decoration:none;display:inline-block;transition:opacity .2s;}
+.hdr{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2.5px solid var(--gold);padding-bottom:12px;margin-bottom:14px;gap:16px;flex-wrap:nowrap;}
+.hdr h1{font-family:'Barlow Condensed',sans-serif;font-size:clamp(22px,5vw,36px);font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--gold);line-height:1;}
+.hdr .sub{font-family:'Barlow Condensed',sans-serif;font-size:clamp(11px,2vw,14px);font-weight:400;letter-spacing:2px;text-transform:uppercase;color:var(--sub);margin-top:4px;}
+.nav{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;}
+.nbtn{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(11px,1.5vw,13px);letter-spacing:1px;text-transform:uppercase;padding:6px 14px;border-radius:4px;border:1.5px solid var(--cborder);background:var(--ctrl);color:var(--text);text-decoration:none;display:inline-block;cursor:pointer;transition:all .2s;}
 .nbtn:hover{opacity:.8;}
 .nbtn.on{background:var(--gold);color:#0A0E1A;border-color:var(--gold);}
 .hdr-r{display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex-shrink:0;}
-.ctrl{display:flex;align-items:center;gap:8px;}
-.clbl{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--sub);white-space:nowrap;}
-select{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;border:1.5px solid var(--cborder);border-radius:4px;padding:4px 8px;background:var(--ctrl);color:var(--text);cursor:pointer;}
+.ctrl{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.clbl{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(10px,1.5vw,13px);letter-spacing:1px;text-transform:uppercase;color:var(--sub);white-space:nowrap;}
+select{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(12px,1.8vw,15px);border:1.5px solid var(--cborder);border-radius:4px;padding:5px 8px;background:var(--ctrl);color:var(--text);cursor:pointer;}
 
 /* MOBILE TABS */
 .tabs{display:none;gap:6px;flex-wrap:wrap;margin-bottom:14px;}
@@ -89,8 +89,8 @@ select{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;
 
 @media(max-width:900px){
   .bwrap{display:none;} .bmob{display:block;} .tabs{display:flex;}
-  .hdr{flex-wrap:wrap;} .hdr-r{align-items:flex-start;width:100%;}
-  .page{padding:14px 12px 32px;}
+  .hdr{flex-direction:column;align-items:flex-start;gap:10px;} .hdr-r{align-items:flex-start;width:100%;}
+  .page{padding:16px 14px 32px;}
 }
 </style>
   <!-- Open Graph / Social sharing -->
@@ -113,7 +113,7 @@ select{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;
 <div class="hdr">
   <div>
     <h1>FIFA World Cup 2026</h1>
-    <div class="sub">Knockout · Round of 32 to Final</div>
+    <div class="sub" data-i18n="sub_bracket">Knockout · Round of 32 to Final</div>
     <div class="nav">
       <a href="https://kingdoggydog.github.io/worldcup2026/" class="nbtn">📅 Schedule</a>
       <a href="https://kingdoggydog.github.io/worldcup2026/groups.html" class="nbtn">📊 Groups</a>
@@ -124,7 +124,10 @@ select{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;
   </div>
   <div class="hdr-r">
     <div class="ctrl">
-      <span class="clbl">Timezone</span>
+      <button id="lang-btn" onclick="cycleLang()" title="Change language" class="nbtn"></button>
+    </div>
+    <div class="ctrl">
+      <span class="clbl" data-i18n="lbl_timezone">Timezone</span>
       <select id="tzsel">
           <option value="12">Auckland (NZST, UTC+12)</option>
           <option value="11">Solomon Islands (UTC+11)</option>
@@ -191,12 +194,93 @@ select{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;
 </div>
 
 <div class="foot">
-  <p>Teams TBD until group stage ends 28 Jun 2026 · Updated live</p>
+  <p id="bracket-footer">Teams TBD until group stage ends 28 Jun 2026 · Updated live</p>
   <p id="ftz">All times AEST (UTC+10)</p>
 </div>
 </div>
 
 <script>
+// ── i18n ─────────────────────────────────────────────────────────────────────
+const LANGS = {
+  en: {
+    sub_bracket:'Knockout · Round of 32 to Final',
+    nav_schedule:'📅 Schedule', nav_groups:'📊 Groups',
+    nav_knockout:'🏆 Knockout', nav_feedback:'💬 Feedback',
+    lbl_timezone:'Timezone',
+    col_r32:'Round of 32', col_r16:'Round of 16',
+    col_qf:'Quarter-finals', col_sf:'Semi-finals',
+    col_final:'Final', lbl_3rd_place:'3rd Place', lbl_3rd_playoff:'3rd Place Play-off',
+    winners_meet:'Winners play each other in',
+    bracket_footer:'Teams TBD until group stage ends 28 Jun 2026 · Updated live',
+    months:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+  },
+  pt: {
+    sub_bracket:'Eliminatórias · Oitavas até a Final',
+    nav_schedule:'📅 Jogos', nav_groups:'📊 Grupos',
+    nav_knockout:'🏆 Eliminatórias', nav_feedback:'💬 Feedback',
+    lbl_timezone:'Fuso Horário',
+    col_r32:'Oitavas de Final', col_r16:'Quartas de Final',
+    col_qf:'Quartas de Final', col_sf:'Semifinais',
+    col_final:'Final', lbl_3rd_place:'3º Lugar', lbl_3rd_playoff:'Disputa do 3º Lugar',
+    winners_meet:'Vencedores se enfrentam em',
+    bracket_footer:'Seleções definidas após 28 jun 2026 · Atualizado ao vivo',
+    months:['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+    teams:{'Algeria':'Argélia','Australia':'Austrália','Austria':'Áustria','Belgium':'Bélgica','Bosnia':'Bósnia','Brazil':'Brasil','Cape Verde':'Cabo Verde','Colombia':'Colômbia','Congo DR':'Congo RD','Croatia':'Croácia','Czechia':'Rep. Tcheca','Ecuador':'Equador','Egypt':'Egito','England':'Inglaterra','France':'França','Germany':'Alemanha','Ghana':'Gana','Ivory Coast':'Costa do Marfim','Japan':'Japão','Mexico':'México','Morocco':'Marrocos','Netherlands':'Países Baixos','New Zealand':'Nova Zelândia','Norway':'Noruega','Qatar':'Catar','Saudi Arabia':'Arábia Saudita','Scotland':'Escócia','South Africa':'África do Sul','South Korea':'Coreia do Sul','Spain':'Espanha','Sweden':'Suécia','Switzerland':'Suíça','Tunisia':'Tunísia','Turkiye':'Turquia','USA':'EUA','Uruguay':'Uruguai','Uzbekistan':'Uzbequistão'},
+  },
+  es: {
+    sub_bracket:'Eliminatorias · Octavos hasta la Final',
+    nav_schedule:'📅 Partidos', nav_groups:'📊 Grupos',
+    nav_knockout:'🏆 Eliminatorias', nav_feedback:'💬 Comentarios',
+    lbl_timezone:'Zona Horaria',
+    col_r32:'Octavos de Final', col_r16:'Octavos de Final',
+    col_qf:'Cuartos de Final', col_sf:'Semifinales',
+    col_final:'Final', lbl_3rd_place:'3er Lugar', lbl_3rd_playoff:'Tercer Puesto',
+    winners_meet:'Los ganadores se enfrentan en',
+    bracket_footer:'Selecciones definidas tras el 28 jun 2026 · Actualizado en vivo',
+    months:['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+    teams:{'Algeria':'Argelia','Belgium':'Bélgica','Brazil':'Brasil','Congo DR':'Congo RD','Croatia':'Croacia','Czechia':'Chequia','Egypt':'Egipto','England':'Inglaterra','France':'Francia','Germany':'Alemania','Ivory Coast':'Costa de Marfil','Japan':'Japón','Mexico':'México','Morocco':'Marruecos','Netherlands':'Países Bajos','New Zealand':'Nueva Zelanda','Norway':'Noruega','Qatar':'Catar','Saudi Arabia':'Arabia Saudita','Scotland':'Escocia','South Africa':'Sudáfrica','South Korea':'Corea del Sur','Spain':'España','Sweden':'Suecia','Switzerland':'Suiza','Tunisia':'Túnez','Turkiye':'Turquía','USA':'EE.UU.','Uzbekistan':'Uzbekistán'},
+  },
+};
+
+let _lang = 'en';
+try { _lang = localStorage.getItem('wc2026_lang') || 'en'; } catch(e) {}
+
+function t(key) {
+  return (LANGS[_lang] || LANGS.en)[key] ?? LANGS.en[key] ?? key;
+}
+function teamName(n) { return LANGS[_lang]?.teams?.[n] ?? n; }
+
+const LANG_FLAGS = { en:'us', pt:'br', es:'es' };
+const LANG_LABELS = { en:'EN', pt:'PT', es:'ES' };
+function langBtnHTML(lang) {
+  const code = LANG_FLAGS[lang];
+  const label = LANG_LABELS[lang];
+  return `<img src="https://flagcdn.com/w20/${code}.png" alt="${label}" style="width:18px;height:13px;object-fit:cover;border-radius:2px;vertical-align:middle;margin-right:5px;">${label}`;
+}
+
+function cycleLang() {
+  const order = ['en','pt','es'];
+  _lang = order[(order.indexOf(_lang) + 1) % order.length];
+  try { localStorage.setItem('wc2026_lang', _lang); } catch(e) {}
+  applyLang();
+  render();
+}
+
+function applyLang() {
+  const btn = document.getElementById('lang-btn');
+  if (btn) btn.innerHTML = langBtnHTML(_lang);
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const val = t(el.dataset.i18n);
+    if (val !== undefined) el.innerHTML = val;
+  });
+  ['schedule','groups','knockout','feedback'].forEach(k => {
+    const el = document.getElementById('nav-' + k);
+    if (el) el.innerHTML = t('nav_' + k);
+  });
+  const bf = document.getElementById('bracket-footer');
+  if (bf) bf.textContent = t('bracket_footer');
+}
+
 const NAME_MAP = {
   'Korea Republic':'South Korea','United States':'USA',
   'Bosnia-H.':'Bosnia','Bosnia-Herzegovina':'Bosnia',
@@ -285,7 +369,7 @@ function flag(t){
 function pad(n){ return String(Math.floor(Math.abs(n))).padStart(2,'0'); }
 function fmt(utc, off){
   const d = new Date(new Date(utc).getTime() + off*3600000);
-  const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const mo=t('months')||['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   const h=d.getUTCHours(), mi=d.getUTCMinutes();
   const p=h>=12?'pm':'am', h12=h%12||12;
   return `${d.getUTCDate()} ${mo[d.getUTCMonth()]} ${h12}:${pad(mi)}${p}`;
@@ -333,7 +417,7 @@ function mbox(m, off){
   const suf=dur==='PENALTY_SHOOTOUT'?'p':dur==='EXTRA_TIME'?'aet':'';
   const tr=(n,ph,w,sc)=>`<div class="mbt2${w?' w':''}${ph?' ph':''}">
     ${!ph?flag(n):''}
-    <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${n}</span>
+    <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${teamName(n)}</span>
     ${sc!=null?`<span class="sc">${sc}${w&&suf?suf:''}</span>`:''}
   </div>`;
   return `<div class="mb${fin?' fin':''}">
@@ -356,7 +440,7 @@ function mobMatch(m, off){
   const suf=dur==='PENALTY_SHOOTOUT'?'p':dur==='EXTRA_TIME'?'aet':'';
   const tr=(n,ph,w,sc)=>`<div class="mmt${w?' w':''}${ph?' ph':''}">
     ${!ph?flag(n):''}
-    <span style="flex:1">${n}</span>
+    <span style="flex:1">${teamName(n)}</span>
     ${sc!=null?`<span class="sc">${sc}${w&&suf?`<span style="font-size:10px;color:#8A93B8;font-weight:600">${suf}</span>`:''}</span>`:''}
   </div>`;
   return `<div class="mm${fin?' fin':''}">
@@ -439,23 +523,23 @@ function render(){
        finM.score.fullTime.home>finM.score.fullTime.away ? finT.h : finT.a) : '';
 
   const fcol=`<div class="bcol fcol">
-    <div class="blbl">Final</div>
+    <div class="blbl">${t('col_final')}</div>
     <div class="ftrophy">🏆</div>
     ${finM?mbox(finM,off):'<div class="mb"><div class="mbt2 ph"><span>TBD</span></div><div class="mbt2 ph"><span>TBD</span></div></div>'}
-    ${champ?`<div class="champ">🥇 ${champ}</div>`:''}
-    ${tpM?`<div class="tplbl">3rd Place</div>${mbox(tpM,off)}`:''}
+    ${champ?`<div class="champ">🥇 ${teamName(champ)}</div>`:''}
+    ${tpM?`<div class="tplbl">${t('lbl_3rd_place')}</div>${mbox(tpM,off)}`:''}
   </div>`;
 
   document.getElementById('bdesk').innerHTML =
-    col(r32L,'Round of 32') +
-    col(r16L,'Round of 16') +
-    col(qfL,'Quarter-finals') +
-    col(sf.slice(0,1),'Semi-finals') +
+    col(r32L,t('col_r32')) +
+    col(r16L,t('col_r16')) +
+    col(qfL,t('col_qf')) +
+    col(sf.slice(0,1),t('col_sf')) +
     fcol +
-    col(sf.slice(1),'Semi-finals') +
-    col(qfR,'Quarter-finals') +
-    col(r16R,'Round of 16') +
-    col(r32R,'Round of 32');
+    col(sf.slice(1),t('col_sf')) +
+    col(qfR,t('col_qf')) +
+    col(r16R,t('col_r16')) +
+    col(r32R,t('col_r32'));
 
   // Mobile
   // R32 - render as pairs that feed same R16 match
@@ -476,12 +560,12 @@ function render(){
       if(!m1 && !m2) return '';
       return `<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:4px;">
         <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);padding:4px 10px;border-bottom:1px solid var(--border);text-align:right;">
-          winners meet in <span style="color:var(--gold)">${pair.r16}</span>
+          ${t('winners_meet')} <span style="color:var(--gold)">${pair.r16}</span>
         </div>
         ${m1 ? mobMatch(m1, off) : ''}
         <div style="display:flex;align-items:center;padding:0 0 0 12px;border-top:1px solid var(--border);background:rgba(42,48,80,0.4);">
           <div style="width:2px;height:28px;background:var(--gold);border-radius:1px;flex-shrink:0;margin-right:8px;"></div>
-          <span style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;color:var(--gold);letter-spacing:1px;">Winners play each other in <span style="color:#E8EAF2">${pair.r16}</span></span>
+          <span style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;color:var(--gold);letter-spacing:1px;">${t('winners_meet')} <span style="color:#E8EAF2">${pair.r16}</span></span>
         </div>
         ${m2 ? mobMatch(m2, off) : ''}
       </div>`;
@@ -507,7 +591,7 @@ function render(){
         ${m1 ? mobMatch(m1, off) : ''}
         <div style="display:flex;align-items:center;padding:0 0 0 12px;border-top:1px solid var(--border);background:rgba(42,48,80,0.4);">
           <div style="width:2px;height:28px;background:var(--gold);border-radius:1px;flex-shrink:0;margin-right:8px;"></div>
-          <span style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;color:var(--gold);letter-spacing:1px;">Winners play each other in <span style="color:#E8EAF2">${pair.next}</span></span>
+          <span style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;color:var(--gold);letter-spacing:1px;">${t('winners_meet')} <span style="color:#E8EAF2">${pair.next}</span></span>
         </div>
         ${m2 ? mobMatch(m2, off) : ''}
       </div>`;
@@ -531,14 +615,14 @@ function render(){
         ${m1 ? mobMatch(m1, off) : ''}
         <div style="display:flex;align-items:center;padding:0 0 0 12px;border-top:1px solid var(--border);background:rgba(42,48,80,0.4);">
           <div style="width:2px;height:28px;background:var(--gold);border-radius:1px;flex-shrink:0;margin-right:8px;"></div>
-          <span style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;color:var(--gold);letter-spacing:1px;">Winners play each other in <span style="color:#E8EAF2">${pair.next}</span></span>
+          <span style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;color:var(--gold);letter-spacing:1px;">${t('winners_meet')} <span style="color:#E8EAF2">${pair.next}</span></span>
         </div>
         ${m2 ? mobMatch(m2, off) : ''}
       </div>`;
     }).join('');
   }
 
-  // SF pair - winners meet in the Final
+  // SF pair - ${t('winners_meet')} the Final
   const sfEl = document.getElementById('mrsf');
   if(sfEl){
     const m1 = mById(537387), m2 = mById(537388);
@@ -549,7 +633,7 @@ function render(){
       ${m1 ? mobMatch(m1, off) : ''}
       <div style="display:flex;align-items:center;padding:0 0 0 12px;border-top:1px solid var(--border);background:rgba(42,48,80,0.4);">
         <div style="width:2px;height:28px;background:var(--gold);border-radius:1px;flex-shrink:0;margin-right:8px;"></div>
-        <span style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;color:var(--gold);letter-spacing:1px;">Winners play each other in <span style="color:#E8EAF2">M104 The Final</span></span>
+        <span style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;color:var(--gold);letter-spacing:1px;">${t('winners_meet')} <span style="color:#E8EAF2">M104 The Final</span></span>
       </div>
       ${m2 ? mobMatch(m2, off) : ''}
     </div>`;
@@ -565,7 +649,7 @@ function render(){
       html+=finMatches.map(m=>mobMatch(m,off)).join('');
     }
     if(tpMatches.length){
-      html+=`<div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--sub);padding:4px 0;border-bottom:1px solid var(--border);margin-bottom:4px;margin-top:12px;">3rd Place Play-off</div>`;
+      html+=`<div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--sub);padding:4px 0;border-bottom:1px solid var(--border);margin-bottom:4px;margin-top:12px;">${t('lbl_3rd_playoff')}</div>`;
       html+=tpMatches.map(m=>mobMatch(m,off)).join('');
     }
     finEl.innerHTML=html;
@@ -602,6 +686,7 @@ document.getElementById('tzsel').addEventListener('change',()=>{
 // Load data.json and merge over base
 async function load(){
   buildNums();
+  applyLang();
   render(); // render immediately with base data
   try{
     const r=await fetch('data.json?t='+Date.now());

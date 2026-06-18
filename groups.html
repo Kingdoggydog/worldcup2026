@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>World Cup 2026 Group Standings - Live & Updated</title>
 <meta name="description" content="Live standings updated as matches are played. All 12 groups with FIFA tiebreaker logic.">
-<meta property="og:title" content="World Cup 2026 Group Standings - Live & Updated">
-<meta property="og:description" content="Live standings updated as matches are played. All 12 groups with FIFA tiebreaker logic.">
 <meta property="og:url" content="https://kingdoggydog.github.io/worldcup2026/groups.html">
 <link rel="canonical" href="https://kingdoggydog.github.io/worldcup2026/groups.html">
+<meta property="og:title" content="World Cup 2026 Group Standings - Live & Updated">
+<meta property="og:description" content="Live standings updated as matches are played. All 12 groups with FIFA tiebreaker logic.">
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-N0ENDBHCS4"></script>
 <script>
@@ -336,7 +336,7 @@
   <div class="header">
     <div style="flex:1;min-width:0;">
       <h1>FIFA World Cup 2026</h1>
-      <div class="sub">Group Stage Draw &bull; 12 Groups &bull; 48 Teams</div>
+      <div class="sub" data-i18n="sub_groups">Group Stage Draw &bull; 12 Groups &bull; 48 Teams</div>
       <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;">
         <a href="https://kingdoggydog.github.io/worldcup2026/" class="nav-btn">&#128197; Schedule</a>
         <a href="https://kingdoggydog.github.io/worldcup2026/groups.html" class="nav-btn active">&#128202; Groups</a>
@@ -347,7 +347,10 @@
     </div>
     <div class="header-right">
       <div class="ctrl-row">
-        <span class="ctrl-label">Timezone</span>
+        <button id="lang-btn" onclick="cycleLang()" title="Change language" class="nav-btn ctrl-btn"></button>
+      </div>
+      <div class="ctrl-row">
+        <span class="ctrl-label" data-i18n="lbl_timezone">Timezone</span>
         <select id="tz-select">
           <option value="12">Auckland (NZST, UTC+12)</option>
           <option value="11">Solomon Islands (UTC+11)</option>
@@ -390,22 +393,22 @@
         </select>
       </div>
       <div class="ctrl-row" style="align-items:flex-start;flex-direction:column;gap:6px;">
-        <span class="ctrl-label">Highlight</span>
+        <span class="ctrl-label" data-i18n="lbl_highlight">Highlight</span>
         <div class="highlight-rows" id="highlight-rows"></div>
-        <button class="hl-add" id="hl-add-btn" onclick="addHighlightRow()">+ Add team</button>
+        <button class="hl-add" id="hl-add-btn" onclick="addHighlightRow()" data-i18n="btn_add_team">+ Add team</button>
       </div>
       <span class="highlight-note" id="highlight-note" style="display:none"></span>
     </div>
   </div>
 
-  <div class="standings-note">
+  <div class="standings-note" id="standings-note">
     Groups with a <span style="display:inline-block;width:8px;height:8px;background:#2ECC71;border-radius:50%;vertical-align:middle;margin:0 2px"></span> are in play &mdash; standings shown are provisional.
   </div>
 
   <div class="groups-grid" id="groups-grid"></div>
   <div class="third-place-section" id="third-place-section" style="display:none;">
-    <div class="third-place-title">Best Third-Place Teams</div>
-    <div class="third-place-sub">Top 8 of 12 advance to Round of 32 &bull; Ranked by: Points &rarr; Goal Diff &rarr; Goals Scored &rarr; Fair Play &rarr; FIFA Ranking</div>
+    <div class="third-place-title" id="third-place-title">Best Third-Place Teams</div>
+    <div class="third-place-sub" id="third-place-sub">Top 8 of 12 advance to Round of 32 &bull; Ranked by: Points &rarr; Goal Diff &rarr; Goals Scored &rarr; Fair Play &rarr; FIFA Ranking</div>
     <table class="third-place-table">
       <thead>
         <tr>
@@ -426,8 +429,8 @@
   </div>
 
   <div class="footer">
-    <p>FIFA World Cup 2026 &bull; USA / Canada / Mexico &bull; <span id="version">v1.22</span></p>
-    <p>Top 2 per group + 8 best 3rd place teams advance to Round of 32</p>
+    <p id="footer-top">FIFA World Cup 2026 &bull; USA / Canada / Mexico &bull; <span id="version">v1.22</span></p>
+    <p id="footer-bottom">Top 2 per group + 8 best 3rd place teams advance to Round of 32</p>
   </div>
 
   <div id="bmc-mobile">
@@ -437,6 +440,101 @@
 </div>
 
 <script>
+// ── i18n ─────────────────────────────────────────────────────────────────────
+const LANGS = {
+  en: {
+    sub_groups:'Group Stage Draw • 12 Groups • 48 Teams',
+    nav_schedule:'&#128197; Schedule', nav_groups:'&#128202; Groups',
+    nav_knockout:'&#127942; Knockout', nav_feedback:'&#128172; Feedback',
+    lbl_timezone:'Timezone', lbl_highlight:'Highlight', btn_add_team:'+ Add team',
+    lbl_group:'Group',
+    standings_note:'Groups with a <span style="display:inline-block;width:8px;height:8px;background:#2ECC71;border-radius:50%;vertical-align:middle;margin:0 2px"></span> are in play &mdash; standings shown are provisional.',
+    third_place_title:'Best Third-Place Teams',
+    third_place_sub:'Top 8 of 12 advance to Round of 32 • Ranked by: Points → Goal Diff → Goals Scored → Fair Play → FIFA Ranking',
+    col_team:'Team', col_pts:'Pts', col_status:'Status',
+    status_advance:'✅ Advance', status_eliminated:'❌ Eliminated',
+    footer_top:'FIFA World Cup 2026 • USA / Canada / Mexico',
+    footer_bottom:'Top 2 per group + 8 best 3rd place teams advance to Round of 32',
+  },
+  pt: {
+    sub_groups:'Fase de Grupos • 12 Grupos • 48 Seleções',
+    nav_schedule:'&#128197; Jogos', nav_groups:'&#128202; Grupos',
+    nav_knockout:'&#127942; Eliminatórias', nav_feedback:'&#128172; Feedback',
+    lbl_timezone:'Fuso Horário', lbl_highlight:'Destaque', btn_add_team:'+ Adicionar',
+    lbl_group:'Grupo',
+    standings_note:'Grupos com <span style="display:inline-block;width:8px;height:8px;background:#2ECC71;border-radius:50%;vertical-align:middle;margin:0 2px"></span> em andamento &mdash; classificação provisória.',
+    third_place_title:'Melhores Terceiros Colocados',
+    third_place_sub:'Os 8 melhores de 12 avançam para as Oitavas • Critérios: Pontos → Saldo de Gols → Gols Marcados → Fair Play → Ranking FIFA',
+    col_team:'Seleção', col_pts:'Pts', col_status:'Situação',
+    status_advance:'✅ Classificado', status_eliminated:'❌ Eliminado',
+    footer_top:'Copa do Mundo FIFA 2026 • EUA / Canadá / México',
+    footer_bottom:'Top 2 de cada grupo + 8 melhores 3ºs avançam para as Oitavas',
+    teams:{'Algeria':'Argélia','Australia':'Austrália','Austria':'Áustria','Belgium':'Bélgica','Bosnia':'Bósnia','Brazil':'Brasil','Cape Verde':'Cabo Verde','Colombia':'Colômbia','Congo DR':'Congo RD','Croatia':'Croácia','Czechia':'Rep. Tcheca','Ecuador':'Equador','Egypt':'Egito','England':'Inglaterra','France':'França','Germany':'Alemanha','Ghana':'Gana','Ivory Coast':'Costa do Marfim','Japan':'Japão','Mexico':'México','Morocco':'Marrocos','Netherlands':'Países Baixos','New Zealand':'Nova Zelândia','Norway':'Noruega','Qatar':'Catar','Saudi Arabia':'Arábia Saudita','Scotland':'Escócia','South Africa':'África do Sul','South Korea':'Coreia do Sul','Spain':'Espanha','Sweden':'Suécia','Switzerland':'Suíça','Tunisia':'Tunísia','Turkiye':'Turquia','USA':'EUA','Uruguay':'Uruguai','Uzbekistan':'Uzbequistão'},
+  },
+  es: {
+    sub_groups:'Fase de Grupos • 12 Grupos • 48 Selecciones',
+    nav_schedule:'&#128197; Partidos', nav_groups:'&#128202; Grupos',
+    nav_knockout:'&#127942; Eliminatorias', nav_feedback:'&#128172; Comentarios',
+    lbl_timezone:'Zona Horaria', lbl_highlight:'Destacar', btn_add_team:'+ Agregar',
+    lbl_group:'Grupo',
+    standings_note:'Grupos con <span style="display:inline-block;width:8px;height:8px;background:#2ECC71;border-radius:50%;vertical-align:middle;margin:0 2px"></span> en juego &mdash; clasificación provisional.',
+    third_place_title:'Mejores Terceros Clasificados',
+    third_place_sub:'Los 8 mejores de 12 avanzan a Octavos • Criterios: Puntos → Dif. Goles → Goles Marcados → Fair Play → Ranking FIFA',
+    col_team:'Selección', col_pts:'Pts', col_status:'Estado',
+    status_advance:'✅ Clasificado', status_eliminated:'❌ Eliminado',
+    footer_top:'Copa Mundial FIFA 2026 • EE.UU. / Canadá / México',
+    footer_bottom:'Top 2 por grupo + 8 mejores 3eros avanzan a Octavos de Final',
+    teams:{'Algeria':'Argelia','Belgium':'Bélgica','Brazil':'Brasil','Congo DR':'Congo RD','Croatia':'Croacia','Czechia':'Chequia','Egypt':'Egipto','England':'Inglaterra','France':'Francia','Germany':'Alemania','Ivory Coast':'Costa de Marfil','Japan':'Japón','Mexico':'México','Morocco':'Marruecos','Netherlands':'Países Bajos','New Zealand':'Nueva Zelanda','Norway':'Noruega','Qatar':'Catar','Saudi Arabia':'Arabia Saudita','Scotland':'Escocia','South Africa':'Sudáfrica','South Korea':'Corea del Sur','Spain':'España','Sweden':'Suecia','Switzerland':'Suiza','Tunisia':'Túnez','Turkiye':'Turquía','USA':'EE.UU.','Uzbekistan':'Uzbekistán'},
+  },
+};
+
+let _lang = 'en';
+try { _lang = localStorage.getItem('wc2026_lang') || 'en'; } catch(e) {}
+
+function t(key) {
+  return (LANGS[_lang] || LANGS.en)[key] ?? LANGS.en[key] ?? key;
+}
+function teamName(n) { return LANGS[_lang]?.teams?.[n] ?? n; }
+
+const LANG_FLAGS = { en:'us', pt:'br', es:'es' };
+const LANG_LABELS = { en:'EN', pt:'PT', es:'ES' };
+function langBtnHTML(lang) {
+  const code = LANG_FLAGS[lang];
+  const label = LANG_LABELS[lang];
+  return `<img src="https://flagcdn.com/w20/${code}.png" alt="${label}" style="width:18px;height:13px;object-fit:cover;border-radius:2px;vertical-align:middle;margin-right:5px;">${label}`;
+}
+
+function cycleLang() {
+  const order = ['en','pt','es'];
+  _lang = order[(order.indexOf(_lang) + 1) % order.length];
+  try { localStorage.setItem('wc2026_lang', _lang); } catch(e) {}
+  applyLang();
+  if (lastData) render(null, lastData);
+}
+
+function applyLang() {
+  const btn = document.getElementById('lang-btn');
+  if (btn) btn.innerHTML = langBtnHTML(_lang);
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const val = t(el.dataset.i18n);
+    if (val !== undefined) el.innerHTML = val;
+  });
+  ['schedule','groups','knockout','feedback'].forEach(k => {
+    const el = document.getElementById('nav-' + k);
+    if (el) el.innerHTML = t('nav_' + k);
+  });
+  const sn = document.getElementById('standings-note');
+  if (sn) sn.innerHTML = t('standings_note');
+  const tpt = document.getElementById('third-place-title');
+  if (tpt) tpt.textContent = t('third_place_title');
+  const tps = document.getElementById('third-place-sub');
+  if (tps) tps.textContent = t('third_place_sub');
+  const ft = document.getElementById('footer-top');
+  if (ft) ft.innerHTML = t('footer_top') + ' • <span id="version">v1.22</span>';
+  const fb = document.getElementById('footer-bottom');
+  if (fb) fb.textContent = t('footer_bottom');
+}
+
 const GROUPS = {
   A: ['Mexico','South Korea','South Africa','Czechia'],
   B: ['Canada','Switzerland','Qatar','Bosnia'],
@@ -772,7 +870,7 @@ function render(highlightTeam, data) {
 
       rows += `<tr class="${hiCls}">
         <td class="stat" style="width:20px;padding-left:8px">${i+1}</td>
-        <td class="team-name">${flagImg(name)}${name}</td>
+        <td class="team-name">${flagImg(name)}${teamName(name)}</td>
         <td class="stat">${s.p}</td>
         <td class="stat">${s.p > 0 ? s.w : '-'}</td>
         <td class="stat">${s.p > 0 ? s.d : '-'}</td>
@@ -784,7 +882,7 @@ function render(highlightTeam, data) {
 
     card.innerHTML = `
       <div class="group-header">
-        <span class="group-letter" style="color:${color}">Group ${grp}</span>
+        <span class="group-letter" style="color:${color}">${t('lbl_group')} ${grp}</span>
         ${isLive ? '<span class="live-dot" title="Match in progress"></span>' : ''}
       </div>
       <table class="standings-table">
@@ -853,12 +951,12 @@ function renderThirdPlace(groups, groupStats) {
     const gdStr = t.p > 0 ? (t.gd > 0 ? '+' + t.gd : String(t.gd)) : '-';
     let statusCell = '-';
     if (groupStageComplete) {
-      statusCell = advances ? '✅ Advance' : '❌ Eliminated';
+      statusCell = advances ? t('status_advance') : t('status_eliminated');
     }
     const posColor = groupStageComplete ? (advances ? '#2ECC71' : 'var(--text-muted)') : 'var(--text-muted)';
     return `<tr class="${cls}">
       <td class="pos" style="color:${posColor};">${i+1}</td>
-      <td class="team-name">${flagImg(t.team)}${t.team}<span class="grp-badge" style="color:${GROUP_COLORS[t.grp]}">${t.grp}</span></td>
+      <td class="team-name">${flagImg(t.team)}${teamName(t.team)}<span class="grp-badge" style="color:${GROUP_COLORS[t.grp]}">${t.grp}</span></td>
       <td>${t.p > 0 ? t.p : '-'}</td>
       <td>${t.p > 0 ? t.w : '-'}</td>
       <td>${t.p > 0 ? t.d : '-'}</td>
@@ -885,6 +983,7 @@ async function loadAndRender() {
 }
 
 // Render highlight rows on load
+applyLang();
 renderHighlightRows();
 
 // Timezone selector

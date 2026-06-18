@@ -380,6 +380,11 @@
   }
   #bmc-mobile a:hover { opacity: 0.8; }
   body.print-mode #bmc-mobile { display: none !important; }
+  body.hide-bmc #bmc-header,
+  body.hide-bmc #bmc-mobile,
+  body.hide-bmc #bmc-wbtn,
+  body.hide-bmc #bmc-iframe-wrapper,
+  body.hide-bmc .bmc-btn-container { display: none !important; }
 
   /* single column + larger text on mobile - night mode only */
   @media screen and (max-width: 900px) {
@@ -4203,7 +4208,7 @@
   <div class="header">
     <div>
       <h1>FIFA World Cup 2026</h1>
-      <div class="sub">All 104 matches &bull; 11 June &ndash; 19 July &bull; USA / Canada / Mexico</div>
+      <div class="sub" data-i18n="sub_index">All 104 matches &bull; 11 June &ndash; 19 July &bull; USA / Canada / Mexico</div>
       <div style="margin-top:8px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;">
         <a href="https://www.buymeacoffee.com/coolcato" target="_blank" id="bmc-header">☕ Buy me a coffee</a>
         <div style="display:flex;gap:8px;flex-wrap:nowrap;">
@@ -4218,9 +4223,10 @@
     </div>
     <div class="header-right">
       <div class="ctrl-row">
-        <button id="mode-toggle">&#9788; Switch to Print Mode</button>
-        <button id="scores-toggle">Hide Scores</button>
-        <button id="finished-toggle">Hide Completed</button>
+        <button id="lang-btn" onclick="cycleLang()" title="Change language" class="nav-btn"></button>
+        <button id="mode-toggle" data-i18n="btn_print">&#9788; Switch to Print Mode</button>
+        <button id="scores-toggle" data-i18n="btn_hide_scores">Hide Scores</button>
+        <button id="finished-toggle" data-i18n="btn_hide_finished">Hide Completed</button>
       </div>
       <div class="ctrl-row" id="col-switch-row">
         <div class="time-switch" id="time-switch" title="Toggle 12/24 hour time">
@@ -4239,7 +4245,7 @@
         </div>
       </div>
       <div class="ctrl-row">
-        <span class="ctrl-label">Timezone</span>
+        <span class="ctrl-label" data-i18n="lbl_timezone">Timezone</span>
         <select id="tz-select">
           <option value="12">Auckland (NZST, UTC+12)</option>
           <option value="11">Solomon Islands (UTC+11)</option>
@@ -4283,14 +4289,14 @@
       </div>
       <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start;">
         <div class="ctrl-row" style="align-items:flex-start;flex-direction:column;gap:6px;">
-          <span class="ctrl-label">Highlight</span>
+          <span class="ctrl-label" data-i18n="lbl_highlight">Highlight</span>
           <div class="highlight-rows" id="highlight-rows"></div>
-          <button class="hl-add" id="hl-add-btn" onclick="addHighlightRow()">+ Add team</button>
+          <button class="hl-add" id="hl-add-btn" onclick="addHighlightRow()" data-i18n="btn_add_team">+ Add team</button>
         </div>
         <div class="ctrl-row" id="filters-row" style="align-items:flex-start;flex-direction:column;gap:6px;display:flex;">
-          <span class="ctrl-label">Filters</span>
+          <span class="ctrl-label" data-i18n="lbl_filters">Filters</span>
           <select id="city-filter" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(12px,1.8vw,15px);border:1.5px solid var(--ctrl-border);border-radius:4px;padding:4px 8px;background:var(--ctrl-bg);color:var(--ctrl-text);cursor:pointer;min-width:160px;">
-            <option value="all">All cities</option>
+            <option value="all" data-i18n="lbl_all_cities">All cities</option>
             <option value="Atlanta">Atlanta</option>
             <option value="Boston">Boston</option>
             <option value="Dallas">Dallas</option>
@@ -4309,7 +4315,7 @@
             <option value="Vancouver">Vancouver</option>
           </select>
           <select id="group-filter" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(12px,1.8vw,15px);border:1.5px solid var(--ctrl-border);border-radius:4px;padding:4px 8px;background:var(--ctrl-bg);color:var(--ctrl-text);cursor:pointer;min-width:160px;">
-            <option value="all">All groups</option>
+            <option value="all" data-i18n="lbl_all_groups">All groups</option>
             <option value="A">Group A</option>
             <option value="B">Group B</option>
             <option value="C">Group C</option>
@@ -4322,14 +4328,14 @@
             <option value="J">Group J</option>
             <option value="K">Group K</option>
             <option value="L">Group L</option>
-            <option value="R32">Round of 32</option>
-            <option value="R16">Round of 16</option>
-            <option value="QF">Quarter Finals</option>
-            <option value="SF">Semi Finals</option>
-            <option value="Final">Final</option>
+            <option value="R32" data-i18n="lbl_r32">Round of 32</option>
+            <option value="R16" data-i18n="lbl_r16">Round of 16</option>
+            <option value="QF" data-i18n="lbl_qf">Quarter Finals</option>
+            <option value="SF" data-i18n="lbl_sf">Semi Finals</option>
+            <option value="Final" data-i18n="lbl_final">Final</option>
           </select>
           <select id="team-filter" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(12px,1.8vw,15px);border:1.5px solid var(--ctrl-border);border-radius:4px;padding:4px 8px;background:var(--ctrl-bg);color:var(--ctrl-text);cursor:pointer;min-width:160px;">
-            <option value="all">All teams</option>
+            <option value="all" data-i18n="lbl_all_teams">All teams</option>
             <option value="Algeria">Algeria</option>
             <option value="Argentina">Argentina</option>
             <option value="Australia">Australia</option>
@@ -4380,8 +4386,8 @@
             <option value="Uzbekistan">Uzbekistan</option>
           </select>
           <div style="display:flex;gap:6px;">
-            <button onclick="clearFilters()" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:4px;cursor:pointer;border:1.5px solid var(--ctrl-border);background:transparent;color:var(--text-muted);transition:all 0.2s;" onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'" onmouseout="this.style.borderColor='var(--ctrl-border)';this.style.color='var(--text-muted)'">✕ Clear</button>
-            <button onclick="downloadICS()" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:4px;cursor:pointer;border:1.5px solid var(--ctrl-border);background:transparent;color:var(--text-muted);transition:all 0.2s;" onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'" onmouseout="this.style.borderColor='var(--ctrl-border)';this.style.color='var(--text-muted)'">📅 Calendar</button>
+            <button onclick="clearFilters()" data-i18n="btn_clear" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:4px;cursor:pointer;border:1.5px solid var(--ctrl-border);background:transparent;color:var(--text-muted);transition:all 0.2s;" onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'" onmouseout="this.style.borderColor='var(--ctrl-border)';this.style.color='var(--text-muted)'">✕ Clear</button>
+            <button onclick="downloadICS()" data-i18n="btn_calendar" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:4px;cursor:pointer;border:1.5px solid var(--ctrl-border);background:transparent;color:var(--text-muted);transition:all 0.2s;" onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'" onmouseout="this.style.borderColor='var(--ctrl-border)';this.style.color='var(--text-muted)'">📅 Calendar</button>
           </div>
         </div>
       </div>
@@ -4402,7 +4408,7 @@
   </p>
 
   <div id="next-match-card" style="background:#111827;border:1px solid #1E2840;border-left:3px solid #C9A84C;border-radius:0 6px 6px 0;padding:7px 16px;margin-bottom:12px;display:flex;align-items:center;gap:12px;">
-    <span style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#C9A84C;white-space:nowrap;">Next Match</span>
+    <span id="nm-label" style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#C9A84C;white-space:nowrap;" data-i18n="next_match">Next Match</span>
     <div style="display:flex;align-items:center;gap:10px;flex:1;justify-content:center;">
       <div style="display:flex;align-items:center;gap:6px;justify-content:flex-end;flex:1;">
         <span id="nm-home" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;color:#E8EAF0;"></span>
@@ -4423,12 +4429,12 @@
 
   <div class="footer">
     <p id="footer-tz">All times AEST (UTC+10) &bull; Source: FIFA / Fox Sports 2026 &bull; <span id="version">v1.38</span></p>
-    <p>72 group stage matches &bull; 12 groups &bull; Top 2 per group + 8 best 3rd place advance</p>
+    <p id="footer-bottom">72 group stage matches &bull; 12 groups &bull; Top 2 per group + 8 best 3rd place advance</p>
   </div>
   <div style="text-align:center;margin-top:12px;">
-    <a href="https://kingdoggydog.github.io/worldcup2026/feedback.html" style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;color:var(--text-muted);text-decoration:none;letter-spacing:1px;">💬 Feedback &amp; suggestions</a>
-    <a href="https://www.reddit.com/user/coolcato" target="_blank" style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;color:var(--text-muted);text-decoration:none;letter-spacing:1px;">👋 Made by u/coolcato</a>
-    <a href="https://forms.gle/SdgXv6VJLanh5JBJ6" target="_blank" style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;color:var(--text-muted);text-decoration:none;letter-spacing:1px;">&#128233; Get notified for future tournaments</a>
+    <a href="https://kingdoggydog.github.io/worldcup2026/feedback.html" data-i18n="lnk_feedback" style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;color:var(--text-muted);text-decoration:none;letter-spacing:1px;">💬 Feedback &amp; suggestions</a>
+    <a href="https://www.reddit.com/user/coolcato" target="_blank" data-i18n="lnk_madeby" style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;color:var(--text-muted);text-decoration:none;letter-spacing:1px;">👋 Made by u/coolcato</a>
+    <a href="https://forms.gle/SdgXv6VJLanh5JBJ6" target="_blank" data-i18n="lnk_notify" style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;color:var(--text-muted);text-decoration:none;letter-spacing:1px;">&#128233; Get notified for future tournaments</a>
   </div>
   <div id="bmc-mobile">
     <a href="https://www.buymeacoffee.com/coolcato" target="_blank">☕ Buy me a coffee</a>
@@ -4436,7 +4442,7 @@
 
 </div>
 
-<button id="jump-btn" onclick="jumpToNextDay()">&#9660; Today's matches</button>
+<button id="jump-btn" onclick="jumpToNextDay()" data-i18n="jump_btn">&#9660; Today's matches</button>
 
 <script>
 // UTC times verified from kickoffclock.com CSV (cross-referenced FIFA/Fox Sports)
@@ -4574,6 +4580,158 @@ const KNOCKOUT_MATCHES = [
 
 let showKnockout = true;
 
+// Set to true to hide all "Buy me a coffee" elements (header link, mobile footer, floating widget)
+const HIDE_BMC = true;
+if (HIDE_BMC) document.body.classList.add('hide-bmc');
+
+// ── i18n ─────────────────────────────────────────────────────────────────────
+const LANGS = {
+  en: {
+    sub_index:'All 104 matches • 11 June – 19 July • USA / Canada / Mexico',
+    nav_schedule:'&#128197; Schedule', nav_groups:'&#128202; Groups',
+    nav_knockout:'&#127942; Knockout', nav_feedback:'&#128172; Feedback',
+    btn_print:'&#9788; Switch to Print Mode',
+    btn_hide_scores:'Hide Scores', btn_show_scores:'Show Scores',
+    btn_hide_finished:'Hide Completed', btn_show_finished:'Show Completed',
+    lbl_timezone:'Timezone', lbl_highlight:'Highlight', lbl_filters:'Filters',
+    btn_add_team:'+ Add team', lbl_all_cities:'All cities',
+    lbl_all_groups:'All groups', lbl_all_teams:'All teams', lbl_group:'Group',
+    lbl_r32:'Round of 32', lbl_r16:'Round of 16',
+    lbl_qf:'Quarter Finals', lbl_sf:'Semi Finals', lbl_final:'Final',
+    btn_clear:'✕ Clear', btn_calendar:'&#128197; Calendar',
+    live_label:'LIVE',
+    next_match:'Next Match',
+    knockout_heading:'Knockout Stage',
+    knockout_sub:'Round of 32 • R16 • QF • SF • Final',
+    schedule_note:'<strong>&#10024; New:</strong> <span style="color:var(--text-sub)">Hide scores &bull; Hide completed matches - preferences persist until changed</span>',
+    jump_btn:'&#9660; Today\'s matches',
+    footer_source:'Source: FIFA / Fox Sports 2026',
+    footer_groups_idx:'72 group stage matches • 12 groups • Top 2 per group + 8 best 3rd place advance',
+    no_matches_alert:'No matches match your current filters.',
+    lnk_feedback:'💬 Feedback &amp; suggestions',
+    lnk_madeby:'👋 Made by u/coolcato',
+    lnk_notify:'📧 Get notified for future tournaments',
+    days:['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
+    months:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+  },
+  pt: {
+    sub_index:'Todos os 104 jogos • 11 jun – 19 jul • EUA / Canadá / México',
+    nav_schedule:'&#128197; Jogos', nav_groups:'&#128202; Grupos',
+    nav_knockout:'&#127942; Eliminatórias', nav_feedback:'&#128172; Feedback',
+    btn_print:'&#9788; Modo Impressão',
+    btn_hide_scores:'Ocultar Placar', btn_show_scores:'Mostrar Placar',
+    btn_hide_finished:'Ocultar Encerrados', btn_show_finished:'Mostrar Encerrados',
+    lbl_timezone:'Fuso Horário', lbl_highlight:'Destaque', lbl_filters:'Filtros',
+    btn_add_team:'+ Adicionar', lbl_all_cities:'Todas as cidades',
+    lbl_all_groups:'Todos os grupos', lbl_all_teams:'Todas as seleções', lbl_group:'Grupo',
+    lbl_r32:'Oitavas de Final', lbl_r16:'Quartas de Final',
+    lbl_qf:'Quartas de Final', lbl_sf:'Semifinais', lbl_final:'Final',
+    btn_clear:'✕ Limpar', btn_calendar:'&#128197; Calendário',
+    live_label:'AO VIVO',
+    next_match:'Próximo Jogo',
+    knockout_heading:'Fase Eliminatória',
+    knockout_sub:'Oitavas • Quartas • Semi • Final',
+    schedule_note:'<strong>&#10024; Novo:</strong> <span style="color:var(--text-sub)">Ocultar placar &bull; Ocultar encerrados – preferências salvas automaticamente</span>',
+    jump_btn:'&#9660; Jogos de hoje',
+    footer_source:'Fonte: FIFA / Fox Sports 2026',
+    footer_groups_idx:'72 jogos na fase de grupos • 12 grupos • Top 2 de cada + 8 melhores 3ºs avançam',
+    no_matches_alert:'Nenhum jogo corresponde aos filtros atuais.',
+    lnk_feedback:'💬 Feedback &amp; sugestões',
+    lnk_madeby:'👋 Feito por u/coolcato',
+    lnk_notify:'📧 Receber notificações de torneios futuros',
+    days:['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'],
+    months:['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+    teams:{'Algeria':'Argélia','Australia':'Austrália','Austria':'Áustria','Belgium':'Bélgica','Bosnia':'Bósnia','Bosnia & Herz.':'Bósnia & Herz.','Brazil':'Brasil','Cape Verde':'Cabo Verde','Colombia':'Colômbia','Congo DR':'Congo RD','Croatia':'Croácia','Czechia':'Rep. Tcheca','Ecuador':'Equador','Egypt':'Egito','England':'Inglaterra','France':'França','Germany':'Alemanha','Ghana':'Gana','Ivory Coast':'Costa do Marfim','Japan':'Japão','Mexico':'México','Morocco':'Marrocos','Netherlands':'Países Baixos','New Zealand':'Nova Zelândia','Norway':'Noruega','Qatar':'Catar','Saudi Arabia':'Arábia Saudita','Scotland':'Escócia','South Africa':'África do Sul','South Korea':'Coreia do Sul','Spain':'Espanha','Sweden':'Suécia','Switzerland':'Suíça','Tunisia':'Tunísia','Turkiye':'Turquia','USA':'EUA','Uruguay':'Uruguai','Uzbekistan':'Uzbequistão'},
+  },
+  es: {
+    sub_index:'Los 104 partidos • 11 jun – 19 jul • EE.UU. / Canadá / México',
+    nav_schedule:'&#128197; Partidos', nav_groups:'&#128202; Grupos',
+    nav_knockout:'&#127942; Eliminatorias', nav_feedback:'&#128172; Comentarios',
+    btn_print:'&#9788; Modo Impresión',
+    btn_hide_scores:'Ocultar Marcador', btn_show_scores:'Mostrar Marcador',
+    btn_hide_finished:'Ocultar Terminados', btn_show_finished:'Mostrar Terminados',
+    lbl_timezone:'Zona Horaria', lbl_highlight:'Destacar', lbl_filters:'Filtros',
+    btn_add_team:'+ Agregar', lbl_all_cities:'Todas las ciudades',
+    lbl_all_groups:'Todos los grupos', lbl_all_teams:'Todas las selecciónes', lbl_group:'Grupo',
+    lbl_r32:'Octavos de Final', lbl_r16:'Octavos de Final',
+    lbl_qf:'Cuartos de Final', lbl_sf:'Semifinales', lbl_final:'Final',
+    btn_clear:'✕ Limpiar', btn_calendar:'&#128197; Calendario',
+    live_label:'EN VIVO',
+    next_match:'Próximo Partido',
+    knockout_heading:'Fase Eliminatoria',
+    knockout_sub:'Octavos • Cuartos • Semi • Final',
+    schedule_note:'<strong>&#10024; Nuevo:</strong> <span style="color:var(--text-sub)">Ocultar marcador &bull; Ocultar terminados – preferencias guardadas automáticamente</span>',
+    jump_btn:'&#9660; Partidos de hoy',
+    footer_source:'Fuente: FIFA / Fox Sports 2026',
+    footer_groups_idx:'72 partidos en fase de grupos • 12 grupos • Top 2 por grupo + 8 mejores 3eros avanzan',
+    no_matches_alert:'Ningún partido coincide con los filtros actuales.',
+    lnk_feedback:'💬 Comentarios &amp; sugerencias',
+    lnk_madeby:'👋 Hecho por u/coolcato',
+    lnk_notify:'📧 Recibir notificaciones de torneos futuros',
+    days:['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'],
+    months:['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+    teams:{'Algeria':'Argelia','Belgium':'Bélgica','Bosnia & Herz.':'Bosnia y Herz.','Brazil':'Brasil','Congo DR':'Congo RD','Croatia':'Croacia','Czechia':'Chequia','Egypt':'Egipto','England':'Inglaterra','France':'Francia','Germany':'Alemania','Ivory Coast':'Costa de Marfil','Japan':'Japón','Mexico':'México','Morocco':'Marruecos','Netherlands':'Países Bajos','New Zealand':'Nueva Zelanda','Norway':'Noruega','Qatar':'Catar','Saudi Arabia':'Arabia Saudita','Scotland':'Escocia','South Africa':'Sudáfrica','South Korea':'Corea del Sur','Spain':'España','Sweden':'Suecia','Switzerland':'Suiza','Tunisia':'Túnez','Turkiye':'Turquía','USA':'EE.UU.','Uzbekistan':'Uzbekistán'},
+  },
+};
+
+let _lang = 'en';
+try { _lang = localStorage.getItem('wc2026_lang') || 'en'; } catch(e) {}
+
+function t(key) {
+  return (LANGS[_lang] || LANGS.en)[key] ?? LANGS.en[key] ?? key;
+}
+function teamName(n) { return LANGS[_lang]?.teams?.[n] ?? n; }
+function xlateTeams(s) {
+  const p = s.split(' v ');
+  if (p.length !== 2) return s;
+  return `${teamName(p[0].trim())} v ${teamName(p[1].trim())}`;
+}
+
+const LANG_FLAGS = { en:'us', pt:'br', es:'es' };
+const LANG_LABELS = { en:'EN', pt:'PT', es:'ES' };
+function langBtnHTML(lang) {
+  const code = LANG_FLAGS[lang];
+  const label = LANG_LABELS[lang];
+  return `<img src="https://flagcdn.com/w20/${code}.png" alt="${label}" style="width:18px;height:13px;object-fit:cover;border-radius:2px;vertical-align:middle;margin-right:5px;">${label}`;
+}
+
+function cycleLang() {
+  const order = ['en','pt','es'];
+  _lang = order[(order.indexOf(_lang) + 1) % order.length];
+  try { localStorage.setItem('wc2026_lang', _lang); } catch(e) {}
+  applyLang();
+  if (typeof updateLiveCard === 'function') updateLiveCard(lastMatches);
+  const s = getState();
+  render(s.offset, s.team);
+}
+
+function applyLang() {
+  const btn = document.getElementById('lang-btn');
+  if (btn) btn.innerHTML = langBtnHTML(_lang);
+  // data-i18n elements
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const val = t(el.dataset.i18n);
+    if (val !== undefined) el.innerHTML = val;
+  });
+  // nav buttons
+  ['schedule','groups','knockout','feedback'].forEach(k => {
+    const el = document.getElementById('nav-' + k);
+    if (el) el.innerHTML = t('nav_' + k);
+  });
+  // schedule note
+  const sn = document.getElementById('schedule-note');
+  if (sn) sn.innerHTML = t('schedule_note');
+  // re-sync toggle buttons to their current state
+  const sb = document.getElementById('scores-toggle');
+  if (sb) sb.textContent = document.body.classList.contains('hide-scores') ? t('btn_show_scores') : t('btn_hide_scores');
+  const fb2 = document.getElementById('finished-toggle');
+  if (fb2) fb2.textContent = (typeof hideFinished !== 'undefined' && hideFinished) ? t('btn_show_finished') : t('btn_hide_finished');
+  // update day/month arrays in place
+  const d = t('days'), m = t('months');
+  if (Array.isArray(d)) DAYS.splice(0, 7, ...d);
+  if (Array.isArray(m)) MONTHS.splice(0, 12, ...m);
+}
+
 // ISO 3166-1 alpha-2 codes for flagcdn.com
 const FLAGS = {
   'Algeria':'dz','Argentina':'ar','Australia':'au','Austria':'at',
@@ -4597,12 +4755,13 @@ function flagImg(team) {
   return `<img class="flag" src="https://flagcdn.com/${size}/${code}.png" alt="">`;
 }
 
+
 function teamsHtml(teamsStr) {
   const parts = teamsStr.split(' v ');
   if (parts.length !== 2) return teamsStr;
   const home = parts[0].trim();
   const away = parts[1].trim();
-  return `${flagImg(home)} ${home} <span class="vs">v</span> ${away} ${flagImg(away)}`;
+  return `${flagImg(home)} ${teamName(home)} <span class="vs">v</span> ${teamName(away)} ${flagImg(away)}`;
 }
 
 
@@ -4646,6 +4805,7 @@ async function loadScores() {
   }
 }
 
+
 function getScore(teamsStr) {
   const parts = teamsStr.split(' v ');
   if (parts.length !== 2) return null;
@@ -4667,8 +4827,8 @@ function getScore(teamsStr) {
   return null;
 }
 
-const DAYS   = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+let DAYS   = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+let MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
 function pad(n) { return String(Math.floor(Math.abs(n))).padStart(2,'0'); }
 
@@ -4770,7 +4930,7 @@ function render(offset, team) {
     // Heading spanning both columns
     const heading = document.createElement('div');
     heading.className = 'knockout-heading';
-    heading.innerHTML = '<h2>Knockout Stage</h2><span class="ko-sub">Round of 32 &bull; R16 &bull; QF &bull; SF &bull; Final</span>';
+    heading.innerHTML = `<h2>${t('knockout_heading')}</h2><span class="ko-sub">${t('knockout_sub')}</span>`;
     sched.appendChild(heading);
 
     // Bucket knockout matches by local date
@@ -4809,7 +4969,7 @@ function render(offset, team) {
         html += `<div class="match${cls}">
           <span style="font-family:'Barlow Condensed',sans-serif;flex-shrink:0;width:80px;color:${koColors[m.grp]||'#7A82A8'}"><span style="font-weight:700;font-size:17px">${m.grp}</span> <span style="font-weight:400;font-size:14px">${m.num}</span></span>
           <span class="time">${t}</span>
-          <span class="teams">${m.teams}</span>
+          <span class="teams">${xlateTeams(m.teams)}</span>
           <span class="venue">${m.venue}</span>
         </div>`;
       });
@@ -4824,7 +4984,9 @@ function render(offset, team) {
     ? `UTC${sign}${Math.floor(offset)}:${Math.abs((offset%1)*60) === 30 ? '30':'00'}`
     : `UTC${sign}${offset}`;
   document.getElementById('footer-tz').innerHTML =
-    `All times ${lbl} \u2022 Source: FIFA / Fox Sports 2026 \u2022 <span id="version" style="color:var(--text-muted);font-style:italic">v1.38</span>`;
+    `All times ${lbl} \u2022 ${t('footer_source')} \u2022 <span id="version" style="color:var(--text-muted);font-style:italic">v1.38</span>`;
+  const fb = document.getElementById('footer-bottom');
+  if (fb) fb.textContent = t('footer_groups_idx');
 
   // Next match card + countdown
   const FLAGS = {
@@ -4882,8 +5044,8 @@ function render(offset, team) {
     const home = parts[0]?.trim() || '';
     const away = parts[1]?.trim() || nextMatch.teams;
 
-    document.getElementById('nm-home').textContent = home;
-    document.getElementById('nm-away').textContent = away;
+    document.getElementById('nm-home').textContent = teamName(home);
+    document.getElementById('nm-away').textContent = teamName(away);
     document.getElementById('nm-kickoff').textContent = timeStr;
     const grpColors = {
       A:'#E74C3C',B:'#E67E22',C:'#F0C040',D:'#2ECC71',
@@ -5046,7 +5208,7 @@ function downloadICS() {
   });
 
   if (filtered.length === 0) {
-    alert('No matches match your current filters.');
+    alert(t('no_matches_alert'));
     return;
   }
 
@@ -5221,10 +5383,10 @@ function jumpToNextDay() {
 const finishedBtn = document.getElementById('finished-toggle');
 let hideFinished = false;
 try { hideFinished = localStorage.getItem('wc2026_hidefinished') === '1'; } catch(e) {}
-if (hideFinished) finishedBtn.textContent = 'Show Completed';
+if (hideFinished) finishedBtn.textContent = t('btn_show_finished');
 finishedBtn.addEventListener('click', () => {
   hideFinished = !hideFinished;
-  finishedBtn.textContent = hideFinished ? 'Show Completed' : 'Hide Completed';
+  finishedBtn.textContent = hideFinished ? t('btn_show_finished') : t('btn_hide_finished');
   try { localStorage.setItem('wc2026_hidefinished', hideFinished ? '1' : '0'); } catch(e) {}
   const s = getState();
   render(s.offset, s.team);
@@ -5234,11 +5396,11 @@ finishedBtn.addEventListener('click', () => {
 const scoresBtn = document.getElementById('scores-toggle');
 let scoresHidden = false;
 try { scoresHidden = localStorage.getItem('wc2026_hidescores') === '1'; } catch(e) {}
-if (scoresHidden) { document.body.classList.add('hide-scores'); scoresBtn.textContent = 'Show Scores'; }
+if (scoresHidden) { document.body.classList.add('hide-scores'); scoresBtn.textContent = t('btn_show_scores'); }
 scoresBtn.addEventListener('click', () => {
   scoresHidden = !scoresHidden;
   document.body.classList.toggle('hide-scores', scoresHidden);
-  scoresBtn.textContent = scoresHidden ? 'Show Scores' : 'Hide Scores';
+  scoresBtn.textContent = scoresHidden ? t('btn_show_scores') : t('btn_hide_scores');
   try { localStorage.setItem('wc2026_hidescores', scoresHidden ? '1' : '0'); } catch(e) {}
 });
 
@@ -5439,6 +5601,7 @@ if (koBtn) koBtn.addEventListener('click', () => {
     render(s.offset, s.team);
   }
 
+  applyLang();
   loadScores().then(() => {
     restoreAndRender();
     setInterval(() => {
