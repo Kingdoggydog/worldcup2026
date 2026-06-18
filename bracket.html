@@ -611,7 +611,7 @@ async function load(){
       // Merge: API data wins, but keep base for any missing
       const byId={};
       BASE.forEach(m=>byId[m.id]={...m});
-      ko.forEach(m=>{ if(byId[m.id]) byId[m.id]={...byId[m.id],...m,homeTeam:m.homeTeam,awayTeam:m.awayTeam,score:m.score,status:m.status}; });
+      ko.forEach(m=>{ if(byId[m.id]) byId[m.id]={...byId[m.id],homeTeam:m.homeTeam,awayTeam:m.awayTeam,score:m.score,status:m.status}; }); // utcDate kept from BASE not API
       matches=BASE.map(m=>byId[m.id]||m);
       render();
     }
