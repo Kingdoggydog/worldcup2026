@@ -527,6 +527,8 @@
   body.hide-scores .score-live .score-nums,
   body.hide-scores .score-ft .score-right,
   body.hide-scores .score-live .score-right { visibility: hidden; }
+  .score-vs-hidden { display: none; }
+  body.hide-scores .score-vs-hidden { display: inline; visibility: visible; color: var(--text-muted); font-size: 12px; }
 
   .score-inline {
     display: flex; align-items: center; gap: 6px; flex: 1;
@@ -4744,7 +4746,7 @@ function render(offset, team) {
         const minStr = score.minute ? `<span class="live-min">${score.minute}</span>` : '';
         scoreHtml = `<span class="${score.cls} score-inline">
           <span class="score-home">${flagImg(home)}${home}</span>
-          <span class="score-nums">${score.home} - ${score.away}</span>
+          <span class="score-nums">${score.home} - ${score.away}<span class="score-vs-hidden">v</span></span>
           <span class="score-away">${away}${flagImg(away)}</span>
           <span class="score-right">${statusStr}${minStr}</span>
         </span>`;
