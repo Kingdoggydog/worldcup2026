@@ -523,12 +523,13 @@
   body.print-mode .schedule-note { display: none !important; }
 
   /* scores */
-  body.hide-scores .score-ft .score-nums,
-  body.hide-scores .score-live .score-nums,
   body.hide-scores .score-ft .score-right,
   body.hide-scores .score-live .score-right { visibility: hidden; }
+  body.hide-scores .score-nums { min-width: 0; }
   .score-vs-hidden { display: none; }
-  body.hide-scores .score-vs-hidden { display: inline; visibility: visible; color: var(--text-muted); font-size: 12px; }
+  .score-number { display: inline; }
+  body.hide-scores .score-number { display: none; }
+  body.hide-scores .score-vs-hidden { display: inline; color: var(--text-muted); font-size: clamp(12px,1.8vw,15px); font-weight: 700; }
 
   .score-inline {
     display: flex; align-items: center; gap: 6px; flex: 1;
@@ -4746,7 +4747,7 @@ function render(offset, team) {
         const minStr = score.minute ? `<span class="live-min">${score.minute}</span>` : '';
         scoreHtml = `<span class="${score.cls} score-inline">
           <span class="score-home">${flagImg(home)}${home}</span>
-          <span class="score-nums">${score.home} - ${score.away}<span class="score-vs-hidden">v</span></span>
+          <span class="score-nums"><span class="score-number">${score.home} - ${score.away}</span><span class="score-vs-hidden">v</span></span>
           <span class="score-away">${away}${flagImg(away)}</span>
           <span class="score-right">${statusStr}${minStr}</span>
         </span>`;
