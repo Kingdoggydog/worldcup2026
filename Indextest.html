@@ -528,7 +528,9 @@
   body.hide-scores .score-ft .score-right,
   body.hide-scores .score-live .score-right { visibility: hidden; }
   .score-vs-hidden { display: none; }
-  body.hide-scores .score-vs-hidden { display: inline; visibility: visible; color: var(--text-muted); font-size: 12px; }
+  .score-number { display: inline; }
+  body.hide-scores .score-number { display: none; }
+  body.hide-scores .score-vs-hidden { display: inline; color: var(--text-muted); font-size: clamp(12px,1.8vw,15px); font-weight: 700; }
 
   .score-inline {
     display: flex; align-items: center; gap: 6px; flex: 1;
@@ -537,7 +539,7 @@
   .score-home {
     display: flex; align-items: center; gap: 4px;
     font-weight: 700; font-size: clamp(12px,1.8vw,15px);
-    color: var(--text); justify-content: flex-end; white-space: nowrap; flex: 1;
+    color: var(--text); justify-content: flex-start; white-space: nowrap;
   }
   .score-away {
     display: flex; align-items: center; gap: 4px;
@@ -4746,7 +4748,7 @@ function render(offset, team) {
         const minStr = score.minute ? `<span class="live-min">${score.minute}</span>` : '';
         scoreHtml = `<span class="${score.cls} score-inline">
           <span class="score-home">${flagImg(home)}${home}</span>
-          <span class="score-nums">${score.home} - ${score.away}<span class="score-vs-hidden">v</span></span>
+          <span class="score-nums"><span class="score-number">${score.home} - ${score.away}</span><span class="score-vs-hidden">v</span></span>
           <span class="score-away">${away}${flagImg(away)}</span>
           <span class="score-right">${statusStr}${minStr}</span>
         </span>`;
