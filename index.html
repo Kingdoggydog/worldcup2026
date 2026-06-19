@@ -598,9 +598,8 @@
     transition: opacity 0.3s;
   }
   #jump-btn:hover { opacity: 0.85; }
-  @media screen and (max-width: 900px) {
-    #jump-btn { display: block; }
-  }
+  #jump-btn { display: block; }
+  body.print-mode #jump-btn { display: none !important; }
   @media print { #jump-btn { display: none !important; } }
 
   @page {
@@ -4630,7 +4629,7 @@ async function loadScores() {
     const data = await res.json();
     scoreMap = {};
     (data.matches || []).forEach(m => {
-      if (m.stage !== 'GROUP_STAGE') return;
+      // Include all stages so knockout match scores also display
       const home = normalise(m.homeTeam.shortName || m.homeTeam.name || '');
       const away = normalise(m.awayTeam.shortName || m.awayTeam.name || '');
       if (!home || !away) return;
