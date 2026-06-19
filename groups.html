@@ -132,6 +132,16 @@
   }
 
   /* STANDINGS NOTE */
+  .qual-badge {
+    display: inline-block;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800; font-size: 10px;
+    color: #0A0E1A; width: 16px; height: 16px;
+    line-height: 16px; text-align: center;
+    border-radius: 50%; margin-left: 6px;
+    vertical-align: middle;
+  }
+
   .third-place-section {
     margin-top: 24px;
     padding-top: 20px;
@@ -399,7 +409,13 @@
   </div>
 
   <div class="standings-note">
-    Groups with a <span style="display:inline-block;width:8px;height:8px;background:#2ECC71;border-radius:50%;vertical-align:middle;margin:0 2px"></span> are in play &mdash; standings shown are provisional.
+    Groups with a <span style="display:inline-block;width:8px;height:8px;background:#2ECC71;border-radius:50%;vertical-align:middle;margin:0 2px"></span> are in play &mdash; standings shown are provisional.<br>
+    <span style="display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:6px;">
+      <span style="display:inline-flex;align-items:center;gap:4px;"><span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#FFD700;color:#0A0E1A;font-weight:800;font-size:10px;font-family:'Barlow Condensed',sans-serif;">1</span> Group winner clinched</span>
+      <span style="display:inline-flex;align-items:center;gap:4px;"><span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#2ECC71;color:#0A0E1A;font-weight:800;font-size:10px;font-family:'Barlow Condensed',sans-serif;">Q</span> Qualified (top 2 guaranteed)</span>
+      <span style="display:inline-flex;align-items:center;gap:4px;"><span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#5DADE2;color:#0A0E1A;font-weight:800;font-size:10px;font-family:'Barlow Condensed',sans-serif;">2</span> Runner-up clinched</span>
+      <span style="display:inline-flex;align-items:center;gap:4px;"><span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#E74C3C;color:#0A0E1A;font-weight:800;font-size:10px;font-family:'Barlow Condensed',sans-serif;">E</span> Eliminated</span>
+    </span>
   </div>
 
   <div class="groups-grid" id="groups-grid"></div>
@@ -451,6 +467,81 @@ const GROUPS = {
   K: ['Portugal','Colombia','Uzbekistan','Congo DR'],
   L: ['England','Croatia','Ghana','Panama'],
 };
+
+const GROUP_FIXTURES = [
+  {grp:'A', date:'2026-06-11', home:'Mexico', away:'South Africa'},
+  {grp:'A', date:'2026-06-12', home:'South Korea', away:'Czechia'},
+  {grp:'A', date:'2026-06-18', home:'Czechia', away:'South Africa'},
+  {grp:'A', date:'2026-06-19', home:'Mexico', away:'South Korea'},
+  {grp:'A', date:'2026-06-25', home:'Czechia', away:'Mexico'},
+  {grp:'A', date:'2026-06-25', home:'South Africa', away:'South Korea'},
+  {grp:'B', date:'2026-06-12', home:'Canada', away:'Bosnia & Herz.'},
+  {grp:'B', date:'2026-06-13', home:'Qatar', away:'Switzerland'},
+  {grp:'B', date:'2026-06-18', home:'Switzerland', away:'Bosnia'},
+  {grp:'B', date:'2026-06-18', home:'Canada', away:'Qatar'},
+  {grp:'B', date:'2026-06-24', home:'Switzerland', away:'Canada'},
+  {grp:'B', date:'2026-06-24', home:'Bosnia', away:'Qatar'},
+  {grp:'C', date:'2026-06-13', home:'Brazil', away:'Morocco'},
+  {grp:'C', date:'2026-06-14', home:'Haiti', away:'Scotland'},
+  {grp:'C', date:'2026-06-19', home:'Scotland', away:'Morocco'},
+  {grp:'C', date:'2026-06-20', home:'Brazil', away:'Haiti'},
+  {grp:'C', date:'2026-06-24', home:'Scotland', away:'Brazil'},
+  {grp:'C', date:'2026-06-24', home:'Morocco', away:'Haiti'},
+  {grp:'D', date:'2026-06-13', home:'USA', away:'Paraguay'},
+  {grp:'D', date:'2026-06-14', home:'Australia', away:'Turkiye'},
+  {grp:'D', date:'2026-06-19', home:'USA', away:'Australia'},
+  {grp:'D', date:'2026-06-20', home:'Turkiye', away:'Paraguay'},
+  {grp:'D', date:'2026-06-26', home:'Turkiye', away:'USA'},
+  {grp:'D', date:'2026-06-26', home:'Paraguay', away:'Australia'},
+  {grp:'E', date:'2026-06-14', home:'Germany', away:'Curacao'},
+  {grp:'E', date:'2026-06-14', home:'Ivory Coast', away:'Ecuador'},
+  {grp:'E', date:'2026-06-20', home:'Germany', away:'Ivory Coast'},
+  {grp:'E', date:'2026-06-21', home:'Ecuador', away:'Curacao'},
+  {grp:'E', date:'2026-06-25', home:'Curacao', away:'Ivory Coast'},
+  {grp:'E', date:'2026-06-25', home:'Ecuador', away:'Germany'},
+  {grp:'F', date:'2026-06-14', home:'Netherlands', away:'Japan'},
+  {grp:'F', date:'2026-06-15', home:'Sweden', away:'Tunisia'},
+  {grp:'F', date:'2026-06-20', home:'Netherlands', away:'Sweden'},
+  {grp:'F', date:'2026-06-21', home:'Tunisia', away:'Japan'},
+  {grp:'F', date:'2026-06-25', home:'Japan', away:'Sweden'},
+  {grp:'F', date:'2026-06-25', home:'Tunisia', away:'Netherlands'},
+  {grp:'G', date:'2026-06-15', home:'Belgium', away:'Egypt'},
+  {grp:'G', date:'2026-06-16', home:'Iran', away:'New Zealand'},
+  {grp:'G', date:'2026-06-21', home:'Belgium', away:'Iran'},
+  {grp:'G', date:'2026-06-22', home:'New Zealand', away:'Egypt'},
+  {grp:'G', date:'2026-06-27', home:'Egypt', away:'Iran'},
+  {grp:'G', date:'2026-06-27', home:'New Zealand', away:'Belgium'},
+  {grp:'H', date:'2026-06-15', home:'Spain', away:'Cape Verde'},
+  {grp:'H', date:'2026-06-15', home:'Saudi Arabia', away:'Uruguay'},
+  {grp:'H', date:'2026-06-21', home:'Spain', away:'Saudi Arabia'},
+  {grp:'H', date:'2026-06-21', home:'Uruguay', away:'Cape Verde'},
+  {grp:'H', date:'2026-06-27', home:'Cape Verde', away:'Saudi Arabia'},
+  {grp:'H', date:'2026-06-27', home:'Uruguay', away:'Spain'},
+  {grp:'I', date:'2026-06-16', home:'France', away:'Senegal'},
+  {grp:'I', date:'2026-06-16', home:'Iraq', away:'Norway'},
+  {grp:'I', date:'2026-06-22', home:'France', away:'Iraq'},
+  {grp:'I', date:'2026-06-23', home:'Norway', away:'Senegal'},
+  {grp:'I', date:'2026-06-26', home:'Norway', away:'France'},
+  {grp:'I', date:'2026-06-26', home:'Senegal', away:'Iraq'},
+  {grp:'J', date:'2026-06-17', home:'Argentina', away:'Algeria'},
+  {grp:'J', date:'2026-06-17', home:'Austria', away:'Jordan'},
+  {grp:'J', date:'2026-06-22', home:'Argentina', away:'Austria'},
+  {grp:'J', date:'2026-06-23', home:'Jordan', away:'Algeria'},
+  {grp:'J', date:'2026-06-28', home:'Jordan', away:'Argentina'},
+  {grp:'J', date:'2026-06-28', home:'Algeria', away:'Austria'},
+  {grp:'K', date:'2026-06-17', home:'Portugal', away:'Congo DR'},
+  {grp:'K', date:'2026-06-18', home:'Uzbekistan', away:'Colombia'},
+  {grp:'K', date:'2026-06-23', home:'Portugal', away:'Uzbekistan'},
+  {grp:'K', date:'2026-06-24', home:'Colombia', away:'Congo DR'},
+  {grp:'K', date:'2026-06-27', home:'Colombia', away:'Portugal'},
+  {grp:'K', date:'2026-06-27', home:'Congo DR', away:'Uzbekistan'},
+  {grp:'L', date:'2026-06-17', home:'England', away:'Croatia'},
+  {grp:'L', date:'2026-06-17', home:'Ghana', away:'Panama'},
+  {grp:'L', date:'2026-06-23', home:'England', away:'Ghana'},
+  {grp:'L', date:'2026-06-23', home:'Panama', away:'Croatia'},
+  {grp:'L', date:'2026-06-27', home:'Panama', away:'England'},
+  {grp:'L', date:'2026-06-27', home:'Croatia', away:'Ghana'}
+];
 
 const GROUP_COLORS = {
   A:'#E74C3C', B:'#E67E22', C:'#F0C040', D:'#2ECC71',
@@ -506,7 +597,8 @@ function calcStandings(matches) {
   });
 
   // Store all completed match results for head-to-head calculation
-  const results = {}; // key: "grp|home|away" -> {hg, ag}
+  const results = {}; // key: "grp|home|away" -> {hg, ag} (includes IN_PLAY/PAUSED provisional scores)
+  const finishedResults = {}; // key: "grp|home|away" -> {hg, ag} (FINISHED only - for qualification badge simulation)
 
   matches.forEach(m => {
     if (m.stage !== 'GROUP_STAGE') return;
@@ -526,6 +618,7 @@ function calcStandings(matches) {
 
     // Store result for H2H
     results[`${grp}|${home}|${away}`] = { hg, ag };
+    if (m.status === 'FINISHED') finishedResults[`${grp}|${home}|${away}`] = { hg, ag };
 
     // Update overall stats
     const ht = groups[grp][home];
@@ -549,7 +642,7 @@ function calcStandings(matches) {
     }
   });
 
-  return { groups, results, liveGroups };
+  return { groups, results, finishedResults, liveGroups };
 }
 
 // ── HEAD-TO-HEAD TIEBREAKER (FIFA 2026 rules) ─────────────────────────────────
@@ -742,18 +835,135 @@ function removeHighlight(idx) {
   if (lastData) render(null, lastData);
 }
 
+
+// ── QUALIFICATION BADGE ENGINE ──────────────────────────────────────────────
+// Simulates all possible outcomes of each group's remaining fixtures and
+// determines if a team's final position (1st/2nd/3rd/4th) is mathematically
+// guaranteed in every scenario. Only runs once all 4 teams have played >=2 games.
+
+function buildGroupStatsFromResults(teamNames, finishedResults) {
+  // finishedResults: array of {home, away, hg, ag} for completed matches
+  const stats = {};
+  teamNames.forEach(t => { stats[t] = { p:0, w:0, d:0, l:0, gf:0, ga:0, pts:0 }; });
+  finishedResults.forEach(r => {
+    const ht = stats[r.home], at = stats[r.away];
+    if (!ht || !at) return;
+    ht.p++; at.p++;
+    ht.gf += r.hg; ht.ga += r.ag;
+    at.gf += r.ag; at.ga += r.hg;
+    if (r.hg > r.ag) { ht.w++; ht.pts += 3; at.l++; }
+    else if (r.hg < r.ag) { at.w++; at.pts += 3; ht.l++; }
+    else { ht.d++; at.d++; ht.pts++; at.pts++; }
+  });
+  return stats;
+}
+
+function getGroupFixtureStatus(grp, results) {
+  // Returns { finished: [...], remaining: [...] } for a group's fixtures.
+  // results is the existing grp|home|away -> {hg,ag} lookup (FINISHED/IN_PLAY/PAUSED matches only)
+  const fixtures = GROUP_FIXTURES.filter(f => f.grp === grp);
+  const finished = [];
+  const remaining = [];
+  fixtures.forEach(f => {
+    const r = results[`${grp}|${f.home}|${f.away}`];
+    if (r && r.hg !== null && r.hg !== undefined && r.ag !== null && r.ag !== undefined) {
+      finished.push({ home: f.home, away: f.away, hg: r.hg, ag: r.ag });
+    } else {
+      remaining.push(f);
+    }
+  });
+  return { finished, remaining };
+}
+
+function allTeamsPlayedTwo(teamNames, finishedResults) {
+  const played = {};
+  teamNames.forEach(t => played[t] = 0);
+  finishedResults.forEach(r => {
+    if (played[r.home] !== undefined) played[r.home]++;
+    if (played[r.away] !== undefined) played[r.away]++;
+  });
+  return teamNames.every(t => played[t] >= 2);
+}
+
+// Generate every combination of outcomes for the remaining fixtures
+function generateScenarios(remaining) {
+  if (remaining.length === 0) return [[]];
+  const outcomes = [
+    (h,a) => ({hg:1, ag:0}), // home win (margin doesn't matter for pts, use 1-0)
+    (h,a) => ({hg:0, ag:0}), // draw
+    (h,a) => ({hg:0, ag:1}), // away win
+  ];
+  let scenarios = [[]];
+  remaining.forEach(fix => {
+    const next = [];
+    scenarios.forEach(scn => {
+      outcomes.forEach(outcomeFn => {
+        const res = outcomeFn();
+        next.push([...scn, { home: fix.home, away: fix.away, hg: res.hg, ag: res.ag }]);
+      });
+    });
+    scenarios = next;
+  });
+  return scenarios;
+}
+
+// Calculate qualification badges for a single group. Returns {team: 'Q'|'1'|'2'|'E'|null}
+function calcGroupBadges(grp, teamNames, results) {
+  const { finished, remaining } = getGroupFixtureStatus(grp, results);
+
+  if (!allTeamsPlayedTwo(teamNames, finished)) {
+    return {}; // too early, no badges yet
+  }
+
+  const scenarios = generateScenarios(remaining);
+  // Cap scenario count for safety (4 remaining fixtures = 81, still fine)
+  if (scenarios.length > 100) return {};
+
+  const positionsSeen = {};
+  teamNames.forEach(t => positionsSeen[t] = new Set());
+
+  scenarios.forEach(scnResults => {
+    const allResults = [...finished, ...scnResults];
+    const stats = buildGroupStatsFromResults(teamNames, allResults);
+    const sorted = sortTeams(teamNames, grp, stats, buildResultsLookup(grp, allResults));
+    sorted.forEach((team, idx) => positionsSeen[team].add(idx + 1));
+  });
+
+  const badges = {};
+  teamNames.forEach(t => {
+    const positions = positionsSeen[t];
+    if (positions.size === 1 && positions.has(1)) badges[t] = '1';
+    else if (positions.size <= 2 && !positions.has(3) && !positions.has(4)) badges[t] = 'Q';
+    else if (positions.size === 1 && positions.has(2)) badges[t] = '2';
+    else if (positions.size === 1 && positions.has(4)) badges[t] = 'E';
+    // else: undetermined, no badge
+  });
+  return badges;
+}
+
+// Build a results lookup object compatible with h2hStats() format (grp|home|away keys)
+function buildResultsLookup(grp, allResults) {
+  const lookup = {};
+  allResults.forEach(r => {
+    lookup[`${grp}|${r.home}|${r.away}`] = { hg: r.hg, ag: r.ag };
+  });
+  return lookup;
+}
+
+
 let lastData = null;
 
 function render(highlightTeam, data) {
   const grid = document.getElementById('groups-grid');
   grid.innerHTML = '';
 
-  const { groups, results, liveGroups } = data || calcStandings([]);
+  const { groups, results, finishedResults, liveGroups } = data || calcStandings([]);
 
   Object.entries(GROUPS).forEach(([grp, teamList]) => {
     const groupStats = groups[grp] || {};
     const sorted = sortTeams(teamList, grp, groupStats, results);
     const color = GROUP_COLORS[grp];
+    const badges = calcGroupBadges(grp, teamList, finishedResults || {});
     const card = document.createElement('div');
     card.className = 'group-card';
     const isLive = liveGroups && liveGroups.has(grp);
@@ -770,9 +980,13 @@ function render(highlightTeam, data) {
       const isHi = hiIdx >= 0;
       const hiCls = isHi ? ` highlighted hi-${hiIdx+1}` : '';
 
+      const badge = badges[name];
+      const badgeColor = badge === '1' ? '#FFD700' : badge === 'Q' ? '#2ECC71' : badge === '2' ? '#5DADE2' : badge === 'E' ? '#E74C3C' : 'transparent';
+      const badgeHtml = badge ? `<span class="qual-badge" style="background:${badgeColor};" title="${badge==='1'?'Group winner clinched':badge==='Q'?'Qualified (top 2 guaranteed)':badge==='2'?'Runner-up clinched':'Eliminated'}">${badge}</span>` : '';
+
       rows += `<tr class="${hiCls}">
         <td class="stat" style="width:20px;padding-left:8px">${i+1}</td>
-        <td class="team-name">${flagImg(name)}${name}</td>
+        <td class="team-name">${flagImg(name)}${name}${badgeHtml}</td>
         <td class="stat">${s.p}</td>
         <td class="stat">${s.p > 0 ? s.w : '-'}</td>
         <td class="stat">${s.p > 0 ? s.d : '-'}</td>
