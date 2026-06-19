@@ -228,7 +228,7 @@ const R32_PH = {
   537418: ['Win Group C', '2nd Group F'],
   537424: ['Win Group I', '3rd C/D/F/G/H'],
   537416: ['2nd Group E', '2nd Group I'],
-  537425: ['Win Group A', '3rd C/E/F/H/I'],
+  537425: ['Mexico', '3rd C/E/F/H/I'],
   537426: ['Win Group L', '3rd E/H/I/J/K'],
   537422: ['Win Group D', '3rd B/E/F/I/J'],
   537421: ['Win Group G', '3rd A/E/H/I/J'],
@@ -244,7 +244,7 @@ const PH = {
   537417:['2nd A','2nd B'],      537423:['Win C','2nd F'],
   537415:['Win E','3rd A/B/C/D/F'], 537418:['Win F','2nd C'],
   537424:['2nd E','2nd I'],      537416:['Win I','3rd C/D/F/G/H'],
-  537425:['Win A','3rd C/E/F/H/I'], 537426:['Win L','3rd E/H/I/J/K'],
+  537425:['Mexico','3rd C/E/F/H/I'], 537426:['Win L','3rd E/H/I/J/K'],
   537422:['Win G','3rd A/E/H/I/J'], 537421:['Win D','3rd B/E/F/I/J'],
   537420:['Win H','2nd J'],      537419:['2nd K','2nd L'],
   537429:['Win B','3rd D/E/I/J/L'], 537428:['2nd D','2nd G'],
@@ -310,7 +310,10 @@ function teams(m){
       phh='TBD'; pha='TBD';
     }
   }
-  return { h:hn||phh, a:an||pha, hph:!hn, aph:!an };
+  // If the placeholder text is itself a real team name (manually confirmed), treat as non-placeholder
+  const hConfirmed = !hn && FLAGS[phh];
+  const aConfirmed = !an && FLAGS[pha];
+  return { h:hn||phh, a:an||pha, hph:!hn&&!hConfirmed, aph:!an&&!aConfirmed };
 }
 
 function scoreSuffix(m){

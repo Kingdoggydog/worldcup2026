@@ -4540,7 +4540,7 @@ const KNOCKOUT_MATCHES = [
   { grp:'R32', num:'M75', utc:1,    date:'2026-06-30', teams:'Win F v 2nd C',         venue:'Monterrey'     },
   { grp:'R32', num:'M78', utc:17,   date:'2026-06-30', teams:'2nd E v 2nd I',         venue:'Dallas'        },
   { grp:'R32', num:'M77', utc:21,   date:'2026-06-30', teams:'Win I v 3rd C/D/F/G/H', venue:'New York/NJ'   },
-  { grp:'R32', num:'M79', utc:1,    date:'2026-07-01', teams:'Win A v 3rd C/E/F/H/I', venue:'Mexico City'   },
+  { grp:'R32', num:'M79', utc:1,    date:'2026-07-01', teams:'Mexico v 3rd C/E/F/H/I', venue:'Mexico City'   },
   { grp:'R32', num:'M80', utc:16,   date:'2026-07-01', teams:'Win L v 3rd E/H/I/J/K', venue:'Atlanta'       },
   { grp:'R32', num:'M82', utc:20,   date:'2026-07-01', teams:'Win G v 3rd A/E/H/I/J', venue:'Seattle'       },
   { grp:'R32', num:'M81', utc:0,    date:'2026-07-02', teams:'Win D v 3rd B/E/F/I/J', venue:'San Francisco' },
@@ -4809,7 +4809,7 @@ function render(offset, team) {
         html += `<div class="match${cls}">
           <span style="font-family:'Barlow Condensed',sans-serif;flex-shrink:0;width:80px;color:${koColors[m.grp]||'#7A82A8'}"><span style="font-weight:700;font-size:17px">${m.grp}</span> <span style="font-weight:400;font-size:14px">${m.num}</span></span>
           <span class="time">${t}</span>
-          <span class="teams">${m.teams}</span>
+          <span class="teams">${teamsHtml(m.teams)}</span>
           <span class="venue">${m.venue}</span>
         </div>`;
       });
