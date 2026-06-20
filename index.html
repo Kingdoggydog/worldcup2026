@@ -93,12 +93,63 @@
     max-width: 900px;
     width: 100%;
     margin: 0 auto;
-    padding: 24px 20px 32px 20px;
+    padding: 24px 20px 90px 20px;
     display: flex; flex-direction: column;
     background: var(--bg);
     box-shadow: var(--page-shadow);
     transition: background 0.3s, box-shadow 0.3s;
     min-height: 100vh;
+  }
+
+
+  /* ── MATCH EVENT CARD (hover/tap popup) ──────────────────────────────── */
+  .match { position: relative; cursor: pointer; }
+  .event-card {
+    position: absolute;
+    left: 50%; transform: translateX(-50%);
+    top: calc(100% + 6px);
+    width: min(420px, 92vw);
+    background: var(--card-bg, #131A2E);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    box-shadow: 0 8px 28px rgba(0,0,0,0.5);
+    z-index: 50;
+    font-family: 'Barlow Condensed', sans-serif;
+    overflow: hidden;
+  }
+  .event-card-header {
+    display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+    justify-content: center;
+    padding: 10px 12px;
+    background: rgba(255,255,255,0.03);
+    border-bottom: 1px solid var(--border);
+    font-weight: 700; font-size: 14px;
+    color: var(--text);
+  }
+  .event-card-header .ev-score { color: var(--gold); font-weight: 800; margin: 0 4px; }
+  .event-card-header .ev-status { color: var(--text-muted); font-size: 11px; letter-spacing: 1px; margin-left: 6px; }
+  .event-card-body {
+    display: flex;
+    gap: 0;
+  }
+  .ev-col {
+    flex: 1; padding: 8px 10px; min-width: 0;
+  }
+  .ev-col:first-child { border-right: 1px solid var(--border); }
+  .ev-row {
+    font-size: 12.5px; color: var(--text); padding: 4px 0;
+    line-height: 1.4;
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: 3px;
+  }
+  .ev-icon { font-size: 11px; }
+  .ev-min { color: var(--gold); font-weight: 700; min-width: 30px; }
+  .ev-player { font-weight: 600; }
+  .ev-scorer { color: var(--gold); font-weight: 800; }
+  .ev-assist { color: var(--text); font-size: 11px; }
+  .ev-empty { font-size: 11.5px; color: var(--text-muted); font-style: italic; padding: 4px 0; }
+
+  @media (max-width: 600px) {
+    .event-card { width: 94vw; left: 50%; }
   }
 
   /* ── PRINT MODE: lock to A4 ──────────────────────────────────────────────── */
@@ -438,7 +489,10 @@
     background: var(--bg-match);
     border-radius: 4px;
     line-height: 1.3;
-    transition: background 0.3s;
+    transition: background 0.3s, box-shadow 0.2s;
+  }
+  body:not(.hide-scores) .match.has-events:hover {
+    box-shadow: 0 0 0 1.5px rgba(255,255,255,0.55), 0 0 12px rgba(255,255,255,0.15);
   }
   body.print-mode .match {
     background: transparent; padding: 1.5px 2px;
@@ -477,6 +531,7 @@
     flex: 1; font-family: 'Barlow Condensed', sans-serif; font-weight: 600;
     font-size: clamp(13px, 2vw, 16px);
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text);
+    position: relative;
   }
   body.print-mode .teams { font-size: 11px; }
 
@@ -534,6 +589,7 @@
   .score-inline {
     display: flex; align-items: center; gap: 6px; flex: 1;
     font-family: 'Barlow Condensed', sans-serif; justify-content: flex-start;
+    position: relative;
   }
   .score-home {
     display: flex; align-items: center; gap: 4px;
@@ -549,6 +605,7 @@
     font-weight: 800; font-size: clamp(13px,2vw,16px);
     white-space: nowrap; min-width: 40px; text-align: center;
     color: var(--gold);
+    position: relative;
   }
   .score-right {
     display: flex; align-items: center; gap: 4px;
@@ -4418,11 +4475,15 @@
     </div>
     <span id="nm-venue" style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#7A82A8;white-space:nowrap;text-align:right;"></span>
   </div>
+  <div class="schedule-note">
+    <strong>&#10024; New:</strong> <span style="color:var(--text-sub)">Hover over / tap a match to see scorers and cards information</span>
+  </div>
   <div class="schedule" id="schedule"></div>
 
   <div class="footer">
-    <p id="footer-tz">All times AEST (UTC+10) &bull; Source: FIFA / Fox Sports 2026 &bull; <span id="version">v1.38</span></p>
+    <p id="footer-tz">All times AEST (UTC+10) &bull; Source: FIFA / Fox Sports 2026 &bull; <span id="version">v1.4</span></p>
     <p>72 group stage matches &bull; 12 groups &bull; Top 2 per group + 8 best 3rd place advance</p>
+    <p>Live scores &amp; match data provided by <a href="https://www.football-data.org" target="_blank" style="color:var(--gold);text-decoration:none;">football-data.org</a></p>
   </div>
   <div style="text-align:center;margin-top:12px;">
     <a href="https://kingdoggydog.github.io/worldcup2026/feedback.html" style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;color:var(--text-muted);text-decoration:none;letter-spacing:1px;">💬 Feedback &amp; suggestions</a>
@@ -4621,6 +4682,7 @@ function normalise(name) {
 
 // scoreMap: keyed by "HomeTeam|AwayTeam" -> {home, away, status}
 let scoreMap = {};
+let matchDetails = {};
 let lastFetch = null;
 
 async function loadScores() {
@@ -4637,13 +4699,110 @@ async function loadScores() {
       const status = m.status; // TIMED, IN_PLAY, PAUSED, FINISHED
       const hg = m.score?.fullTime?.home;
       const ag = m.score?.fullTime?.away;
-      scoreMap[key] = { home: hg, away: ag, status, minute: m.minute, injuryTime: m.injuryTime };
+      scoreMap[key] = { home: hg, away: ag, status, minute: m.minute, injuryTime: m.injuryTime, id: m.id };
     });
     lastFetch = new Date();
   } catch(e) {
     console.log('Could not load scores:', e.message);
   }
+  try {
+    const detRes = await fetch('match-details.json?t=' + Date.now());
+    matchDetails = await detRes.json();
+  } catch(e) {
+    matchDetails = matchDetails || {};
+  }
 }
+
+
+// ── MATCH EVENT CARD (hover/tap for goals, cards, subs) ────────────────────
+function getMatchId(teamsStr) {
+  const parts = teamsStr.split(' v ');
+  if (parts.length !== 2) return null;
+  const DISPLAY_MAP = { 'Bosnia & Herz.': 'Bosnia' };
+  const home = DISPLAY_MAP[parts[0].trim()] || parts[0].trim();
+  const away = DISPLAY_MAP[parts[1].trim()] || parts[1].trim();
+  const key = home + '|' + away;
+  const s = scoreMap[key];
+  return s ? s.id : null;
+}
+
+function hasEventData(teamsStr) {
+  const mid = getMatchId(teamsStr);
+  if (!mid) return false;
+  const det = matchDetails[String(mid)];
+  if (!det) return false;
+  if (!['FINISHED', 'IN_PLAY', 'PAUSED'].includes(det.status)) return false;
+  return (det.goals && det.goals.length > 0) || (det.bookings && det.bookings.length > 0);
+}
+
+function buildEventCard(teamsStr) {
+  if (document.body.classList.contains('hide-scores')) return null; // never leak results
+  const mid = getMatchId(teamsStr);
+  if (!mid) return null;
+  const det = matchDetails[String(mid)];
+  if (!det) return null;
+  if (!['FINISHED', 'IN_PLAY', 'PAUSED'].includes(det.status)) return null;
+
+  const parts = teamsStr.split(' v ');
+  if (parts.length !== 2) return null;
+  const homeName = parts[0].trim();
+  const awayName = parts[1].trim();
+
+  const hg = det.score?.fullTime?.home;
+  const ag = det.score?.fullTime?.away;
+  if (hg === null || hg === undefined) return null;
+
+  // Combine goals + bookings into one event list per team, tagged with type
+  const events = { home: [], away: [] };
+
+  (det.goals || []).forEach(g => {
+    const side = g.team?.name === homeName || normalise(g.team?.name) === normalise(homeName) ? 'home' : 'away';
+    let tag = '';
+    if (g.type === 'OWN') tag = ' (OG)';
+    else if (g.type === 'PENALTY') tag = ' (pen)';
+    const assistStr = g.assist ? ` <span class="ev-assist">assist: ${g.assist.name}</span>` : '';
+    events[side].push({
+      minute: g.minute,
+      injuryTime: g.injuryTime,
+      sortMin: g.minute + (g.injuryTime ? g.injuryTime / 100 : 0),
+      html: `<span class="ev-icon">&#9917;</span> <span class="ev-min">${g.minute}${g.injuryTime ? '+'+g.injuryTime : ''}'</span> <span class="ev-player ev-scorer">${g.scorer.name}${tag}</span>${assistStr}`
+    });
+  });
+
+  (det.bookings || []).forEach(b => {
+    const side = b.team?.name === homeName || normalise(b.team?.name) === normalise(homeName) ? 'home' : 'away';
+    const icon = b.card === 'RED' ? '&#128997;' : '&#129000;';
+    events[side].push({
+      minute: b.minute,
+      injuryTime: 0,
+      sortMin: b.minute,
+      html: `<span class="ev-icon">${icon}</span> <span class="ev-min">${b.minute}'</span> <span class="ev-player">${b.player.name}</span>`
+    });
+  });
+
+  events.home.sort((a,b) => a.sortMin - b.sortMin);
+  events.away.sort((a,b) => a.sortMin - b.sortMin);
+
+  if (events.home.length === 0 && events.away.length === 0) return null; // 0-0 finished, nothing to show
+
+  const statusLabel = det.status === 'FINISHED' ? 'FT' : det.status === 'PAUSED' ? 'HT' : (det.minute ? `${det.minute}'` : 'LIVE');
+
+  const homeCol = events.home.length
+    ? events.home.map(e => `<div class="ev-row">${e.html}</div>`).join('')
+    : '<div class="ev-empty">No events</div>';
+  const awayCol = events.away.length
+    ? events.away.map(e => `<div class="ev-row">${e.html}</div>`).join('')
+    : '<div class="ev-empty">No events</div>';
+
+  return `
+    <div class="event-card">
+      <div class="event-card-body">
+        <div class="ev-col">${homeCol}</div>
+        <div class="ev-col">${awayCol}</div>
+      </div>
+    </div>`;
+}
+
 
 function getScore(teamsStr) {
   const parts = teamsStr.split(' v ');
@@ -4753,7 +4912,7 @@ function render(offset, team) {
       } else {
         scoreHtml = `<span class="teams">${teamsHtml(m.teams)}</span>`;
       }
-      html += `<div class="match${cls}">
+      html += `<div class="match${cls}${hasEventData(m.teams)?' has-events':''}" data-teams="${m.teams.replace(/"/g,'&quot;')}">
         <span class="grp ${m.grp}">${m.grp}</span>
         <span class="time">${t}</span>
         ${scoreHtml}
@@ -4805,7 +4964,7 @@ function render(offset, team) {
         const hi = hiIdx >= 0;
         const cls = hi ? ` highlighted hi-${hiIdx+1} ko-match` : ' ko-match';
         const grpStyle = `style="color:var(--ko-${m.grp}, #7A82A8)"`;
-        html += `<div class="match${cls}">
+        html += `<div class="match${cls}${hasEventData(m.teams)?' has-events':''}" data-teams="${m.teams.replace(/"/g,'&quot;')}">
           <span style="font-family:'Barlow Condensed',sans-serif;flex-shrink:0;width:80px;color:${koColors[m.grp]||'#7A82A8'}"><span style="font-weight:700;font-size:17px">${m.grp}</span> <span style="font-weight:400;font-size:14px">${m.num}</span></span>
           <span class="time">${t}</span>
           <span class="teams">${teamsHtml(m.teams)}</span>
@@ -4823,7 +4982,7 @@ function render(offset, team) {
     ? `UTC${sign}${Math.floor(offset)}:${Math.abs((offset%1)*60) === 30 ? '30':'00'}`
     : `UTC${sign}${offset}`;
   document.getElementById('footer-tz').innerHTML =
-    `All times ${lbl} \u2022 Source: FIFA / Fox Sports 2026 \u2022 <span id="version" style="color:var(--text-muted);font-style:italic">v1.38</span>`;
+    `All times ${lbl} \u2022 Source: FIFA / Fox Sports 2026 \u2022 <span id="version" style="color:var(--text-muted);font-style:italic">v1.4</span>`;
 
   // Next match card + countdown
   const FLAGS = {
@@ -5447,6 +5606,74 @@ if (koBtn) koBtn.addEventListener('click', () => {
       });
     }, 60000);
   });
+
+  // ── Match event card: hover (desktop) + tap (mobile) ────────────────────
+  let activeCard = null;
+  function closeEventCard() {
+    if (activeCard) { activeCard.remove(); activeCard = null; }
+  }
+  function showEventCard(matchEl) {
+    closeEventCard();
+    const teamsStr = matchEl.getAttribute('data-teams');
+    if (!teamsStr) return;
+    const cardHtml = buildEventCard(teamsStr);
+    if (!cardHtml) return;
+    matchEl.insertAdjacentHTML('beforeend', cardHtml);
+    activeCard = matchEl.querySelector('.event-card');
+    positionEventCard(matchEl, activeCard);
+  }
+
+  function positionEventCard(matchEl, card) {
+    // Find the true visual centre of the team names (home start -> away end),
+    // not the whole row (which includes venue text and varies in width).
+    const scoreEl = matchEl.querySelector('.score-inline') || matchEl.querySelector('.teams');
+    const refRect = (scoreEl || matchEl).getBoundingClientRect();
+    const matchRect = matchEl.getBoundingClientRect();
+    const cardWidth = card.offsetWidth;
+
+    const centerX = refRect.left + refRect.width / 2;
+    let leftPx = (centerX - matchRect.left) - (cardWidth / 2);
+
+    // Clamp so the card never overflows the viewport on mobile
+    const margin = 8;
+    const minLeftPx = margin - matchRect.left;
+    const maxLeftPx = (window.innerWidth - margin - cardWidth) - matchRect.left;
+    leftPx = Math.max(minLeftPx, Math.min(leftPx, maxLeftPx));
+
+    card.style.left = leftPx + 'px';
+    card.style.transform = 'none';
+  }
+
+  const isTouchDevice = window.matchMedia('(hover: none)').matches;
+
+  document.addEventListener('mouseover', (e) => {
+    if (isTouchDevice) return;
+    const matchEl = e.target.closest('.match[data-teams]');
+    if (matchEl && matchEl !== (activeCard && activeCard.closest('.match'))) {
+      showEventCard(matchEl);
+    }
+  });
+  document.addEventListener('mouseout', (e) => {
+    if (isTouchDevice) return;
+    const matchEl = e.target.closest('.match[data-teams]');
+    if (matchEl && !matchEl.contains(e.relatedTarget)) {
+      closeEventCard();
+    }
+  });
+  document.addEventListener('click', (e) => {
+    if (!isTouchDevice) return;
+    const matchEl = e.target.closest('.match[data-teams]');
+    if (matchEl) {
+      if (activeCard && activeCard.closest('.match') === matchEl) {
+        closeEventCard();
+      } else {
+        showEventCard(matchEl);
+      }
+    } else {
+      closeEventCard();
+    }
+  });
+
 })();
 </script>
 
