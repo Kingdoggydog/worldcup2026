@@ -531,6 +531,7 @@
     flex: 1; font-family: 'Barlow Condensed', sans-serif; font-weight: 600;
     font-size: clamp(13px, 2vw, 16px);
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text);
+    position: relative;
   }
   body.print-mode .teams { font-size: 11px; }
 
@@ -588,6 +589,7 @@
   .score-inline {
     display: flex; align-items: center; gap: 6px; flex: 1;
     font-family: 'Barlow Condensed', sans-serif; justify-content: flex-start;
+    position: relative;
   }
   .score-home {
     display: flex; align-items: center; gap: 4px;
@@ -5615,8 +5617,10 @@ if (koBtn) koBtn.addEventListener('click', () => {
     if (!teamsStr) return;
     const cardHtml = buildEventCard(teamsStr);
     if (!cardHtml) return;
-    matchEl.insertAdjacentHTML('beforeend', cardHtml);
-    activeCard = matchEl.querySelector('.event-card');
+    // Anchor under the team names specifically, not the full row (avoids drift from venue/time width)
+    const anchor = matchEl.querySelector('.score-inline') || matchEl.querySelector('.teams') || matchEl;
+    anchor.insertAdjacentHTML('beforeend', cardHtml);
+    activeCard = anchor.querySelector('.event-card');
   }
 
   const isTouchDevice = window.matchMedia('(hover: none)').matches;
