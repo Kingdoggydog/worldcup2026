@@ -144,7 +144,8 @@
   .ev-icon { font-size: 11px; }
   .ev-min { color: var(--gold); font-weight: 700; min-width: 30px; }
   .ev-player { font-weight: 600; }
-  .ev-assist { color: var(--text-muted); font-size: 11px; }
+  .ev-scorer { color: var(--gold); font-weight: 800; }
+  .ev-assist { color: var(--text); font-size: 11px; }
   .ev-empty { font-size: 11.5px; color: var(--text-muted); font-style: italic; padding: 4px 0; }
 
   @media (max-width: 600px) {
@@ -4761,7 +4762,7 @@ function buildEventCard(teamsStr) {
       minute: g.minute,
       injuryTime: g.injuryTime,
       sortMin: g.minute + (g.injuryTime ? g.injuryTime / 100 : 0),
-      html: `<span class="ev-icon">&#9917;</span> <span class="ev-min">${g.minute}${g.injuryTime ? '+'+g.injuryTime : ''}'</span> <span class="ev-player">${g.scorer.name}${tag}</span>${assistStr}`
+      html: `<span class="ev-icon">&#9917;</span> <span class="ev-min">${g.minute}${g.injuryTime ? '+'+g.injuryTime : ''}'</span> <span class="ev-player ev-scorer">${g.scorer.name}${tag}</span>${assistStr}`
     });
   });
 
