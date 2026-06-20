@@ -4468,10 +4468,13 @@
     </div>
     <span id="nm-venue" style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#7A82A8;white-space:nowrap;text-align:right;"></span>
   </div>
+  <div class="schedule-note">
+    <strong>&#10024; New:</strong> <span style="color:var(--text-sub)">Hover over / tap a match to see scorers and cards information</span>
+  </div>
   <div class="schedule" id="schedule"></div>
 
   <div class="footer">
-    <p id="footer-tz">All times AEST (UTC+10) &bull; Source: FIFA / Fox Sports 2026 &bull; <span id="version">v1.38</span></p>
+    <p id="footer-tz">All times AEST (UTC+10) &bull; Source: FIFA / Fox Sports 2026 &bull; <span id="version">v1.4</span></p>
     <p>72 group stage matches &bull; 12 groups &bull; Top 2 per group + 8 best 3rd place advance</p>
     <p>Live scores &amp; match data provided by <a href="https://www.football-data.org" target="_blank" style="color:var(--gold);text-decoration:none;">football-data.org</a></p>
   </div>
@@ -4752,7 +4755,7 @@ function buildEventCard(teamsStr) {
 
   (det.bookings || []).forEach(b => {
     const side = b.team?.name === homeName || normalise(b.team?.name) === normalise(homeName) ? 'home' : 'away';
-    const icon = b.card === 'RED' ? '&#128997;' : '&#128993;';
+    const icon = b.card === 'RED' ? '&#128997;' : '&#129000;';
     events[side].push({
       minute: b.minute,
       injuryTime: 0,
@@ -4777,7 +4780,6 @@ function buildEventCard(teamsStr) {
 
   return `
     <div class="event-card">
-      <div class="event-card-header">${flagImg(homeName)} ${homeName} <span class="ev-score">${hg} - ${ag}</span> ${awayName} ${flagImg(awayName)} <span class="ev-status">${statusLabel}</span></div>
       <div class="event-card-body">
         <div class="ev-col">${homeCol}</div>
         <div class="ev-col">${awayCol}</div>
@@ -4964,7 +4966,7 @@ function render(offset, team) {
     ? `UTC${sign}${Math.floor(offset)}:${Math.abs((offset%1)*60) === 30 ? '30':'00'}`
     : `UTC${sign}${offset}`;
   document.getElementById('footer-tz').innerHTML =
-    `All times ${lbl} \u2022 Source: FIFA / Fox Sports 2026 \u2022 <span id="version" style="color:var(--text-muted);font-style:italic">v1.38</span>`;
+    `All times ${lbl} \u2022 Source: FIFA / Fox Sports 2026 \u2022 <span id="version" style="color:var(--text-muted);font-style:italic">v1.4</span>`;
 
   // Next match card + countdown
   const FLAGS = {
