@@ -4600,10 +4600,10 @@ const KNOCKOUT_MATCHES = [
   { grp:'R32', num:'M75', utc:1,    date:'2026-06-30', teams:'Win F v 2nd C',         venue:'Monterrey'     },
   { grp:'R32', num:'M78', utc:17,   date:'2026-06-30', teams:'2nd E v 2nd I',         venue:'Dallas'        },
   { grp:'R32', num:'M77', utc:21,   date:'2026-06-30', teams:'Win I v 3rd C/D/F/G/H', venue:'New York/NJ'   },
-  { grp:'R32', num:'M79', utc:1,    date:'2026-07-01', teams:'Mexico v 3rd C/E/F/H/I', venue:'Mexico City'   },
+  { grp:'R32', num:'M79', utc:1,    date:'2026-07-01', teams:'Win A v 3rd C/E/F/H/I', venue:'Mexico City'   },
   { grp:'R32', num:'M80', utc:16,   date:'2026-07-01', teams:'Win L v 3rd E/H/I/J/K', venue:'Atlanta'       },
   { grp:'R32', num:'M82', utc:20,   date:'2026-07-01', teams:'Win G v 3rd A/E/H/I/J', venue:'Seattle'       },
-  { grp:'R32', num:'M81', utc:0,    date:'2026-07-02', teams:'USA v 3rd B/E/F/I/J', venue:'San Francisco' },
+  { grp:'R32', num:'M81', utc:0,    date:'2026-07-02', teams:'Win D v 3rd B/E/F/I/J', venue:'San Francisco' },
   { grp:'R32', num:'M84', utc:19,   date:'2026-07-02', teams:'Win H v 2nd J',         venue:'Los Angeles'   },
   { grp:'R32', num:'M83', utc:23,   date:'2026-07-02', teams:'2nd K v 2nd L',         venue:'Toronto'       },
   { grp:'R32', num:'M85', utc:3,    date:'2026-07-03', teams:'Win B v 3rd E/F/G/I/J', venue:'Vancouver'     },
@@ -4683,6 +4683,7 @@ function normalise(name) {
 // scoreMap: keyed by "HomeTeam|AwayTeam" -> {home, away, status}
 let scoreMap = {};
 let matchDetails = {};
+let groupWinners = {};
 let lastFetch = null;
 
 async function loadScores() {
@@ -4711,6 +4712,26 @@ async function loadScores() {
   } catch(e) {
     matchDetails = matchDetails || {};
   }
+  try {
+    const gwRes = await fetch('group-winners.json?t=' + Date.now());
+    groupWinners = await gwRes.json();
+  } catch(e) {
+    groupWinners = groupWinners || {};
+  }
+}
+
+// Swap "Win X" placeholders for confirmed team names once a group is mathematically clinched.
+// Letter range A-L only (group letters) - never touches "Win M89" style knockout-round references.
+function applyGroupWinners(teamsStr) {
+  let result = teamsStr.replace(/\bWin ([A-L])\b/g, (match, letter) => {
+    const winner = groupWinners[letter]?.first;
+    return winner ? winner : match;
+  });
+  result = result.replace(/\b2nd ([A-L])\b/g, (match, letter) => {
+    const runnerUp = groupWinners[letter]?.second;
+    return runnerUp ? runnerUp : match;
+  });
+  return result;
 }
 
 
@@ -4963,7 +4984,8 @@ function render(offset, team) {
       const div = document.createElement('div');
       div.className = 'day';
       let html = `<div class="day-header"><span class="day-name">${hdr.name}</span><span class="day-date">${hdr.date}</span></div>`;
-      koFiltered.forEach(m => {
+      koFiltered.forEach(rawM => {
+        const m = { ...rawM, teams: applyGroupWinners(rawM.teams) };
         const t  = formatTime(m.utc + offset);
         const hiIdx = _highlightTeams.findIndex(t => t && t !== 'none' && m.teams.includes(t));
         const hi = hiIdx >= 0;

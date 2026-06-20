@@ -228,9 +228,9 @@ const R32_PH = {
   537418: ['Win Group C', '2nd Group F'],
   537424: ['Win Group I', '3rd C/D/F/G/H'],
   537416: ['2nd Group E', '2nd Group I'],
-  537425: ['Mexico', '3rd C/E/F/H/I'],
+  537425: ['Win Group A', '3rd C/E/F/H/I'],
   537426: ['Win Group L', '3rd E/H/I/J/K'],
-  537422: ['USA', '3rd B/E/F/I/J'],
+  537422: ['Win Group D', '3rd B/E/F/I/J'],
   537421: ['Win Group G', '3rd A/E/H/I/J'],
   537420: ['2nd Group K', '2nd Group L'],
   537419: ['Win Group H', '2nd Group J'],
@@ -244,8 +244,8 @@ const PH = {
   537417:['2nd A','2nd B'],      537423:['Win C','2nd F'],
   537415:['Win E','3rd A/B/C/D/F'], 537418:['Win F','2nd C'],
   537424:['2nd E','2nd I'],      537416:['Win I','3rd C/D/F/G/H'],
-  537425:['Mexico','3rd C/E/F/H/I'], 537426:['Win L','3rd E/H/I/J/K'],
-  537422:['USA','3rd B/E/F/I/J'], 537421:['Win G','3rd A/E/H/I/J'],
+  537425:['Win A','3rd C/E/F/H/I'], 537426:['Win L','3rd E/H/I/J/K'],
+  537422:['Win D','3rd B/E/F/I/J'], 537421:['Win G','3rd A/E/H/I/J'],
   537420:['Win H','2nd J'],      537419:['2nd K','2nd L'],
   537429:['Win B','3rd D/E/I/J/L'], 537428:['2nd D','2nd G'],
   537427:['Win J','2nd H'],      537430:['Win K','3rd D/E/I/J/L']
@@ -273,6 +273,7 @@ const BASE = [
 ].map(m => ({...m, status:'TIMED', homeTeam:{name:null,shortName:null}, awayTeam:{name:null,shortName:null}, score:{fullTime:{home:null,away:null}}}));
 
 let matches = BASE.map(m => ({...m}));
+let groupWinners = {};
 const mnums = {};
 
 function norm(n){ return n ? (NAME_MAP[n]||n) : null; }
@@ -292,6 +293,20 @@ function fmt(utc, off){
 }
 function getOff(){ return parseFloat(document.getElementById('tzsel').value); }
 
+function applyGroupWinnersBracket(phStr) {
+  const winMatch = phStr.match(/^Win Group ([A-L])$/);
+  if (winMatch) {
+    const winner = groupWinners[winMatch[1]]?.first;
+    return winner || phStr;
+  }
+  const secondMatch = phStr.match(/^2nd ([A-L])$/);
+  if (secondMatch) {
+    const runnerUp = groupWinners[secondMatch[1]]?.second;
+    return runnerUp || phStr;
+  }
+  return phStr;
+}
+
 function teams(m){
   const h=m.homeTeam?.shortName||m.homeTeam?.name;
   const a=m.awayTeam?.shortName||m.awayTeam?.name;
@@ -299,7 +314,7 @@ function teams(m){
   let phh, pha;
   if(m.stage==='LAST_32'){
     const ph=R32_PH[m.id]||['TBD','TBD'];
-    phh=ph[0]; pha=ph[1];
+    phh=applyGroupWinnersBracket(ph[0]); pha=applyGroupWinnersBracket(ph[1]);
   } else {
     const feeders=FEEDERS[m.id];
     if(feeders){
@@ -607,6 +622,10 @@ async function load(){
   buildNums();
   render(); // render immediately with base data
   try{
+    const gwRes = await fetch('group-winners.json?t='+Date.now());
+    groupWinners = await gwRes.json();
+  }catch(e){ groupWinners = groupWinners || {}; }
+  try{
     const r=await fetch('data.json?t='+Date.now());
     const d=await r.json();
     const ko=d.matches.filter(m=>m.stage!=='GROUP_STAGE');
@@ -616,8 +635,8 @@ async function load(){
       BASE.forEach(m=>byId[m.id]={...m});
       ko.forEach(m=>{ if(byId[m.id]) byId[m.id]={...byId[m.id],homeTeam:m.homeTeam,awayTeam:m.awayTeam,score:m.score,status:m.status}; }); // utcDate kept from BASE not API
       matches=BASE.map(m=>byId[m.id]||m);
-      render();
     }
+    render(); // re-render even if no live KO matches yet, to pick up any new group-winners
   }catch(e){ console.log('data.json:',e.message); }
 }
 
