@@ -488,7 +488,10 @@
     background: var(--bg-match);
     border-radius: 4px;
     line-height: 1.3;
-    transition: background 0.3s;
+    transition: background 0.3s, box-shadow 0.2s;
+  }
+  body:not(.hide-scores) .match.has-events:hover {
+    box-shadow: 0 0 0 1.5px rgba(255,255,255,0.55), 0 0 12px rgba(255,255,255,0.15);
   }
   body.print-mode .match {
     background: transparent; padding: 1.5px 2px;
@@ -4719,6 +4722,15 @@ function getMatchId(teamsStr) {
   return s ? s.id : null;
 }
 
+function hasEventData(teamsStr) {
+  const mid = getMatchId(teamsStr);
+  if (!mid) return false;
+  const det = matchDetails[String(mid)];
+  if (!det) return false;
+  if (!['FINISHED', 'IN_PLAY', 'PAUSED'].includes(det.status)) return false;
+  return (det.goals && det.goals.length > 0) || (det.bookings && det.bookings.length > 0);
+}
+
 function buildEventCard(teamsStr) {
   if (document.body.classList.contains('hide-scores')) return null; // never leak results
   const mid = getMatchId(teamsStr);
@@ -4896,7 +4908,7 @@ function render(offset, team) {
       } else {
         scoreHtml = `<span class="teams">${teamsHtml(m.teams)}</span>`;
       }
-      html += `<div class="match${cls}" data-teams="${m.teams.replace(/"/g,'&quot;')}">
+      html += `<div class="match${cls}${hasEventData(m.teams)?' has-events':''}" data-teams="${m.teams.replace(/"/g,'&quot;')}">
         <span class="grp ${m.grp}">${m.grp}</span>
         <span class="time">${t}</span>
         ${scoreHtml}
@@ -4948,7 +4960,7 @@ function render(offset, team) {
         const hi = hiIdx >= 0;
         const cls = hi ? ` highlighted hi-${hiIdx+1} ko-match` : ' ko-match';
         const grpStyle = `style="color:var(--ko-${m.grp}, #7A82A8)"`;
-        html += `<div class="match${cls}" data-teams="${m.teams.replace(/"/g,'&quot;')}">
+        html += `<div class="match${cls}${hasEventData(m.teams)?' has-events':''}" data-teams="${m.teams.replace(/"/g,'&quot;')}">
           <span style="font-family:'Barlow Condensed',sans-serif;flex-shrink:0;width:80px;color:${koColors[m.grp]||'#7A82A8'}"><span style="font-weight:700;font-size:17px">${m.grp}</span> <span style="font-weight:400;font-size:14px">${m.num}</span></span>
           <span class="time">${t}</span>
           <span class="teams">${teamsHtml(m.teams)}</span>
