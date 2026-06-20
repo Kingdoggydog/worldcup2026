@@ -70,10 +70,23 @@ jobs:
 
           print(f"Matches needing detail fetch: {len(to_fetch)}")
 
+          # Cap per run so a big backlog (e.g. first run of the day) doesn't risk rate limits.
+          # Remaining matches will simply be picked up on the next run a minute later.
+          MAX_PER_RUN = 15
+          if len(to_fetch) > MAX_PER_RUN:
+              print(f"  Capping to {MAX_PER_RUN} this run; rest will be picked up next run")
+              to_fetch = to_fetch[:MAX_PER_RUN]
+
           fetched = 0
           for mid in to_fetch:
               try:
-                  req = urllib.request.Request(f"{WORKER}/matches/{mid}")
+                  req = urllib.request.Request(
+                      f"{WORKER}/matches/{mid}",
+                      headers={
+                          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+                          "Accept": "application/json",
+                      }
+                  )
                   with urllib.request.urlopen(req, timeout=15) as resp:
                       full = json.loads(resp.read().decode())
                   # Only keep the fields we actually use, to keep file size sane
@@ -87,7 +100,11 @@ jobs:
                       "substitutions": full.get("substitutions", []),
                   }
                   fetched += 1
-                  time.sleep(0.3)  # gentle pacing, well under 30 calls/min
+                  time.sleep(1.5)  # gentle pacing, well under 30 calls/min
+              except urllib.error.HTTPError as e:
+                  body = e.read().decode(errors='replace')[:200]
+                  print(f"  Failed to fetch match {mid}: HTTP {e.code} - {body}")
+                  continue
               except Exception as e:
                   print(f"  Failed to fetch match {mid}: {e}")
                   continue
