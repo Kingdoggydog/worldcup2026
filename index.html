@@ -4756,9 +4756,14 @@ function buildEventCard(teamsStr) {
   const events = { home: [], away: [] };
 
   (det.goals || []).forEach(g => {
-    const side = g.team?.name === homeName || normalise(g.team?.name) === normalise(homeName) ? 'home' : 'away';
+    let side = g.team?.name === homeName || normalise(g.team?.name) === normalise(homeName) ? 'home' : 'away';
     let tag = '';
-    if (g.type === 'OWN') tag = ' (OG)';
+    if (g.type === 'OWN') {
+      // API's team field for own goals is the scorer's own team (who conceded),
+      // but the goal is credited to the OPPOSING team - flip the side.
+      side = side === 'home' ? 'away' : 'home';
+      tag = ' (OG)';
+    }
     else if (g.type === 'PENALTY') tag = ' (pen)';
     const assistStr = g.assist ? ` <span class="ev-assist">assist: ${g.assist.name}</span>` : '';
     events[side].push({
