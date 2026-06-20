@@ -605,6 +605,7 @@
     font-weight: 800; font-size: clamp(13px,2vw,16px);
     white-space: nowrap; min-width: 40px; text-align: center;
     color: var(--gold);
+    position: relative;
   }
   .score-right {
     display: flex; align-items: center; gap: 4px;
@@ -5618,7 +5619,7 @@ if (koBtn) koBtn.addEventListener('click', () => {
     const cardHtml = buildEventCard(teamsStr);
     if (!cardHtml) return;
     // Anchor under the team names specifically, not the full row (avoids drift from venue/time width)
-    const anchor = matchEl.querySelector('.score-inline') || matchEl.querySelector('.teams') || matchEl;
+    const anchor = matchEl.querySelector('.score-nums') || matchEl.querySelector('.score-inline') || matchEl.querySelector('.teams') || matchEl;
     anchor.insertAdjacentHTML('beforeend', cardHtml);
     activeCard = anchor.querySelector('.event-card');
   }
