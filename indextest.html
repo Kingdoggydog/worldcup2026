@@ -5618,10 +5618,30 @@ if (koBtn) koBtn.addEventListener('click', () => {
     if (!teamsStr) return;
     const cardHtml = buildEventCard(teamsStr);
     if (!cardHtml) return;
-    // Anchor under the team names specifically, not the full row (avoids drift from venue/time width)
-    const anchor = matchEl.querySelector('.score-nums') || matchEl.querySelector('.score-inline') || matchEl.querySelector('.teams') || matchEl;
-    anchor.insertAdjacentHTML('beforeend', cardHtml);
-    activeCard = anchor.querySelector('.event-card');
+    matchEl.insertAdjacentHTML('beforeend', cardHtml);
+    activeCard = matchEl.querySelector('.event-card');
+    positionEventCard(matchEl, activeCard);
+  }
+
+  function positionEventCard(matchEl, card) {
+    // Find the true visual centre of the team names (home start -> away end),
+    // not the whole row (which includes venue text and varies in width).
+    const scoreEl = matchEl.querySelector('.score-inline') || matchEl.querySelector('.teams');
+    const refRect = (scoreEl || matchEl).getBoundingClientRect();
+    const matchRect = matchEl.getBoundingClientRect();
+    const cardWidth = card.offsetWidth;
+
+    const centerX = refRect.left + refRect.width / 2;
+    let leftPx = (centerX - matchRect.left) - (cardWidth / 2);
+
+    // Clamp so the card never overflows the viewport on mobile
+    const margin = 8;
+    const minLeftPx = margin - matchRect.left;
+    const maxLeftPx = (window.innerWidth - margin - cardWidth) - matchRect.left;
+    leftPx = Math.max(minLeftPx, Math.min(leftPx, maxLeftPx));
+
+    card.style.left = leftPx + 'px';
+    card.style.transform = 'none';
   }
 
   const isTouchDevice = window.matchMedia('(hover: none)').matches;
