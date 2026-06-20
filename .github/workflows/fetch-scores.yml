@@ -35,6 +35,69 @@ jobs:
             -o scorers.json \
             --fail --max-time 25 --retry 1 --retry-delay 3
 
+      - name: Fetch match details (goals/cards/subs) for live and newly finished matches
+        id: fetch_details
+        if: steps.fetch.outcome == 'success'
+        continue-on-error: true
+        run: |
+          python3 << 'PYEOF'
+          import json, urllib.request, urllib.error, os, time
+
+          WORKER = "https://fancy-block-fde3.aking116.workers.dev"
+
+          # Load the bulk matches list we just fetched
+          with open('data.json') as f:
+              data = json.load(f)
+          matches = data.get('matches', [])
+
+          # Load existing match-details.json (built up over the tournament)
+          details = {}
+          if os.path.exists('match-details.json'):
+              try:
+                  with open('match-details.json') as f:
+                      details = json.load(f)
+              except Exception:
+                  details = {}
+
+          to_fetch = []
+          for m in matches:
+              mid = str(m.get('id'))
+              status = m.get('status')
+              if status in ('IN_PLAY', 'PAUSED'):
+                  to_fetch.append(mid)               # always refresh live matches
+              elif status == 'FINISHED' and mid not in details:
+                  to_fetch.append(mid)               # fetch once, never again
+
+          print(f"Matches needing detail fetch: {len(to_fetch)}")
+
+          fetched = 0
+          for mid in to_fetch:
+              try:
+                  req = urllib.request.Request(f"{WORKER}/matches/{mid}")
+                  with urllib.request.urlopen(req, timeout=15) as resp:
+                      full = json.loads(resp.read().decode())
+                  # Only keep the fields we actually use, to keep file size sane
+                  details[mid] = {
+                      "status": full.get("status"),
+                      "minute": full.get("minute"),
+                      "injuryTime": full.get("injuryTime"),
+                      "score": full.get("score"),
+                      "goals": full.get("goals", []),
+                      "bookings": full.get("bookings", []),
+                      "substitutions": full.get("substitutions", []),
+                  }
+                  fetched += 1
+                  time.sleep(0.3)  # gentle pacing, well under 30 calls/min
+              except Exception as e:
+                  print(f"  Failed to fetch match {mid}: {e}")
+                  continue
+
+          print(f"Successfully fetched {fetched} match detail(s)")
+
+          with open('match-details.json', 'w') as f:
+              json.dump(details, f, separators=(',', ':'))
+          PYEOF
+
       - name: Track consecutive failures
         if: steps.fetch.outcome == 'failure'
         run: |
@@ -53,6 +116,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data.json scorers.json .fail_count
+          git add data.json scorers.json match-details.json .fail_count
           git diff --staged --quiet || git commit -m "Update scores $(date -u '+%Y-%m-%d %H:%M UTC')"
           git push
