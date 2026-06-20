@@ -4400,19 +4400,24 @@
     World Cup 2026 results, scores and standings updated live during the tournament.
   </p>
 
+  <div id="live-match-card" style="display:none;background:#0D1A10;border:1px solid #1E3A22;border-left:3px solid #2ECC71;border-radius:0 6px 6px 0;padding:6px 16px;margin-bottom:8px;flex-direction:column;align-items:center;gap:4px;">
+    <span style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#2ECC71;display:flex;align-items:center;gap:6px;"><span style="display:inline-block;width:7px;height:7px;background:#2ECC71;border-radius:50%;animation:pulse-score 1.5s ease-in-out infinite;flex-shrink:0;"></span><span id="lm-live-label" style="animation:pulse-score 1.5s ease-in-out infinite;">LIVE</span></span>
+    <div id="lm-matches" style="display:flex;flex-direction:column;gap:6px;width:100%;"></div>
+  </div>
+
   <div id="next-match-card" style="background:#111827;border:1px solid #1E2840;border-left:3px solid #C9A84C;border-radius:0 6px 6px 0;padding:7px 16px;margin-bottom:12px;display:flex;align-items:center;gap:12px;">
     <span style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#C9A84C;white-space:nowrap;">Next Match</span>
     <div style="display:flex;align-items:center;gap:10px;flex:1;justify-content:center;">
       <div style="display:flex;align-items:center;gap:6px;justify-content:flex-end;flex:1;">
         <span id="nm-home" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;color:#E8EAF0;"></span>
-        <img id="nm-home-flag" src="" alt="" style="width:24px;height:17px;object-fit:contain;border-radius:2px;">
+        <img id="nm-home-flag" src="" alt="" style="width:24px;height:17px;object-fit:contain;border-radius:2px;visibility:hidden;">
       </div>
       <div style="text-align:center;white-space:nowrap;">
         <div id="nm-kickoff" style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:16px;color:#C9A84C;letter-spacing:1px;line-height:1.1;"></div>
         <div id="nm-countdown" style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;color:#7A82A8;letter-spacing:1px;line-height:1.1;"></div>
       </div>
       <div style="display:flex;align-items:center;gap:6px;justify-content:flex-start;flex:1;">
-        <img id="nm-away-flag" src="" alt="" style="width:24px;height:17px;object-fit:contain;border-radius:2px;">
+        <img id="nm-away-flag" src="" alt="" style="width:24px;height:17px;object-fit:contain;border-radius:2px;visibility:hidden;">
         <span id="nm-away" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;color:#E8EAF0;"></span>
       </div>
     </div>
@@ -4596,6 +4601,18 @@ function flagImg(team) {
   return `<img class="flag" src="https://flagcdn.com/${size}/${code}.png" alt="">`;
 }
 
+function flagUrl(team) {
+  const code = FLAGS[team] || FLAGS[team.split(' ')[0]];
+  return code ? `https://flagcdn.com/w20/${code}.png` : '';
+}
+
+const CARD_LABELS = {
+  en: { live_label: 'LIVE', ht_label: 'HT' },
+  pt: { live_label: 'AO VIVO', ht_label: 'INT' },
+  es: { live_label: 'EN VIVO', ht_label: 'ET' },
+};
+let _cardLang = localStorage.getItem('lang') || 'en';
+
 function teamsHtml(teamsStr) {
   const parts = teamsStr.split(' v ');
   if (parts.length !== 2) return teamsStr;
@@ -4622,6 +4639,7 @@ function normalise(name) {
 // scoreMap: keyed by "HomeTeam|AwayTeam" -> {home, away, status}
 let scoreMap = {};
 let lastFetch = null;
+let lastMatches = [];
 
 async function loadScores() {
   try {
@@ -4640,9 +4658,55 @@ async function loadScores() {
       scoreMap[key] = { home: hg, away: ag, status, minute: m.minute, injuryTime: m.injuryTime };
     });
     lastFetch = new Date();
+    lastMatches = data.matches || [];
+    updateLiveCard(lastMatches);
   } catch(e) {
     console.log('Could not load scores:', e.message);
   }
+}
+
+function teamName(n) { return n; }
+
+function updateLiveCard(matches) {
+  const card = document.getElementById('live-match-card');
+  if (!card) return;
+  const liveMatches = matches.filter(m => m.status === 'IN_PLAY' || m.status === 'PAUSED');
+  if (!liveMatches.length) { card.style.display = 'none'; return; }
+  const cardLbl = CARD_LABELS[_cardLang] || CARD_LABELS.en;
+  const liveLabel = document.getElementById('lm-live-label');
+  if (liveLabel) liveLabel.textContent = cardLbl.live_label;
+  const gc = {A:'#E74C3C',B:'#E67E22',C:'#F0C040',D:'#2ECC71',E:'#1ABC9C',F:'#5DADE2',G:'#A569BD',H:'#EC407A',I:'#FF7043',J:'#26C6DA',K:'#9CCC65',L:'#FFA726'};
+  const rows = liveMatches.map((live, i) => {
+    const homeKey = normalise(live.homeTeam.shortName || live.homeTeam.name || '');
+    const awayKey = normalise(live.awayTeam.shortName || live.awayTeam.name || '');
+    const hg = live.score?.fullTime?.home ?? '–';
+    const ag = live.score?.fullTime?.away ?? '–';
+    const minStr = live.minute ? `${live.minute}${live.injuryTime ? '+' + live.injuryTime : ''}'` : '';
+    const minute = live.status === 'PAUSED' ? cardLbl.ht_label : minStr;
+    const grpMatch = MATCHES.find(m => normalise(m.teams.split(' v ')[0]?.trim()) === homeKey);
+    const venueHtml = grpMatch
+      ? `<span style="color:${gc[grpMatch.grp]||'#2ECC71'};font-weight:800;">Group ${grpMatch.grp}</span> &middot; ${grpMatch.venue}`
+      : '';
+    const separator = i > 0 ? `<div style="width:100%;height:1px;background:#1E3A22;"></div>` : '';
+    return `${separator}
+      <div style="display:flex;align-items:center;gap:10px;width:100%;justify-content:center;">
+        <div style="display:flex;align-items:center;gap:6px;justify-content:flex-end;flex:1;">
+          <span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;color:#E8EAF0;">${teamName(homeKey)}</span>
+          <img src="${flagUrl(homeKey)}" alt="${homeKey}" style="width:24px;height:17px;object-fit:contain;border-radius:2px;">
+        </div>
+        <div style="text-align:center;white-space:nowrap;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:16px;color:#2ECC71;letter-spacing:1px;line-height:1.1;">${hg} – ${ag}</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;color:#2ECC71;opacity:0.75;letter-spacing:1px;line-height:1.1;">${minute}</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;justify-content:flex-start;flex:1;">
+          <img src="${flagUrl(awayKey)}" alt="${awayKey}" style="width:24px;height:17px;object-fit:contain;border-radius:2px;">
+          <span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;color:#E8EAF0;">${teamName(awayKey)}</span>
+        </div>
+      </div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#7A82A8;text-align:center;">${venueHtml}</div>`;
+  });
+  document.getElementById('lm-matches').innerHTML = rows.join('');
+  card.style.display = 'flex';
 }
 
 function getScore(teamsStr) {
@@ -4660,7 +4724,8 @@ function getScore(teamsStr) {
   }
   if ((s.status === 'IN_PLAY' || s.status === 'PAUSED') && s.home !== null) {
     const minStr = s.minute ? `${s.minute}${s.injuryTime ? '+'+s.injuryTime : ''}'` : '';
-    const label = s.status === 'PAUSED' ? 'HT' : (minStr ? '' : 'LIVE');
+    const cl = CARD_LABELS[_cardLang] || CARD_LABELS.en;
+    const label = s.status === 'PAUSED' ? cl.ht_label : (minStr ? '' : cl.live_label);
     return { home: s.home, away: s.away, cls: 'score-live', label, minute: minStr };
   }
   return null;
@@ -4891,10 +4956,10 @@ function render(offset, team) {
     };
     const grpColor = grpColors[nextMatch.grp] || '#C9A84C';
     document.getElementById('nm-venue').innerHTML = `<span style="color:${grpColor};font-weight:800;">Group ${nextMatch.grp}</span> · ${nextMatch.venue}`;
-    document.getElementById('nm-home-flag').src = flagUrl(home);
-    document.getElementById('nm-home-flag').alt = home;
-    document.getElementById('nm-away-flag').src = flagUrl(away);
-    document.getElementById('nm-away-flag').alt = away;
+    const nmHomeFlag = document.getElementById('nm-home-flag');
+    const nmAwayFlag = document.getElementById('nm-away-flag');
+    nmHomeFlag.src = flagUrl(home); nmHomeFlag.alt = home; nmHomeFlag.style.visibility = 'visible';
+    nmAwayFlag.src = flagUrl(away); nmAwayFlag.alt = away; nmAwayFlag.style.visibility = 'visible';
 
     // Countdown
     const diff = nextTime - now;
