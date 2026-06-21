@@ -51,7 +51,7 @@
     /* Legend bar + sticky table header */
     .legend-bar { display: none; }
     .legend-icon { display: inline-block; margin-right: 4px; font-weight: 700; color: var(--gold); }
-    .scorers-table thead { position: sticky; z-index: 10; }
+    .scorers-table thead { position: sticky; top: 0; z-index: 10; }
     .scorers-table thead th { background: var(--bg); }
     @media (max-width: 600px) {
       .legend-bar {
@@ -63,7 +63,6 @@
         border-radius: 8px;
         margin-bottom: 12px;
         font-size: 10.5px; color: var(--text-sub);
-        position: sticky; top: 0; z-index: 11;
       }
     }
     .scorers-table th.center { text-align: center; }
@@ -203,7 +202,6 @@ async function loadScorers() {
     html += '</tbody></table>';
     document.getElementById('scorers-container').innerHTML = html;
     document.getElementById('last-updated').textContent = 'Updated ' + new Date().toLocaleTimeString();
-    positionStickyHeader();
 
   } catch(e) {
     document.getElementById('scorers-container').innerHTML = '<div class="loading">Could not load scorers. Try again shortly.</div>';
@@ -212,14 +210,6 @@ async function loadScorers() {
 
 // Stick the table header right below the legend bar, whatever height the legend
 // happens to render at (varies slightly between desktop/mobile font sizes).
-function positionStickyHeader() {
-  const legend = document.querySelector('.legend-bar');
-  const thead = document.querySelector('.scorers-table thead');
-  if (!legend || !thead) return;
-  thead.style.top = legend.offsetHeight + 'px';
-}
-window.addEventListener('resize', positionStickyHeader);
-
 loadScorers();
 setInterval(loadScorers, 60000);
 </script>
