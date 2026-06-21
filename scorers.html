@@ -50,8 +50,25 @@
 
     /* Legend bar + sticky table header */
     .legend-bar { display: none; }
+    .top-mask {
+      display: none;
+      position: fixed; top: 0; left: 0; right: 0;
+      height: 38px;
+      background: var(--bg);
+      z-index: 20;
+      pointer-events: none;
+    }
+    @media (max-width: 600px) {
+      .top-mask { display: block; }
+      .scorers-table thead th { top: 38px; }
+    }
     .legend-icon { display: inline-block; margin-right: 4px; font-weight: 700; color: var(--gold); }
-    .scorers-table thead th { position: sticky; top: 0; z-index: 10; background: var(--bg); }
+    .scorers-table thead th {
+      position: -webkit-sticky; position: sticky; top: 0; z-index: 10;
+      background: var(--bg);
+      -webkit-transform: translateZ(0); transform: translateZ(0);
+      -webkit-backface-visibility: hidden; backface-visibility: hidden;
+    }
     @media (max-width: 600px) {
       .legend-bar {
         display: flex; flex-wrap: wrap; gap: 10px;
@@ -106,6 +123,7 @@
     </div>
   </div>
 
+  <div class="top-mask"></div>
   <div class="legend-bar">
     <span><span class="legend-icon">⚽</span> Goals</span>
     <span><span class="legend-icon">🅰️</span> Assists</span>
