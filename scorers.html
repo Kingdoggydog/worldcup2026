@@ -32,7 +32,7 @@
       .scorers-table td, .scorers-table th { padding: 8px 4px; }
       .scorers-table { font-size: 13px; table-layout: fixed; width: 100%; }
       .player-name { font-size: 13px; }
-      .col-mp { display: none; }
+      .col-pens { display: none; }
       .col-player { width: 45%; }
     }
 
@@ -147,7 +147,7 @@ async function loadScorers() {
           <th>Player</th>
           <th class="center">⚽<br><span style="font-size:9px;letter-spacing:1px;">GOALS</span></th>
           <th class="center">🅰️<br><span style="font-size:9px;letter-spacing:1px;">ASSISTS</span></th>
-          <th class="center">🎯<br><span style="font-size:9px;letter-spacing:1px;">PENS</span></th>
+          <th class="center col-pens">🎯<br><span style="font-size:9px;letter-spacing:1px;">PENS</span></th>
           <th class="center col-mp"><span style="font-size:11px;letter-spacing:1px;">MP</span><br><span style="font-size:9px;letter-spacing:1px;">PLAYED</span></th>
         </tr>
       </thead>
@@ -169,7 +169,7 @@ async function loadScorers() {
         </td>
         <td class="goals">${s.goals ?? '-'}</td>
         <td class="stat">${s.assists ?? '-'}</td>
-        <td class="stat">${s.penalties ?? '-'}</td>
+        <td class="stat col-pens">${s.penalties ?? '-'}</td>
         <td class="stat col-mp">${s.playedMatches ?? '-'}</td>
       </tr>`;
     });
