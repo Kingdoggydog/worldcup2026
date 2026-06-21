@@ -45,41 +45,26 @@
     .nav-btn:hover { opacity: 0.8; }
     .nav-btn.active { background: var(--gold); color: #0A0E1A; border-color: var(--gold); }
 
-    .scorers-table { width: 100%; border-collapse: separate; border-spacing: 0; }
+    .scorers-table { width: 100%; border-collapse: collapse; }
     .scorers-table th { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); padding: 8px 12px; border-bottom: 2px solid var(--border); text-align: center; }
 
     /* Legend bar + sticky table header */
-    .legend-bar { display: none; }
-    .top-mask {
-      display: none;
-      position: fixed; top: 0; left: 0; right: 0;
-      height: 38px;
-      background: var(--bg);
-      z-index: 20;
-      pointer-events: none;
-    }
-    @media (max-width: 600px) {
-      .top-mask { display: block; }
-      .scorers-table thead th { top: 38px; }
+    .legend-bar {
+      display: flex; flex-wrap: wrap; gap: 14px;
+      align-items: center;
+      padding: 10px 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 12px;
+      font-size: 12px; color: var(--text-sub);
+      position: sticky; top: 0; z-index: 11;
     }
     .legend-icon { display: inline-block; margin-right: 4px; font-weight: 700; color: var(--gold); }
-    .scorers-table thead th {
-      position: -webkit-sticky; position: sticky; top: 0; z-index: 10;
-      background: var(--bg);
-      -webkit-transform: translateZ(0); transform: translateZ(0);
-      -webkit-backface-visibility: hidden; backface-visibility: hidden;
-    }
+    .scorers-table thead { position: sticky; z-index: 10; }
+    .scorers-table thead th { background: var(--bg); }
     @media (max-width: 600px) {
-      .legend-bar {
-        display: flex; flex-wrap: wrap; gap: 10px;
-        align-items: center;
-        padding: 8px 10px;
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: 8px;
-        margin-bottom: 12px;
-        font-size: 10.5px; color: var(--text-sub);
-      }
+      .legend-bar { font-size: 10.5px; gap: 10px; padding: 8px 10px; }
     }
     .scorers-table th.center { text-align: center; }
     .scorers-table td { padding: 12px 12px; border-bottom: 1px solid var(--border); font-size: 16px; color: var(--text); vertical-align: middle; text-align: center; }
@@ -123,7 +108,6 @@
     </div>
   </div>
 
-  <div class="top-mask"></div>
   <div class="legend-bar">
     <span><span class="legend-icon">⚽</span> Goals</span>
     <span><span class="legend-icon">🅰️</span> Assists</span>
@@ -219,6 +203,7 @@ async function loadScorers() {
     html += '</tbody></table>';
     document.getElementById('scorers-container').innerHTML = html;
     document.getElementById('last-updated').textContent = 'Updated ' + new Date().toLocaleTimeString();
+    positionStickyHeader();
 
   } catch(e) {
     document.getElementById('scorers-container').innerHTML = '<div class="loading">Could not load scorers. Try again shortly.</div>';
@@ -227,6 +212,14 @@ async function loadScorers() {
 
 // Stick the table header right below the legend bar, whatever height the legend
 // happens to render at (varies slightly between desktop/mobile font sizes).
+function positionStickyHeader() {
+  const legend = document.querySelector('.legend-bar');
+  const thead = document.querySelector('.scorers-table thead');
+  if (!legend || !thead) return;
+  thead.style.top = legend.offsetHeight + 'px';
+}
+window.addEventListener('resize', positionStickyHeader);
+
 loadScorers();
 setInterval(loadScorers, 60000);
 </script>
