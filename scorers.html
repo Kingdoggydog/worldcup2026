@@ -32,7 +32,16 @@
       .scorers-table { font-size: 12px; table-layout: fixed; width: 100%; }
       .player-name { font-size: 12.5px; }
       .player-team { font-size: 11px; }
-      .col-player { width: 38%; }
+      /* Explicit width on every column - table-layout:fixed needs this on ALL
+         columns (not just player), otherwise browsers compute the remaining
+         columns inconsistently, which was causing the goals number to
+         visually collide with wrapped player names. */
+      .col-pos { width: 8%; }
+      .col-player { width: 36%; }
+      .col-goals { width: 18%; }
+      .col-assists { width: 18%; }
+      .col-mp { width: 20%; }
+      .pos { width: auto; }
       .scorers-table th .sublabel { display: none; }
       .scorers-table th { font-size: 14px; }
     }
@@ -183,10 +192,10 @@ async function loadScorers() {
     let html = `<table class="scorers-table">
       <thead>
         <tr>
-          <th class="center">#</th>
-          <th>Player</th>
-          <th class="center">⚽<br><span class="sublabel" style="font-size:9px;letter-spacing:1px;">GOALS</span></th>
-          <th class="center">🅰️<br><span class="sublabel" style="font-size:9px;letter-spacing:1px;">ASSISTS</span></th>
+          <th class="center col-pos">#</th>
+          <th class="col-player">Player</th>
+          <th class="center col-goals">⚽<br><span class="sublabel" style="font-size:9px;letter-spacing:1px;">GOALS</span></th>
+          <th class="center col-assists">🅰️<br><span class="sublabel" style="font-size:9px;letter-spacing:1px;">ASSISTS</span></th>
           <th class="center col-pens">🎯<br><span class="sublabel" style="font-size:9px;letter-spacing:1px;">PENS</span></th>
           <th class="center col-mp"><span style="font-size:11px;letter-spacing:1px;">MP</span><br><span class="sublabel" style="font-size:9px;letter-spacing:1px;">PLAYED</span></th>
         </tr>
@@ -202,13 +211,13 @@ async function loadScorers() {
       const tied = prev && s.goals === prev.goals && (s.assists ?? 0) === (prev.assists ?? 0);
       const posDisplay = tied ? '=' : (i + 1);
       html += `<tr>
-        <td class="pos ${posClass(i)}">${posDisplay}</td>
-        <td style="text-align:left;">
+        <td class="pos col-pos ${posClass(i)}">${posDisplay}</td>
+        <td class="col-player" style="text-align:left;">
           <div class="player-name">${player.name}</div>
           <div class="player-team">${flag} ${team.shortName}</div>
         </td>
-        <td class="goals">${s.goals ?? '-'}</td>
-        <td class="stat">${s.assists ?? '-'}</td>
+        <td class="goals col-goals">${s.goals ?? '-'}</td>
+        <td class="stat col-assists">${s.assists ?? '-'}</td>
         <td class="stat col-pens">${s.penalties ?? '-'}</td>
         <td class="stat col-mp">${s.playedMatches ?? '-'}</td>
       </tr>`;
