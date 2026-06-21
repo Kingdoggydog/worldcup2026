@@ -45,14 +45,13 @@
     .nav-btn:hover { opacity: 0.8; }
     .nav-btn.active { background: var(--gold); color: #0A0E1A; border-color: var(--gold); }
 
-    .scorers-table { width: 100%; border-collapse: collapse; }
+    .scorers-table { width: 100%; border-collapse: separate; border-spacing: 0; }
     .scorers-table th { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); padding: 8px 12px; border-bottom: 2px solid var(--border); text-align: center; }
 
     /* Legend bar + sticky table header */
     .legend-bar { display: none; }
     .legend-icon { display: inline-block; margin-right: 4px; font-weight: 700; color: var(--gold); }
-    .scorers-table thead { position: sticky; top: 0; z-index: 10; }
-    .scorers-table thead th { background: var(--bg); }
+    .scorers-table thead th { position: sticky; top: 0; z-index: 10; background: var(--bg); }
     @media (max-width: 600px) {
       .legend-bar {
         display: flex; flex-wrap: wrap; gap: 10px;
