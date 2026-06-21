@@ -36,6 +36,35 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow Condensed',sans-
 .ctrl{display:flex;align-items:center;gap:8px;}
 .clbl{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--sub);white-space:nowrap;}
 select{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;border:1.5px solid var(--cborder);border-radius:4px;padding:4px 8px;background:var(--ctrl);color:var(--text);cursor:pointer;}
+#mode-toggle{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;padding:6px 14px;border-radius:4px;cursor:pointer;border:1.5px solid var(--cborder);background:var(--ctrl);color:var(--text);transition:all .2s;white-space:nowrap;}
+#mode-toggle:hover{opacity:.8;}
+
+/* ── PRINT MODE: light theme, desktop bracket forced, fit to A4 landscape ── */
+body.print-mode {
+  --bg:#ffffff; --card:#f3f3f6; --border:#cfcfd8;
+  --text:#1a1a22; --sub:#55556a; --muted:#8888a0;
+  --gold:#8a6d1f; --win:#1e8449;
+  --ctrl:#f3f3f6; --cborder:#cfcfd8;
+}
+body.print-mode .page { width: 277mm; max-width: 277mm; padding: 6mm; min-height: unset; }
+body.print-mode .nav,
+body.print-mode .tabs { display: none !important; }
+@media print {
+  body.print-mode #mode-toggle,
+  body.print-mode .hdr-r select { display: none !important; }
+}
+body.print-mode .bwrap { display: block !important; overflow-x: visible !important; padding-bottom: 0; }
+body.print-mode .bmob { display: none !important; }
+body.print-mode .hdr { margin-bottom: 8px; padding-bottom: 6px; }
+body.print-mode .hdr h1 { font-size: 16px; }
+body.print-mode .hdr .sub { font-size: 8px; margin-top: 1px; }
+body.print-mode .mbnum { font-size: 8px; padding: 2px 5px; }
+body.print-mode .mbt2 { font-size: 9px; padding: 3px 5px; min-height: 18px; gap: 3px; }
+body.print-mode .mbt2 img { width: 12px; height: 9px; }
+body.print-mode .mb { margin: 1px 0; }
+body.print-mode .bcol { padding: 0 1.5px; }
+body.print-mode .champ { font-size: 9px; margin-top: 1px; min-height: 12px; }
+
 
 /* MOBILE TABS */
 .tabs{display:none;gap:6px;flex-wrap:wrap;margin-bottom:14px;}
@@ -91,6 +120,14 @@ select{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;
   .bwrap{display:none;} .bmob{display:block;} .tabs{display:flex;}
   .hdr{flex-wrap:wrap;} .hdr-r{align-items:flex-start;width:100%;}
   .page{padding:14px 12px 32px;}
+  #mode-toggle{display:none;}
+}
+
+@media print {
+  @page { size: landscape; margin: 10mm; }
+  .bwrap { display: block !important; overflow-x: visible !important; }
+  .bmob { display: none !important; }
+  .tabs { display: none !important; }
 }
 </style>
   <!-- Open Graph / Social sharing -->
@@ -165,6 +202,9 @@ select{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;
           <option value="-8">Anchorage (AKDT, UTC-8)</option>
           <option value="-10">Honolulu (HST, UTC-10)</option>
         </select>
+    </div>
+    <div class="ctrl">
+      <button id="mode-toggle">&#9788; Switch to Print Mode</button>
     </div>
   </div>
 </div>
@@ -642,6 +682,12 @@ async function load(){
 
 load();
 setInterval(load,60000);
+
+const printModeBtn = document.getElementById('mode-toggle');
+printModeBtn.addEventListener('click', () => {
+  const isPrint = document.body.classList.toggle('print-mode');
+  printModeBtn.textContent = isPrint ? '\u2600 Switch to Night Mode' : '\u2788 Switch to Print Mode';
+});
 </script>
 </body>
 </html>
