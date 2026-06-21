@@ -23,17 +23,18 @@
       --ctrl-bg: #1A2235; --ctrl-border: #2A3A55; --ctrl-text: #C8D0E0;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { overflow-x: hidden; width: 100%; }
+    html { overflow-x: hidden; width: 100%; }
     body { background: var(--bg); color: var(--text); font-family: 'Barlow Condensed', sans-serif; min-height: 100vh; }
     .page { max-width: 800px; margin: 0 auto; padding: 20px 16px 60px; }
     @media (max-width: 600px) {
       .page { padding: 12px 0px 40px; }
-      body { overflow-x: hidden; }
-      .scorers-table td, .scorers-table th { padding: 8px 4px; }
-      .scorers-table { font-size: 13px; table-layout: fixed; width: 100%; }
-      .player-name { font-size: 13px; }
-      .col-pens { display: none; }
-      .col-player { width: 45%; }
+      .scorers-table td, .scorers-table th { padding: 6px 2px; }
+      .scorers-table { font-size: 12px; table-layout: fixed; width: 100%; }
+      .player-name { font-size: 12.5px; }
+      .player-team { font-size: 11px; }
+      .col-player { width: 38%; }
+      .scorers-table th .sublabel { display: none; }
+      .scorers-table th { font-size: 14px; }
     }
 
     .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
@@ -46,6 +47,25 @@
 
     .scorers-table { width: 100%; border-collapse: collapse; }
     .scorers-table th { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); padding: 8px 12px; border-bottom: 2px solid var(--border); text-align: center; }
+
+    /* Legend bar + sticky table header */
+    .legend-bar { display: none; }
+    .legend-icon { display: inline-block; margin-right: 4px; font-weight: 700; color: var(--gold); }
+    .scorers-table thead { position: sticky; z-index: 10; }
+    .scorers-table thead th { background: var(--bg); }
+    @media (max-width: 600px) {
+      .legend-bar {
+        display: flex; flex-wrap: wrap; gap: 10px;
+        align-items: center;
+        padding: 8px 10px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        margin-bottom: 12px;
+        font-size: 10.5px; color: var(--text-sub);
+        position: sticky; top: 0; z-index: 11;
+      }
+    }
     .scorers-table th.center { text-align: center; }
     .scorers-table td { padding: 12px 12px; border-bottom: 1px solid var(--border); font-size: 16px; color: var(--text); vertical-align: middle; text-align: center; }
     .scorers-table td.center { text-align: center; }
@@ -88,6 +108,12 @@
     </div>
   </div>
 
+  <div class="legend-bar">
+    <span><span class="legend-icon">⚽</span> Goals</span>
+    <span><span class="legend-icon">🅰️</span> Assists</span>
+    <span><span class="legend-icon">🎯</span> Penalties</span>
+    <span><span class="legend-icon">MP</span> Matches Played</span>
+  </div>
   <div id="scorers-container" class="loading">Loading scorers...</div>
   <div class="last-updated" id="last-updated"></div>
 
@@ -145,10 +171,10 @@ async function loadScorers() {
         <tr>
           <th class="center">#</th>
           <th>Player</th>
-          <th class="center">⚽<br><span style="font-size:9px;letter-spacing:1px;">GOALS</span></th>
-          <th class="center">🅰️<br><span style="font-size:9px;letter-spacing:1px;">ASSISTS</span></th>
-          <th class="center col-pens">🎯<br><span style="font-size:9px;letter-spacing:1px;">PENS</span></th>
-          <th class="center col-mp"><span style="font-size:11px;letter-spacing:1px;">MP</span><br><span style="font-size:9px;letter-spacing:1px;">PLAYED</span></th>
+          <th class="center">⚽<br><span class="sublabel" style="font-size:9px;letter-spacing:1px;">GOALS</span></th>
+          <th class="center">🅰️<br><span class="sublabel" style="font-size:9px;letter-spacing:1px;">ASSISTS</span></th>
+          <th class="center col-pens">🎯<br><span class="sublabel" style="font-size:9px;letter-spacing:1px;">PENS</span></th>
+          <th class="center col-mp"><span style="font-size:11px;letter-spacing:1px;">MP</span><br><span class="sublabel" style="font-size:9px;letter-spacing:1px;">PLAYED</span></th>
         </tr>
       </thead>
       <tbody>`;
@@ -177,11 +203,22 @@ async function loadScorers() {
     html += '</tbody></table>';
     document.getElementById('scorers-container').innerHTML = html;
     document.getElementById('last-updated').textContent = 'Updated ' + new Date().toLocaleTimeString();
+    positionStickyHeader();
 
   } catch(e) {
     document.getElementById('scorers-container').innerHTML = '<div class="loading">Could not load scorers. Try again shortly.</div>';
   }
 }
+
+// Stick the table header right below the legend bar, whatever height the legend
+// happens to render at (varies slightly between desktop/mobile font sizes).
+function positionStickyHeader() {
+  const legend = document.querySelector('.legend-bar');
+  const thead = document.querySelector('.scorers-table thead');
+  if (!legend || !thead) return;
+  thead.style.top = legend.offsetHeight + 'px';
+}
+window.addEventListener('resize', positionStickyHeader);
 
 loadScorers();
 setInterval(loadScorers, 60000);
