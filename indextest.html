@@ -4685,6 +4685,24 @@ let matchDetails = {};
 let groupWinners = {};
 let lastFetch = null;
 
+async function loadFromDataJson() {
+  // Fast initial load from pre-cached data.json - instant render on page open
+  try {
+    const res = await fetch('data.json?t=' + Date.now());
+    const data = await res.json();
+    scoreMap = {};
+    (data.matches || []).forEach(m => {
+      const home = normalise(m.homeTeam.shortName || m.homeTeam.name || '');
+      const away = normalise(m.awayTeam.shortName || m.awayTeam.name || '');
+      if (!home || !away) return;
+      scoreMap[home + '|' + away] = { home: m.score?.fullTime?.home, away: m.score?.fullTime?.away, status: m.status, minute: m.minute, injuryTime: m.injuryTime, id: m.id };
+    });
+    lastFetch = new Date();
+  } catch(e) {
+    console.log('data.json initial load failed:', e.message);
+  }
+}
+
 async function loadScores() {
   // TEST BUILD: poll the Cloudflare Worker directly for near-live scores,
   // instead of relying on the once-a-minute GitHub Action -> data.json pipeline.
@@ -5646,14 +5664,22 @@ if (koBtn) koBtn.addEventListener('click', () => {
     render(s.offset, s.team);
   }
 
-  loadScores().then(() => {
+  // Step 1: load data.json immediately for instant initial render
+  loadFromDataJson().then(() => {
     restoreAndRender();
-    setInterval(() => {
+    // Step 2: after 25s, switch to live Worker polling for fresh scores
+    setTimeout(() => {
       loadScores().then(() => {
         const s = getState();
         render(s.offset, s.team);
       });
-    }, 25000); // TEST BUILD: 25s polling direct from Worker for near-live scores
+      setInterval(() => {
+        loadScores().then(() => {
+          const s = getState();
+          render(s.offset, s.team);
+        });
+      }, 25000);
+    }, 25000);
   });
 
   // ── Match event card: hover (desktop) + tap (mobile) ────────────────────
