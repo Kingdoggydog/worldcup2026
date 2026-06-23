@@ -39,7 +39,7 @@ select{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;
 #mode-toggle{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;padding:6px 14px;border-radius:4px;cursor:pointer;border:1.5px solid var(--cborder);background:var(--ctrl);color:var(--text);transition:all .2s;white-space:nowrap;}
 #mode-toggle:hover{opacity:.8;}
 
-/* ── PRINT MODE: light theme, desktop bracket forced, fit to A4 landscape ── */
+/* PRINT MODE */
 body.print-mode {
   --bg:#ffffff; --card:#f3f3f6; --border:#cfcfd8;
   --text:#1a1a22; --sub:#55556a; --muted:#8888a0;
@@ -64,7 +64,6 @@ body.print-mode .mbt2 img { width: 12px; height: 9px; }
 body.print-mode .mb { margin: 1px 0; }
 body.print-mode .bcol { padding: 0 1.5px; }
 body.print-mode .champ { font-size: 9px; margin-top: 1px; min-height: 12px; }
-
 
 /* MOBILE TABS */
 .tabs{display:none;gap:6px;flex-wrap:wrap;margin-bottom:14px;}
@@ -130,7 +129,6 @@ body.print-mode .champ { font-size: 9px; margin-top: 1px; min-height: 12px; }
   .tabs { display: none !important; }
 }
 </style>
-  <!-- Open Graph / Social sharing -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="World Cup 2026 Schedule">
   <meta property="og:title" content="World Cup 2026 Knockout Bracket">
@@ -253,66 +251,76 @@ const FLAGS = {
   'South Korea':'kr','Spain':'es','Sweden':'se','Switzerland':'ch','Tunisia':'tn',
   'Turkiye':'tr','Uruguay':'uy','USA':'us','Uzbekistan':'uz'
 };
+
+// FEEDERS: R16/QF/SF match ID -> [feeder M-number home, feeder M-number away]
+// M74=537423 M75=537415 M76=537418 M81=537421(USA) M82=537422 M86=537430(Argentina) M87=537428 M88=537427
 const FEEDERS = {
   537376:['M74','M77'],537375:['M73','M75'],537377:['M76','M78'],537378:['M79','M80'],
   537379:['M83','M84'],537380:['M81','M82'],537381:['M86','M88'],537382:['M85','M87'],
   537383:['M89','M90'],537384:['M93','M94'],537385:['M91','M92'],537386:['M95','M96'],
   537387:['M97','M98'],537388:['M99','M100'],537390:['M101','M102'],537389:['M101','M102'],
 };
-// R32 group placeholders (Wikipedia official)
+
+// R32 placeholder labels shown when API hasn't confirmed teams yet
+// Verified against API pre-population: Germany->537415(M75), USA->537421(M81),
+// Mexico->537425(M79), Argentina->537430(M86)
 const R32_PH = {
-  537417: ['2nd Group A', '2nd Group B'],
-  537423: ['Win Group E', '3rd A/B/C/D/F'],
-  537415: ['Win Group F', '2nd Group C'],
-  537418: ['Win Group C', '2nd Group F'],
-  537424: ['Win Group I', '3rd C/D/F/G/H'],
-  537416: ['2nd Group E', '2nd Group I'],
-  537425: ['Win Group A', '3rd C/E/F/H/I'],
-  537426: ['Win Group L', '3rd E/H/I/J/K'],
-  537422: ['Win Group D', '3rd B/E/F/I/J'],
-  537421: ['Win Group G', '3rd A/E/H/I/J'],
-  537420: ['2nd Group K', '2nd Group L'],
-  537419: ['Win Group H', '2nd Group J'],
-  537429: ['Win Group B', '3rd E/F/G/I/J'],
-  537428: ['Win Group J', '2nd Group H'],
-  537427: ['Win Group K', '3rd D/E/I/J/L'],
-  537430: ['2nd Group D', '2nd Group G'],
+  537417: ['2nd Group A', '2nd Group B'],       // M73
+  537423: ['Win Group F', '2nd Group C'],        // M74
+  537415: ['Win Group E', '3rd A/B/C/D/F'],     // M75 - Germany (Group E winner)
+  537418: ['Win Group C', '2nd Group F'],        // M76
+  537424: ['Win Group I', '3rd C/D/F/G/H'],     // M77
+  537416: ['2nd Group E', '2nd Group I'],        // M78
+  537425: ['Win Group A', '3rd C/E/F/H/I'],     // M79 - Mexico
+  537426: ['Win Group L', '3rd E/H/I/J/K'],     // M80
+  537421: ['Win Group D', '3rd B/E/F/I/J'],     // M81 - USA
+  537422: ['Win Group G', '3rd A/E/H/I/J'],     // M82
+  537419: ['Win Group H', '2nd Group J'],        // M83
+  537420: ['2nd Group K', '2nd Group L'],        // M84
+  537429: ['Win Group B', '3rd E/F/G/I/J'],     // M85
+  537430: ['Win Group J', '2nd Group H'],        // M86 - Argentina
+  537428: ['2nd Group D', '2nd Group G'],        // M87
+  537427: ['Win Group K', '3rd D/E/I/J/L'],     // M88
 };
 
-const PH = {
-  537417:['2nd A','2nd B'],      537423:['Win C','2nd F'],
-  537415:['Win E','3rd A/B/C/D/F'], 537418:['Win F','2nd C'],
-  537424:['2nd E','2nd I'],      537416:['Win I','3rd C/D/F/G/H'],
-  537425:['Win A','3rd C/E/F/H/I'], 537426:['Win L','3rd E/H/I/J/K'],
-  537422:['Win D','3rd B/E/F/I/J'], 537421:['Win G','3rd A/E/H/I/J'],
-  537420:['Win H','2nd J'],      537419:['2nd K','2nd L'],
-  537429:['Win B','3rd D/E/I/J/L'], 537428:['2nd D','2nd G'],
-  537427:['Win J','2nd H'],      537430:['Win K','3rd D/E/I/J/L']
-};
-
-// Hardcoded matches - always renders even without data.json
+// BASE array order defines M-numbers (M73 = index 0, M74 = index 1, etc.)
+// Correct order verified against API UTC times
 const BASE = [
-  {id:537417,stage:'LAST_32',utcDate:'2026-06-28T19:00:00Z'},{id:537423,stage:'LAST_32',utcDate:'2026-06-29T20:30:00Z'},
-  {id:537415,stage:'LAST_32',utcDate:'2026-06-30T01:00:00Z'},{id:537418,stage:'LAST_32',utcDate:'2026-06-29T17:00:00Z'},
-  {id:537424,stage:'LAST_32',utcDate:'2026-06-30T21:00:00Z'},{id:537416,stage:'LAST_32',utcDate:'2026-06-30T17:00:00Z'},
-  {id:537425,stage:'LAST_32',utcDate:'2026-07-01T01:00:00Z'},{id:537426,stage:'LAST_32',utcDate:'2026-07-01T16:00:00Z'},
-  {id:537422,stage:'LAST_32',utcDate:'2026-07-02T00:00:00Z'},{id:537421,stage:'LAST_32',utcDate:'2026-07-01T20:00:00Z'},
-  {id:537420,stage:'LAST_32',utcDate:'2026-07-02T23:00:00Z'},{id:537419,stage:'LAST_32',utcDate:'2026-07-02T19:00:00Z'},
-  {id:537429,stage:'LAST_32',utcDate:'2026-07-03T03:00:00Z'},{id:537428,stage:'LAST_32',utcDate:'2026-07-03T22:00:00Z'},
-  {id:537427,stage:'LAST_32',utcDate:'2026-07-04T01:30:00Z'},{id:537430,stage:'LAST_32',utcDate:'2026-07-03T18:00:00Z'},
-  {id:537376,stage:'LAST_16',utcDate:'2026-07-04T21:00:00Z'},{id:537375,stage:'LAST_16',utcDate:'2026-07-04T17:00:00Z'},
-  {id:537377,stage:'LAST_16',utcDate:'2026-07-05T20:00:00Z'},{id:537378,stage:'LAST_16',utcDate:'2026-07-06T00:00:00Z'},
-  {id:537379,stage:'LAST_16',utcDate:'2026-07-06T19:00:00Z'},{id:537380,stage:'LAST_16',utcDate:'2026-07-07T00:00:00Z'},
-  {id:537381,stage:'LAST_16',utcDate:'2026-07-07T16:00:00Z'},{id:537382,stage:'LAST_16',utcDate:'2026-07-07T20:00:00Z'},
-  {id:537383,stage:'QUARTER_FINALS',utcDate:'2026-07-09T20:00:00Z'},{id:537384,stage:'QUARTER_FINALS',utcDate:'2026-07-10T19:00:00Z'},
-  {id:537385,stage:'QUARTER_FINALS',utcDate:'2026-07-11T21:00:00Z'},{id:537386,stage:'QUARTER_FINALS',utcDate:'2026-07-12T01:00:00Z'},
-  {id:537387,stage:'SEMI_FINALS',utcDate:'2026-07-14T19:00:00Z'},{id:537388,stage:'SEMI_FINALS',utcDate:'2026-07-15T19:00:00Z'},
+  {id:537417,stage:'LAST_32',utcDate:'2026-06-28T19:00:00Z'},  // M73 - 2nd A / 2nd B
+  {id:537423,stage:'LAST_32',utcDate:'2026-06-29T17:00:00Z'},  // M74 - Win Group E / 3rd A/B/C/D/F
+  {id:537415,stage:'LAST_32',utcDate:'2026-06-29T20:30:00Z'},  // M75 - Win Group F / 2nd Group C
+  {id:537418,stage:'LAST_32',utcDate:'2026-06-30T01:00:00Z'},  // M76 - Win Group C / 2nd Group F
+  {id:537424,stage:'LAST_32',utcDate:'2026-06-30T17:00:00Z'},  // M77 - Win Group I / 3rd C/D/F/G/H
+  {id:537416,stage:'LAST_32',utcDate:'2026-06-30T21:00:00Z'},  // M78 - 2nd Group E / 2nd Group I
+  {id:537425,stage:'LAST_32',utcDate:'2026-07-01T01:00:00Z'},  // M79 - Win Group A / 3rd C/E/F/H/I (Mexico)
+  {id:537426,stage:'LAST_32',utcDate:'2026-07-01T16:00:00Z'},  // M80 - Win Group L / 3rd E/H/I/J/K
+  {id:537421,stage:'LAST_32',utcDate:'2026-07-01T20:00:00Z'},  // M81 - Win Group D / 3rd B/E/F/I/J (USA)
+  {id:537422,stage:'LAST_32',utcDate:'2026-07-02T00:00:00Z'},  // M82 - Win Group G / 3rd A/E/H/I/J
+  {id:537419,stage:'LAST_32',utcDate:'2026-07-02T19:00:00Z'},  // M83 - Win Group H / 2nd Group J
+  {id:537420,stage:'LAST_32',utcDate:'2026-07-02T23:00:00Z'},  // M84 - 2nd Group K / 2nd Group L
+  {id:537429,stage:'LAST_32',utcDate:'2026-07-03T03:00:00Z'},  // M85 - Win Group B / 3rd E/F/G/I/J
+  {id:537430,stage:'LAST_32',utcDate:'2026-07-03T18:00:00Z'},  // M86 - Win Group J / 2nd Group H (Argentina)
+  {id:537428,stage:'LAST_32',utcDate:'2026-07-03T22:00:00Z'},  // M87 - 2nd Group D / 2nd Group G
+  {id:537427,stage:'LAST_32',utcDate:'2026-07-04T01:30:00Z'},  // M88 - Win Group K / 3rd D/E/I/J/L
+  {id:537376,stage:'LAST_16',utcDate:'2026-07-04T21:00:00Z'},
+  {id:537375,stage:'LAST_16',utcDate:'2026-07-04T17:00:00Z'},
+  {id:537377,stage:'LAST_16',utcDate:'2026-07-05T20:00:00Z'},
+  {id:537378,stage:'LAST_16',utcDate:'2026-07-06T00:00:00Z'},
+  {id:537379,stage:'LAST_16',utcDate:'2026-07-06T19:00:00Z'},
+  {id:537380,stage:'LAST_16',utcDate:'2026-07-07T00:00:00Z'},
+  {id:537381,stage:'LAST_16',utcDate:'2026-07-07T16:00:00Z'},
+  {id:537382,stage:'LAST_16',utcDate:'2026-07-07T20:00:00Z'},
+  {id:537383,stage:'QUARTER_FINALS',utcDate:'2026-07-09T20:00:00Z'},
+  {id:537384,stage:'QUARTER_FINALS',utcDate:'2026-07-10T19:00:00Z'},
+  {id:537385,stage:'QUARTER_FINALS',utcDate:'2026-07-11T21:00:00Z'},
+  {id:537386,stage:'QUARTER_FINALS',utcDate:'2026-07-12T01:00:00Z'},
+  {id:537387,stage:'SEMI_FINALS',utcDate:'2026-07-14T19:00:00Z'},
+  {id:537388,stage:'SEMI_FINALS',utcDate:'2026-07-15T19:00:00Z'},
   {id:537389,stage:'THIRD_PLACE',utcDate:'2026-07-18T21:00:00Z'},
   {id:537390,stage:'FINAL',utcDate:'2026-07-19T19:00:00Z'}
 ].map(m => ({...m, status:'TIMED', homeTeam:{name:null,shortName:null}, awayTeam:{name:null,shortName:null}, score:{fullTime:{home:null,away:null}}}));
 
 let matches = BASE.map(m => ({...m}));
-let groupWinners = {};
 const mnums = {};
 
 function norm(n){ return n ? (NAME_MAP[n]||n) : null; }
@@ -332,20 +340,6 @@ function fmt(utc, off){
 }
 function getOff(){ return parseFloat(document.getElementById('tzsel').value); }
 
-function applyGroupWinnersBracket(phStr) {
-  const winMatch = phStr.match(/^Win Group ([A-L])$/);
-  if (winMatch) {
-    const winner = groupWinners[winMatch[1]]?.first;
-    return winner || phStr;
-  }
-  const secondMatch = phStr.match(/^2nd ([A-L])$/);
-  if (secondMatch) {
-    const runnerUp = groupWinners[secondMatch[1]]?.second;
-    return runnerUp || phStr;
-  }
-  return phStr;
-}
-
 function teams(m){
   const h=m.homeTeam?.shortName||m.homeTeam?.name;
   const a=m.awayTeam?.shortName||m.awayTeam?.name;
@@ -353,7 +347,7 @@ function teams(m){
   let phh, pha;
   if(m.stage==='LAST_32'){
     const ph=R32_PH[m.id]||['TBD','TBD'];
-    phh=applyGroupWinnersBracket(ph[0]); pha=applyGroupWinnersBracket(ph[1]);
+    phh=ph[0]; pha=ph[1];
   } else {
     const feeders=FEEDERS[m.id];
     if(feeders){
@@ -364,17 +358,9 @@ function teams(m){
       phh='TBD'; pha='TBD';
     }
   }
-  // If the placeholder text is itself a real team name (manually confirmed), treat as non-placeholder
   const hConfirmed = !hn && FLAGS[phh];
   const aConfirmed = !an && FLAGS[pha];
   return { h:hn||phh, a:an||pha, hph:!hn&&!hConfirmed, aph:!an&&!aConfirmed };
-}
-
-function scoreSuffix(m){
-  const d = m.score?.duration || '';
-  if(d==='PENALTY_SHOOTOUT') return 'p';
-  if(d==='EXTRA_TIME') return 'aet';
-  return '';
 }
 
 function mbox(m, off){
@@ -426,7 +412,7 @@ function mobMatch(m, off){
 function byStage(s){ return matches.filter(m=>m.stage===s).sort((a,b)=>new Date(a.utcDate)-new Date(b.utcDate)); }
 
 function buildNums(){
-  // R32: use BASE array order to preserve official match numbers regardless of utcDate
+  // R32: BASE array order defines official match numbers (M73 = first entry)
   BASE.filter(m=>m.stage==='LAST_32').forEach((m,i)=>{ mnums[m.id]='M'+(73+i); });
   // All other rounds: sort by date
   let n=89;
@@ -440,35 +426,29 @@ function render(){
   const sf=byStage('SEMI_FINALS');
   const fin=byStage('FINAL'), tp=byStage('THIRD_PLACE');
 
-  // Build ordered arrays by explicit match ID order so bracket flows correctly
-  // Match ID -> Match Number mapping (sorted by utcDate):
+  // Correct M-number to ID mapping (sorted by API UTC time):
   // M73=537417 M74=537423 M75=537415 M76=537418 M77=537424 M78=537416
-  // M79=537425 M80=537426 M81=537422 M82=537421 M83=537420 M84=537419
-  // M85=537429 M86=537428 M87=537427 M88=537430
-  // M89=537376 M90=537375 M91=537377 M92=537378
-  // M93=537379 M94=537380 M95=537381 M96=537382
-  // M97=537383 M98=537384 M99=537385 M100=537386
+  // M79=537425 M80=537426 M81=537421 M82=537422 M83=537419 M84=537420
+  // M85=537429 M86=537430 M87=537428 M88=537427
 
   function mById(id){ return matches.find(m=>m.id===id); }
 
-  // R32 left side pairs (top feeds M89, then M90, M91, M92)
-  // Left side: M73-M80 (ordered so pairs feeding same R16 are adjacent)
+  // R32 left side - pairs that feed same R16 match
   const r32L=[
     mById(537423),mById(537424), // M74+M77 -> M89
     mById(537417),mById(537415), // M73+M75 -> M90
-    mById(537420),mById(537419), // M83+M84 -> M93
-    mById(537422),mById(537421), // M81+M82 -> M94
+    mById(537419),mById(537420), // M83+M84 -> M93
+    mById(537421),mById(537422), // M81+M82 -> M94
   ].filter(Boolean);
 
-  // Right side: M81-M88 (ordered so pairs feeding same R16 are adjacent)
+  // R32 right side
   const r32R=[
     mById(537418),mById(537416), // M76+M78 -> M91
     mById(537425),mById(537426), // M79+M80 -> M92
-    mById(537428),mById(537430), // M86+M88 -> M95
-    mById(537429),mById(537427), // M85+M87 -> M96
+    mById(537430),mById(537427), // M86+M88 -> M95
+    mById(537429),mById(537428), // M85+M87 -> M96
   ].filter(Boolean);
 
-  // R16 left side pairs (M89+M90 -> M97, M91+M92 -> M98)
   const r16L=[
     mById(537376),mById(537375), // M89+M90 -> M97
     mById(537379),mById(537380), // M93+M94 -> M98
@@ -479,11 +459,9 @@ function render(){
     mById(537381),mById(537382), // M95+M96 -> M100
   ].filter(Boolean);
 
-  // QF left (M97+M98 -> M101), QF right (M99+M100 -> M102)
-  const qfL=[mById(537383),mById(537384)].filter(Boolean); // M97,M98
-  const qfR=[mById(537385),mById(537386)].filter(Boolean); // M99,M100
+  const qfL=[mById(537383),mById(537384)].filter(Boolean);
+  const qfR=[mById(537385),mById(537386)].filter(Boolean);
 
-  // Desktop - split left/right
   const col=(ms,lbl)=>`<div class="bcol">
     <div class="blbl">${lbl}</div>
     <div class="bmatches">${ms.map(m=>mbox(m,off)).join('')}</div>
@@ -514,17 +492,16 @@ function render(){
     col(r16R,'Round of 16') +
     col(r32R,'Round of 32');
 
-  // Mobile
-  // R32 - render as pairs that feed same R16 match
+  // Mobile R32 pairs
   const r32pairs = [
     { r16:'M89', matches:[537423,537424] }, // M74+M77 -> M89
     { r16:'M90', matches:[537417,537415] }, // M73+M75 -> M90
-    { r16:'M93', matches:[537420,537419] }, // M83+M84 -> M93
-    { r16:'M94', matches:[537422,537421] }, // M81+M82 -> M94
+    { r16:'M93', matches:[537419,537420] }, // M83+M84 -> M93
+    { r16:'M94', matches:[537421,537422] }, // M81+M82 -> M94
     { r16:'M91', matches:[537418,537416] }, // M76+M78 -> M91
     { r16:'M92', matches:[537425,537426] }, // M79+M80 -> M92
-    { r16:'M95', matches:[537428,537430] }, // M86+M88 -> M95
-    { r16:'M96', matches:[537429,537427] }, // M85+M87 -> M96
+    { r16:'M95', matches:[537430,537427] }, // M86+M88 -> M95
+    { r16:'M96', matches:[537429,537428] }, // M85+M87 -> M96
   ];
   const r32El = document.getElementById('mr32');
   if(r32El){
@@ -545,11 +522,11 @@ function render(){
     }).join('');
   }
 
-  // R16 pairs - each pair feeds a QF match
+  // Mobile R16 pairs
   const r16pairs = [
     { next:'M97',  matches:[537376,537375] }, // M89+M90
-    { next:'M98',  matches:[537379,537380] }, // M91+M92
-    { next:'M99',  matches:[537377,537378] }, // M93+M94
+    { next:'M98',  matches:[537379,537380] }, // M93+M94
+    { next:'M99',  matches:[537377,537378] }, // M91+M92
     { next:'M100', matches:[537381,537382] }, // M95+M96
   ];
   const r16El = document.getElementById('mr16');
@@ -571,10 +548,10 @@ function render(){
     }).join('');
   }
 
-  // QF pairs - each pair feeds a SF match
+  // Mobile QF pairs
   const qfpairs = [
-    { next:'M101', matches:[537383,537384] }, // M97+M98
-    { next:'M102', matches:[537385,537386] }, // M99+M100
+    { next:'M101', matches:[537383,537384] },
+    { next:'M102', matches:[537385,537386] },
   ];
   const qfEl = document.getElementById('mrqf');
   if(qfEl){
@@ -595,7 +572,7 @@ function render(){
     }).join('');
   }
 
-  // SF pair - winners meet in the Final
+  // Mobile SF pair
   const sfEl = document.getElementById('mrsf');
   if(sfEl){
     const m1 = mById(537387), m2 = mById(537388);
@@ -612,7 +589,7 @@ function render(){
     </div>`;
   }
 
-  // Handle final tab separately with labels
+  // Mobile Final tab
   const finEl=document.getElementById('mrfin');
   if(finEl){
     const finMatches=byStage('FINAL'), tpMatches=byStage('THIRD_PLACE');
@@ -628,8 +605,7 @@ function render(){
     finEl.innerHTML=html;
   }
 
-
-  // Footer
+  // Footer timezone label
   const s=off>=0?'+':'', frac=off%1!==0;
   document.getElementById('ftz').textContent=`All times UTC${s}${frac?Math.floor(off)+':30':off}`;
 }
@@ -646,7 +622,7 @@ document.querySelectorAll('.tab').forEach(b=>{
   });
 });
 
-// Timezone
+// Timezone persistence
 try{
   const sv=localStorage.getItem('wc2026_tz');
   if(sv!==null){const s=document.getElementById('tzsel');const idx=parseInt(sv);if(!isNaN(idx)&&s.options[idx])s.selectedIndex=idx;}
@@ -656,35 +632,25 @@ document.getElementById('tzsel').addEventListener('change',()=>{
   render();
 });
 
-// Load data.json and merge over base
+// Load data.json and merge API data directly - no calc layer
 async function load(){
   buildNums();
-  render(); // render immediately with base data
-  try{
-    const gwRes = await fetch('group-winners.json?t='+Date.now());
-    groupWinners = await gwRes.json();
-  }catch(e){ groupWinners = groupWinners || {}; }
+  render();
   try{
     const r=await fetch('data.json?t='+Date.now());
     const d=await r.json();
     const ko=d.matches.filter(m=>m.stage!=='GROUP_STAGE');
     if(ko.length>0){
-      // Merge: API data wins, but keep base for any missing
       const byId={};
       BASE.forEach(m=>byId[m.id]={...m});
-      ko.forEach(m => {
-  if(byId[m.id]){
-    // Only merge team data for LAST_32 if the group stage is fully finished (after 28 Jun)
-    const isLast32 = byId[m.id].stage === 'LAST_32';
-    const groupsComplete = new Date() > new Date('2026-06-28T19:00:00Z');
-    const homeTeam = (isLast32 && !groupsComplete) ? {name:null,shortName:null} : m.homeTeam;
-    const awayTeam = (isLast32 && !groupsComplete) ? {name:null,shortName:null} : m.awayTeam;
-    byId[m.id]={...byId[m.id],homeTeam,awayTeam,score:m.score,status:m.status};
-  }
-});
+      ko.forEach(m=>{
+        if(byId[m.id]){
+          byId[m.id]={...byId[m.id],homeTeam:m.homeTeam,awayTeam:m.awayTeam,score:m.score,status:m.status};
+        }
+      });
       matches=BASE.map(m=>byId[m.id]||m);
     }
-    render(); // re-render even if no live KO matches yet, to pick up any new group-winners
+    render();
   }catch(e){ console.log('data.json:',e.message); }
 }
 
