@@ -253,7 +253,7 @@ const FLAGS = {
 };
 
 // FEEDERS: R16/QF/SF match ID -> [feeder M-number home, feeder M-number away]
-// M74=537415, M75=537418, M76=537423 (corrected from API time alignment)
+// M74=537423 M75=537415 M76=537418 M81=537421(USA) M82=537422 M86=537430(Argentina) M87=537428 M88=537427
 const FEEDERS = {
   537376:['M74','M77'],537375:['M73','M75'],537377:['M76','M78'],537378:['M79','M80'],
   537379:['M83','M84'],537380:['M81','M82'],537381:['M86','M88'],537382:['M85','M87'],
@@ -262,45 +262,46 @@ const FEEDERS = {
 };
 
 // R32 placeholder labels shown when API hasn't confirmed teams yet
-// keyed by API match ID, aligned to correct UTC times
+// Verified against API pre-population: Germany->537415(M75), USA->537421(M81),
+// Mexico->537425(M79), Argentina->537430(M86)
 const R32_PH = {
-  537417: ['2nd Group A', '2nd Group B'],
-  537415: ['Win Group E', '3rd A/B/C/D/F'],
-  537418: ['Win Group F', '2nd Group C'],
-  537423: ['Win Group C', '2nd Group F'],
-  537424: ['Win Group I', '3rd C/D/F/G/H'],
-  537416: ['2nd Group E', '2nd Group I'],
-  537425: ['Win Group A', '3rd C/E/F/H/I'],
-  537426: ['Win Group L', '3rd E/H/I/J/K'],
-  537422: ['Win Group D', '3rd B/E/F/I/J'],
-  537421: ['Win Group G', '3rd A/E/H/I/J'],
-  537420: ['2nd Group K', '2nd Group L'],
-  537419: ['Win Group H', '2nd Group J'],
-  537429: ['Win Group B', '3rd E/F/G/I/J'],
-  537428: ['Win Group J', '2nd Group H'],
-  537427: ['Win Group K', '3rd D/E/I/J/L'],
-  537430: ['2nd Group D', '2nd Group G'],
+  537417: ['2nd Group A', '2nd Group B'],       // M73
+  537423: ['Win Group F', '2nd Group C'],        // M74
+  537415: ['Win Group E', '3rd A/B/C/D/F'],     // M75 - Germany (Group E winner)
+  537418: ['Win Group C', '2nd Group F'],        // M76
+  537424: ['Win Group I', '3rd C/D/F/G/H'],     // M77
+  537416: ['2nd Group E', '2nd Group I'],        // M78
+  537425: ['Win Group A', '3rd C/E/F/H/I'],     // M79 - Mexico
+  537426: ['Win Group L', '3rd E/H/I/J/K'],     // M80
+  537421: ['Win Group D', '3rd B/E/F/I/J'],     // M81 - USA
+  537422: ['Win Group G', '3rd A/E/H/I/J'],     // M82
+  537419: ['Win Group H', '2nd Group J'],        // M83
+  537420: ['2nd Group K', '2nd Group L'],        // M84
+  537429: ['Win Group B', '3rd E/F/G/I/J'],     // M85
+  537430: ['Win Group J', '2nd Group H'],        // M86 - Argentina
+  537428: ['2nd Group D', '2nd Group G'],        // M87
+  537427: ['Win Group K', '3rd D/E/I/J/L'],     // M88
 };
 
 // BASE array order defines M-numbers (M73 = index 0, M74 = index 1, etc.)
-// Corrected order: 537415 is M74, 537418 is M75, 537423 is M76
+// Correct order verified against API UTC times
 const BASE = [
-  {id:537417,stage:'LAST_32',utcDate:'2026-06-28T19:00:00Z'},  // M73
-  {id:537415,stage:'LAST_32',utcDate:'2026-06-29T17:00:00Z'},  // M74 - Win Group E (Germany slot)
-  {id:537418,stage:'LAST_32',utcDate:'2026-06-29T20:30:00Z'},  // M75 - Win Group F
-  {id:537423,stage:'LAST_32',utcDate:'2026-06-30T01:00:00Z'},  // M76 - Win Group C
-  {id:537424,stage:'LAST_32',utcDate:'2026-06-30T21:00:00Z'},  // M77
-  {id:537416,stage:'LAST_32',utcDate:'2026-06-30T17:00:00Z'},  // M78
-  {id:537425,stage:'LAST_32',utcDate:'2026-07-01T01:00:00Z'},  // M79
-  {id:537426,stage:'LAST_32',utcDate:'2026-07-01T16:00:00Z'},  // M80
-  {id:537422,stage:'LAST_32',utcDate:'2026-07-02T00:00:00Z'},  // M81 - Win Group D (USA slot)
-  {id:537421,stage:'LAST_32',utcDate:'2026-07-01T20:00:00Z'},  // M82
-  {id:537420,stage:'LAST_32',utcDate:'2026-07-02T23:00:00Z'},  // M83
-  {id:537419,stage:'LAST_32',utcDate:'2026-07-02T19:00:00Z'},  // M84
-  {id:537429,stage:'LAST_32',utcDate:'2026-07-03T03:00:00Z'},  // M85
-  {id:537428,stage:'LAST_32',utcDate:'2026-07-03T22:00:00Z'},  // M86
-  {id:537427,stage:'LAST_32',utcDate:'2026-07-04T01:30:00Z'},  // M87
-  {id:537430,stage:'LAST_32',utcDate:'2026-07-03T18:00:00Z'},  // M88
+  {id:537417,stage:'LAST_32',utcDate:'2026-06-28T19:00:00Z'},  // M73 - 2nd A / 2nd B
+  {id:537423,stage:'LAST_32',utcDate:'2026-06-29T17:00:00Z'},  // M74 - Win Group E / 3rd A/B/C/D/F
+  {id:537415,stage:'LAST_32',utcDate:'2026-06-29T20:30:00Z'},  // M75 - Win Group F / 2nd Group C
+  {id:537418,stage:'LAST_32',utcDate:'2026-06-30T01:00:00Z'},  // M76 - Win Group C / 2nd Group F
+  {id:537424,stage:'LAST_32',utcDate:'2026-06-30T17:00:00Z'},  // M77 - Win Group I / 3rd C/D/F/G/H
+  {id:537416,stage:'LAST_32',utcDate:'2026-06-30T21:00:00Z'},  // M78 - 2nd Group E / 2nd Group I
+  {id:537425,stage:'LAST_32',utcDate:'2026-07-01T01:00:00Z'},  // M79 - Win Group A / 3rd C/E/F/H/I (Mexico)
+  {id:537426,stage:'LAST_32',utcDate:'2026-07-01T16:00:00Z'},  // M80 - Win Group L / 3rd E/H/I/J/K
+  {id:537421,stage:'LAST_32',utcDate:'2026-07-01T20:00:00Z'},  // M81 - Win Group D / 3rd B/E/F/I/J (USA)
+  {id:537422,stage:'LAST_32',utcDate:'2026-07-02T00:00:00Z'},  // M82 - Win Group G / 3rd A/E/H/I/J
+  {id:537419,stage:'LAST_32',utcDate:'2026-07-02T19:00:00Z'},  // M83 - Win Group H / 2nd Group J
+  {id:537420,stage:'LAST_32',utcDate:'2026-07-02T23:00:00Z'},  // M84 - 2nd Group K / 2nd Group L
+  {id:537429,stage:'LAST_32',utcDate:'2026-07-03T03:00:00Z'},  // M85 - Win Group B / 3rd E/F/G/I/J
+  {id:537430,stage:'LAST_32',utcDate:'2026-07-03T18:00:00Z'},  // M86 - Win Group J / 2nd Group H (Argentina)
+  {id:537428,stage:'LAST_32',utcDate:'2026-07-03T22:00:00Z'},  // M87 - 2nd Group D / 2nd Group G
+  {id:537427,stage:'LAST_32',utcDate:'2026-07-04T01:30:00Z'},  // M88 - Win Group K / 3rd D/E/I/J/L
   {id:537376,stage:'LAST_16',utcDate:'2026-07-04T21:00:00Z'},
   {id:537375,stage:'LAST_16',utcDate:'2026-07-04T17:00:00Z'},
   {id:537377,stage:'LAST_16',utcDate:'2026-07-05T20:00:00Z'},
@@ -425,27 +426,27 @@ function render(){
   const sf=byStage('SEMI_FINALS');
   const fin=byStage('FINAL'), tp=byStage('THIRD_PLACE');
 
-  // Corrected M-number to ID mapping:
-  // M73=537417 M74=537415 M75=537418 M76=537423 M77=537424 M78=537416
-  // M79=537425 M80=537426 M81=537422 M82=537421 M83=537420 M84=537419
-  // M85=537429 M86=537428 M87=537427 M88=537430
+  // Correct M-number to ID mapping (sorted by API UTC time):
+  // M73=537417 M74=537423 M75=537415 M76=537418 M77=537424 M78=537416
+  // M79=537425 M80=537426 M81=537421 M82=537422 M83=537419 M84=537420
+  // M85=537429 M86=537430 M87=537428 M88=537427
 
   function mById(id){ return matches.find(m=>m.id===id); }
 
   // R32 left side - pairs that feed same R16 match
   const r32L=[
-    mById(537415),mById(537424), // M74+M77 -> M89
-    mById(537417),mById(537418), // M73+M75 -> M90
-    mById(537420),mById(537419), // M83+M84 -> M93
-    mById(537422),mById(537421), // M81+M82 -> M94
+    mById(537423),mById(537424), // M74+M77 -> M89
+    mById(537417),mById(537415), // M73+M75 -> M90
+    mById(537419),mById(537420), // M83+M84 -> M93
+    mById(537421),mById(537422), // M81+M82 -> M94
   ].filter(Boolean);
 
   // R32 right side
   const r32R=[
-    mById(537423),mById(537416), // M76+M78 -> M91
+    mById(537418),mById(537416), // M76+M78 -> M91
     mById(537425),mById(537426), // M79+M80 -> M92
-    mById(537428),mById(537430), // M86+M88 -> M95
-    mById(537429),mById(537427), // M85+M87 -> M96
+    mById(537430),mById(537427), // M86+M88 -> M95
+    mById(537429),mById(537428), // M85+M87 -> M96
   ].filter(Boolean);
 
   const r16L=[
@@ -493,14 +494,14 @@ function render(){
 
   // Mobile R32 pairs
   const r32pairs = [
-    { r16:'M89', matches:[537415,537424] }, // M74+M77 -> M89
-    { r16:'M90', matches:[537417,537418] }, // M73+M75 -> M90
-    { r16:'M93', matches:[537420,537419] }, // M83+M84 -> M93
-    { r16:'M94', matches:[537422,537421] }, // M81+M82 -> M94
-    { r16:'M91', matches:[537423,537416] }, // M76+M78 -> M91
+    { r16:'M89', matches:[537423,537424] }, // M74+M77 -> M89
+    { r16:'M90', matches:[537417,537415] }, // M73+M75 -> M90
+    { r16:'M93', matches:[537419,537420] }, // M83+M84 -> M93
+    { r16:'M94', matches:[537421,537422] }, // M81+M82 -> M94
+    { r16:'M91', matches:[537418,537416] }, // M76+M78 -> M91
     { r16:'M92', matches:[537425,537426] }, // M79+M80 -> M92
-    { r16:'M95', matches:[537428,537430] }, // M86+M88 -> M95
-    { r16:'M96', matches:[537429,537427] }, // M85+M87 -> M96
+    { r16:'M95', matches:[537430,537427] }, // M86+M88 -> M95
+    { r16:'M96', matches:[537429,537428] }, // M85+M87 -> M96
   ];
   const r32El = document.getElementById('mr32');
   if(r32El){
