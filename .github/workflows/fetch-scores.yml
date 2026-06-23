@@ -2,8 +2,7 @@ name: Fetch World Cup Scores
 
 on:
   schedule:
-    # Every 15 minutes, offset from crowded :00/:15/:30/:45 slots.
-    - cron: '7,22,37,52 * * * *'
+    - cron: '*/5 * * * *'
   workflow_dispatch:
 
 env:
@@ -20,29 +19,125 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Fetch scores from API via Cloudflare Worker
+      - name: Fetch match scores
+        id: fetch
+        continue-on-error: true
         run: |
           curl -s "https://fancy-block-fde3.aking116.workers.dev/competitions/WC/matches?season=2026" \
             -o data.json \
-            --fail \
-            --max-time 25 \
-            --retry 1 \
-            --retry-delay 3
-          python3 - <<'PY'
-          import json
-          from pathlib import Path
+            --fail --max-time 25 --retry 1 --retry-delay 3
 
-          data = json.loads(Path("data.json").read_text())
-          matches = data.get("matches")
-          if not isinstance(matches, list) or len(matches) != 104:
-              raise SystemExit(f"Unexpected data.json: matches={len(matches) if isinstance(matches, list) else type(matches).__name__}")
-          print(f"Fetched {len(matches)} matches")
-          PY
+      - name: Fetch top scorers
+        id: fetch_scorers
+        continue-on-error: true
+        run: |
+          curl -s "https://fancy-block-fde3.aking116.workers.dev/competitions/WC/scorers?season=2026&limit=200" \
+            -o scorers.json \
+            --fail --max-time 25 --retry 1 --retry-delay 3
+
+      - name: Fetch match details (goals/cards/subs) for live and newly finished matches
+        id: fetch_details
+        if: steps.fetch.outcome == 'success'
+        continue-on-error: true
+        run: |
+          python3 << 'PYEOF'
+          import json, urllib.request, urllib.error, os, time
+
+          WORKER = "https://fancy-block-fde3.aking116.workers.dev"
+
+          # Load the bulk matches list we just fetched
+          with open('data.json') as f:
+              data = json.load(f)
+          matches = data.get('matches', [])
+
+          # Load existing match-details.json (built up over the tournament)
+          details = {}
+          if os.path.exists('match-details.json'):
+              try:
+                  with open('match-details.json') as f:
+                      details = json.load(f)
+              except Exception:
+                  details = {}
+
+          to_fetch = []
+          for m in matches:
+              mid = str(m.get('id'))
+              status = m.get('status')
+              if status in ('IN_PLAY', 'PAUSED'):
+                  to_fetch.append(mid)               # always refresh live matches
+              elif status == 'FINISHED' and mid not in details:
+                  to_fetch.append(mid)               # fetch once, never again
+
+          print(f"Matches needing detail fetch: {len(to_fetch)}")
+
+          # Cap per run so a big backlog (e.g. first run of the day) doesn't risk rate limits.
+          # Remaining matches will simply be picked up on the next run a minute later.
+          MAX_PER_RUN = 15
+          if len(to_fetch) > MAX_PER_RUN:
+              print(f"  Capping to {MAX_PER_RUN} this run; rest will be picked up next run")
+              to_fetch = to_fetch[:MAX_PER_RUN]
+
+          fetched = 0
+          for mid in to_fetch:
+              try:
+                  req = urllib.request.Request(
+                      f"{WORKER}/matches/{mid}",
+                      headers={
+                          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+                          "Accept": "application/json",
+                      }
+                  )
+                  with urllib.request.urlopen(req, timeout=15) as resp:
+                      full = json.loads(resp.read().decode())
+                  # Only keep the fields we actually use, to keep file size sane
+                  details[mid] = {
+                      "status": full.get("status"),
+                      "minute": full.get("minute"),
+                      "injuryTime": full.get("injuryTime"),
+                      "score": full.get("score"),
+                      "goals": full.get("goals", []),
+                      "bookings": full.get("bookings", []),
+                      "substitutions": full.get("substitutions", []),
+                  }
+                  fetched += 1
+                  time.sleep(1.5)  # gentle pacing, well under 30 calls/min
+              except urllib.error.HTTPError as e:
+                  body = e.read().decode(errors='replace')[:200]
+                  print(f"  Failed to fetch match {mid}: HTTP {e.code} - {body}")
+                  continue
+              except Exception as e:
+                  print(f"  Failed to fetch match {mid}: {e}")
+                  continue
+
+          print(f"Successfully fetched {fetched} match detail(s)")
+
+          with open('match-details.json', 'w') as f:
+              json.dump(details, f, separators=(',', ':'))
+          PYEOF
+
+      - name: Track consecutive failures
+        if: steps.fetch.outcome == 'failure'
+        run: |
+          COUNT=0
+          if [ -f .fail_count ]; then COUNT=$(cat .fail_count); fi
+          COUNT=$((COUNT + 1))
+          echo $COUNT > .fail_count
+          if [ $COUNT -lt 3 ]; then exit 0; else exit 1; fi
+
+      - name: Reset failure count on success
+        if: steps.fetch.outcome == 'success'
+        run: echo 0 > .fail_count
+
+      - name: Calculate clinched group winners
+        if: steps.fetch.outcome == 'success'
+        continue-on-error: true
+        run: node calc-group-winners.js
 
       - name: Commit and push if changed
+        if: steps.fetch.outcome == 'success'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data.json
+          git add data.json scorers.json match-details.json group-winners.json .fail_count
           git diff --staged --quiet || git commit -m "Update scores $(date -u '+%Y-%m-%d %H:%M UTC')"
           git push

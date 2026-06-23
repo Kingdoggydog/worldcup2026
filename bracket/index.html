@@ -125,6 +125,7 @@ select{font-family:'Roboto Condensed',sans-serif;font-weight:700;font-size:13px;
       <a href="../" class="nbtn">Расписание</a>
       <a href="../groups/" class="nbtn">Группы</a>
       <span class="nbtn on" aria-current="page">Плей-офф</span>
+      <a href="../scorers/" class="nbtn">Бомбардиры</a>
     </div>
   </div>
   <div class="hdr-r">
@@ -290,6 +291,7 @@ const BASE = [
 ].map(m => ({...m, status:'TIMED', homeTeam:{name:null,shortName:null}, awayTeam:{name:null,shortName:null}, score:{fullTime:{home:null,away:null}}}));
 
 let matches = BASE.map(m => ({...m}));
+let groupWinners = {};
 const mnums = {};
 
 function norm(n){ return n ? (NAME_MAP[n]||n) : null; }
@@ -308,6 +310,14 @@ function fmt(utc, off){
 }
 function getOff(){ return parseFloat(document.getElementById('tzsel').value); }
 
+function applyGroupWinnersBracket(label){
+  const winnerMatch = label.match(/^Win Group ([A-L])$/);
+  if (winnerMatch) return groupWinners[winnerMatch[1]]?.first || label;
+  const runnerUpMatch = label.match(/^2nd (?:Group )?([A-L])$/);
+  if (runnerUpMatch) return groupWinners[runnerUpMatch[1]]?.second || label;
+  return label;
+}
+
 function teams(m){
   const h=m.homeTeam?.shortName||m.homeTeam?.name;
   const a=m.awayTeam?.shortName||m.awayTeam?.name;
@@ -315,7 +325,8 @@ function teams(m){
   let phh, pha;
   if(m.stage==='LAST_32'){
     const ph=R32_PH[m.id]||['TBD','TBD'];
-    phh=ph[0]; pha=ph[1];
+    phh=applyGroupWinnersBracket(ph[0]);
+    pha=applyGroupWinnersBracket(ph[1]);
   } else {
     const feeders=FEEDERS[m.id];
     if(feeders){
@@ -619,14 +630,25 @@ async function load(){
   buildNums();
   render(); // render immediately with base data
   try{
-    const r=await fetch('../data.json?t='+Date.now());
+    const gwRes=await fetch('../group-winners.json?t='+Date.now(),{cache:'no-store'});
+    groupWinners=await gwRes.json();
+  }catch(e){ groupWinners=groupWinners||{}; }
+  try{
+    const r=await fetch('../data.json?t='+Date.now(),{cache:'no-store'});
     const d=await r.json();
     const ko=d.matches.filter(m=>m.stage!=='GROUP_STAGE');
     if(ko.length>0){
       // Merge: API data wins, but keep base for any missing
       const byId={};
       BASE.forEach(m=>byId[m.id]={...m});
-      ko.forEach(m=>{ if(byId[m.id]) byId[m.id]={...byId[m.id],...m,homeTeam:m.homeTeam,awayTeam:m.awayTeam,score:m.score,status:m.status}; });
+      ko.forEach(m=>{
+        if(!byId[m.id]) return;
+        const isLast32=byId[m.id].stage==='LAST_32';
+        const groupsComplete=new Date()>new Date('2026-06-28T19:00:00Z');
+        const homeTeam=(isLast32&&!groupsComplete)?{name:null,shortName:null}:m.homeTeam;
+        const awayTeam=(isLast32&&!groupsComplete)?{name:null,shortName:null}:m.awayTeam;
+        byId[m.id]={...byId[m.id],homeTeam,awayTeam,score:m.score,status:m.status};
+      });
       matches=BASE.map(m=>byId[m.id]||m);
       render();
     }
@@ -634,7 +656,7 @@ async function load(){
 }
 
 load();
-setInterval(load,60000);
+setInterval(load,30000);
 </script>
 </body>
 </html>

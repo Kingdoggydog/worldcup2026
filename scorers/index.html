@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Бомбардиры ЧМ-2026 - гонка за Золотую бутсу</title>
+  <meta name="description" content="Лучшие бомбардиры ЧМ-2026: голы, передачи, пенальти и сыгранные матчи с live-обновлением.">
+  <link rel="canonical" href="https://worldcup2026.viktoor.ru/scorers/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Чемпионат мира 2026">
+  <meta property="og:title" content="Бомбардиры ЧМ-2026">
+  <meta property="og:description" content="Голы, передачи и гонка за Золотую бутсу.">
+  <meta property="og:url" content="https://worldcup2026.viktoor.ru/scorers/">
+  <meta property="og:image" content="https://worldcup2026.viktoor.ru/preview.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- Yandex.Metrika counter -->
+  <script type="text/javascript">
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();
+    for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}
+    k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window,document,'script','https://mc.yandex.ru/metrika/tag.js?id=109775727','ym');
+    ym(109775727,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.referrer,url:location.href,accurateTrackBounce:true,trackLinks:true});
+  </script>
+  <!-- /Yandex.Metrika counter -->
+  <style>
+    :root {
+      --bg: #0A0E1A; --surface: #111827; --border: #1E2840;
+      --text: #E8EAF0; --text-sub: #7A82A8; --text-muted: #4A5568;
+      --gold: #C9A84C; --win: #2ECC71;
+      --ctrl-bg: #1A2235; --ctrl-border: #2A3A55; --ctrl-text: #C8D0E0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { overflow-x: hidden; width: 100%; }
+    body { background: var(--bg); color: var(--text); font-family: 'Roboto Condensed', sans-serif; min-height: 100vh; }
+    .page { max-width: 800px; margin: 0 auto; padding: 20px 16px 60px; }
+    @media (max-width: 600px) {
+      .page { padding: 12px 0px 40px; }
+      .scorers-table td, .scorers-table th { padding: 6px 2px; }
+      .scorers-table { font-size: 12px; table-layout: fixed; width: 100%; }
+      .player-name { font-size: 12.5px; }
+      .player-team { font-size: 11px; }
+      /* Explicit width on every column - table-layout:fixed needs this on ALL
+         columns (not just player), otherwise browsers compute the remaining
+         columns inconsistently, which was causing the goals number to
+         visually collide with wrapped player names. */
+      .col-pos { width: 6%; }
+      .col-player { width: 30%; }
+      .col-goals { width: 16%; }
+      .col-assists { width: 16%; }
+      .col-pens { width: 16%; }
+      .col-mp { width: 16%; }
+      .pos { width: auto; }
+      .scorers-table th .sublabel { display: none; }
+      .scorers-table th { font-size: 14px; }
+    }
+
+    .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+    .header h1 { font-weight: 800; font-size: clamp(22px,5vw,36px); letter-spacing: 1px; text-transform: uppercase; line-height: 1; color: var(--gold); }
+    .header .sub { font-size: clamp(11px,2vw,14px); font-weight: 400; letter-spacing: 2px; text-transform: uppercase; color: var(--text-sub); margin-top: 4px; }
+    .nav-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+    .nav-btn { font-family: 'Roboto Condensed', sans-serif; font-weight: 700; font-size: clamp(10px,1.5vw,13px); letter-spacing: 0.5px; text-transform: uppercase; padding: 5px 10px; border-radius: 4px; cursor: pointer; border: 1.5px solid var(--ctrl-border); background: var(--ctrl-bg); color: var(--ctrl-text); text-decoration: none; transition: all 0.2s; white-space: nowrap; display: inline-block; }
+    .nav-btn:hover { opacity: 0.8; }
+    .nav-btn.active { background: var(--gold); color: #0A0E1A; border-color: var(--gold); }
+
+    .scorers-table { width: 100%; border-collapse: separate; border-spacing: 0; }
+    .scorers-table th { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); padding: 8px 12px; border-bottom: 2px solid var(--border); text-align: center; }
+
+    /* Legend bar (mobile only, NOT sticky) + sticky table header (th-level, with iOS fix) */
+    .legend-bar { display: none; }
+    .legend-icon { display: inline-block; margin-right: 4px; font-weight: 700; color: var(--gold); }
+    .scorers-table thead th {
+      position: -webkit-sticky; position: sticky; top: 0; z-index: 10;
+      background: var(--bg);
+      -webkit-transform: translateZ(0); transform: translateZ(0);
+      -webkit-backface-visibility: hidden; backface-visibility: hidden;
+    }
+    .top-mask {
+      display: none;
+      position: fixed; top: 0; left: 0; right: 0;
+      height: 38px;
+      background: var(--bg);
+      z-index: 20;
+      pointer-events: none;
+    }
+    @media (max-width: 600px) {
+      .legend-bar {
+        display: flex; flex-wrap: wrap; gap: 10px;
+        align-items: center;
+        padding: 8px 10px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        margin-bottom: 12px;
+        font-size: 10.5px; color: var(--text-sub);
+      }
+      .top-mask { display: block; }
+      .scorers-table thead th { top: 38px; }
+    }
+    .scorers-table th.center { text-align: center; }
+    .scorers-table td { padding: 12px 12px; border-bottom: 1px solid var(--border); font-size: 16px; color: var(--text); vertical-align: middle; text-align: center; }
+    .scorers-table td.center { text-align: center; }
+    .scorers-table td.goals { font-weight: 800; font-size: 20px; color: var(--gold); text-align: center; }
+    .scorers-table td.stat { text-align: center; color: var(--text-sub); font-size: 15px; }
+    .scorers-table tr:hover td { background: rgba(255,255,255,0.02); }
+    .scorers-table tr:first-child td { background: rgba(201,168,76,0.06); }
+
+    .pos { font-size: 13px; color: var(--text-muted); font-weight: 700; text-align: center; width: 30px; }
+    .pos.gold { color: #FFD700; }
+    .pos.silver { color: #C0C0C0; }
+    .pos.bronze { color: #CD7F32; }
+
+    .player-name { font-weight: 700; font-size: 17px; text-align: left; }
+    .player-team { font-size: 13px; color: var(--text-sub); margin-top: 2px; display: flex; align-items: center; gap: 4px; justify-content: flex-start; }
+    .player-team img { width: 16px; height: 12px; object-fit: contain; }
+
+    .last-updated { font-size: 12px; color: var(--text-muted); text-align: right; margin-top: 12px; letter-spacing: 1px; }
+    .loading { text-align: center; padding: 40px; color: var(--text-muted); font-size: 16px; letter-spacing: 1px; }
+
+    .footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--border); }
+    .footer p { font-size: 12px; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; }
+    .footer a { color: var(--text-muted); text-decoration: none; }
+    .footer a:hover { color: var(--gold); }
+  </style>
+</head>
+<body>
+<noscript><div><img src="https://mc.yandex.ru/watch/109775727" style="position:absolute;left:-9999px" alt=""></div></noscript>
+<div class="page">
+
+  <div class="header">
+    <div>
+      <h1>FIFA World Cup 2026</h1>
+      <div class="sub">Гонка за Золотую бутсу &bull; лучшие бомбардиры</div>
+      <div class="nav-row">
+        <a href="../" class="nav-btn">Расписание</a>
+        <a href="../groups/" class="nav-btn">Группы</a>
+        <a href="../bracket/" class="nav-btn">Плей-офф</a>
+        <span class="nav-btn active" aria-current="page">Бомбардиры</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="top-mask"></div>
+  <div class="legend-bar">
+    <span><span class="legend-icon">Г</span> Голы</span>
+    <span><span class="legend-icon">А</span> Передачи</span>
+    <span><span class="legend-icon">П</span> Пенальти</span>
+    <span><span class="legend-icon">И</span> Матчи</span>
+  </div>
+  <div id="scorers-container" class="loading">Загрузка бомбардиров...</div>
+  <div class="last-updated" id="last-updated"></div>
+
+  <div class="footer"><p>ЧМ-2026 &bull; данные обновляются автоматически</p></div>
+
+</div>
+
+<script>
+const FLAGS = {
+  'Algeria':'dz','Argentina':'ar','Australia':'au','Austria':'at','Belgium':'be',
+  'Bosnia-H.':'ba','Bosnia':'ba','Brazil':'br','Canada':'ca','Cape Verde':'cv',
+  'Colombia':'co','Congo DR':'cd','Croatia':'hr','Curacao':'cw','Czechia':'cz',
+  'Ecuador':'ec','Egypt':'eg','England':'gb-eng','France':'fr','Germany':'de',
+  'Ghana':'gh','Haiti':'ht','Iran':'ir','Iraq':'iq','Ivory Coast':'ci','Japan':'jp',
+  'Jordan':'jo','Mexico':'mx','Morocco':'ma','Netherlands':'nl','New Zealand':'nz',
+  'Norway':'no','Panama':'pa','Paraguay':'py','Portugal':'pt','Qatar':'qa',
+  'Saudi Arabia':'sa','Scotland':'gb-sct','Senegal':'sn','South Africa':'za',
+  'Korea Republic':'kr','South Korea':'kr','Spain':'es','Sweden':'se',
+  'Switzerland':'ch','Tunisia':'tn','Turkey':'tr','Turkiye':'tr',
+  'USA':'us','United States':'us','Uruguay':'uy','Uzbekistan':'uz'
+};
+const TEAM_RU = {
+  'Algeria':'Алжир','Argentina':'Аргентина','Australia':'Австралия','Austria':'Австрия','Belgium':'Бельгия',
+  'Bosnia-H.':'Босния и Герцеговина','Bosnia':'Босния и Герцеговина','Brazil':'Бразилия','Canada':'Канада',
+  'Cape Verde':'Кабо-Верде','Colombia':'Колумбия','Congo DR':'ДР Конго','Croatia':'Хорватия','Curacao':'Кюрасао',
+  'Czechia':'Чехия','Ecuador':'Эквадор','Egypt':'Египет','England':'Англия','France':'Франция','Germany':'Германия',
+  'Ghana':'Гана','Haiti':'Гаити','Iran':'Иран','Iraq':'Ирак','Ivory Coast':'Кот-д’Ивуар','Japan':'Япония',
+  'Jordan':'Иордания','Mexico':'Мексика','Morocco':'Марокко','Netherlands':'Нидерланды','New Zealand':'Новая Зеландия',
+  'Norway':'Норвегия','Panama':'Панама','Paraguay':'Парагвай','Portugal':'Португалия','Qatar':'Катар',
+  'Saudi Arabia':'Саудовская Аравия','Scotland':'Шотландия','Senegal':'Сенегал','South Africa':'ЮАР',
+  'Korea Republic':'Южная Корея','South Korea':'Южная Корея','Spain':'Испания','Sweden':'Швеция',
+  'Switzerland':'Швейцария','Tunisia':'Тунис','Turkey':'Турция','Turkiye':'Турция','USA':'США',
+  'United States':'США','Uruguay':'Уругвай','Uzbekistan':'Узбекистан'
+};
+
+function flagImg(shortName) {
+  const code = FLAGS[shortName];
+  return code ? `<img src="https://flagcdn.com/w20/${code}.png" alt="${shortName}" style="width:16px;height:12px;object-fit:contain;">` : '';
+}
+
+function posClass(i) {
+  if (i === 0) return 'gold';
+  if (i === 1) return 'silver';
+  if (i === 2) return 'bronze';
+  return '';
+}
+
+async function loadScorers() {
+  try {
+    const res = await fetch('../scorers.json?t=' + Date.now(), {cache:'no-store'});
+    const data = await res.json();
+    const scorers = (data.scorers || []).sort((a, b) => {
+      if (b.goals !== a.goals) return b.goals - a.goals;
+      return (b.assists ?? 0) - (a.assists ?? 0);
+    });
+
+    if (scorers.length === 0) {
+      document.getElementById('scorers-container').innerHTML = '<div class="loading">Бомбардиров пока нет.</div>';
+      return;
+    }
+
+    let html = `<table class="scorers-table">
+      <thead>
+        <tr>
+          <th class="center col-pos">#</th>
+          <th class="col-player">Игрок</th>
+          <th class="center col-goals">Г<br><span class="sublabel" style="font-size:9px;letter-spacing:1px;">ГОЛЫ</span></th>
+          <th class="center col-assists">А<br><span class="sublabel" style="font-size:9px;letter-spacing:1px;">ПЕРЕДАЧИ</span></th>
+          <th class="center col-pens">П<br><span class="sublabel" style="font-size:9px;letter-spacing:1px;">ПЕНАЛЬТИ</span></th>
+          <th class="center col-mp"><span style="font-size:11px;letter-spacing:1px;">И</span><br><span class="sublabel" style="font-size:9px;letter-spacing:1px;">МАТЧИ</span></th>
+        </tr>
+      </thead>
+      <tbody>`;
+
+    scorers.forEach((s, i) => {
+      const player = s.player;
+      const team = s.team;
+      const flag = flagImg(team.shortName);
+      // Show = for tied positions
+      const prev = i > 0 ? scorers[i-1] : null;
+      const tied = prev && s.goals === prev.goals && (s.assists ?? 0) === (prev.assists ?? 0);
+      const posDisplay = tied ? '=' : (i + 1);
+      html += `<tr>
+        <td class="pos col-pos ${posClass(i)}">${posDisplay}</td>
+        <td class="col-player" style="text-align:left;">
+          <div class="player-name">${player.name}</div>
+          <div class="player-team">${flag} ${TEAM_RU[team.shortName] || team.shortName}</div>
+        </td>
+        <td class="goals col-goals">${s.goals ?? '-'}</td>
+        <td class="stat col-assists">${s.assists ?? '-'}</td>
+        <td class="stat col-pens">${s.penalties ?? '-'}</td>
+        <td class="stat col-mp">${s.playedMatches ?? '-'}</td>
+      </tr>`;
+    });
+
+    html += '</tbody></table>';
+    document.getElementById('scorers-container').innerHTML = html;
+    document.getElementById('last-updated').textContent = 'Обновлено: ' + new Date().toLocaleTimeString('ru-RU');
+
+  } catch(e) {
+    document.getElementById('scorers-container').innerHTML = '<div class="loading">Не удалось загрузить данные. Попробуйте позже.</div>';
+  }
+}
+
+loadScorers();
+setInterval(loadScorers, 30000);
+</script>
+</body>
+</html>

@@ -156,6 +156,32 @@
     flex: 1; align-content: start;
   }
 
+  .third-place-section { margin-top:24px;padding-top:20px;border-top:1px solid var(--border); }
+  .third-place-title {
+    font-family:'Roboto Condensed',sans-serif;font-weight:800;
+    font-size:clamp(16px,3vw,22px);letter-spacing:1px;text-transform:uppercase;
+    color:var(--gold);margin-bottom:6px;
+  }
+  .third-place-sub {
+    font-family:'Roboto Condensed',sans-serif;font-size:13px;color:var(--text-muted);
+    letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;
+  }
+  .third-place-table { width:100%;border-collapse:collapse;font-family:'Roboto Condensed',sans-serif; }
+  .third-place-table th {
+    font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+    color:var(--text-muted);padding:4px 8px;border-bottom:1px solid var(--border);text-align:center;
+  }
+  .third-place-table th.team-col,.third-place-table td.team-name { text-align:left; }
+  .third-place-table td {
+    font-size:15px;font-weight:600;padding:6px 8px;border-bottom:1px solid var(--border);
+    text-align:center;color:var(--text);
+  }
+  .third-place-table td.pts { font-weight:800;color:var(--gold); }
+  .third-place-table tr.advances td { background:rgba(46,204,113,.08); }
+  .third-place-table tr.advances td.pos { color:#2ECC71;font-weight:800; }
+  .third-place-table .grp-badge { margin-left:5px;font-weight:800;font-size:12px; }
+  .third-place-scroll { overflow-x:auto; }
+
   /* GROUP CARD */
   .group-card {
     background: var(--bg-match);
@@ -301,6 +327,7 @@
         <a href="../" class="nav-btn">&#128197; Расписание</a>
         <span class="nav-btn active" aria-current="page">&#128202; Группы</span>
         <a href="../bracket/" class="nav-btn">&#127942; Плей-офф</a>
+        <a href="../scorers/" class="nav-btn">Бомбардиры</a>
       </div>
     </div>
     <div class="header-right">
@@ -349,6 +376,19 @@
   </div>
 
   <div class="groups-grid" id="groups-grid"></div>
+
+  <section class="third-place-section" id="third-place-section" style="display:none;">
+    <div class="third-place-title">Лучшие третьи места</div>
+    <div class="third-place-sub">В 1/16 финала выходят 8 из 12 команд: очки → разница мячей → забитые мячи</div>
+    <div class="third-place-scroll">
+      <table class="third-place-table">
+        <thead><tr>
+          <th></th><th class="team-col">Команда</th><th>И</th><th>В</th><th>Н</th><th>П</th><th>РМ</th><th>ЗМ</th><th>О</th><th>Статус</th>
+        </tr></thead>
+        <tbody id="third-place-body"></tbody>
+      </table>
+    </div>
+  </section>
 
   <div class="footer">
     <p>FIFA World Cup 2026 &bull; USA / Canada / Mexico &bull; <span id="version">v1.22</span></p>
@@ -691,10 +731,12 @@ function render(highlightTeam, data) {
   grid.innerHTML = '';
 
   const { groups, results, liveGroups } = data || calcStandings([]);
+  const sortedGroups = {};
 
   Object.entries(GROUPS).forEach(([grp, teamList]) => {
     const groupStats = groups[grp] || {};
     const sorted = sortTeams(teamList, grp, groupStats, results);
+    sortedGroups[grp] = sorted;
     const color = GROUP_COLORS[grp];
     const card = document.createElement('div');
     card.className = 'group-card';
@@ -746,6 +788,38 @@ function render(highlightTeam, data) {
 
   const noteEl = document.getElementById('highlight-note');
   if (noteEl) noteEl.style.display = 'none';
+  renderThirdPlace(sortedGroups, groups);
+}
+
+function renderThirdPlace(sortedGroups, groupStats) {
+  const thirds = [];
+  Object.entries(sortedGroups).forEach(([grp, sorted]) => {
+    if (!sorted || sorted.length < 3) return;
+    const team = sorted[2];
+    const s = groupStats[grp]?.[team];
+    if (!s) return;
+    thirds.push({team,grp,p:s.p,w:s.w,d:s.d,l:s.l,gf:s.gf,gd:s.gf-s.ga,pts:s.pts});
+  });
+  thirds.sort((a,b) => b.pts-a.pts || b.gd-a.gd || b.gf-a.gf || a.team.localeCompare(b.team));
+
+  const section = document.getElementById('third-place-section');
+  const tbody = document.getElementById('third-place-body');
+  if (!thirds.length) { section.style.display='none'; return; }
+  section.style.display='block';
+  const complete = thirds.length===12 && thirds.every(t => t.p===3);
+  tbody.innerHTML = thirds.map((t,i) => {
+    const advances=i<8;
+    const status=complete ? (advances?'Выходит':'Выбыла') : 'Предварительно';
+    const statusColor=complete ? (advances?'#2ECC71':'#E74C3C') : 'var(--text-muted)';
+    const value=n => t.p ? n : '-';
+    return `<tr class="${advances?'advances':''}">
+      <td class="pos">${i+1}</td>
+      <td class="team-name">${flagImg(t.team)}${teamName(t.team)}<span class="grp-badge" style="color:${GROUP_COLORS[t.grp]}">${t.grp}</span></td>
+      <td>${value(t.p)}</td><td>${value(t.w)}</td><td>${value(t.d)}</td><td>${value(t.l)}</td>
+      <td>${value(t.gd>0?'+'+t.gd:t.gd)}</td><td>${value(t.gf)}</td><td class="pts">${value(t.pts)}</td>
+      <td style="font-size:13px;color:${statusColor}">${status}</td>
+    </tr>`;
+  }).join('');
 }
 
 // ── LOAD DATA ─────────────────────────────────────────────────────────────────
@@ -798,7 +872,7 @@ function updateKickoffDate() {
 // Initial load + refresh every 60 seconds
 updateKickoffDate();
 loadAndRender();
-setInterval(loadAndRender, 60000);
+setInterval(loadAndRender, 30000);
 </script>
 
 
