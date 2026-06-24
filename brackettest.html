@@ -215,8 +215,8 @@ const FLAGS = {
 
 const FEEDERS = {
   // R16
-  537376:['M74','M77'], // M89
-  537375:['M73','M75'], // M90
+  537375:['M74','M77'], // M89
+  537376:['M73','M75'], // M90
   537377:['M76','M78'], // M91
   537378:['M79','M80'], // M92
   537379:['M83','M84'], // M93
@@ -275,8 +275,8 @@ const BASE = [
   {id:537427,mnum:'M86',stage:'LAST_32',utcDate:'2026-07-03T22:00:00Z'}, // Argentina
   {id:537430,mnum:'M87',stage:'LAST_32',utcDate:'2026-07-04T01:30:00Z'},
   {id:537428,mnum:'M88',stage:'LAST_32',utcDate:'2026-07-03T18:00:00Z'},
-  {id:537376,mnum:'M89',stage:'LAST_16',utcDate:'2026-07-04T17:00:00Z'},
-  {id:537375,mnum:'M90',stage:'LAST_16',utcDate:'2026-07-04T21:00:00Z'},
+  {id:537375,mnum:'M89',stage:'LAST_16',utcDate:'2026-07-04T21:00:00Z'},
+  {id:537376,mnum:'M90',stage:'LAST_16',utcDate:'2026-07-04T17:00:00Z'},
   {id:537377,mnum:'M91',stage:'LAST_16',utcDate:'2026-07-05T20:00:00Z'},
   {id:537378,mnum:'M92',stage:'LAST_16',utcDate:'2026-07-06T00:00:00Z'},
   {id:537379,mnum:'M93',stage:'LAST_16',utcDate:'2026-07-06T19:00:00Z'},
@@ -408,7 +408,7 @@ function render(){
     mById(537427),mById(537428), // M86+M88 -> M95
     mById(537429),mById(537430), // M85+M87 -> M96
   ].filter(Boolean);
-  const r16L=[mById(537376),mById(537375),mById(537379),mById(537380)].filter(Boolean); // M89+M90, M93+M94
+  const r16L=[mById(537375),mById(537376),mById(537379),mById(537380)].filter(Boolean); // M89+M90, M93+M94
   const r16R=[mById(537377),mById(537378),mById(537381),mById(537382)].filter(Boolean); // M91+M92, M95+M96
   const qfL=[mById(537383),mById(537384)].filter(Boolean); // M97, M98
   const qfR=[mById(537385),mById(537386)].filter(Boolean); // M99, M100
