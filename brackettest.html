@@ -245,9 +245,9 @@ const R32_PH = {
   537420:['2nd Group K','2nd Group L'],         // M83
   537419:['Win Group H','2nd Group J'],         // M84
   537429:['Win Group B','3rd E/F/G/I/J'],      // M85
-  537428:['2nd Group D','2nd Group G'],         // M86
-  537427:['Win Group J','2nd Group H'],         // M87 - Argentina confirmed home
-  537430:['Win Group K','3rd D/E/I/J/L'],      // M88
+  537427:['Win Group J','2nd Group H'],         // M86 - Argentina confirmed home
+  537430:['Win Group K','3rd D/E/I/J/L'],      // M87
+  537428:['2nd Group D','2nd Group G'],         // M88
 };
 
 // BASE array order = Wikipedia match number order (M73-M88).
@@ -266,9 +266,9 @@ const BASE = [
   {id:537420,stage:'LAST_32',utcDate:'2026-07-02T19:00:00Z'}, // M83
   {id:537419,stage:'LAST_32',utcDate:'2026-07-02T23:00:00Z'}, // M84
   {id:537429,stage:'LAST_32',utcDate:'2026-07-03T03:00:00Z'}, // M85
-  {id:537428,stage:'LAST_32',utcDate:'2026-07-03T18:00:00Z'}, // M86
-  {id:537427,stage:'LAST_32',utcDate:'2026-07-03T22:00:00Z'}, // M87 - Argentina
-  {id:537430,stage:'LAST_32',utcDate:'2026-07-04T01:30:00Z'}, // M88
+  {id:537427,stage:'LAST_32',utcDate:'2026-07-03T22:00:00Z'}, // M86 - Argentina
+  {id:537430,stage:'LAST_32',utcDate:'2026-07-04T01:30:00Z'}, // M87
+  {id:537428,stage:'LAST_32',utcDate:'2026-07-03T18:00:00Z'}, // M88
   {id:537376,stage:'LAST_16',utcDate:'2026-07-04T17:00:00Z'}, // M89
   {id:537375,stage:'LAST_16',utcDate:'2026-07-04T21:00:00Z'}, // M90
   {id:537377,stage:'LAST_16',utcDate:'2026-07-05T20:00:00Z'}, // M91
@@ -402,8 +402,8 @@ function render(){
   const r32R=[
     mById(537423),mById(537424), // M76+M78 -> M91
     mById(537425),mById(537426), // M79+M80 -> M92
-    mById(537428),mById(537430), // M86+M88 -> M95
-    mById(537429),mById(537427), // M85+M87 -> M96
+    mById(537427),mById(537428), // M86+M88 -> M95
+    mById(537429),mById(537430), // M85+M87 -> M96
   ].filter(Boolean);
   const r16L=[mById(537376),mById(537375),mById(537379),mById(537380)].filter(Boolean);
   const r16R=[mById(537377),mById(537378),mById(537381),mById(537382)].filter(Boolean);
@@ -441,8 +441,8 @@ function render(){
     {r16:'M94',matches:[537421,537422]}, // M81+M82
     {r16:'M91',matches:[537423,537424]}, // M76+M78
     {r16:'M92',matches:[537425,537426]}, // M79+M80
-    {r16:'M95',matches:[537428,537430]}, // M86+M88
-    {r16:'M96',matches:[537429,537427]}, // M85+M87
+    {r16:'M95',matches:[537427,537428]}, // M86+M88
+    {r16:'M96',matches:[537429,537430]}, // M85+M87
   ];
   const r32El=document.getElementById('mr32');
   if(r32El){
