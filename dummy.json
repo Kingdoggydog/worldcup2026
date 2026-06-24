@@ -57,24 +57,24 @@
      "score":{"winner":"HOME_TEAM","duration":"REGULAR","fullTime":{"home":3,"away":0}}},
 
     {"id":537430,"utcDate":"2026-07-04T01:30:00Z","status":"FINISHED","stage":"LAST_32","group":null,
-     "homeTeam":{"name":"South Korea","shortName":"South Korea"},"awayTeam":{"name":"Switzerland","shortName":"Switzerland"},
-     "score":{"winner":"AWAY_TEAM","duration":"REGULAR","fullTime":{"home":0,"away":1}}},
+     "homeTeam":{"name":"Switzerland","shortName":"Switzerland"},"awayTeam":{"name":"Czechia","shortName":"Czechia"},
+     "score":{"winner":"HOME_TEAM","duration":"REGULAR","fullTime":{"home":2,"away":0}}},
 
     {"id":537428,"utcDate":"2026-07-03T18:00:00Z","status":"FINISHED","stage":"LAST_32","group":null,
      "homeTeam":{"name":"Japan","shortName":"Japan"},"awayTeam":{"name":"Scotland","shortName":"Scotland"},
      "score":{"winner":"HOME_TEAM","duration":"REGULAR","fullTime":{"home":2,"away":1}}},
 
     {"id":537375,"utcDate":"2026-07-04T21:00:00Z","status":"FINISHED","stage":"LAST_16","group":null,
-     "homeTeam":{"name":"South Korea","shortName":"South Korea"},"awayTeam":{"name":"Germany","shortName":"Germany"},
-     "score":{"winner":"AWAY_TEAM","duration":"REGULAR","fullTime":{"home":0,"away":2}}},
+     "homeTeam":{"name":"Germany","shortName":"Germany"},"awayTeam":{"name":"France","shortName":"France"},
+     "score":{"winner":"HOME_TEAM","duration":"REGULAR","fullTime":{"home":2,"away":1}}},
 
     {"id":537376,"utcDate":"2026-07-04T17:00:00Z","status":"FINISHED","stage":"LAST_16","group":null,
-     "homeTeam":{"name":"France","shortName":"France"},"awayTeam":{"name":"Brazil","shortName":"Brazil"},
-     "score":{"winner":"HOME_TEAM","duration":"REGULAR","fullTime":{"home":1,"away":0}}},
+     "homeTeam":{"name":"South Korea","shortName":"South Korea"},"awayTeam":{"name":"Morocco","shortName":"Morocco"},
+     "score":{"winner":"AWAY_TEAM","duration":"REGULAR","fullTime":{"home":0,"away":1}}},
 
     {"id":537377,"utcDate":"2026-07-05T20:00:00Z","status":"FINISHED","stage":"LAST_16","group":null,
-     "homeTeam":{"name":"Morocco","shortName":"Morocco"},"awayTeam":{"name":"Japan","shortName":"Japan"},
-     "score":{"winner":"HOME_TEAM","duration":"REGULAR","fullTime":{"home":2,"away":1}}},
+     "homeTeam":{"name":"Brazil","shortName":"Brazil"},"awayTeam":{"name":"Japan","shortName":"Japan"},
+     "score":{"winner":"HOME_TEAM","duration":"REGULAR","fullTime":{"home":2,"away":0}}},
 
     {"id":537378,"utcDate":"2026-07-06T00:00:00Z","status":"FINISHED","stage":"LAST_16","group":null,
      "homeTeam":{"name":"Mexico","shortName":"Mexico"},"awayTeam":{"name":"England","shortName":"England"},
@@ -97,15 +97,15 @@
      "score":{"winner":"AWAY_TEAM","duration":"EXTRA_TIME","fullTime":{"home":1,"away":2}}},
 
     {"id":537383,"utcDate":"2026-07-09T20:00:00Z","status":"FINISHED","stage":"QUARTER_FINALS","group":null,
-     "homeTeam":{"name":"Germany","shortName":"Germany"},"awayTeam":{"name":"France","shortName":"France"},
-     "score":{"winner":"HOME_TEAM","duration":"REGULAR","fullTime":{"home":2,"away":1}}},
+     "homeTeam":{"name":"Germany","shortName":"Germany"},"awayTeam":{"name":"Morocco","shortName":"Morocco"},
+     "score":{"winner":"HOME_TEAM","duration":"REGULAR","fullTime":{"home":2,"away":0}}},
 
     {"id":537384,"utcDate":"2026-07-10T19:00:00Z","status":"FINISHED","stage":"QUARTER_FINALS","group":null,
      "homeTeam":{"name":"Spain","shortName":"Spain"},"awayTeam":{"name":"USA","shortName":"USA"},
      "score":{"winner":"AWAY_TEAM","duration":"EXTRA_TIME","fullTime":{"home":1,"away":2}}},
 
     {"id":537385,"utcDate":"2026-07-11T21:00:00Z","status":"FINISHED","stage":"QUARTER_FINALS","group":null,
-     "homeTeam":{"name":"Morocco","shortName":"Morocco"},"awayTeam":{"name":"England","shortName":"England"},
+     "homeTeam":{"name":"Brazil","shortName":"Brazil"},"awayTeam":{"name":"England","shortName":"England"},
      "score":{"winner":"AWAY_TEAM","duration":"REGULAR","fullTime":{"home":0,"away":1}}},
 
     {"id":537386,"utcDate":"2026-07-12T01:00:00Z","status":"FINISHED","stage":"QUARTER_FINALS","group":null,
