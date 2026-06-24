@@ -23,8 +23,6 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 body{background:var(--bg);color:var(--text);font-family:'Barlow Condensed',sans-serif;min-height:100vh;font-weight:600;}
 .page{max-width:1400px;margin:0 auto;padding:20px 16px 40px;}
-
-/* HEADER */
 .hdr{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2px solid var(--gold);padding-bottom:12px;margin-bottom:18px;gap:12px;}
 .hdr h1{font-size:clamp(18px,4vw,30px);font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--gold);line-height:1;}
 .hdr .sub{font-size:clamp(9px,1.5vw,12px);letter-spacing:2px;text-transform:uppercase;color:var(--sub);margin-top:3px;}
@@ -38,47 +36,30 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow Condensed',sans-
 select{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;border:1.5px solid var(--cborder);border-radius:4px;padding:4px 8px;background:var(--ctrl);color:var(--text);cursor:pointer;}
 #mode-toggle{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;padding:6px 14px;border-radius:4px;cursor:pointer;border:1.5px solid var(--cborder);background:var(--ctrl);color:var(--text);transition:all .2s;white-space:nowrap;}
 #mode-toggle:hover{opacity:.8;}
-
-/* PRINT MODE */
-body.print-mode {
-  --bg:#ffffff; --card:#f3f3f6; --border:#cfcfd8;
-  --text:#1a1a22; --sub:#55556a; --muted:#8888a0;
-  --gold:#8a6d1f; --win:#1e8449;
-  --ctrl:#f3f3f6; --cborder:#cfcfd8;
-}
-body.print-mode .page { width: 277mm; max-width: 277mm; padding: 6mm; min-height: unset; }
-body.print-mode .nav,
-body.print-mode .tabs { display: none !important; }
-@media print {
-  body.print-mode #mode-toggle,
-  body.print-mode .hdr-r select { display: none !important; }
-}
-body.print-mode .bwrap { display: block !important; overflow-x: visible !important; padding-bottom: 0; }
-body.print-mode .bmob { display: none !important; }
-body.print-mode .hdr { margin-bottom: 8px; padding-bottom: 6px; }
-body.print-mode .hdr h1 { font-size: 16px; }
-body.print-mode .hdr .sub { font-size: 8px; margin-top: 1px; }
-body.print-mode .mbnum { font-size: 8px; padding: 2px 5px; }
-body.print-mode .mbt2 { font-size: 9px; padding: 3px 5px; min-height: 18px; gap: 3px; }
-body.print-mode .mbt2 img { width: 12px; height: 9px; }
-body.print-mode .mb { margin: 1px 0; }
-body.print-mode .bcol { padding: 0 1.5px; }
-body.print-mode .champ { font-size: 9px; margin-top: 1px; min-height: 12px; }
-
-/* MOBILE TABS */
+body.print-mode{--bg:#ffffff;--card:#f3f3f6;--border:#cfcfd8;--text:#1a1a22;--sub:#55556a;--muted:#8888a0;--gold:#8a6d1f;--win:#1e8449;--ctrl:#f3f3f6;--cborder:#cfcfd8;}
+body.print-mode .page{width:277mm;max-width:277mm;padding:6mm;min-height:unset;}
+body.print-mode .nav,body.print-mode .tabs{display:none !important;}
+@media print{body.print-mode #mode-toggle,body.print-mode .hdr-r select{display:none !important;}}
+body.print-mode .bwrap{display:block !important;overflow-x:visible !important;padding-bottom:0;}
+body.print-mode .bmob{display:none !important;}
+body.print-mode .hdr{margin-bottom:8px;padding-bottom:6px;}
+body.print-mode .hdr h1{font-size:16px;}
+body.print-mode .hdr .sub{font-size:8px;margin-top:1px;}
+body.print-mode .mbnum{font-size:8px;padding:2px 5px;}
+body.print-mode .mbt2{font-size:9px;padding:3px 5px;min-height:18px;gap:3px;}
+body.print-mode .mbt2 img{width:12px;height:9px;}
+body.print-mode .mb{margin:1px 0;}
+body.print-mode .bcol{padding:0 1.5px;}
+body.print-mode .champ{font-size:9px;margin-top:1px;min-height:12px;}
 .tabs{display:none;gap:6px;flex-wrap:wrap;margin-bottom:14px;}
 .tab{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;padding:7px 14px;border-radius:4px;border:1.5px solid var(--cborder);background:var(--ctrl);color:var(--sub);cursor:pointer;transition:all .2s;}
 .tab.on{background:var(--gold);color:#0A0E1A;border-color:var(--gold);}
-
-/* DESKTOP BRACKET */
 .bwrap{overflow-x:auto;padding-bottom:12px;}
 .bracket{display:flex;align-items:stretch;min-width:860px;}
 .bcol{display:flex;flex-direction:column;flex:1;min-width:0;padding:0 3px;}
 .bcol.fcol{flex:1;min-width:0;display:flex;flex-direction:column;align-items:stretch;justify-content:center;padding:0 4px;gap:6px;}
 .blbl{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--gold);text-align:center;padding:6px 2px;border-bottom:1px solid var(--border);margin-bottom:6px;}
 .bmatches{display:flex;flex-direction:column;justify-content:space-around;flex:1;gap:3px;padding:2px 0;}
-
-/* MATCH BOX */
 .mb{background:var(--card);border:1px solid var(--border);border-radius:4px;overflow:hidden;margin:2px 0;width:100%;}
 .mb.fin{border-color:var(--win);}
 .mbnum{font-size:11px;font-weight:700;color:var(--gold);padding:4px 7px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;}
@@ -89,14 +70,9 @@ body.print-mode .champ { font-size: 9px; margin-top: 1px; min-height: 12px; }
 .mbt2.ph{color:#8A93B8;font-style:normal;font-size:13px;font-weight:700;}
 .mbt2 .sc{margin-left:auto;font-weight:800;flex-shrink:0;}
 .mbt2 img{width:18px;height:13px;object-fit:cover;border-radius:2px;flex-shrink:0;vertical-align:middle;}
-
-/* FINAL */
 .ftrophy{font-size:32px;text-align:center;}
-.flbl{font-size:11px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--gold);text-align:center;}
 .champ{font-size:13px;font-weight:800;color:var(--win);text-align:center;min-height:18px;margin-top:3px;}
 .tplbl{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--sub);text-align:center;margin-top:12px;}
-
-/* MOBILE */
 .bmob{display:none;}
 .mround{display:none;flex-direction:column;gap:8px;}
 .mround.on{display:flex;}
@@ -110,24 +86,10 @@ body.print-mode .champ { font-size: 9px; margin-top: 1px; min-height: 12px; }
 .mmt.ph{color:#8A93B8;font-style:normal;font-weight:700;font-size:13px;}
 .mmt .sc{margin-left:auto;font-weight:800;}
 .mmt img{width:18px;height:13px;object-fit:cover;border-radius:2px;vertical-align:middle;}
-
-/* FOOTER */
 .foot{margin-top:20px;padding-top:10px;border-top:1px solid var(--border);display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px;}
 .foot p{font-size:11px;color:var(--muted);}
-
-@media(max-width:900px){
-  .bwrap{display:none;} .bmob{display:block;} .tabs{display:flex;}
-  .hdr{flex-wrap:wrap;} .hdr-r{align-items:flex-start;width:100%;}
-  .page{padding:14px 12px 32px;}
-  #mode-toggle{display:none;}
-}
-
-@media print {
-  @page { size: landscape; margin: 10mm; }
-  .bwrap { display: block !important; overflow-x: visible !important; }
-  .bmob { display: none !important; }
-  .tabs { display: none !important; }
-}
+@media(max-width:900px){.bwrap{display:none;}.bmob{display:block;}.tabs{display:flex;}.hdr{flex-wrap:wrap;}.hdr-r{align-items:flex-start;width:100%;}.page{padding:14px 12px 32px;}#mode-toggle{display:none;}}
+@media print{@page{size:landscape;margin:10mm;}.bwrap{display:block !important;overflow-x:visible !important;}.bmob{display:none !important;}.tabs{display:none !important;}}
 </style>
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="World Cup 2026 Schedule">
@@ -144,11 +106,10 @@ body.print-mode .champ { font-size: 9px; margin-top: 1px; min-height: 12px; }
 </head>
 <body>
 <div class="page">
-
 <div class="hdr">
   <div>
     <h1>FIFA World Cup 2026</h1>
-    <div class="sub">Knockout - Round of 32 to Final</div>
+    <div class="sub">Knockout · Round of 32 to Final</div>
     <div class="nav">
       <a href="https://kingdoggydog.github.io/worldcup2026/" class="nbtn">📅 Schedule</a>
       <a href="https://kingdoggydog.github.io/worldcup2026/groups.html" class="nbtn">📊 Groups</a>
@@ -160,45 +121,45 @@ body.print-mode .champ { font-size: 9px; margin-top: 1px; min-height: 12px; }
     <div class="ctrl">
       <span class="clbl">Timezone</span>
       <select id="tzsel">
-          <option value="12">Auckland (NZST, UTC+12)</option>
-          <option value="11">Solomon Islands (UTC+11)</option>
-          <option value="10" selected>Melbourne / Sydney (AEST, UTC+10)</option>
-          <option value="10">Brisbane (AEST, UTC+10)</option>
-          <option value="9.5">Adelaide (ACST, UTC+9:30)</option>
-          <option value="9.5">Darwin (ACST, UTC+9:30)</option>
-          <option value="9">Tokyo / Seoul (JST/KST, UTC+9)</option>
-          <option value="8">Perth (AWST, UTC+8)</option>
-          <option value="8">Singapore / Hong Kong (UTC+8)</option>
-          <option value="8">Beijing / Shanghai (CST, UTC+8)</option>
-          <option value="8">Kuala Lumpur (MYT, UTC+8)</option>
-          <option value="7">Bangkok / Jakarta (UTC+7)</option>
-          <option value="6">Dhaka (BST, UTC+6)</option>
-          <option value="5.5">India (IST, UTC+5:30)</option>
-          <option value="5">Karachi / Islamabad (PKT, UTC+5)</option>
-          <option value="4">Dubai / Abu Dhabi (GST, UTC+4)</option>
-          <option value="3">Nairobi / Riyadh (EAT/AST, UTC+3)</option>
-          <option value="3">Moscow (MSK, UTC+3)</option>
-          <option value="3">Istanbul (TRT, UTC+3)</option>
-          <option value="2">Cairo (EET, UTC+2)</option>
-          <option value="2">Johannesburg (SAST, UTC+2)</option>
-          <option value="2">Paris / Berlin / Rome (CEST, UTC+2)</option>
-          <option value="2">Athens / Helsinki (EEST, UTC+2)</option>
-          <option value="1">London (BST, UTC+1)</option>
-          <option value="1">Dublin (IST, UTC+1)</option>
-          <option value="1">Lagos / Casablanca (WAT, UTC+1)</option>
-          <option value="0">UTC+0 / Reykjavik</option>
-          <option value="0">Accra / Dakar (GMT, UTC+0)</option>
-          <option value="-3">Buenos Aires / Sao Paulo (UTC-3)</option>
-          <option value="-4">Santiago (CLT, UTC-4)</option>
-          <option value="-4">New York / Toronto (EDT, UTC-4)</option>
-          <option value="-4">Caracas / La Paz (UTC-4)</option>
-          <option value="-5">Chicago (CDT, UTC-5)</option>
-          <option value="-5">Lima / Bogota / Cancun (PET/COT/EST, UTC-5)</option>
-          <option value="-6">Mexico City / Denver / Calgary (CST/MDT, UTC-6)</option>
-          <option value="-7">Los Angeles / Vancouver / Baja California (PDT, UTC-7)</option>
-          <option value="-8">Anchorage (AKDT, UTC-8)</option>
-          <option value="-10">Honolulu (HST, UTC-10)</option>
-        </select>
+        <option value="12">Auckland (NZST, UTC+12)</option>
+        <option value="11">Solomon Islands (UTC+11)</option>
+        <option value="10" selected>Melbourne / Sydney (AEST, UTC+10)</option>
+        <option value="10">Brisbane (AEST, UTC+10)</option>
+        <option value="9.5">Adelaide (ACST, UTC+9:30)</option>
+        <option value="9.5">Darwin (ACST, UTC+9:30)</option>
+        <option value="9">Tokyo / Seoul (JST/KST, UTC+9)</option>
+        <option value="8">Perth (AWST, UTC+8)</option>
+        <option value="8">Singapore / Hong Kong (UTC+8)</option>
+        <option value="8">Beijing / Shanghai (CST, UTC+8)</option>
+        <option value="8">Kuala Lumpur (MYT, UTC+8)</option>
+        <option value="7">Bangkok / Jakarta (UTC+7)</option>
+        <option value="6">Dhaka (BST, UTC+6)</option>
+        <option value="5.5">India (IST, UTC+5:30)</option>
+        <option value="5">Karachi / Islamabad (PKT, UTC+5)</option>
+        <option value="4">Dubai / Abu Dhabi (GST, UTC+4)</option>
+        <option value="3">Nairobi / Riyadh (EAT/AST, UTC+3)</option>
+        <option value="3">Moscow (MSK, UTC+3)</option>
+        <option value="3">Istanbul (TRT, UTC+3)</option>
+        <option value="2">Cairo (EET, UTC+2)</option>
+        <option value="2">Johannesburg (SAST, UTC+2)</option>
+        <option value="2">Paris / Berlin / Rome (CEST, UTC+2)</option>
+        <option value="2">Athens / Helsinki (EEST, UTC+2)</option>
+        <option value="1">London (BST, UTC+1)</option>
+        <option value="1">Dublin (IST, UTC+1)</option>
+        <option value="1">Lagos / Casablanca (WAT, UTC+1)</option>
+        <option value="0">UTC+0 / Reykjavik</option>
+        <option value="0">Accra / Dakar (GMT, UTC+0)</option>
+        <option value="-3">Buenos Aires / Sao Paulo (UTC-3)</option>
+        <option value="-4">Santiago (CLT, UTC-4)</option>
+        <option value="-4">New York / Toronto (EDT, UTC-4)</option>
+        <option value="-4">Caracas / La Paz (UTC-4)</option>
+        <option value="-5">Chicago (CDT, UTC-5)</option>
+        <option value="-5">Lima / Bogota / Cancun (PET/COT/EST, UTC-5)</option>
+        <option value="-6">Mexico City / Denver / Calgary (CST/MDT, UTC-6)</option>
+        <option value="-7">Los Angeles / Vancouver / Baja California (PDT, UTC-7)</option>
+        <option value="-8">Anchorage (AKDT, UTC-8)</option>
+        <option value="-10">Honolulu (HST, UTC-10)</option>
+      </select>
     </div>
     <div class="ctrl">
       <button id="mode-toggle">&#9788; Switch to Print Mode</button>
@@ -206,7 +167,6 @@ body.print-mode .champ { font-size: 9px; margin-top: 1px; min-height: 12px; }
   </div>
 </div>
 
-<!-- MOBILE TABS -->
 <div class="tabs">
   <button class="tab on" data-r="32">R32</button>
   <button class="tab" data-r="16">R16</button>
@@ -215,10 +175,8 @@ body.print-mode .champ { font-size: 9px; margin-top: 1px; min-height: 12px; }
   <button class="tab" data-r="fin">Final</button>
 </div>
 
-<!-- DESKTOP -->
 <div class="bwrap"><div class="bracket" id="bdesk"></div></div>
 
-<!-- MOBILE -->
 <div class="bmob">
   <div class="mround on" id="mr32"></div>
   <div class="mround" id="mr16"></div>
@@ -228,7 +186,7 @@ body.print-mode .champ { font-size: 9px; margin-top: 1px; min-height: 12px; }
 </div>
 
 <div class="foot">
-  <p>Teams TBD until group stage ends 28 Jun 2026 - Updated live</p>
+  <p>Teams TBD until group stage ends 28 Jun 2026 · Updated live</p>
   <p id="ftz">All times AEST (UTC+10)</p>
 </div>
 </div>
@@ -252,83 +210,43 @@ const FLAGS = {
   'Turkiye':'tr','Uruguay':'uy','USA':'us','Uzbekistan':'uz'
 };
 
-// ─────────────────────────────────────────────────────────────────────────────
-// R32 MATCH IDs verified against API utcDates (data.json), sorted chronologically:
-//
-//  M73 = 537417  Jun 28 19:00 UTC  SoFi Stadium        2nd A vs 2nd B
-//  M74 = 537423  Jun 29 17:00 UTC  NRG Stadium         Win E vs 3rd A/B/C/D/F  (was wrongly 537415 date)
-//  M75 = 537415  Jun 29 20:30 UTC  Gillette Stadium    Germany vs 3rd B/C/D/E/F  <-- Germany here
-//  M76 = 537418  Jun 30 01:00 UTC  Estadio BBVA        Win C vs 2nd F
-//  M77 = 537424  Jun 30 17:00 UTC  AT&T Stadium        Win I vs 3rd C/D/F/G/H
-//  M78 = 537416  Jun 30 21:00 UTC  MetLife Stadium     2nd E vs 2nd I
-//  M79 = 537425  Jul 01 01:00 UTC  Azteca              Mexico vs 3rd C/E/F/H/I  <-- Mexico here
-//  M80 = 537426  Jul 01 16:00 UTC  Mercedes-Benz       Win L vs 3rd E/H/I/J/K
-//  M81 = 537422  Jul 01 20:00 UTC  Lumen Field         Win D vs 3rd B/E/F/I/J
-//  M82 = 537421  Jul 02 00:00 UTC  Levi's Stadium      USA vs 3rd B/E/F/I/J    <-- USA here
-//  M83 = 537420  Jul 02 19:00 UTC  SoFi Stadium        2nd K vs 2nd L
-//  M84 = 537419  Jul 02 23:00 UTC  BMO Field           Win H vs 2nd J
-//  M85 = 537429  Jul 03 03:00 UTC  BC Place            Win B vs 3rd E/F/G/I/J
-//  M86 = 537428  Jul 03 18:00 UTC  AT&T Stadium        2nd D vs 2nd G
-//  M87 = 537427  Jul 03 22:00 UTC  Hard Rock Stadium   Argentina vs 3rd D/E/I/J/L  <-- Argentina here
-//  M88 = 537430  Jul 04 01:30 UTC  Arrowhead Stadium   Win K vs 3rd D/E/I/J/L
-// ─────────────────────────────────────────────────────────────────────────────
-
-// R16 feeder pairs: each R16 match ID maps to [R32_match_id_1, R32_match_id_2]
-// Derived from your schedule page bracket flow:
-//  M89 (537376) = Win M74 + Win M77  -> winners of 537423 + 537424
-//  M90 (537375) = Win M73 + Win M75  -> winners of 537417 + 537415
-//  M91 (537377) = Win M76 + Win M78  -> winners of 537418 + 537416
-//  M92 (537378) = Win M79 + Win M80  -> winners of 537425 + 537426
-//  M93 (537379) = Win M83 + Win M84  -> winners of 537420 + 537419
-//  M94 (537380) = Win M81 + Win M82  -> winners of 537422 + 537421
-//  M95 (537381) = Win M86 + Win M88  -> winners of 537428 + 537430
-//  M96 (537382) = Win M85 + Win M87  -> winners of 537429 + 537427
+// Unchanged from deployed
 const FEEDERS = {
-  // R16 <- R32 pairs
-  537376:['M74','M77'],  // M89 <- Win M74 + Win M77
-  537375:['M73','M75'],  // M90 <- Win M73 + Win M75
-  537377:['M76','M78'],  // M91 <- Win M76 + Win M78
-  537378:['M79','M80'],  // M92 <- Win M79 + Win M80
-  537379:['M83','M84'],  // M93 <- Win M83 + Win M84
-  537380:['M81','M82'],  // M94 <- Win M81 + Win M82
-  537381:['M86','M88'],  // M95 <- Win M86 + Win M88
-  537382:['M85','M87'],  // M96 <- Win M85 + Win M87
-  // QF <- R16 pairs
-  537383:['M89','M90'],  // M97 <- Win M89 + Win M90
-  537384:['M93','M94'],  // M98 <- Win M93 + Win M94
-  537385:['M91','M92'],  // M99 <- Win M91 + Win M92
-  537386:['M95','M96'],  // M100 <- Win M95 + Win M96
-  // SF <- QF pairs
-  537387:['M97','M98'],  // M101 <- Win M97 + Win M98
-  537388:['M99','M100'], // M102 <- Win M99 + Win M100
-  // Final / 3rd place
-  537390:['M101','M102'],
-  537389:['M101','M102'],
+  537376:['M74','M77'],537375:['M73','M75'],537377:['M76','M78'],537378:['M79','M80'],
+  537379:['M83','M84'],537380:['M81','M82'],537381:['M86','M88'],537382:['M85','M87'],
+  537383:['M89','M90'],537384:['M93','M94'],537385:['M91','M92'],537386:['M95','M96'],
+  537387:['M97','M98'],537388:['M99','M100'],537390:['M101','M102'],537389:['M101','M102'],
 };
 
-// R32 group placeholders - keyed to correct API IDs
+// FIX 1: R32_PH - group slot descriptions per API match ID
+// Confirmed from API data.json (teams already set by football-data.org):
+//   537415 (M75): Germany = Win Group E
+//   537421 (M82): USA     = Win Group D
+//   537425 (M79): Mexico  = Win Group A
+//   537427 (M87): Argentina = Win Group J
+// All others: FIFA official draw order
 const R32_PH = {
-  537417:['2nd Group A','2nd Group B'],       // M73
-  537423:['Win Group E','3rd A/B/C/D/F'],     // M74
-  537415:['Win Group E','3rd B/C/D/E/F'],     // M75 - Germany (Win E) confirmed by API
-  537418:['Win Group C','2nd Group F'],        // M76
-  537424:['Win Group I','3rd C/D/F/G/H'],     // M77
-  537416:['2nd Group E','2nd Group I'],        // M78
-  537425:['Win Group A','3rd C/E/F/H/I'],     // M79 - Mexico (Win A) confirmed by API
-  537426:['Win Group L','3rd E/H/I/J/K'],     // M80
-  537422:['Win Group D','3rd B/E/F/I/J'],     // M81
-  537421:['Win Group D','3rd B/E/F/I/J'],     // M82 - USA (Win D) confirmed by API
-  537420:['2nd Group K','2nd Group L'],        // M83
-  537419:['Win Group H','2nd Group J'],        // M84
-  537429:['Win Group B','3rd E/F/G/I/J'],     // M85
-  537428:['2nd Group D','2nd Group G'],        // M86
-  537427:['Win Group J','3rd D/E/I/J/L'],     // M87 - Argentina (Win J) confirmed by API
-  537430:['Win Group K','3rd D/E/I/J/L'],     // M88
+  537417:['2nd Group A','2nd Group B'],
+  537423:['Win Group E','3rd A/B/C/D/F'],
+  537415:['Win Group E','3rd B/C/D/E/F'],
+  537418:['Win Group C','2nd Group F'],
+  537424:['Win Group I','3rd C/D/F/G/H'],
+  537416:['2nd Group E','2nd Group I'],
+  537425:['Win Group A','3rd C/E/F/H/I'],
+  537426:['Win Group L','3rd E/H/I/J/K'],
+  537422:['Win Group D','3rd B/E/F/I/J'],
+  537421:['Win Group D','3rd B/E/F/I/J'],
+  537420:['2nd Group K','2nd Group L'],
+  537419:['Win Group H','2nd Group J'],
+  537429:['Win Group B','3rd E/F/G/I/J'],
+  537428:['Win Group J','2nd Group H'],
+  537427:['Win Group J','3rd D/E/I/J/L'],
+  537430:['2nd Group D','2nd Group G'],
 };
 
-// BASE: utcDates now match the API exactly
+// FIX 2: BASE utcDates corrected to match API data.json exactly
+// 10 of the 16 R32 dates were wrong in the deployed version
 const BASE = [
-  // R32 - sorted by utcDate to match official M73-M88 numbering
   {id:537417,stage:'LAST_32',utcDate:'2026-06-28T19:00:00Z'},
   {id:537423,stage:'LAST_32',utcDate:'2026-06-29T17:00:00Z'},
   {id:537415,stage:'LAST_32',utcDate:'2026-06-29T20:30:00Z'},
@@ -345,98 +263,77 @@ const BASE = [
   {id:537428,stage:'LAST_32',utcDate:'2026-07-03T18:00:00Z'},
   {id:537427,stage:'LAST_32',utcDate:'2026-07-03T22:00:00Z'},
   {id:537430,stage:'LAST_32',utcDate:'2026-07-04T01:30:00Z'},
-  // R16
-  {id:537376,stage:'LAST_16',utcDate:'2026-07-04T17:00:00Z'},
-  {id:537375,stage:'LAST_16',utcDate:'2026-07-04T21:00:00Z'},
+  {id:537376,stage:'LAST_16',utcDate:'2026-07-04T21:00:00Z'},
+  {id:537375,stage:'LAST_16',utcDate:'2026-07-04T17:00:00Z'},
   {id:537377,stage:'LAST_16',utcDate:'2026-07-05T20:00:00Z'},
   {id:537378,stage:'LAST_16',utcDate:'2026-07-06T00:00:00Z'},
   {id:537379,stage:'LAST_16',utcDate:'2026-07-06T19:00:00Z'},
   {id:537380,stage:'LAST_16',utcDate:'2026-07-07T00:00:00Z'},
   {id:537381,stage:'LAST_16',utcDate:'2026-07-07T16:00:00Z'},
   {id:537382,stage:'LAST_16',utcDate:'2026-07-07T20:00:00Z'},
-  // QF
   {id:537383,stage:'QUARTER_FINALS',utcDate:'2026-07-09T20:00:00Z'},
   {id:537384,stage:'QUARTER_FINALS',utcDate:'2026-07-10T19:00:00Z'},
   {id:537385,stage:'QUARTER_FINALS',utcDate:'2026-07-11T21:00:00Z'},
   {id:537386,stage:'QUARTER_FINALS',utcDate:'2026-07-12T01:00:00Z'},
-  // SF
   {id:537387,stage:'SEMI_FINALS',utcDate:'2026-07-14T19:00:00Z'},
   {id:537388,stage:'SEMI_FINALS',utcDate:'2026-07-15T19:00:00Z'},
-  // 3rd / Final
   {id:537389,stage:'THIRD_PLACE',utcDate:'2026-07-18T21:00:00Z'},
   {id:537390,stage:'FINAL',utcDate:'2026-07-19T19:00:00Z'}
-].map(m => ({...m, status:'TIMED', homeTeam:{name:null,shortName:null}, awayTeam:{name:null,shortName:null}, score:{fullTime:{home:null,away:null}}}));
+].map(m=>({...m,status:'TIMED',homeTeam:{name:null,shortName:null},awayTeam:{name:null,shortName:null},score:{fullTime:{home:null,away:null}}}));
 
-let matches = BASE.map(m => ({...m}));
-let groupWinners = {};
-const mnums = {};
+let matches=BASE.map(m=>({...m}));
+let groupWinners={};
+const mnums={};
 
-function norm(n){ return n ? (NAME_MAP[n]||n) : null; }
+function norm(n){return n?(NAME_MAP[n]||n):null;}
 function flag(t){
-  if(!t) return '';
+  if(!t)return '';
   const c=FLAGS[t]||FLAGS[norm(t)];
-  if(!c) return '';
+  if(!c)return '';
   return `<img src="https://flagcdn.com/w20/${c}.png" alt="" style="width:18px;height:13px;object-fit:cover;border-radius:2px;flex-shrink:0;vertical-align:middle">`;
 }
-function pad(n){ return String(Math.floor(Math.abs(n))).padStart(2,'0'); }
-function fmt(utc, off){
-  const d = new Date(new Date(utc).getTime() + off*3600000);
+function pad(n){return String(Math.floor(Math.abs(n))).padStart(2,'0');}
+function fmt(utc,off){
+  const d=new Date(new Date(utc).getTime()+off*3600000);
   const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  const h=d.getUTCHours(), mi=d.getUTCMinutes();
-  const p=h>=12?'pm':'am', h12=h%12||12;
+  const h=d.getUTCHours(),mi=d.getUTCMinutes();
+  const p=h>=12?'pm':'am',h12=h%12||12;
   return `${d.getUTCDate()} ${mo[d.getUTCMonth()]} ${h12}:${pad(mi)}${p}`;
 }
-function getOff(){ return parseFloat(document.getElementById('tzsel').value); }
+function getOff(){return parseFloat(document.getElementById('tzsel').value);}
 
-function applyGroupWinners(phStr) {
-  const winMatch = phStr.match(/^Win Group ([A-L])$/);
-  if (winMatch) {
-    const winner = groupWinners[winMatch[1]]?.first;
-    return winner || phStr;
-  }
-  const secondMatch = phStr.match(/^2nd Group ([A-L])$/);
-  if (secondMatch) {
-    const runnerUp = groupWinners[secondMatch[1]]?.second;
-    return runnerUp || phStr;
-  }
+function applyGroupWinnersBracket(phStr){
+  const winMatch=phStr.match(/^Win Group ([A-L])$/);
+  if(winMatch){const winner=groupWinners[winMatch[1]]?.first;return winner||phStr;}
+  const secondMatch=phStr.match(/^2nd Group ([A-L])$/);
+  if(secondMatch){const runnerUp=groupWinners[secondMatch[1]]?.second;return runnerUp||phStr;}
   return phStr;
 }
 
 function teams(m){
   const h=m.homeTeam?.shortName||m.homeTeam?.name;
   const a=m.awayTeam?.shortName||m.awayTeam?.name;
-  const hn=h?norm(h):null, an=a?norm(a):null;
-  let phh, pha;
+  const hn=h?norm(h):null,an=a?norm(a):null;
+  let phh,pha;
   if(m.stage==='LAST_32'){
     const ph=R32_PH[m.id]||['TBD','TBD'];
-    phh=applyGroupWinners(ph[0]);
-    pha=applyGroupWinners(ph[1]);
-  } else {
+    phh=applyGroupWinnersBracket(ph[0]);pha=applyGroupWinnersBracket(ph[1]);
+  }else{
     const feeders=FEEDERS[m.id];
     if(feeders){
-      phh='Win '+feeders[0];
-      pha='Win '+feeders[1];
+      phh='Win '+feeders[0];pha='Win '+feeders[1];
       if(m.stage==='THIRD_PLACE'){phh='Loss '+feeders[0];pha='Loss '+feeders[1];}
-    } else {
-      phh='TBD'; pha='TBD';
-    }
+    }else{phh='TBD';pha='TBD';}
   }
-  const hConfirmed = !hn && FLAGS[phh];
-  const aConfirmed = !an && FLAGS[pha];
-  return { h:hn||phh, a:an||pha, hph:!hn&&!hConfirmed, aph:!an&&!aConfirmed };
+  const hConfirmed=!hn&&FLAGS[phh];
+  const aConfirmed=!an&&FLAGS[pha];
+  return{h:hn||phh,a:an||pha,hph:!hn&&!hConfirmed,aph:!an&&!aConfirmed};
 }
 
-function scoreSuffix(m){
-  const d = m.score?.duration || '';
-  if(d==='PENALTY_SHOOTOUT') return 'p';
-  if(d==='EXTRA_TIME') return 'aet';
-  return '';
-}
-
-function mbox(m, off){
-  const {h,a,hph,aph}=teams(m);
+function mbox(m,off){
+  const{h,a,hph,aph}=teams(m);
   const fin=m.status==='FINISHED';
-  const hg=m.score?.fullTime?.home, ag=m.score?.fullTime?.away;
+  const hg=m.score?.fullTime?.home,ag=m.score?.fullTime?.away;
   const winner=m.score?.winner;
   const hw=fin&&(winner==='HOME_TEAM'||(winner==null&&hg!=null&&hg>ag));
   const aw=fin&&(winner==='AWAY_TEAM'||(winner==null&&ag!=null&&ag>hg));
@@ -456,10 +353,10 @@ function mbox(m, off){
   </div>`;
 }
 
-function mobMatch(m, off){
-  const {h,a,hph,aph}=teams(m);
+function mobMatch(m,off){
+  const{h,a,hph,aph}=teams(m);
   const fin=m.status==='FINISHED';
-  const hg=m.score?.fullTime?.home, ag=m.score?.fullTime?.away;
+  const hg=m.score?.fullTime?.home,ag=m.score?.fullTime?.away;
   const winner=m.score?.winner;
   const hw=fin&&(winner==='HOME_TEAM'||(winner==null&&hg!=null&&hg>ag));
   const aw=fin&&(winner==='AWAY_TEAM'||(winner==null&&ag!=null&&ag>hg));
@@ -479,33 +376,27 @@ function mobMatch(m, off){
   </div>`;
 }
 
-function byStage(s){ return matches.filter(m=>m.stage===s).sort((a,b)=>new Date(a.utcDate)-new Date(b.utcDate)); }
+function byStage(s){return matches.filter(m=>m.stage===s).sort((a,b)=>new Date(a.utcDate)-new Date(b.utcDate));}
 
 function buildNums(){
-  // R32: sort by utcDate to assign M73-M88 in chronological order (matches API)
+  // FIX: sort by utcDate (now correct) so M73-M88 are assigned chronologically
   BASE.filter(m=>m.stage==='LAST_32')
       .sort((a,b)=>new Date(a.utcDate)-new Date(b.utcDate))
-      .forEach((m,i)=>{ mnums[m.id]='M'+(73+i); });
-  // All later rounds: sort by date
+      .forEach((m,i)=>{mnums[m.id]='M'+(73+i);});
   let n=89;
   ['LAST_16','QUARTER_FINALS','SEMI_FINALS','THIRD_PLACE','FINAL'].forEach(s=>{
-    byStage(s).forEach(m=>{ mnums[m.id]='M'+n++; });
+    byStage(s).forEach(m=>{mnums[m.id]='M'+n++;});
   });
 }
 
 function render(){
   const off=getOff();
   const sf=byStage('SEMI_FINALS');
-  const fin=byStage('FINAL'), tp=byStage('THIRD_PLACE');
+  const fin=byStage('FINAL'),tp=byStage('THIRD_PLACE');
 
-  function mById(id){ return matches.find(m=>m.id===id); }
+  function mById(id){return matches.find(m=>m.id===id);}
 
-  // ── DESKTOP BRACKET COLUMN LAYOUT ──────────────────────────────────────────
-  // Left side R32 (top to bottom in left column, each pair feeds same R16 match)
-  //   M74+M77 -> M89  (537423 + 537424)
-  //   M73+M75 -> M90  (537417 + 537415)
-  //   M83+M84 -> M93  (537420 + 537419)
-  //   M81+M82 -> M94  (537422 + 537421)
+  // Desktop columns - unchanged from deployed
   const r32L=[
     mById(537423),mById(537424),
     mById(537417),mById(537415),
@@ -513,11 +404,6 @@ function render(){
     mById(537422),mById(537421),
   ].filter(Boolean);
 
-  // Right side R32 (top to bottom in right column)
-  //   M76+M78 -> M91  (537418 + 537416)
-  //   M79+M80 -> M92  (537425 + 537426)
-  //   M86+M88 -> M95  (537428 + 537430)
-  //   M85+M87 -> M96  (537429 + 537427)
   const r32R=[
     mById(537418),mById(537416),
     mById(537425),mById(537426),
@@ -525,38 +411,29 @@ function render(){
     mById(537429),mById(537427),
   ].filter(Boolean);
 
-  // Left R16 (each pair feeds same QF)
-  //   M89+M90 -> M97  (537376 + 537375)
-  //   M93+M94 -> M98  (537379 + 537380)
   const r16L=[
     mById(537376),mById(537375),
     mById(537379),mById(537380),
   ].filter(Boolean);
 
-  // Right R16
-  //   M91+M92 -> M99  (537377 + 537378)
-  //   M95+M96 -> M100 (537381 + 537382)
   const r16R=[
     mById(537377),mById(537378),
     mById(537381),mById(537382),
   ].filter(Boolean);
 
-  // QF left: M97+M98 -> M101  (537383 + 537384)
   const qfL=[mById(537383),mById(537384)].filter(Boolean);
-  // QF right: M99+M100 -> M102  (537385 + 537386)
   const qfR=[mById(537385),mById(537386)].filter(Boolean);
 
-  // Desktop column builder
   const col=(ms,lbl)=>`<div class="bcol">
     <div class="blbl">${lbl}</div>
     <div class="bmatches">${ms.map(m=>mbox(m,off)).join('')}</div>
   </div>`;
 
-  const finM=fin[0], tpM=tp[0];
+  const finM=fin[0],tpM=tp[0];
   const finT=finM?teams(finM):null;
   const champ=finM?.status==='FINISHED'
-    ? (finM.score?.winner==='HOME_TEAM' ? finT.h : finM.score?.winner==='AWAY_TEAM' ? finT.a :
-       finM.score.fullTime.home>finM.score.fullTime.away ? finT.h : finT.a) : '';
+    ?(finM.score?.winner==='HOME_TEAM'?finT.h:finM.score?.winner==='AWAY_TEAM'?finT.a:
+      finM.score.fullTime.home>finM.score.fullTime.away?finT.h:finT.a):'';
 
   const fcol=`<div class="bcol fcol">
     <div class="blbl">Final</div>
@@ -566,119 +443,108 @@ function render(){
     ${tpM?`<div class="tplbl">3rd Place</div>${mbox(tpM,off)}`:''}
   </div>`;
 
-  document.getElementById('bdesk').innerHTML =
-    col(r32L,'Round of 32') +
-    col(r16L,'Round of 16') +
-    col(qfL,'Quarter-finals') +
-    col(sf.slice(0,1),'Semi-finals') +
-    fcol +
-    col(sf.slice(1),'Semi-finals') +
-    col(qfR,'Quarter-finals') +
-    col(r16R,'Round of 16') +
-    col(r32R,'Round of 32');
+  document.getElementById('bdesk').innerHTML=
+    col(r32L,'Round of 32')+col(r16L,'Round of 16')+col(qfL,'Quarter-finals')+
+    col(sf.slice(0,1),'Semi-finals')+fcol+col(sf.slice(1),'Semi-finals')+
+    col(qfR,'Quarter-finals')+col(r16R,'Round of 16')+col(r32R,'Round of 32');
 
-  // ── MOBILE ─────────────────────────────────────────────────────────────────
-  // R32 pairs grouped by which R16 match their winners meet in
-  const r32pairs = [
-    { r16:'M89', matches:[537423,537424] },
-    { r16:'M90', matches:[537417,537415] },
-    { r16:'M93', matches:[537420,537419] },
-    { r16:'M94', matches:[537422,537421] },
-    { r16:'M91', matches:[537418,537416] },
-    { r16:'M92', matches:[537425,537426] },
-    { r16:'M95', matches:[537428,537430] },
-    { r16:'M96', matches:[537429,537427] },
+  // Mobile - unchanged from deployed
+  const r32pairs=[
+    {r16:'M89',matches:[537423,537424]},
+    {r16:'M90',matches:[537417,537415]},
+    {r16:'M93',matches:[537420,537419]},
+    {r16:'M94',matches:[537422,537421]},
+    {r16:'M91',matches:[537418,537416]},
+    {r16:'M92',matches:[537425,537426]},
+    {r16:'M95',matches:[537428,537430]},
+    {r16:'M96',matches:[537429,537427]},
   ];
-  const r32El = document.getElementById('mr32');
+  const r32El=document.getElementById('mr32');
   if(r32El){
-    r32El.innerHTML = r32pairs.map(pair => {
-      const [m1, m2] = pair.matches.map(id => mById(id)).filter(Boolean);
-      if(!m1 && !m2) return '';
+    r32El.innerHTML=r32pairs.map(pair=>{
+      const[m1,m2]=pair.matches.map(id=>mById(id)).filter(Boolean);
+      if(!m1&&!m2)return '';
       return `<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:4px;">
         <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);padding:4px 10px;border-bottom:1px solid var(--border);text-align:right;">
           winners meet in <span style="color:var(--gold)">${pair.r16}</span>
         </div>
-        ${m1 ? mobMatch(m1, off) : ''}
+        ${m1?mobMatch(m1,off):''}
         <div style="display:flex;align-items:center;padding:0 0 0 12px;border-top:1px solid var(--border);background:rgba(42,48,80,0.4);">
           <div style="width:2px;height:28px;background:var(--gold);border-radius:1px;flex-shrink:0;margin-right:8px;"></div>
           <span style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;color:var(--gold);letter-spacing:1px;">Winners play each other in <span style="color:#E8EAF2">${pair.r16}</span></span>
         </div>
-        ${m2 ? mobMatch(m2, off) : ''}
+        ${m2?mobMatch(m2,off):''}
       </div>`;
     }).join('');
   }
 
-  // R16 pairs grouped by which QF their winners meet in
-  const r16pairs = [
-    { next:'M97',  matches:[537376,537375] },
-    { next:'M98',  matches:[537379,537380] },
-    { next:'M99',  matches:[537377,537378] },
-    { next:'M100', matches:[537381,537382] },
+  const r16pairs=[
+    {next:'M97',matches:[537376,537375]},
+    {next:'M98',matches:[537379,537380]},
+    {next:'M99',matches:[537377,537378]},
+    {next:'M100',matches:[537381,537382]},
   ];
-  const r16El = document.getElementById('mr16');
+  const r16El=document.getElementById('mr16');
   if(r16El){
-    r16El.innerHTML = r16pairs.map(pair => {
-      const [m1, m2] = pair.matches.map(id => mById(id)).filter(Boolean);
-      if(!m1 && !m2) return '';
+    r16El.innerHTML=r16pairs.map(pair=>{
+      const[m1,m2]=pair.matches.map(id=>mById(id)).filter(Boolean);
+      if(!m1&&!m2)return '';
       return `<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:4px;">
         <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);padding:4px 10px;border-bottom:1px solid var(--border);text-align:right;">
           Winners meet in <span style="color:var(--gold)">${pair.next}</span>
         </div>
-        ${m1 ? mobMatch(m1, off) : ''}
+        ${m1?mobMatch(m1,off):''}
         <div style="display:flex;align-items:center;padding:0 0 0 12px;border-top:1px solid var(--border);background:rgba(42,48,80,0.4);">
           <div style="width:2px;height:28px;background:var(--gold);border-radius:1px;flex-shrink:0;margin-right:8px;"></div>
           <span style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;color:var(--gold);letter-spacing:1px;">Winners play each other in <span style="color:#E8EAF2">${pair.next}</span></span>
         </div>
-        ${m2 ? mobMatch(m2, off) : ''}
+        ${m2?mobMatch(m2,off):''}
       </div>`;
     }).join('');
   }
 
-  // QF pairs grouped by which SF their winners meet in
-  const qfpairs = [
-    { next:'M101', matches:[537383,537384] },
-    { next:'M102', matches:[537385,537386] },
+  const qfpairs=[
+    {next:'M101',matches:[537383,537384]},
+    {next:'M102',matches:[537385,537386]},
   ];
-  const qfEl = document.getElementById('mrqf');
+  const qfEl=document.getElementById('mrqf');
   if(qfEl){
-    qfEl.innerHTML = qfpairs.map(pair => {
-      const [m1, m2] = pair.matches.map(id => mById(id)).filter(Boolean);
-      if(!m1 && !m2) return '';
+    qfEl.innerHTML=qfpairs.map(pair=>{
+      const[m1,m2]=pair.matches.map(id=>mById(id)).filter(Boolean);
+      if(!m1&&!m2)return '';
       return `<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:4px;">
         <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);padding:4px 10px;border-bottom:1px solid var(--border);text-align:right;">
           Winners meet in <span style="color:var(--gold)">${pair.next}</span>
         </div>
-        ${m1 ? mobMatch(m1, off) : ''}
+        ${m1?mobMatch(m1,off):''}
         <div style="display:flex;align-items:center;padding:0 0 0 12px;border-top:1px solid var(--border);background:rgba(42,48,80,0.4);">
           <div style="width:2px;height:28px;background:var(--gold);border-radius:1px;flex-shrink:0;margin-right:8px;"></div>
           <span style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;color:var(--gold);letter-spacing:1px;">Winners play each other in <span style="color:#E8EAF2">${pair.next}</span></span>
         </div>
-        ${m2 ? mobMatch(m2, off) : ''}
+        ${m2?mobMatch(m2,off):''}
       </div>`;
     }).join('');
   }
 
-  // SF pair
-  const sfEl = document.getElementById('mrsf');
+  const sfEl=document.getElementById('mrsf');
   if(sfEl){
-    const m1 = mById(537387), m2 = mById(537388);
-    sfEl.innerHTML = `<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:4px;">
+    const m1=mById(537387),m2=mById(537388);
+    sfEl.innerHTML=`<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:4px;">
       <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);padding:4px 10px;border-bottom:1px solid var(--border);text-align:right;">
         Winners meet in <span style="color:var(--gold)">M104 The Final</span>
       </div>
-      ${m1 ? mobMatch(m1, off) : ''}
+      ${m1?mobMatch(m1,off):''}
       <div style="display:flex;align-items:center;padding:0 0 0 12px;border-top:1px solid var(--border);background:rgba(42,48,80,0.4);">
         <div style="width:2px;height:28px;background:var(--gold);border-radius:1px;flex-shrink:0;margin-right:8px;"></div>
         <span style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;color:var(--gold);letter-spacing:1px;">Winners play each other in <span style="color:#E8EAF2">M104 The Final</span></span>
       </div>
-      ${m2 ? mobMatch(m2, off) : ''}
+      ${m2?mobMatch(m2,off):''}
     </div>`;
   }
 
-  // Final tab
   const finEl=document.getElementById('mrfin');
   if(finEl){
-    const finMatches=byStage('FINAL'), tpMatches=byStage('THIRD_PLACE');
+    const finMatches=byStage('FINAL'),tpMatches=byStage('THIRD_PLACE');
     let html='';
     if(finMatches.length){
       html+=`<div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--gold);padding:4px 0;border-bottom:1px solid var(--border);margin-bottom:4px;">🏆 Final</div>`;
@@ -691,24 +557,21 @@ function render(){
     finEl.innerHTML=html;
   }
 
-  // Footer timezone label
-  const s=off>=0?'+':'', frac=off%1!==0;
+  const s=off>=0?'+':'',frac=off%1!==0;
   document.getElementById('ftz').textContent=`All times UTC${s}${frac?Math.floor(off)+':30':off}`;
 }
 
-// Mobile tabs
 document.querySelectorAll('.tab').forEach(b=>{
   b.addEventListener('click',()=>{
     document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
     document.querySelectorAll('.mround').forEach(x=>x.classList.remove('on'));
     b.classList.add('on');
-    const rid = b.dataset.r;
-    const el = document.getElementById('mr'+rid) || document.getElementById('mr'+rid.replace('r',''));
-    if(el) el.classList.add('on');
+    const rid=b.dataset.r;
+    const el=document.getElementById('mr'+rid)||document.getElementById('mr'+rid.replace('r',''));
+    if(el)el.classList.add('on');
   });
 });
 
-// Restore saved timezone
 try{
   const sv=localStorage.getItem('wc2026_tz');
   if(sv!==null){const s=document.getElementById('tzsel');const idx=parseInt(sv);if(!isNaN(idx)&&s.options[idx])s.selectedIndex=idx;}
@@ -718,16 +581,13 @@ document.getElementById('tzsel').addEventListener('change',()=>{
   render();
 });
 
-// Load data.json and merge over base
 async function load(){
   buildNums();
-  render(); // immediate render with base data
-
+  render();
   try{
-    const gwRes = await fetch('group-winners.json?t='+Date.now());
-    groupWinners = await gwRes.json();
-  }catch(e){ groupWinners = groupWinners || {}; }
-
+    const gwRes=await fetch('group-winners.json?t='+Date.now());
+    groupWinners=await gwRes.json();
+  }catch(e){groupWinners=groupWinners||{};}
   try{
     const r=await fetch('data.json?t='+Date.now());
     const d=await r.json();
@@ -735,29 +595,28 @@ async function load(){
     if(ko.length>0){
       const byId={};
       BASE.forEach(m=>byId[m.id]={...m});
-      ko.forEach(m => {
+      ko.forEach(m=>{
         if(byId[m.id]){
-          const isLast32 = byId[m.id].stage === 'LAST_32';
-          const groupsComplete = new Date() > new Date('2026-06-28T19:00:00Z');
-          const homeTeam = (isLast32 && !groupsComplete) ? {name:null,shortName:null} : m.homeTeam;
-          const awayTeam = (isLast32 && !groupsComplete) ? {name:null,shortName:null} : m.awayTeam;
+          const isLast32=byId[m.id].stage==='LAST_32';
+          const groupsComplete=new Date()>new Date('2026-06-28T19:00:00Z');
+          const homeTeam=(isLast32&&!groupsComplete)?{name:null,shortName:null}:m.homeTeam;
+          const awayTeam=(isLast32&&!groupsComplete)?{name:null,shortName:null}:m.awayTeam;
           byId[m.id]={...byId[m.id],homeTeam,awayTeam,score:m.score,status:m.status};
         }
       });
       matches=BASE.map(m=>byId[m.id]||m);
     }
     render();
-  }catch(e){ console.log('data.json:',e.message); }
+  }catch(e){console.log('data.json:',e.message);}
 }
 
 load();
-setInterval(load, 60000);
+setInterval(load,60000);
 
-// Print mode toggle
-const printModeBtn = document.getElementById('mode-toggle');
-printModeBtn.addEventListener('click', () => {
-  const isPrint = document.body.classList.toggle('print-mode');
-  printModeBtn.textContent = isPrint ? '\u2600 Switch to Night Mode' : '\u2788 Switch to Print Mode';
+const printModeBtn=document.getElementById('mode-toggle');
+printModeBtn.addEventListener('click',()=>{
+  const isPrint=document.body.classList.toggle('print-mode');
+  printModeBtn.textContent=isPrint?'\u2600 Switch to Night Mode':'\u2788 Switch to Print Mode';
 });
 </script>
 </body>
