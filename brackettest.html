@@ -336,8 +336,8 @@ function mbox(m,off){
   const liveHtml=live?'<span class="live-dot"></span>':'';
   return `<div class="mb${fin?' fin':''}${live?' live':''}">
     <div class="mbnum"><span>${num}${liveHtml}</span><span class="mbt">${dt}</span></div>
-    ${tr(h,hph,hw,fin?hg:null)}
-    ${tr(a,aph,aw,fin?ag:null)}
+    ${tr(h,hph,hw,(fin||live)?hg:null)}
+    ${tr(a,aph,aw,(fin||live)?ag:null)}
   </div>`;
 }
 
@@ -359,10 +359,10 @@ function mobMatch(m,off){
   </div>`;
   const live=m.status==='IN_PLAY'||m.status==='PAUSED';
   const liveHtml=live?'<span class="live-dot"></span>':'';
-  return `<div class="mm${fin?' fin':''}">
+  return `<div class="mm${fin?' fin':''}${live?' live':''}">
     <div class="mmh"><span class="mnum">${num}${liveHtml}</span><span>${dt}</span></div>
-    ${tr(h,hph,hw,fin?hg:null)}
-    ${tr(a,aph,aw,fin?ag:null)}
+    ${tr(h,hph,hw,(fin||live)?hg:null)}
+    ${tr(a,aph,aw,(fin||live)?ag:null)}
   </div>`;
 }
 
