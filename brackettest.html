@@ -250,10 +250,10 @@ const BASE = [
   {id:537424,stage:'LAST_32',utcDate:'2026-06-30T17:00:00Z'},
   {id:537425,stage:'LAST_32',utcDate:'2026-07-01T01:00:00Z'},
   {id:537426,stage:'LAST_32',utcDate:'2026-07-01T16:00:00Z'},
-  {id:537421,stage:'LAST_32',utcDate:'2026-07-02T00:00:00Z'},
   {id:537422,stage:'LAST_32',utcDate:'2026-07-01T20:00:00Z'},
-  {id:537419,stage:'LAST_32',utcDate:'2026-07-02T23:00:00Z'},
+  {id:537421,stage:'LAST_32',utcDate:'2026-07-02T00:00:00Z'},
   {id:537420,stage:'LAST_32',utcDate:'2026-07-02T19:00:00Z'},
+  {id:537419,stage:'LAST_32',utcDate:'2026-07-02T23:00:00Z'},
   {id:537429,stage:'LAST_32',utcDate:'2026-07-03T03:00:00Z'},
   {id:537427,stage:'LAST_32',utcDate:'2026-07-03T22:00:00Z'},
   {id:537430,stage:'LAST_32',utcDate:'2026-07-04T01:30:00Z'},
@@ -385,8 +385,8 @@ function render(){
   const r32L=[
     mById(537415),mById(537416), // M74+M77 -> M89
     mById(537417),mById(537418), // M73+M75 -> M90
-    mById(537419),mById(537420), // M83+M84 -> M93
-    mById(537421),mById(537422), // M81+M82 -> M94
+    mById(537420),mById(537419), // M83+M84 -> M93
+    mById(537422),mById(537421), // M81+M82 -> M94
   ].filter(Boolean);
   const r32R=[
     mById(537423),mById(537424), // M76+M78 -> M91
@@ -426,8 +426,8 @@ function render(){
   const r32pairs=[
     {r16:'M89',matches:[537415,537416]}, // M74+M77
     {r16:'M90',matches:[537417,537418]}, // M73+M75
-    {r16:'M93',matches:[537419,537420]}, // M83+M84
-    {r16:'M94',matches:[537421,537422]}, // M81+M82
+    {r16:'M93',matches:[537420,537419]}, // M83+M84
+    {r16:'M94',matches:[537422,537421]}, // M81+M82
     {r16:'M91',matches:[537423,537424]}, // M76+M78
     {r16:'M92',matches:[537425,537426]}, // M79+M80
     {r16:'M95',matches:[537427,537428]}, // M86+M88
