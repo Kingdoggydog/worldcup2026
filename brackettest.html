@@ -676,7 +676,7 @@ async function load(){
   if(byId[m.id]){
     // Only merge team data for LAST_32 if the group stage is fully finished (after 28 Jun)
     const isLast32 = byId[m.id].stage === 'LAST_32';
-    const groupsComplete = new Date() > new Date('2026-06-28T19:00:00Z');
+    const groupsComplete = true;
     const homeTeam = (isLast32 && !groupsComplete) ? {name:null,shortName:null} : m.homeTeam;
     const awayTeam = (isLast32 && !groupsComplete) ? {name:null,shortName:null} : m.awayTeam;
     byId[m.id]={...byId[m.id],homeTeam,awayTeam,score:m.score,status:m.status};
