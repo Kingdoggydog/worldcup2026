@@ -590,6 +590,20 @@ async function load(){
         }
       });
       matches=BASE.map(m=>byId[m.id]||m);
+
+      // Hardcoded overrides - teams confirmed but API not yet populated.
+      // Safe to leave in - only fires if API still has null, remove once API populates.
+      const KNOWN_TEAMS = {
+        537429: { home:'Switzerland', away:null }, // M85 - Switzerland won Group B
+        537417: { home:null, away:'Canada' },      // M73 - Canada 2nd Group B
+      };
+      matches=matches.map(m=>{
+        const override=KNOWN_TEAMS[m.id];
+        if(!override) return m;
+        const homeTeam=(override.home&&!m.homeTeam?.name)?{name:override.home,shortName:override.home}:m.homeTeam;
+        const awayTeam=(override.away&&!m.awayTeam?.name)?{name:override.away,shortName:override.away}:m.awayTeam;
+        return {...m,homeTeam,awayTeam};
+      });
     }
     render();
   }catch(e){console.log('data.json:',e.message);}
