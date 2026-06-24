@@ -552,7 +552,7 @@ async function load(){
   buildNums();
   render();
   try{
-    const r=await fetch('data.json?t='+Date.now());
+    const r=await fetch('dummy.json?t='+Date.now());
     const d=await r.json();
     const ko=d.matches.filter(m=>m.stage!=='GROUP_STAGE');
     if(ko.length>0){
