@@ -4689,7 +4689,7 @@ async function loadScores() {
   try {
     const res = await fetch('data.json?t=' + Date.now());
     const data = await res.json();
-    scoreMap = {};
+    const newScoreMap = {};
     (data.matches || []).forEach(m => {
       // Include all stages so knockout match scores also display
       const home = normalise(m.homeTeam.shortName || m.homeTeam.name || '');
@@ -4699,8 +4699,9 @@ async function loadScores() {
       const status = m.status; // TIMED, IN_PLAY, PAUSED, FINISHED
       const hg = m.score?.fullTime?.home;
       const ag = m.score?.fullTime?.away;
-      scoreMap[key] = { home: hg, away: ag, status, minute: m.minute, injuryTime: m.injuryTime, id: m.id };
+      newScoreMap[key] = { home: hg, away: ag, status, minute: m.minute, injuryTime: m.injuryTime, id: m.id };
     });
+    scoreMap = newScoreMap; // only replace once fully built
     lastFetch = new Date();
   } catch(e) {
     console.log('Could not load scores:', e.message);
