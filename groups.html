@@ -490,9 +490,9 @@ function calcGroupBadges(grp,teamNames,results){
   teamNames.forEach(t=>{
     const positions=positionsSeen[t];
     if(positions.size===1&&positions.has(1))                            badges[t]='1';
-    else if(positions.size<=2&&!positions.has(3)&&!positions.has(4))   badges[t]='Q';
     else if(positions.size===1&&positions.has(2))                       badges[t]='2';
     else if(positions.size===1&&positions.has(4))                       badges[t]='E';
+    else if(!positions.has(3)&&!positions.has(4))                       badges[t]='Q';
   });
   return badges;
 }
