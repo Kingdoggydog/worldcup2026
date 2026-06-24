@@ -62,6 +62,7 @@ body.print-mode .champ{font-size:9px;margin-top:1px;min-height:12px;}
 .bmatches{display:flex;flex-direction:column;justify-content:space-around;flex:1;gap:3px;padding:2px 0;}
 .mb{background:var(--card);border:1px solid var(--border);border-radius:4px;overflow:hidden;margin:2px 0;width:100%;}
 .mb.fin{border-color:var(--win);}
+.mb.live{border-color:#F39C12;}
 .mbnum{font-size:11px;font-weight:700;color:var(--gold);padding:4px 7px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;}
 .mbnum .mbt{color:#8A93B8;font-weight:600;}
 .mbt2{display:flex;align-items:center;gap:5px;padding:7px 7px;border-bottom:1px solid var(--border);font-size:14px;font-weight:600;min-height:32px;line-height:1.2;}
@@ -70,6 +71,8 @@ body.print-mode .champ{font-size:9px;margin-top:1px;min-height:12px;}
 .mbt2.ph{color:#8A93B8;font-style:normal;font-size:13px;font-weight:700;}
 .mbt2 .sc{margin-left:auto;font-weight:800;flex-shrink:0;}
 .mbt2 img{width:18px;height:13px;object-fit:cover;border-radius:2px;flex-shrink:0;vertical-align:middle;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(0.85)}}
+.live-dot{display:inline-block;width:8px;height:8px;background:#2ECC71;border-radius:50%;margin-left:6px;animation:pulse 1.2s ease-in-out infinite;vertical-align:middle;flex-shrink:0;box-shadow:0 0 6px #2ECC71;}
 .ftrophy{font-size:32px;text-align:center;}
 .champ{font-size:13px;font-weight:800;color:var(--win);text-align:center;min-height:18px;margin-top:3px;}
 .tplbl{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--sub);text-align:center;margin-top:12px;}
@@ -211,7 +214,7 @@ const FLAGS = {
 };
 
 const FEEDERS = {
-  537376:['M74','M77'],537375:['M73','M75'],537377:['M76','M78'],537378:['M79','M80'],
+  537375:['M74','M77'],537376:['M73','M75'],537377:['M76','M78'],537378:['M79','M80'],
   537379:['M83','M84'],537380:['M81','M82'],537381:['M86','M88'],537382:['M85','M87'],
   537383:['M89','M90'],537384:['M93','M94'],537385:['M91','M92'],537386:['M95','M96'],
   537387:['M97','M98'],537388:['M99','M100'],537390:['M101','M102'],537389:['M101','M102'],
@@ -255,8 +258,8 @@ const BASE = [
   {id:537427,stage:'LAST_32',utcDate:'2026-07-03T22:00:00Z'},
   {id:537430,stage:'LAST_32',utcDate:'2026-07-04T01:30:00Z'},
   {id:537428,stage:'LAST_32',utcDate:'2026-07-03T18:00:00Z'},
-  {id:537376,stage:'LAST_16',utcDate:'2026-07-04T21:00:00Z'},
-  {id:537375,stage:'LAST_16',utcDate:'2026-07-04T17:00:00Z'},
+  {id:537375,stage:'LAST_16',utcDate:'2026-07-04T21:00:00Z'},
+  {id:537376,stage:'LAST_16',utcDate:'2026-07-04T17:00:00Z'},
   {id:537377,stage:'LAST_16',utcDate:'2026-07-05T20:00:00Z'},
   {id:537378,stage:'LAST_16',utcDate:'2026-07-06T00:00:00Z'},
   {id:537379,stage:'LAST_16',utcDate:'2026-07-06T19:00:00Z'},
@@ -329,8 +332,10 @@ function mbox(m,off){
     <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${n}</span>
     ${sc!=null?`<span class="sc">${sc}${w&&suf?suf:''}</span>`:''}
   </div>`;
-  return `<div class="mb${fin?' fin':''}">
-    <div class="mbnum"><span>${num}</span><span class="mbt">${dt}</span></div>
+  const live=m.status==='IN_PLAY'||m.status==='PAUSED';
+  const liveHtml=live?'<span class="live-dot"></span>':'';
+  return `<div class="mb${fin?' fin':''}${live?' live':''}">
+    <div class="mbnum"><span>${num}${liveHtml}</span><span class="mbt">${dt}</span></div>
     ${tr(h,hph,hw,fin?hg:null)}
     ${tr(a,aph,aw,fin?ag:null)}
   </div>`;
@@ -352,8 +357,10 @@ function mobMatch(m,off){
     <span style="flex:1">${n}</span>
     ${sc!=null?`<span class="sc">${sc}${w&&suf?`<span style="font-size:10px;color:#8A93B8;font-weight:600">${suf}</span>`:''}</span>`:''}
   </div>`;
+  const live=m.status==='IN_PLAY'||m.status==='PAUSED';
+  const liveHtml=live?'<span class="live-dot"></span>':'';
   return `<div class="mm${fin?' fin':''}">
-    <div class="mmh"><span class="mnum">${num}</span><span>${dt}</span></div>
+    <div class="mmh"><span class="mnum">${num}${liveHtml}</span><span>${dt}</span></div>
     ${tr(h,hph,hw,fin?hg:null)}
     ${tr(a,aph,aw,fin?ag:null)}
   </div>`;
@@ -387,7 +394,7 @@ function render(){
     mById(537427),mById(537428),
     mById(537429),mById(537430),
   ].filter(Boolean);
-  const r16L=[mById(537376),mById(537375),mById(537379),mById(537380)].filter(Boolean);
+  const r16L=[mById(537375),mById(537376),mById(537379),mById(537380)].filter(Boolean);
   const r16R=[mById(537377),mById(537378),mById(537381),mById(537382)].filter(Boolean);
   const qfL=[mById(537383),mById(537384)].filter(Boolean);
   const qfR=[mById(537385),mById(537386)].filter(Boolean);
@@ -446,7 +453,7 @@ function render(){
   }
 
   const r16pairs=[
-    {next:'M97',matches:[537376,537375]},
+    {next:'M97',matches:[537375,537376]},
     {next:'M98',matches:[537379,537380]},
     {next:'M99',matches:[537377,537378]},
     {next:'M100',matches:[537381,537382]},
