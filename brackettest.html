@@ -226,8 +226,8 @@ const R32_PH = {
   537415:['Win Group E','3rd A/B/C/D/F'],    // M74 - Germany confirmed home
   537418:['Win Group F','2nd Group C'],       // M75
   537423:['Win Group C','2nd Group F'],       // M76
-  537424:['Win Group I','3rd C/D/F/G/H'],    // M77
-  537416:['2nd Group E','2nd Group I'],       // M78
+  537416:['Win Group I','3rd C/D/F/G/H'],    // M77
+  537424:['2nd Group E','2nd Group I'],        // M78
   537425:['Win Group A','3rd C/E/F/H/I'],    // M79 - Mexico confirmed home
   537426:['Win Group L','3rd E/H/I/J/K'],    // M80
   537422:['Win Group D','3rd B/E/F/I/J'],    // M81
@@ -246,8 +246,8 @@ const BASE = [
   {id:537415,stage:'LAST_32',utcDate:'2026-06-29T20:30:00Z'},
   {id:537418,stage:'LAST_32',utcDate:'2026-06-30T01:00:00Z'},
   {id:537423,stage:'LAST_32',utcDate:'2026-06-29T17:00:00Z'},
-  {id:537416,stage:'LAST_32',utcDate:'2026-06-30T21:00:00Z'},
-  {id:537424,stage:'LAST_32',utcDate:'2026-06-30T17:00:00Z'},
+  {id:537416,stage:'LAST_32',utcDate:'2026-06-30T17:00:00Z'},
+  {id:537424,stage:'LAST_32',utcDate:'2026-06-30T21:00:00Z'},
   {id:537425,stage:'LAST_32',utcDate:'2026-07-01T01:00:00Z'},
   {id:537426,stage:'LAST_32',utcDate:'2026-07-01T16:00:00Z'},
   {id:537421,stage:'LAST_32',utcDate:'2026-07-02T00:00:00Z'},
@@ -383,16 +383,16 @@ function render(){
   function mById(id){return matches.find(m=>m.id===id);}
 
   const r32L=[
-    mById(537415),mById(537424),
-    mById(537417),mById(537418),
-    mById(537419),mById(537420),
-    mById(537421),mById(537422),
+    mById(537415),mById(537416), // M74+M77 -> M89
+    mById(537417),mById(537418), // M73+M75 -> M90
+    mById(537419),mById(537420), // M83+M84 -> M93
+    mById(537421),mById(537422), // M81+M82 -> M94
   ].filter(Boolean);
   const r32R=[
-    mById(537423),mById(537416),
-    mById(537425),mById(537426),
-    mById(537427),mById(537428),
-    mById(537429),mById(537430),
+    mById(537423),mById(537424), // M76+M78 -> M91
+    mById(537425),mById(537426), // M79+M80 -> M92
+    mById(537427),mById(537428), // M86+M88 -> M95
+    mById(537429),mById(537430), // M85+M87 -> M96
   ].filter(Boolean);
   const r16L=[mById(537375),mById(537376),mById(537379),mById(537380)].filter(Boolean);
   const r16R=[mById(537377),mById(537378),mById(537381),mById(537382)].filter(Boolean);
@@ -424,14 +424,14 @@ function render(){
     col(qfR,'Quarter-finals')+col(r16R,'Round of 16')+col(r32R,'Round of 32');
 
   const r32pairs=[
-    {r16:'M89',matches:[537415,537424]},
-    {r16:'M90',matches:[537417,537418]},
-    {r16:'M93',matches:[537419,537420]},
-    {r16:'M94',matches:[537421,537422]},
-    {r16:'M91',matches:[537423,537416]},
-    {r16:'M92',matches:[537425,537426]},
-    {r16:'M95',matches:[537427,537428]},
-    {r16:'M96',matches:[537429,537430]},
+    {r16:'M89',matches:[537415,537416]}, // M74+M77
+    {r16:'M90',matches:[537417,537418]}, // M73+M75
+    {r16:'M93',matches:[537419,537420]}, // M83+M84
+    {r16:'M94',matches:[537421,537422]}, // M81+M82
+    {r16:'M91',matches:[537423,537424]}, // M76+M78
+    {r16:'M92',matches:[537425,537426]}, // M79+M80
+    {r16:'M95',matches:[537427,537428]}, // M86+M88
+    {r16:'M96',matches:[537429,537430]}, // M85+M87
   ];
   const r32El=document.getElementById('mr32');
   if(r32El){
