@@ -59,7 +59,7 @@ body.print-mode .champ{font-size:9px;margin-top:1px;min-height:12px;}
 .bcol{display:flex;flex-direction:column;flex:1;min-width:0;padding:0 3px;}
 .bcol.fcol{flex:1;min-width:0;display:flex;flex-direction:column;align-items:stretch;justify-content:center;padding:0 4px;gap:6px;}
 .blbl{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--gold);text-align:center;padding:6px 2px;border-bottom:1px solid var(--border);margin-bottom:6px;}
-.bmatches{display:flex;flex-direction:column;justify-content:space-around;flex:1;gap:3px;padding:2px 0;}
+.bmatches{display:flex;flex-direction:column;justify-content:space-around;flex:1;gap:3px;padding:2px 0;overflow:visible;}
 .mb{background:var(--card);border:1px solid var(--border);border-radius:4px;overflow:hidden;margin:2px 0;width:100%;}
 .mb.fin{border-color:var(--win);}
 .mb.live{border-color:#F39C12;}
@@ -93,6 +93,47 @@ body.print-mode .champ{font-size:9px;margin-top:1px;min-height:12px;}
 .foot p{font-size:11px;color:var(--muted);}
 @media(max-width:900px){.bwrap{display:none;}.bmob{display:block;}.tabs{display:flex;}.hdr{flex-wrap:wrap;}.hdr-r{align-items:flex-start;width:100%;}.page{padding:14px 12px 32px;}#mode-toggle{display:none;}}
 @media print{@page{size:landscape;margin:10mm;}.bwrap{display:block !important;overflow-x:visible !important;}.bmob{display:none !important;}.tabs{display:none !important;}}
+  /* ── EVENT CARD (hover/tap) ─────────────────────────────────────────────── */
+  .mb, .mm { position: relative; }
+  .mb.has-events:hover, .mm.has-events:hover {
+    box-shadow: 0 0 0 1.5px rgba(255,255,255,0.55), 0 0 12px rgba(255,255,255,0.15);
+    cursor: pointer;
+    overflow: visible;
+    z-index: 50;
+  }
+  .event-card {
+    position: absolute;
+    top: calc(100% + 6px);
+    width: min(380px, 92vw);
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    box-shadow: 0 8px 28px rgba(0,0,0,0.5);
+    z-index: 100;
+    font-family: 'Barlow Condensed', sans-serif;
+    overflow: hidden;
+  }
+  /* Left cols: card appears to the right of the match box */
+  [data-side="left"] .event-card {
+    left: 100%; top: 0;
+    margin-left: 6px;
+  }
+  /* Right cols: card appears to the left of the match box */
+  [data-side="right"] .event-card {
+    right: 100%; top: 0; left: auto;
+    margin-right: 6px;
+  }
+  .event-card-body { display: flex; }
+  .ev-col { flex: 1; padding: 8px 10px; min-width: 0; }
+  .ev-col:first-child { border-right: 1px solid var(--border); }
+  .ev-row { font-size: 12.5px; color: var(--text); padding: 4px 0; line-height: 1.4;
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: 3px; }
+  .ev-icon { font-size: 11px; }
+  .ev-min { color: var(--gold); font-weight: 700; min-width: 30px; }
+  .ev-player { font-weight: 600; }
+  .ev-scorer { color: var(--gold); font-weight: 800; }
+  .ev-assist { color: var(--text-muted); font-size: 11px; }
+  .ev-empty { font-size: 11.5px; color: var(--text-muted); font-style: italic; padding: 4px 0; }
 </style>
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="World Cup 2026 Schedule">
@@ -295,6 +336,7 @@ const BASE = [
 
 let matches=BASE.map(m=>({...m}));
 const mnums={};
+let matchDetails={};
 
 function norm(n){return n?(NAME_MAP[n]||n):null;}
 function flag(t){
@@ -350,8 +392,11 @@ function mbox(m,off){
     ${sc!=null?`<span class="sc">${sc}${w&&suf?suf:''}</span>`:''}
   </div>`;
   const live=m.status==='IN_PLAY'||m.status==='PAUSED';
-  const liveHtml=live?'<span class="live-dot"></span>':'';
-  return `<div class="mb${fin?' fin':''}${live?' live':''}">
+  const paused=m.status==='PAUSED';
+  const minLabel=live?(paused?'HT':m.minute?`${m.minute}${m.injuryTime?'+'+m.injuryTime:''}'`:'LIVE'):(fin?'FT':'');
+  const liveHtml=live?`<span class="live-dot"></span><span style="color:${paused?'var(--gold)':'#2ECC71'};font-size:10px;font-weight:700;margin-left:3px;">${minLabel}</span>`:(fin?`<span style="color:var(--text-muted);font-size:10px;font-weight:700;">FT</span>`:'');
+  const hasEv=matchDetails[String(m.id)]&&['FINISHED','IN_PLAY','PAUSED'].includes(matchDetails[String(m.id)]?.status)&&((matchDetails[String(m.id)]?.goals||[]).length>0||(matchDetails[String(m.id)]?.bookings||[]).length>0);
+  return `<div class="mb${fin?' fin':''}${live?' live':''}${hasEv?' has-events':''}" data-mid="${m.id}">
     <div class="mbnum"><span>${num}${liveHtml}</span><span class="mbt">${dt}</span></div>
     ${tr(h,hph,hw,(fin||live)?hg:null)}
     ${tr(a,aph,aw,(fin||live)?ag:null)}
@@ -375,8 +420,11 @@ function mobMatch(m,off){
     ${sc!=null?`<span class="sc">${sc}${w&&suf?`<span style="font-size:10px;color:#8A93B8;font-weight:600">${suf}</span>`:''}</span>`:''}
   </div>`;
   const live=m.status==='IN_PLAY'||m.status==='PAUSED';
-  const liveHtml=live?'<span class="live-dot"></span>':'';
-  return `<div class="mm${fin?' fin':''}${live?' live':''}">
+  const paused=m.status==='PAUSED';
+  const minLabel=live?(paused?'HT':m.minute?`${m.minute}${m.injuryTime?'+'+m.injuryTime:''}'`:'LIVE'):(fin?'FT':'');
+  const liveHtml=live?`<span class="live-dot"></span><span style="color:${paused?'var(--gold)':'#2ECC71'};font-size:10px;font-weight:700;margin-left:3px;">${minLabel}</span>`:(fin?`<span style="color:var(--text-muted);font-size:10px;font-weight:700;">FT</span>`:'');
+  const hasEv=matchDetails[String(m.id)]&&['FINISHED','IN_PLAY','PAUSED'].includes(matchDetails[String(m.id)]?.status)&&((matchDetails[String(m.id)]?.goals||[]).length>0||(matchDetails[String(m.id)]?.bookings||[]).length>0);
+  return `<div class="mm${fin?' fin':''}${live?' live':''}${hasEv?' has-events':''}" data-mid="${m.id}">
     <div class="mmh"><span class="mnum">${num}${liveHtml}</span><span>${dt}</span></div>
     ${tr(h,hph,hw,(fin||live)?hg:null)}
     ${tr(a,aph,aw,(fin||live)?ag:null)}
@@ -413,7 +461,7 @@ function render(){
   const qfL=[mById(537383),mById(537384)].filter(Boolean); // M97, M98
   const qfR=[mById(537385),mById(537386)].filter(Boolean); // M99, M100
 
-  const col=(ms,lbl)=>`<div class="bcol">
+  const col=(ms,lbl,side='left')=>`<div class="bcol" data-side="${side}">
     <div class="blbl">${lbl}</div>
     <div class="bmatches">${ms.map(m=>mbox(m,off)).join('')}</div>
   </div>`;
@@ -433,9 +481,9 @@ function render(){
   </div>`;
 
   document.getElementById('bdesk').innerHTML=
-    col(r32L,'Round of 32')+col(r16L,'Round of 16')+col(qfL,'Quarter-finals')+
-    col(sf.slice(0,1),'Semi-finals')+fcol+col(sf.slice(1),'Semi-finals')+
-    col(qfR,'Quarter-finals')+col(r16R,'Round of 16')+col(r32R,'Round of 32');
+    col(r32L,'Round of 32','left')+col(r16L,'Round of 16','left')+col(qfL,'Quarter-finals','left')+
+    col(sf.slice(0,1),'Semi-finals','left')+fcol+col(sf.slice(1),'Semi-finals','right')+
+    col(qfR,'Quarter-finals','right')+col(r16R,'Round of 16','right')+col(r32R,'Round of 32','right');
 
   const r32pairs=[
     {r16:'M89',matches:[537415,537416]}, // M74+M77
@@ -569,6 +617,82 @@ document.getElementById('tzsel').addEventListener('change',()=>{
   render();
 });
 
+// ── EVENT CARD ────────────────────────────────────────────────────────────────
+function buildEventCard(m){
+  const det=matchDetails[String(m.id)];
+  if(!det) return null;
+  if(!['FINISHED','IN_PLAY','PAUSED'].includes(det.status)) return null;
+  const hg=det.score?.fullTime?.home, ag=det.score?.fullTime?.away;
+  if(hg===null||hg===undefined) return null;
+  // Use names from matchDetails directly - most reliable source
+  const homeName=det.homeTeam?.name||det.homeTeam?.shortName||m.homeTeam?.name||'';
+  const events={home:[],away:[]};
+  (det.goals||[]).forEach(g=>{
+    let side=g.team?.name===homeName?'home':'away';
+    let tag='';
+    if(g.type==='OWN'){side=side==='home'?'away':'home';tag=' (OG)';}
+    else if(g.type==='PENALTY') tag=' (pen)';
+    const assist=g.assist?` <span class="ev-assist">assist: ${g.assist.name}</span>`:'';
+    events[side].push({
+      sortMin:g.minute+(g.injuryTime?g.injuryTime/100:0),
+      html:`<span class="ev-icon">&#9917;</span> <span class="ev-min">${g.minute}${g.injuryTime?'+'+g.injuryTime:''}'</span> <span class="ev-player ev-scorer">${g.scorer.name}${tag}</span>${assist}`
+    });
+  });
+  (det.bookings||[]).forEach(b=>{
+    const side=b.team?.name===homeName?'home':'away';
+    const icon=b.card==='RED'?'&#128997;':'&#129000;';
+    events[side].push({
+      sortMin:b.minute,
+      html:`<span class="ev-icon">${icon}</span> <span class="ev-min">${b.minute}'</span> <span class="ev-player">${b.player.name}</span>`
+    });
+  });
+  events.home.sort((a,b)=>a.sortMin-b.sortMin);
+  events.away.sort((a,b)=>a.sortMin-b.sortMin);
+  if(!events.home.length&&!events.away.length) return null;
+  const homeCol=events.home.length?events.home.map(e=>`<div class="ev-row">${e.html}</div>`).join(''):'<div class="ev-empty">No events</div>';
+  const awayCol=events.away.length?events.away.map(e=>`<div class="ev-row">${e.html}</div>`).join(''):'<div class="ev-empty">No events</div>';
+  return `<div class="event-card"><div class="event-card-body"><div class="ev-col">${homeCol}</div><div class="ev-col">${awayCol}</div></div></div>`;
+}
+
+// ── HOVER / TAP INTERACTION ───────────────────────────────────────────────────
+(function(){
+  let activeCard=null;
+  function close(){if(activeCard){activeCard.remove();activeCard=null;}}
+  function show(el){
+    close();
+    // Find the match object by id
+    const id=parseInt(el.getAttribute('data-mid'));
+    if(!id) return;
+    const m=matches.find(x=>x.id===id);
+    console.log('show card for id',id,'match found:',!!m,'det:',!!matchDetails[String(id)]);
+    if(!m) return;
+    const html=buildEventCard(m);
+    console.log('card html:',html?'generated':'null');
+    if(!html) return;
+    el.insertAdjacentHTML('beforeend',html);
+    activeCard=el.querySelector('.event-card');
+  }
+  const touch=window.matchMedia('(hover: none)').matches;
+  document.addEventListener('mouseover',e=>{
+    if(touch) return;
+    const el=e.target.closest('[data-mid]');
+    if(el&&el!==(activeCard&&activeCard.closest('[data-mid]'))) show(el);
+  });
+  document.addEventListener('mouseout',e=>{
+    if(touch) return;
+    const el=e.target.closest('[data-mid]');
+    if(el&&!el.contains(e.relatedTarget)) close();
+  });
+  document.addEventListener('click',e=>{
+    if(!touch) return;
+    const el=e.target.closest('[data-mid]');
+    if(el){
+      if(activeCard&&activeCard.closest('[data-mid]')===el) close();
+      else show(el);
+    } else close();
+  });
+})();
+
 async function load(){
   buildNums();
   render();
@@ -586,7 +710,7 @@ async function load(){
           const isLast32=byId[m.id].stage==='LAST_32';
           const homeTeam=(isLast32&&!groupsComplete)?{name:null,shortName:null}:m.homeTeam;
           const awayTeam=(isLast32&&!groupsComplete)?{name:null,shortName:null}:m.awayTeam;
-          byId[m.id]={...byId[m.id],homeTeam,awayTeam,score:m.score,status:m.status};
+          byId[m.id]={...byId[m.id],homeTeam,awayTeam,score:m.score,status:m.status,minute:m.minute,injuryTime:m.injuryTime};
         }
       });
       matches=BASE.map(m=>byId[m.id]||m);
@@ -609,6 +733,11 @@ async function load(){
     }
     render();
   }catch(e){console.log('data.json:',e.message);}
+  try{
+    const dr=await fetch('match-details.json?t='+Date.now());
+    matchDetails=await dr.json();
+    render(); // re-render so has-events classes are applied
+  }catch(e){matchDetails=matchDetails||{};}
 }
 
 load();
