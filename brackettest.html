@@ -393,7 +393,7 @@ function mbox(m,off){
   </div>`;
   const live=m.status==='IN_PLAY'||m.status==='PAUSED';
   const paused=m.status==='PAUSED';
-  const minLabel=live?(paused?'HT':m.minute?`${m.minute}'`:'LIVE'):(fin?'FT':'');
+  const minLabel=live?(paused?'HT':m.minute?`${m.minute}${m.injuryTime?'+'+m.injuryTime:''}'`:'LIVE'):(fin?'FT':'');
   const liveHtml=live?`<span class="live-dot"></span><span style="color:${paused?'var(--gold)':'#2ECC71'};font-size:10px;font-weight:700;margin-left:3px;">${minLabel}</span>`:(fin?`<span style="color:var(--text-muted);font-size:10px;font-weight:700;">FT</span>`:'');
   const hasEv=matchDetails[String(m.id)]&&['FINISHED','IN_PLAY','PAUSED'].includes(matchDetails[String(m.id)]?.status)&&((matchDetails[String(m.id)]?.goals||[]).length>0||(matchDetails[String(m.id)]?.bookings||[]).length>0);
   return `<div class="mb${fin?' fin':''}${live?' live':''}${hasEv?' has-events':''}" data-mid="${m.id}">
@@ -421,7 +421,7 @@ function mobMatch(m,off){
   </div>`;
   const live=m.status==='IN_PLAY'||m.status==='PAUSED';
   const paused=m.status==='PAUSED';
-  const minLabel=live?(paused?'HT':m.minute?`${m.minute}'`:'LIVE'):(fin?'FT':'');
+  const minLabel=live?(paused?'HT':m.minute?`${m.minute}${m.injuryTime?'+'+m.injuryTime:''}'`:'LIVE'):(fin?'FT':'');
   const liveHtml=live?`<span class="live-dot"></span><span style="color:${paused?'var(--gold)':'#2ECC71'};font-size:10px;font-weight:700;margin-left:3px;">${minLabel}</span>`:(fin?`<span style="color:var(--text-muted);font-size:10px;font-weight:700;">FT</span>`:'');
   const hasEv=matchDetails[String(m.id)]&&['FINISHED','IN_PLAY','PAUSED'].includes(matchDetails[String(m.id)]?.status)&&((matchDetails[String(m.id)]?.goals||[]).length>0||(matchDetails[String(m.id)]?.bookings||[]).length>0);
   return `<div class="mm${fin?' fin':''}${live?' live':''}${hasEv?' has-events':''}" data-mid="${m.id}">
@@ -710,7 +710,7 @@ async function load(){
           const isLast32=byId[m.id].stage==='LAST_32';
           const homeTeam=(isLast32&&!groupsComplete)?{name:null,shortName:null}:m.homeTeam;
           const awayTeam=(isLast32&&!groupsComplete)?{name:null,shortName:null}:m.awayTeam;
-          byId[m.id]={...byId[m.id],homeTeam,awayTeam,score:m.score,status:m.status};
+          byId[m.id]={...byId[m.id],homeTeam,awayTeam,score:m.score,status:m.status,minute:m.minute,injuryTime:m.injuryTime};
         }
       });
       matches=BASE.map(m=>byId[m.id]||m);
