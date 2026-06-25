@@ -4685,7 +4685,7 @@ let lastFetch = null;
 
 async function loadScores() {
   try {
-    const res = await fetch('dummy.json?t=' + Date.now());
+    const res = await fetch('data.json?t=' + Date.now());
     const data = await res.json();
     const newScoreMap = {};
     const newScoreMapById = {};
@@ -4709,7 +4709,7 @@ async function loadScores() {
     console.log('Could not load scores:', e.message);
   }
   try {
-    const detRes = await fetch('dummy-details.json?t=' + Date.now());
+    const detRes = await fetch('match-details.json?t=' + Date.now());
     matchDetails = await detRes.json();
   } catch(e) {
     matchDetails = matchDetails || {};
