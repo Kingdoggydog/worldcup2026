@@ -1,131 +1,60 @@
 {
+  "filters": {"season": 2026},
+  "resultSet": {"count": 104, "played": 52},
   "matches": [
-    {"id":537417,"utcDate":"2026-06-28T19:00:00Z","status":"FINISHED","stage":"LAST_32","group":null,
-     "homeTeam":{"name":"South Korea","shortName":"South Korea"},"awayTeam":{"name":"Czechia","shortName":"Czechia"},
-     "score":{"winner":"HOME_TEAM","duration":"REGULAR","fullTime":{"home":2,"away":1}}},
-
-    {"id":537415,"utcDate":"2026-06-29T20:30:00Z","status":"FINISHED","stage":"LAST_32","group":null,
-     "homeTeam":{"name":"Germany","shortName":"Germany"},"awayTeam":{"name":"Ivory Coast","shortName":"Ivory Coast"},
-     "score":{"winner":"HOME_TEAM","duration":"REGULAR","fullTime":{"home":3,"away":0}}},
-
-    {"id":537418,"utcDate":"2026-06-30T01:00:00Z","status":"FINISHED","stage":"LAST_32","group":null,
-     "homeTeam":{"name":"Netherlands","shortName":"Netherlands"},"awayTeam":{"name":"Morocco","shortName":"Morocco"},
-     "score":{"winner":"AWAY_TEAM","duration":"REGULAR","fullTime":{"home":1,"away":2}}},
-
-    {"id":537423,"utcDate":"2026-06-29T17:00:00Z","status":"FINISHED","stage":"LAST_32","group":null,
-     "homeTeam":{"name":"Brazil","shortName":"Brazil"},"awayTeam":{"name":"Ecuador","shortName":"Ecuador"},
-     "score":{"winner":"HOME_TEAM","duration":"REGULAR","fullTime":{"home":2,"away":0}}},
-
-    {"id":537416,"utcDate":"2026-06-30T21:00:00Z","status":"FINISHED","stage":"LAST_32","group":null,
-     "homeTeam":{"name":"Ivory Coast","shortName":"Ivory Coast"},"awayTeam":{"name":"Japan","shortName":"Japan"},
-     "score":{"winner":"AWAY_TEAM","duration":"EXTRA_TIME","fullTime":{"home":1,"away":2}}},
-
-    {"id":537424,"utcDate":"2026-06-30T17:00:00Z","status":"FINISHED","stage":"LAST_32","group":null,
-     "homeTeam":{"name":"France","shortName":"France"},"awayTeam":{"name":"Senegal","shortName":"Senegal"},
-     "score":{"winner":"HOME_TEAM","duration":"REGULAR","fullTime":{"home":2,"away":1}}},
-
-    {"id":537425,"utcDate":"2026-07-01T01:00:00Z","status":"FINISHED","stage":"LAST_32","group":null,
-     "homeTeam":{"name":"Mexico","shortName":"Mexico"},"awayTeam":{"name":"Egypt","shortName":"Egypt"},
-     "score":{"winner":"HOME_TEAM","duration":"REGULAR","fullTime":{"home":1,"away":0}}},
-
-    {"id":537426,"utcDate":"2026-07-01T16:00:00Z","status":"FINISHED","stage":"LAST_32","group":null,
-     "homeTeam":{"name":"England","shortName":"England"},"awayTeam":{"name":"Norway","shortName":"Norway"},
-     "score":{"winner":"HOME_TEAM","duration":"PENALTY_SHOOTOUT","fullTime":{"home":1,"away":1}}},
-
-    {"id":537421,"utcDate":"2026-07-02T00:00:00Z","status":"FINISHED","stage":"LAST_32","group":null,
-     "homeTeam":{"name":"USA","shortName":"USA"},"awayTeam":{"name":"Iran","shortName":"Iran"},
-     "score":{"winner":"HOME_TEAM","duration":"REGULAR","fullTime":{"home":2,"away":0}}},
-
-    {"id":537422,"utcDate":"2026-07-01T20:00:00Z","status":"FINISHED","stage":"LAST_32","group":null,
-     "homeTeam":{"name":"Australia","shortName":"Australia"},"awayTeam":{"name":"Belgium","shortName":"Belgium"},
-     "score":{"winner":"AWAY_TEAM","duration":"REGULAR","fullTime":{"home":0,"away":1}}},
-
-    {"id":537419,"utcDate":"2026-07-02T23:00:00Z","status":"FINISHED","stage":"LAST_32","group":null,
-     "homeTeam":{"name":"Spain","shortName":"Spain"},"awayTeam":{"name":"Uruguay","shortName":"Uruguay"},
-     "score":{"winner":"HOME_TEAM","duration":"REGULAR","fullTime":{"home":2,"away":0}}},
-
-    {"id":537420,"utcDate":"2026-07-02T19:00:00Z","status":"FINISHED","stage":"LAST_32","group":null,
-     "homeTeam":{"name":"Portugal","shortName":"Portugal"},"awayTeam":{"name":"Colombia","shortName":"Colombia"},
-     "score":{"winner":"HOME_TEAM","duration":"REGULAR","fullTime":{"home":3,"away":1}}},
-
-    {"id":537429,"utcDate":"2026-07-03T03:00:00Z","status":"FINISHED","stage":"LAST_32","group":null,
-     "homeTeam":{"name":"Canada","shortName":"Canada"},"awayTeam":{"name":"New Zealand","shortName":"New Zealand"},
-     "score":{"winner":"HOME_TEAM","duration":"REGULAR","fullTime":{"home":2,"away":0}}},
-
-    {"id":537427,"utcDate":"2026-07-03T22:00:00Z","status":"FINISHED","stage":"LAST_32","group":null,
-     "homeTeam":{"name":"Argentina","shortName":"Argentina"},"awayTeam":{"name":"Algeria","shortName":"Algeria"},
-     "score":{"winner":"HOME_TEAM","duration":"REGULAR","fullTime":{"home":3,"away":0}}},
-
-    {"id":537430,"utcDate":"2026-07-04T01:30:00Z","status":"FINISHED","stage":"LAST_32","group":null,
-     "homeTeam":{"name":"Switzerland","shortName":"Switzerland"},"awayTeam":{"name":"Czechia","shortName":"Czechia"},
-     "score":{"winner":"HOME_TEAM","duration":"REGULAR","fullTime":{"home":2,"away":0}}},
-
-    {"id":537428,"utcDate":"2026-07-03T18:00:00Z","status":"FINISHED","stage":"LAST_32","group":null,
-     "homeTeam":{"name":"Japan","shortName":"Japan"},"awayTeam":{"name":"Scotland","shortName":"Scotland"},
-     "score":{"winner":"HOME_TEAM","duration":"REGULAR","fullTime":{"home":2,"away":1}}},
-
-    {"id":537375,"utcDate":"2026-07-04T21:00:00Z","status":"FINISHED","stage":"LAST_16","group":null,
-     "homeTeam":{"name":"Germany","shortName":"Germany"},"awayTeam":{"name":"France","shortName":"France"},
-     "score":{"winner":"HOME_TEAM","duration":"REGULAR","fullTime":{"home":2,"away":1}}},
-
-    {"id":537376,"utcDate":"2026-07-04T17:00:00Z","status":"FINISHED","stage":"LAST_16","group":null,
-     "homeTeam":{"name":"South Korea","shortName":"South Korea"},"awayTeam":{"name":"Morocco","shortName":"Morocco"},
-     "score":{"winner":"AWAY_TEAM","duration":"REGULAR","fullTime":{"home":0,"away":1}}},
-
-    {"id":537377,"utcDate":"2026-07-05T20:00:00Z","status":"FINISHED","stage":"LAST_16","group":null,
-     "homeTeam":{"name":"Brazil","shortName":"Brazil"},"awayTeam":{"name":"Japan","shortName":"Japan"},
-     "score":{"winner":"HOME_TEAM","duration":"REGULAR","fullTime":{"home":2,"away":0}}},
-
-    {"id":537378,"utcDate":"2026-07-06T00:00:00Z","status":"FINISHED","stage":"LAST_16","group":null,
-     "homeTeam":{"name":"Mexico","shortName":"Mexico"},"awayTeam":{"name":"England","shortName":"England"},
-     "score":{"winner":"AWAY_TEAM","duration":"PENALTY_SHOOTOUT","fullTime":{"home":1,"away":1}}},
-
-    {"id":537379,"utcDate":"2026-07-06T19:00:00Z","status":"FINISHED","stage":"LAST_16","group":null,
-     "homeTeam":{"name":"Spain","shortName":"Spain"},"awayTeam":{"name":"Portugal","shortName":"Portugal"},
-     "score":{"winner":"HOME_TEAM","duration":"REGULAR","fullTime":{"home":2,"away":1}}},
-
-    {"id":537380,"utcDate":"2026-07-07T00:00:00Z","status":"FINISHED","stage":"LAST_16","group":null,
-     "homeTeam":{"name":"USA","shortName":"USA"},"awayTeam":{"name":"Belgium","shortName":"Belgium"},
-     "score":{"winner":"HOME_TEAM","duration":"REGULAR","fullTime":{"home":1,"away":0}}},
-
-    {"id":537381,"utcDate":"2026-07-07T16:00:00Z","status":"FINISHED","stage":"LAST_16","group":null,
-     "homeTeam":{"name":"Argentina","shortName":"Argentina"},"awayTeam":{"name":"Japan","shortName":"Japan"},
-     "score":{"winner":"HOME_TEAM","duration":"REGULAR","fullTime":{"home":2,"away":0}}},
-
-    {"id":537382,"utcDate":"2026-07-07T20:00:00Z","status":"FINISHED","stage":"LAST_16","group":null,
-     "homeTeam":{"name":"Canada","shortName":"Canada"},"awayTeam":{"name":"Switzerland","shortName":"Switzerland"},
-     "score":{"winner":"AWAY_TEAM","duration":"EXTRA_TIME","fullTime":{"home":1,"away":2}}},
-
-    {"id":537383,"utcDate":"2026-07-09T20:00:00Z","status":"FINISHED","stage":"QUARTER_FINALS","group":null,
-     "homeTeam":{"name":"Germany","shortName":"Germany"},"awayTeam":{"name":"Morocco","shortName":"Morocco"},
-     "score":{"winner":"HOME_TEAM","duration":"REGULAR","fullTime":{"home":2,"away":0}}},
-
-    {"id":537384,"utcDate":"2026-07-10T19:00:00Z","status":"FINISHED","stage":"QUARTER_FINALS","group":null,
-     "homeTeam":{"name":"Spain","shortName":"Spain"},"awayTeam":{"name":"USA","shortName":"USA"},
-     "score":{"winner":"AWAY_TEAM","duration":"EXTRA_TIME","fullTime":{"home":1,"away":2}}},
-
-    {"id":537385,"utcDate":"2026-07-11T21:00:00Z","status":"FINISHED","stage":"QUARTER_FINALS","group":null,
-     "homeTeam":{"name":"Brazil","shortName":"Brazil"},"awayTeam":{"name":"England","shortName":"England"},
-     "score":{"winner":"AWAY_TEAM","duration":"REGULAR","fullTime":{"home":0,"away":1}}},
-
-    {"id":537386,"utcDate":"2026-07-12T01:00:00Z","status":"FINISHED","stage":"QUARTER_FINALS","group":null,
-     "homeTeam":{"name":"Argentina","shortName":"Argentina"},"awayTeam":{"name":"Switzerland","shortName":"Switzerland"},
-     "score":{"winner":"HOME_TEAM","duration":"REGULAR","fullTime":{"home":3,"away":1}}},
-
-    {"id":537387,"utcDate":"2026-07-14T19:00:00Z","status":"FINISHED","stage":"SEMI_FINALS","group":null,
-     "homeTeam":{"name":"Germany","shortName":"Germany"},"awayTeam":{"name":"USA","shortName":"USA"},
-     "score":{"winner":"AWAY_TEAM","duration":"REGULAR","fullTime":{"home":1,"away":2}}},
-
-    {"id":537388,"utcDate":"2026-07-15T19:00:00Z","status":"FINISHED","stage":"SEMI_FINALS","group":null,
-     "homeTeam":{"name":"England","shortName":"England"},"awayTeam":{"name":"Argentina","shortName":"Argentina"},
-     "score":{"winner":"AWAY_TEAM","duration":"PENALTY_SHOOTOUT","fullTime":{"home":1,"away":1}}},
-
-    {"id":537389,"utcDate":"2026-07-18T21:00:00Z","status":"FINISHED","stage":"THIRD_PLACE","group":null,
-     "homeTeam":{"name":"Germany","shortName":"Germany"},"awayTeam":{"name":"England","shortName":"England"},
-     "score":{"winner":"HOME_TEAM","duration":"REGULAR","fullTime":{"home":2,"away":1}}},
-
-    {"id":537390,"utcDate":"2026-07-19T19:00:00Z","status":"FINISHED","stage":"FINAL","group":null,
-     "homeTeam":{"name":"USA","shortName":"USA"},"awayTeam":{"name":"Argentina","shortName":"Argentina"},
-     "score":{"winner":"AWAY_TEAM","duration":"EXTRA_TIME","fullTime":{"home":2,"away":3}}}
+    {
+      "id": 537415,
+      "utcDate": "2026-06-29T20:30:00Z",
+      "status": "IN_PLAY",
+      "minute": 54,
+      "injuryTime": null,
+      "stage": "LAST_32",
+      "group": null,
+      "matchday": null,
+      "homeTeam": {"id": 759, "name": "Germany", "shortName": "Germany", "tla": "GER", "crest": "https://crests.football-data.org/759.svg"},
+      "awayTeam": {"id": 772, "name": "South Korea", "shortName": "Korea Republic", "tla": "KOR", "crest": "https://crests.football-data.org/772.png"},
+      "score": {
+        "winner": null,
+        "duration": "REGULAR",
+        "fullTime": {"home": 2, "away": 1},
+        "halfTime": {"home": 1, "away": 0}
+      }
+    },
+    {
+      "id": 537423,
+      "utcDate": "2026-06-29T17:00:00Z",
+      "status": "FINISHED",
+      "minute": 90,
+      "injuryTime": null,
+      "stage": "LAST_32",
+      "group": null,
+      "matchday": null,
+      "homeTeam": {"id": 764, "name": "Brazil", "shortName": "Brazil", "tla": "BRA", "crest": "https://crests.football-data.org/764.svg"},
+      "awayTeam": {"id": 766, "name": "Japan", "shortName": "Japan", "tla": "JPN", "crest": "https://crests.football-data.org/766.svg"},
+      "score": {
+        "winner": "HOME_TEAM",
+        "duration": "REGULAR",
+        "fullTime": {"home": 3, "away": 1},
+        "halfTime": {"home": 1, "away": 1}
+      }
+    },
+    {
+      "id": 537425,
+      "utcDate": "2026-07-01T01:00:00Z",
+      "status": "PAUSED",
+      "minute": 45,
+      "injuryTime": null,
+      "stage": "LAST_32",
+      "group": null,
+      "matchday": null,
+      "homeTeam": {"id": 769, "name": "Mexico", "shortName": "Mexico", "tla": "MEX", "crest": "https://crests.football-data.org/769.svg"},
+      "awayTeam": {"id": 805, "name": "Belgium", "shortName": "Belgium", "tla": "BEL", "crest": "https://crests.football-data.org/805.svg"},
+      "score": {
+        "winner": null,
+        "duration": "REGULAR",
+        "fullTime": {"home": 1, "away": 1},
+        "halfTime": {"home": 1, "away": 1}
+      }
+    }
   ]
 }

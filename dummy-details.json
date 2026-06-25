@@ -1,0 +1,65 @@
+{
+  "537415": {
+    "id": 537415,
+    "status": "IN_PLAY",
+    "minute": 54,
+    "injuryTime": null,
+    "homeTeam": {"id": 759, "name": "Germany", "shortName": "Germany"},
+    "awayTeam": {"id": 772, "name": "South Korea", "shortName": "Korea Republic"},
+    "score": {
+      "fullTime": {"home": 2, "away": 1},
+      "halfTime": {"home": 1, "away": 0}
+    },
+    "goals": [
+      {"minute": 23, "injuryTime": null, "type": "REGULAR", "team": {"name": "Germany"}, "scorer": {"name": "Musiala"}, "assist": {"name": "Wirtz"}},
+      {"minute": 41, "injuryTime": null, "type": "REGULAR", "team": {"name": "South Korea"}, "scorer": {"name": "Son Heung-min"}, "assist": null},
+      {"minute": 51, "injuryTime": null, "type": "PENALTY", "team": {"name": "Germany"}, "scorer": {"name": "Havertz"}, "assist": null}
+    ],
+    "bookings": [
+      {"minute": 37, "card": "YELLOW", "team": {"name": "South Korea"}, "player": {"name": "Kim Min-jae"}},
+      {"minute": 49, "card": "YELLOW", "team": {"name": "Germany"}, "player": {"name": "Kimmich"}}
+    ]
+  },
+  "537423": {
+    "id": 537423,
+    "status": "FINISHED",
+    "minute": 90,
+    "injuryTime": null,
+    "homeTeam": {"id": 764, "name": "Brazil", "shortName": "Brazil"},
+    "awayTeam": {"id": 766, "name": "Japan", "shortName": "Japan"},
+    "score": {
+      "fullTime": {"home": 3, "away": 1},
+      "halfTime": {"home": 1, "away": 1}
+    },
+    "goals": [
+      {"minute": 18, "injuryTime": null, "type": "REGULAR", "team": {"name": "Japan"}, "scorer": {"name": "Minamino"}, "assist": {"name": "Doan"}},
+      {"minute": 44, "injuryTime": null, "type": "REGULAR", "team": {"name": "Brazil"}, "scorer": {"name": "Vinicius Jr."}, "assist": {"name": "Raphinha"}},
+      {"minute": 67, "injuryTime": null, "type": "REGULAR", "team": {"name": "Brazil"}, "scorer": {"name": "Rodrygo"}, "assist": null},
+      {"minute": 82, "injuryTime": null, "type": "OWN", "team": {"name": "Japan"}, "scorer": {"name": "Tomiyasu"}, "assist": null}
+    ],
+    "bookings": [
+      {"minute": 55, "card": "YELLOW", "team": {"name": "Japan"}, "player": {"name": "Endo"}},
+      {"minute": 71, "card": "RED", "team": {"name": "Japan"}, "player": {"name": "Itakura"}}
+    ]
+  },
+  "537425": {
+    "id": 537425,
+    "status": "PAUSED",
+    "minute": 45,
+    "injuryTime": null,
+    "homeTeam": {"id": 769, "name": "Mexico", "shortName": "Mexico"},
+    "awayTeam": {"id": 805, "name": "Belgium", "shortName": "Belgium"},
+    "score": {
+      "fullTime": {"home": 1, "away": 1},
+      "halfTime": {"home": 1, "away": 1}
+    },
+    "goals": [
+      {"minute": 12, "injuryTime": null, "type": "REGULAR", "team": {"name": "Mexico"}, "scorer": {"name": "Lozano"}, "assist": {"name": "Herrera"}},
+      {"minute": 39, "injuryTime": null, "type": "REGULAR", "team": {"name": "Belgium"}, "scorer": {"name": "De Bruyne"}, "assist": {"name": "Lukaku"}}
+    ],
+    "bookings": [
+      {"minute": 28, "card": "YELLOW", "team": {"name": "Mexico"}, "player": {"name": "Guardado"}},
+      {"minute": 43, "card": "YELLOW", "team": {"name": "Belgium"}, "player": {"name": "De Bruyne"}}
+    ]
+  }
+}

@@ -4683,14 +4683,10 @@ let groupWinners = {};
 let lastFetch = null;
 
 async function loadScores() {
-  // TEST BUILD: poll the Cloudflare Worker directly for near-live scores,
-  // instead of relying on the once-a-minute GitHub Action -> data.json pipeline.
-  // The Worker edge-caches responses (~30s) so this stays well under API rate limits
-  // regardless of how many visitors are polling at once.
   try {
-    const res = await fetch('https://fancy-block-fde3.aking116.workers.dev/competitions/WC/matches?season=2026&t=' + Date.now());
+    const res = await fetch('dummy.json?t=' + Date.now());
     const data = await res.json();
-    scoreMap = {};
+    const newScoreMap = {};
     (data.matches || []).forEach(m => {
       // Include all stages so knockout match scores also display
       const home = normalise(m.homeTeam.shortName || m.homeTeam.name || '');
@@ -4700,33 +4696,15 @@ async function loadScores() {
       const status = m.status; // TIMED, IN_PLAY, PAUSED, FINISHED
       const hg = m.score?.fullTime?.home;
       const ag = m.score?.fullTime?.away;
-      scoreMap[key] = { home: hg, away: ag, status, minute: m.minute, injuryTime: m.injuryTime, id: m.id };
+      newScoreMap[key] = { home: hg, away: ag, status, minute: m.minute, injuryTime: m.injuryTime, id: m.id };
     });
+    scoreMap = newScoreMap; // only replace once fully built
     lastFetch = new Date();
   } catch(e) {
-    console.log('Worker fetch failed, falling back to data.json:', e.message);
-    // Fallback so the page still works if the Worker is ever unreachable (CORS, outage, etc)
-    try {
-      const res2 = await fetch('data.json?t=' + Date.now());
-      const data2 = await res2.json();
-      scoreMap = {};
-      (data2.matches || []).forEach(m => {
-        const home = normalise(m.homeTeam.shortName || m.homeTeam.name || '');
-        const away = normalise(m.awayTeam.shortName || m.awayTeam.name || '');
-        if (!home || !away) return;
-        const key = home + '|' + away;
-        const status = m.status;
-        const hg = m.score?.fullTime?.home;
-        const ag = m.score?.fullTime?.away;
-        scoreMap[key] = { home: hg, away: ag, status, minute: m.minute, injuryTime: m.injuryTime, id: m.id };
-      });
-      lastFetch = new Date();
-    } catch(e2) {
-      console.log('Fallback data.json also failed:', e2.message);
-    }
+    console.log('Could not load scores:', e.message);
   }
   try {
-    const detRes = await fetch('match-details.json?t=' + Date.now());
+    const detRes = await fetch('dummy-details.json?t=' + Date.now());
     matchDetails = await detRes.json();
   } catch(e) {
     matchDetails = matchDetails || {};
@@ -4854,8 +4832,8 @@ function getScore(teamsStr) {
   if (parts.length !== 2) return null;
   // Normalise our display names to match API normalised names
   const DISPLAY_MAP = { 'Bosnia & Herz.': 'Bosnia' };
-  const home = DISPLAY_MAP[parts[0].trim()] || parts[0].trim();
-  const away = DISPLAY_MAP[parts[1].trim()] || parts[1].trim();
+  const home = normalise(DISPLAY_MAP[parts[0].trim()] || parts[0].trim());
+  const away = normalise(DISPLAY_MAP[parts[1].trim()] || parts[1].trim());
   const key = home + '|' + away;
   const s = scoreMap[key];
   if (!s) return null;
@@ -5650,15 +5628,8 @@ if (koBtn) koBtn.addEventListener('click', () => {
         const s = getState();
         render(s.offset, s.team);
       });
-    }, 25000); // TEST BUILD: 25s polling direct from Worker for near-live scores
+    }, 60000);
   });
-
-  // Load match-details.json immediately on page load so hover cards work straight away
-  // (the Worker polling cycle doesn't fire until 25s in, so without this hover cards are blank initially)
-  fetch('match-details.json?t=' + Date.now())
-    .then(r => r.json())
-    .then(d => { matchDetails = d; const s = getState(); render(s.offset, s.team); })
-    .catch(() => {});
 
   // ── Match event card: hover (desktop) + tap (mobile) ────────────────────
   let activeCard = null;
