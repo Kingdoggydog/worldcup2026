@@ -729,6 +729,7 @@ async function load(){
   try{
     const dr=await fetch('dummy-details.json?t='+Date.now());
     matchDetails=await dr.json();
+    render(); // re-render so has-events classes are applied
   }catch(e){matchDetails=matchDetails||{};}
 }
 
