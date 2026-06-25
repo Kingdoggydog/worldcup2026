@@ -609,11 +609,11 @@ function buildEventCard(m){
   if(!['FINISHED','IN_PLAY','PAUSED'].includes(det.status)) return null;
   const hg=det.score?.fullTime?.home, ag=det.score?.fullTime?.away;
   if(hg===null||hg===undefined) return null;
-  const homeName=m.homeTeam?.shortName||m.homeTeam?.name||'';
-  const awayName=m.awayTeam?.shortName||m.awayTeam?.name||'';
+  // Use names from matchDetails directly - most reliable source
+  const homeName=det.homeTeam?.name||det.homeTeam?.shortName||m.homeTeam?.name||'';
   const events={home:[],away:[]};
   (det.goals||[]).forEach(g=>{
-    let side=g.team?.name===homeName||g.team?.name===m.homeTeam?.name?'home':'away';
+    let side=g.team?.name===homeName?'home':'away';
     let tag='';
     if(g.type==='OWN'){side=side==='home'?'away':'home';tag=' (OG)';}
     else if(g.type==='PENALTY') tag=' (pen)';
@@ -624,7 +624,7 @@ function buildEventCard(m){
     });
   });
   (det.bookings||[]).forEach(b=>{
-    const side=b.team?.name===homeName||b.team?.name===m.homeTeam?.name?'home':'away';
+    const side=b.team?.name===homeName?'home':'away';
     const icon=b.card==='RED'?'&#128997;':'&#129000;';
     events[side].push({
       sortMin:b.minute,
@@ -649,21 +649,25 @@ function buildEventCard(m){
     const id=parseInt(el.getAttribute('data-mid'));
     if(!id) return;
     const m=matches.find(x=>x.id===id);
+    console.log('show card for id',id,'match found:',!!m,'det:',!!matchDetails[String(id)]);
     if(!m) return;
     const html=buildEventCard(m);
+    console.log('card html:',html?'generated':'null');
     if(!html) return;
     el.insertAdjacentHTML('beforeend',html);
     activeCard=el.querySelector('.event-card');
-    // Position: clamp to viewport
+    // Wait for paint before measuring
     const card=activeCard;
-    const elR=el.getBoundingClientRect();
-    const cw=card.offsetWidth;
-    const cx=elR.left+elR.width/2;
-    let lx=cx-elR.left-cw/2;
-    const margin=8;
-    lx=Math.max(margin-elR.left,Math.min(lx,(window.innerWidth-margin-cw)-elR.left));
-    card.style.left=lx+'px';
-    card.style.transform='none';
+    requestAnimationFrame(()=>{
+      const elR=el.getBoundingClientRect();
+      const cw=card.offsetWidth;
+      const cx=elR.left+elR.width/2;
+      let lx=cx-elR.left-cw/2;
+      const margin=8;
+      lx=Math.max(margin-elR.left,Math.min(lx,(window.innerWidth-margin-cw)-elR.left));
+      card.style.left=lx+'px';
+      card.style.transform='none';
+    });
   }
   const touch=window.matchMedia('(hover: none)').matches;
   document.addEventListener('mouseover',e=>{
