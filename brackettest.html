@@ -697,7 +697,7 @@ async function load(){
   buildNums();
   render();
   try{
-    const r=await fetch('data.json?t='+Date.now());
+    const r=await fetch('dummy.json?t='+Date.now());
     const d=await r.json();
     const ko=d.matches.filter(m=>m.stage!=='GROUP_STAGE');
     if(ko.length>0){
@@ -734,7 +734,7 @@ async function load(){
     render();
   }catch(e){console.log('data.json:',e.message);}
   try{
-    const dr=await fetch('match-details.json?t='+Date.now());
+    const dr=await fetch('dummy-details.json?t='+Date.now());
     matchDetails=await dr.json();
     render(); // re-render so has-events classes are applied
   }catch(e){matchDetails=matchDetails||{};}
