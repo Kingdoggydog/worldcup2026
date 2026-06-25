@@ -59,7 +59,7 @@ body.print-mode .champ{font-size:9px;margin-top:1px;min-height:12px;}
 .bcol{display:flex;flex-direction:column;flex:1;min-width:0;padding:0 3px;}
 .bcol.fcol{flex:1;min-width:0;display:flex;flex-direction:column;align-items:stretch;justify-content:center;padding:0 4px;gap:6px;}
 .blbl{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--gold);text-align:center;padding:6px 2px;border-bottom:1px solid var(--border);margin-bottom:6px;}
-.bmatches{display:flex;flex-direction:column;justify-content:space-around;flex:1;gap:3px;padding:2px 0;}
+.bmatches{display:flex;flex-direction:column;justify-content:space-around;flex:1;gap:3px;padding:2px 0;overflow:visible;}
 .mb{background:var(--card);border:1px solid var(--border);border-radius:4px;overflow:hidden;margin:2px 0;width:100%;}
 .mb.fin{border-color:var(--win);}
 .mb.live{border-color:#F39C12;}
@@ -98,6 +98,8 @@ body.print-mode .champ{font-size:9px;margin-top:1px;min-height:12px;}
   .mb.has-events:hover, .mm.has-events:hover {
     box-shadow: 0 0 0 1.5px rgba(255,255,255,0.55), 0 0 12px rgba(255,255,255,0.15);
     cursor: pointer;
+    overflow: visible;
+    z-index: 50;
   }
   .event-card {
     position: absolute;
