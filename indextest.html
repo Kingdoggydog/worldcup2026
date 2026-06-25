@@ -4988,11 +4988,29 @@ function render(offset, team) {
         const hi = hiIdx >= 0;
         const cls = hi ? ` highlighted hi-${hiIdx+1} ko-match` : ' ko-match';
         const grpStyle = `style="color:var(--ko-${m.grp}, #7A82A8)"`;
-        html += `<div class="match${cls}${hasEventData(m.teams)?' has-events':''}" data-teams="${m.teams.replace(/"/g,'&quot;')}">
+        const score = getScore(m.teams);
+        const parts = m.teams.split(' v ');
+        const home = parts[0]?.trim() || '';
+        const away = parts[1]?.trim() || '';
+        let teamsDisplay;
+        if (score) {
+          const statusStr = score.label ? `<span class="score-status${score.cls==='score-live'?' live':''}">${score.label}</span>` : '';
+          const minStr = score.minute ? `<span class="live-min">${score.minute}</span>` : '';
+          teamsDisplay = `<span class="${score.cls} score-inline">
+            <span class="score-home">${flagImg(home)}${home}</span>
+            <span class="score-nums"><span class="score-number">${score.home} - ${score.away}</span><span class="score-vs-hidden">v</span></span>
+            <span class="score-away">${away}${flagImg(away)}</span>
+            <span class="score-right">${statusStr}${minStr}</span>
+          </span>`;
+        } else {
+          teamsDisplay = `<span class="teams">${teamsHtml(m.teams)}</span>`;
+        }
+        html += `<div class="match${cls}${hasEventData(m.teams)?' has-events':''}" data-teams="${m.teams.replace(/"/g,'&quot;"')}">
           <span style="font-family:'Barlow Condensed',sans-serif;flex-shrink:0;width:80px;color:${koColors[m.grp]||'#7A82A8'}"><span style="font-weight:700;font-size:17px">${m.grp}</span> <span style="font-weight:400;font-size:14px">${m.num}</span></span>
           <span class="time">${t}</span>
-          <span class="teams">${teamsHtml(m.teams)}</span>
+          ${teamsDisplay}
           <span class="venue">${m.venue}</span>
+        </div>`;
         </div>`;
       });
       div.innerHTML = html;
