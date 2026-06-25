@@ -596,6 +596,8 @@ async function load(){
       const KNOWN_TEAMS = {
         537429: { home:'Switzerland', away:null }, // M85 - Switzerland won Group B
         537417: { home:null, away:'Canada' },      // M73 - Canada 2nd Group B
+        537423: { home:'Brazil', away:null },      // M76 - Brazil won Group C
+        537418: { home:null, away:'Morocco' },     // M75 - Morocco 2nd Group C
       };
       matches=matches.map(m=>{
         const override=KNOWN_TEAMS[m.id];
