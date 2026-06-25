@@ -170,6 +170,7 @@
       <span style="display:inline-flex;align-items:center;gap:4px;"><span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#FFD700;color:#0A0E1A;font-weight:800;font-size:10px;font-family:'Barlow Condensed',sans-serif;">1</span> Group winner clinched</span>
       <span style="display:inline-flex;align-items:center;gap:4px;"><span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#2ECC71;color:#0A0E1A;font-weight:800;font-size:10px;font-family:'Barlow Condensed',sans-serif;">Q</span> Qualified (top 2 guaranteed)</span>
       <span style="display:inline-flex;align-items:center;gap:4px;"><span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#5DADE2;color:#0A0E1A;font-weight:800;font-size:10px;font-family:'Barlow Condensed',sans-serif;">2</span> Runner-up clinched</span>
+      <span style="display:inline-flex;align-items:center;gap:4px;"><span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#F39C12;color:#0A0E1A;font-weight:800;font-size:10px;font-family:'Barlow Condensed',sans-serif;">3</span> Qualified as best 3rd</span>
       <span style="display:inline-flex;align-items:center;gap:4px;"><span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#E74C3C;color:#0A0E1A;font-weight:800;font-size:10px;font-family:'Barlow Condensed',sans-serif;">E</span> Eliminated</span>
     </span>
   </div>
@@ -473,6 +474,9 @@ function buildResultsLookup(grp,allResults){
   return lookup;
 }
 
+// Teams confirmed as best 3rd place qualifiers - hardcoded until API confirms
+const KNOWN_THIRD = new Set(['Bosnia']);
+
 function calcGroupBadges(grp,teamNames,results){
   const{finished,remaining}=getGroupFixtureStatus(grp,results);
   if(!allTeamsPlayedTwo(teamNames,finished))return{};
@@ -579,9 +583,9 @@ function render(highlightTeam,data){
       const gdStr=s.p>0?(gd>0?'+'+gd:String(gd)):'-';
       const hiIdx=_highlightTeams.findIndex(t=>t&&t!=='none'&&t===name);
       const hiCls=hiIdx>=0?` hi-${hiIdx+1}`:'';
-      const badge=badges[name];
-      const badgeColor=badge==='1'?'#FFD700':badge==='Q'?'#2ECC71':badge==='2'?'#5DADE2':badge==='E'?'#E74C3C':'transparent';
-      const badgeHtml=badge?`<span class="qual-badge" style="background:${badgeColor};" title="${badge==='1'?'Group winner clinched':badge==='Q'?'Qualified (top 2 guaranteed)':badge==='2'?'Runner-up clinched':'Eliminated'}">${badge}</span>`:'';
+      const badge=KNOWN_THIRD.has(name)?'3':(badges[name]||'');
+      const badgeColor=badge==='1'?'#FFD700':badge==='Q'?'#2ECC71':badge==='2'?'#5DADE2':badge==='3'?'#F39C12':badge==='E'?'#E74C3C':'transparent';
+      const badgeHtml=badge?`<span class="qual-badge" style="background:${badgeColor};" title="${badge==='1'?'Group winner clinched':badge==='Q'?'Qualified (top 2 guaranteed)':badge==='2'?'Runner-up clinched':badge==='3'?'Qualified as best 3rd place':'Eliminated'}">${badge}</span>`:'';
       rows+=`<tr class="${hiCls}">
         <td class="stat" style="width:20px;padding-left:8px">${i+1}</td>
         <td class="team-name">${flagImg(name)}${name}${badgeHtml}</td>
@@ -639,17 +643,19 @@ function renderThirdPlace(groups,groupStats){
   section.style.display='block';
   const groupStageComplete=thirds.every(t=>t.p===3);
   tbody.innerHTML=thirds.map((t,i)=>{
-    const advances=i<8;
+    const advances=i<8||KNOWN_THIRD.has(t.team);
+    const confirmed3rd=KNOWN_THIRD.has(t.team);
     const gdStr=t.p>0?(t.gd>0?'+'+t.gd:String(t.gd)):'-';
-    const statusCell=groupStageComplete?(advances?'✅ Advance':'❌ Eliminated'):'-';
-    const posColor=groupStageComplete?(advances?'#2ECC71':'var(--text-muted)'):'var(--text-muted)';
+    const statusCell=confirmed3rd?'✅ Advance':groupStageComplete?(advances?'✅ Advance':'❌ Eliminated'):'-';
+    const posColor=confirmed3rd?'#F39C12':groupStageComplete?(advances?'#2ECC71':'var(--text-muted)'):'var(--text-muted)';
+    const badge3=confirmed3rd?`<span class="qual-badge" style="background:#F39C12;" title="Qualified as best 3rd place">3</span>`:'';
     return `<tr class="${advances?'advances':''}">
       <td class="pos" style="color:${posColor};">${i+1}</td>
-      <td class="team-name">${flagImg(t.team)}${t.team}<span class="grp-badge" style="color:${GROUP_COLORS[t.grp]}">${t.grp}</span></td>
+      <td class="team-name">${flagImg(t.team)}${t.team}${badge3}<span class="grp-badge" style="color:${GROUP_COLORS[t.grp]}">${t.grp}</span></td>
       <td>${t.p>0?t.p:'-'}</td><td>${t.p>0?t.w:'-'}</td><td>${t.p>0?t.d:'-'}</td><td>${t.p>0?t.l:'-'}</td>
       <td>${gdStr}</td><td>${t.p>0?t.gf:'-'}</td>
       <td class="pts">${t.p>0?t.pts:'-'}</td>
-      <td style="font-size:13px;color:${groupStageComplete?(advances?'#2ECC71':'#E74C3C'):'var(--text-muted)'};">${statusCell}</td>
+      <td style="font-size:13px;color:${confirmed3rd?'#F39C12':groupStageComplete?(advances?'#2ECC71':'#E74C3C'):'var(--text-muted)'};">${statusCell}</td>
     </tr>`;
   }).join('');
 }
