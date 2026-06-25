@@ -4724,7 +4724,7 @@ async function loadScores() {
 
 // Swap "Win X" placeholders for confirmed team names once a group is mathematically clinched.
 // Letter range A-L only (group letters) - never touches "Win M89" style knockout-round references.
-function applyGroupWinners(teamsStr) {
+function applyGroupWinners(teamsStr, id) {
   let result = teamsStr.replace(/\bWin ([A-L])\b/g, (match, letter) => {
     const winner = groupWinners[letter]?.first;
     return winner ? winner : match;
@@ -4733,6 +4733,16 @@ function applyGroupWinners(teamsStr) {
     const runnerUp = groupWinners[letter]?.second;
     return runnerUp ? runnerUp : match;
   });
+  // If match ID is known, try to resolve remaining placeholders from API via scoreMapById
+  if (id && scoreMapById[id]) {
+    const s = scoreMapById[id];
+    const parts = result.split(' v ');
+    if (parts.length === 2) {
+      const home = (s.homeName && s.homeName.length > 0) ? s.homeName : parts[0].trim();
+      const away = (s.awayName && s.awayName.length > 0) ? s.awayName : parts[1].trim();
+      result = `${home} v ${away}`;
+    }
+  }
   return result;
 }
 
@@ -4992,7 +5002,7 @@ function render(offset, team) {
       div.className = 'day';
       let html = `<div class="day-header"><span class="day-name">${hdr.name}</span><span class="day-date">${hdr.date}</span></div>`;
       koFiltered.forEach(rawM => {
-        const m = { ...rawM, teams: applyGroupWinners(rawM.teams) };
+        const m = { ...rawM, teams: applyGroupWinners(rawM.teams, rawM.id) };
         const t  = formatTime(m.utc + offset);
         const hiIdx = _highlightTeams.findIndex(t => t && t !== 'none' && m.teams.includes(t));
         const hi = hiIdx >= 0;
