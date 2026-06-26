@@ -4807,7 +4807,7 @@ async function loadScores() {
 let matchNumToId = {};
 function buildMatchNumToId() {
   matchNumToId = {};
-  MATCHES.forEach(m => { if (m.num && m.id) matchNumToId[m.num] = m.id; });
+  [...MATCHES, ...KNOCKOUT_MATCHES].forEach(m => { if (m.num && m.id) matchNumToId[m.num] = m.id; });
 }
 
 // Resolve 'Win MXX' or 'Loss MXX' from scoreMapById results
