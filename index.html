@@ -4803,6 +4803,29 @@ async function loadScores() {
 
 // Swap "Win X" placeholders for confirmed team names once a group is mathematically clinched.
 // Letter range A-L only (group letters) - never touches "Win M89" style knockout-round references.
+// Build match number -> id lookup from MATCHES array (called once after MATCHES defined)
+let matchNumToId = {};
+function buildMatchNumToId() {
+  matchNumToId = {};
+  [...MATCHES, ...KNOCKOUT_MATCHES].forEach(m => { if (m.num && m.id) matchNumToId[m.num] = m.id; });
+}
+
+// Resolve 'Win MXX' or 'Loss MXX' from scoreMapById results
+function resolveKnockoutRef(ref) {
+  const winMatch = ref.match(/^Win (M\d+)$/);
+  const lossMatch = ref.match(/^Loss (M\d+)$/);
+  const mnum = winMatch ? winMatch[1] : lossMatch ? lossMatch[1] : null;
+  if (!mnum) return ref;
+  const id = matchNumToId[mnum];
+  if (!id) return ref;
+  const s = scoreMapById[id];
+  if (!s || s.status !== 'FINISHED' || s.home === null || s.away === null) return ref;
+  // Determine winner or loser
+  if (s.home > s.away) return winMatch ? s.homeName : s.awayName;
+  if (s.away > s.home) return winMatch ? s.awayName : s.homeName;
+  return ref; // draw shouldn't happen in knockout but leave as-is
+}
+
 function applyGroupWinners(teamsStr, id) {
   let result = teamsStr.replace(/\bWin ([A-L])\b/g, (match, letter) => {
     const winner = groupWinners[letter]?.first;
@@ -4812,6 +4835,8 @@ function applyGroupWinners(teamsStr, id) {
     const runnerUp = groupWinners[letter]?.second;
     return runnerUp ? runnerUp : match;
   });
+  // Resolve Win MXX / Loss MXX from finished knockout results
+  result = result.replace(/\b(Win|Loss) (M\d+)\b/g, (match) => resolveKnockoutRef(match));
   // If match ID is known, try to resolve remaining placeholders from API via scoreMapById
   if (id && scoreMapById[id]) {
     const s = scoreMapById[id];
@@ -5740,9 +5765,11 @@ if (koBtn) koBtn.addEventListener('click', () => {
   }
 
   loadScores().then(() => {
+    buildMatchNumToId();
     restoreAndRender();
     setInterval(() => {
       loadScores().then(() => {
+        buildMatchNumToId();
         const s = getState();
         render(s.offset, s.team);
       });
