@@ -420,6 +420,11 @@
     border-top: 1px solid var(--border);
     padding-bottom: 60px;
   }
+  #support-banner-mobile { display: none; }
+  @media(max-width:900px) {
+    #support-banner-desktop { display: none !important; }
+    #support-banner-mobile { display: block !important; }
+  }
   #bmc-mobile a {
     font-family: 'Barlow Condensed', sans-serif;
     font-weight: 700; font-size: 14px;
@@ -4480,15 +4485,75 @@
   <div class="footer">
     <p id="footer-tz">All times AEST (UTC+10) &bull; Source: FIFA / Fox Sports 2026 &bull; <span id="version">v1.4</span></p>
     <p>72 group stage matches &bull; 12 groups &bull; Top 2 per group + 8 best 3rd place advance</p>
+  <!-- Desktop: single banner -->
+  <div id="support-banner-desktop" style="
+    background: rgba(201,168,76,0.07);
+    border: 1px solid var(--gold);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 20px auto 8px;
+    max-width: 900px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    font-family: 'Barlow Condensed', sans-serif;
+  ">
+    <span style="color:var(--text);font-weight:600;font-size:14px;white-space:nowrap;">
+      📬 Get notified — EPL, Champions League, NFL &amp; more
+    </span>
+    <a href="https://forms.gle/SdgXv6VJLanh5JBJ6" target="_blank"
+       style="background:var(--gold);color:#000;padding:6px 14px;border-radius:4px;
+       font-weight:700;font-size:13px;text-decoration:none;letter-spacing:1px;white-space:nowrap;">
+      NOTIFY ME
+    </a>
+    <span style="color:var(--text-muted);font-size:13px;">|</span>
+    <span style="color:var(--text-muted);font-size:13px;white-space:nowrap;">
+      ☕ Free &amp; ad-free — if it's been useful,
+    </span>
+    <a href="https://www.buymeacoffee.com/coolcato" target="_blank"
+       style="background:transparent;color:var(--gold);border:1px solid var(--gold);
+       padding:6px 14px;border-radius:4px;font-weight:700;font-size:13px;
+       text-decoration:none;letter-spacing:1px;white-space:nowrap;">
+      BUY ME A COFFEE
+    </a>
+  </div>
+  <!-- Mobile: two separate bars -->
+  <div id="support-banner-mobile" style="display:none;margin:20px auto 8px;max-width:900px;">
+    <div style="
+      background:rgba(201,168,76,0.07);border:1px solid var(--gold);
+      border-radius:8px;padding:10px 16px;margin-bottom:8px;
+      display:flex;align-items:center;justify-content:space-between;
+      font-family:'Barlow Condensed',sans-serif;gap:12px;
+    ">
+      <span style="color:var(--text);font-weight:600;font-size:14px;">📬 Get notified — EPL, CL, NFL &amp; more</span>
+      <a href="https://forms.gle/SdgXv6VJLanh5JBJ6" target="_blank"
+         style="background:var(--gold);color:#000;padding:6px 14px;border-radius:4px;
+         font-weight:700;font-size:13px;text-decoration:none;letter-spacing:1px;white-space:nowrap;">
+        NOTIFY ME
+      </a>
+    </div>
+    <div style="
+      background:rgba(201,168,76,0.07);border:1px solid var(--gold);
+      border-radius:8px;padding:10px 16px;
+      display:flex;align-items:center;justify-content:space-between;
+      font-family:'Barlow Condensed',sans-serif;gap:12px;
+    ">
+      <span style="color:var(--text-muted);font-size:13px;">☕ Free &amp; ad-free — if it's been useful</span>
+      <a href="https://www.buymeacoffee.com/coolcato" target="_blank"
+         style="background:transparent;color:var(--gold);border:1px solid var(--gold);
+         padding:6px 14px;border-radius:4px;font-weight:700;font-size:13px;
+         text-decoration:none;letter-spacing:1px;white-space:nowrap;">
+        BUY ME A COFFEE
+      </a>
+    </div>
+  </div>
     <p>Live scores &amp; match data provided by <a href="https://www.football-data.org" target="_blank" style="color:var(--gold);text-decoration:none;">football-data.org</a></p>
   </div>
   <div style="text-align:center;margin-top:12px;">
     <a href="https://www.reddit.com/user/coolcato" target="_blank" style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;color:var(--text-muted);text-decoration:none;letter-spacing:1px;">👋 Made by u/coolcato</a>
-    <a href="https://forms.gle/SdgXv6VJLanh5JBJ6" target="_blank" style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;color:var(--text-muted);text-decoration:none;letter-spacing:1px;">&#128233; Get notified for future tournaments</a>
   </div>
-  <div id="bmc-mobile">
-    <a href="https://www.buymeacoffee.com/coolcato" target="_blank">☕ Buy me a coffee</a>
-  </div>
+
 
 </div>
 
