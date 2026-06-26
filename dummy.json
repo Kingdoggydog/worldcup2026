@@ -5,19 +5,37 @@
     {
       "id": 537415,
       "utcDate": "2026-06-29T20:30:00Z",
-      "status": "IN_PLAY",
-      "minute": 54,
+      "status": "FINISHED",
+      "minute": 90,
       "injuryTime": null,
       "stage": "LAST_32",
       "group": null,
       "matchday": null,
-      "homeTeam": {"id": 759, "name": "Germany", "shortName": "Germany", "tla": "GER", "crest": "https://crests.football-data.org/759.svg"},
-      "awayTeam": {"id": 772, "name": "South Korea", "shortName": "Korea Republic", "tla": "KOR", "crest": "https://crests.football-data.org/772.png"},
+      "homeTeam": {"id": 759, "name": "Germany", "shortName": "Germany", "tla": "GER"},
+      "awayTeam": {"id": 772, "name": "South Korea", "shortName": "Korea Republic", "tla": "KOR"},
       "score": {
-        "winner": null,
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
-        "fullTime": {"home": 2, "away": 1},
+        "fullTime": {"home": 3, "away": 1},
         "halfTime": {"home": 1, "away": 0}
+      }
+    },
+    {
+      "id": 537416,
+      "utcDate": "2026-06-30T21:00:00Z",
+      "status": "FINISHED",
+      "minute": 90,
+      "injuryTime": null,
+      "stage": "LAST_32",
+      "group": null,
+      "matchday": null,
+      "homeTeam": {"id": null, "name": null, "shortName": null, "tla": null},
+      "awayTeam": {"id": 760, "name": "Spain", "shortName": "Spain", "tla": "ESP"},
+      "score": {
+        "winner": "AWAY_TEAM",
+        "duration": "REGULAR",
+        "fullTime": {"home": 0, "away": 2},
+        "halfTime": {"home": 0, "away": 1}
       }
     },
     {
@@ -29,31 +47,67 @@
       "stage": "LAST_32",
       "group": null,
       "matchday": null,
-      "homeTeam": {"id": 764, "name": "Brazil", "shortName": "Brazil", "tla": "BRA", "crest": "https://crests.football-data.org/764.svg"},
-      "awayTeam": {"id": 766, "name": "Japan", "shortName": "Japan", "tla": "JPN", "crest": "https://crests.football-data.org/766.svg"},
+      "homeTeam": {"id": 764, "name": "Brazil", "shortName": "Brazil", "tla": "BRA"},
+      "awayTeam": {"id": 766, "name": "Japan", "shortName": "Japan", "tla": "JPN"},
       "score": {
         "winner": "HOME_TEAM",
         "duration": "REGULAR",
-        "fullTime": {"home": 3, "away": 1},
-        "halfTime": {"home": 1, "away": 1}
+        "fullTime": {"home": 2, "away": 0},
+        "halfTime": {"home": 1, "away": 0}
       }
     },
     {
-      "id": 537425,
-      "utcDate": "2026-07-01T01:00:00Z",
-      "status": "PAUSED",
-      "minute": 45,
+      "id": 537424,
+      "utcDate": "2026-06-30T17:00:00Z",
+      "status": "FINISHED",
+      "minute": 90,
       "injuryTime": null,
       "stage": "LAST_32",
       "group": null,
       "matchday": null,
-      "homeTeam": {"id": 769, "name": "Mexico", "shortName": "Mexico", "tla": "MEX", "crest": "https://crests.football-data.org/769.svg"},
-      "awayTeam": {"id": 805, "name": "Belgium", "shortName": "Belgium", "tla": "BEL", "crest": "https://crests.football-data.org/805.svg"},
+      "homeTeam": {"id": 1935, "name": "Ivory Coast", "shortName": "Ivory Coast", "tla": "CIV"},
+      "awayTeam": {"id": 773, "name": "France", "shortName": "France", "tla": "FRA"},
+      "score": {
+        "winner": "AWAY_TEAM",
+        "duration": "REGULAR",
+        "fullTime": {"home": 1, "away": 3},
+        "halfTime": {"home": 0, "away": 1}
+      }
+    },
+    {
+      "id": 537375,
+      "utcDate": "2026-07-04T21:00:00Z",
+      "status": "TIMED",
+      "minute": null,
+      "injuryTime": null,
+      "stage": "LAST_16",
+      "group": null,
+      "matchday": null,
+      "homeTeam": {"id": null, "name": null, "shortName": null, "tla": null},
+      "awayTeam": {"id": null, "name": null, "shortName": null, "tla": null},
       "score": {
         "winner": null,
         "duration": "REGULAR",
-        "fullTime": {"home": 1, "away": 1},
-        "halfTime": {"home": 1, "away": 1}
+        "fullTime": {"home": null, "away": null},
+        "halfTime": {"home": null, "away": null}
+      }
+    },
+    {
+      "id": 537377,
+      "utcDate": "2026-07-05T20:00:00Z",
+      "status": "TIMED",
+      "minute": null,
+      "injuryTime": null,
+      "stage": "LAST_16",
+      "group": null,
+      "matchday": null,
+      "homeTeam": {"id": null, "name": null, "shortName": null, "tla": null},
+      "awayTeam": {"id": null, "name": null, "shortName": null, "tla": null},
+      "score": {
+        "winner": null,
+        "duration": "REGULAR",
+        "fullTime": {"home": null, "away": null},
+        "halfTime": {"home": null, "away": null}
       }
     }
   ]
