@@ -4516,11 +4516,19 @@
     <span style="color:var(--text);font-weight:600;font-size:14px;white-space:nowrap;">
       📬 Get notified — EPL, Champions League, NFL &amp; more
     </span>
-    <a href="https://forms.gle/SdgXv6VJLanh5JBJ6" target="_blank"
-       style="background:var(--gold);color:#000;padding:6px 14px;border-radius:4px;
-       font-weight:700;font-size:13px;text-decoration:none;letter-spacing:1px;white-space:nowrap;">
-      NOTIFY ME
-    </a>
+    <div style="display:flex;border:1px solid rgba(201,168,76,0.3);border-radius:4px;overflow:hidden;background:#1a1a1a;">
+      <input type="email" id="email-input-desk" placeholder="your@email.com"
+        style="background:transparent;border:none;outline:none;padding:6px 10px;
+        font-family:'Barlow Condensed',sans-serif;font-size:13px;color:#e8e8e8;
+        letter-spacing:0.05em;width:180px;" />
+      <button onclick="submitEmail('desk')"
+        style="background:var(--gold);border:none;padding:6px 14px;
+        font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;
+        letter-spacing:1px;text-transform:uppercase;color:#0d0d0d;cursor:pointer;white-space:nowrap;">
+        NOTIFY ME
+      </button>
+    </div>
+    <span id="signup-success-desk" style="display:none;color:#2ECC71;font-size:13px;font-weight:600;">✓ You're on the list!</span>
     <span style="color:var(--text-muted);font-size:13px;">|</span>
     <span style="color:var(--text-muted);font-size:13px;white-space:nowrap;">
       ☕ Free &amp; ad-free — if it's been useful,
@@ -4537,15 +4545,21 @@
     <div style="
       background:rgba(201,168,76,0.07);border:1px solid var(--gold);
       border-radius:8px;padding:10px 16px;margin-bottom:8px;
-      display:flex;align-items:center;justify-content:space-between;
-      font-family:'Barlow Condensed',sans-serif;gap:12px;
+      font-family:'Barlow Condensed',sans-serif;
     ">
-      <span style="color:var(--text);font-weight:600;font-size:14px;">📬 Get notified — EPL, CL, NFL &amp; more</span>
-      <a href="https://forms.gle/SdgXv6VJLanh5JBJ6" target="_blank"
-         style="background:var(--gold);color:#000;padding:6px 14px;border-radius:4px;
-         font-weight:700;font-size:13px;text-decoration:none;letter-spacing:1px;white-space:nowrap;">
-        NOTIFY ME
-      </a>
+      <div style="color:var(--text);font-weight:600;font-size:14px;margin-bottom:8px;">📬 Get notified — EPL, CL, NFL &amp; more</div>
+      <div style="display:flex;border:1px solid rgba(201,168,76,0.3);border-radius:4px;overflow:hidden;background:#1a1a1a;">
+        <input type="email" id="email-input-mob" placeholder="your@email.com"
+          style="flex:1;background:transparent;border:none;outline:none;padding:8px 10px;
+          font-family:'Barlow Condensed',sans-serif;font-size:14px;color:#e8e8e8;" />
+        <button onclick="submitEmail('mob')"
+          style="background:var(--gold);border:none;padding:8px 14px;
+          font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;
+          letter-spacing:1px;text-transform:uppercase;color:#0d0d0d;cursor:pointer;">
+          NOTIFY ME
+        </button>
+      </div>
+      <div id="signup-success-mob" style="display:none;color:#2ECC71;font-size:13px;font-weight:600;margin-top:6px;">✓ You're on the list!</div>
     </div>
     <div style="
       background:rgba(201,168,76,0.07);border:1px solid var(--gold);
@@ -4671,20 +4685,20 @@ const KNOCKOUT_MATCHES = [
   // Round of 32 (M73-M88) - Jun 28 - Jul 4
   { grp:'R32', num:'M73', id:537417, utc:19,   date:'2026-06-28', teams:'2nd A v 2nd B',         venue:'Los Angeles'   },
   { grp:'R32', num:'M76', id:537423, utc:17,   date:'2026-06-29', teams:'Win C v 2nd F',         venue:'Houston'       },
-  { grp:'R32', num:'M74', id:537415, utc:20.5, date:'2026-06-29', teams:'Win E v 3rd A/B/C/D/F', venue:'Boston'        },
+  { grp:'R32', num:'M74', id:537415, utc:20.5, date:'2026-06-29', teams:'Germany v Paraguay',       venue:'Boston'        },
   { grp:'R32', num:'M75', id:537418, utc:1,    date:'2026-06-30', teams:'Win F v 2nd C',         venue:'Monterrey'     },
-  { grp:'R32', num:'M78', id:537424, utc:17,   date:'2026-06-30', teams:'2nd E v 2nd I',         venue:'Dallas'        },
-  { grp:'R32', num:'M77', id:537416, utc:21,   date:'2026-06-30', teams:'Win I v 3rd C/D/F/G/H', venue:'New York/NJ'   },
+  { grp:'R32', num:'M78', id:537424, utc:17,   date:'2026-06-30', teams:'Ivory Coast v Norway',    venue:'Dallas'        },
+  { grp:'R32', num:'M77', id:537416, utc:21,   date:'2026-06-30', teams:'France v Sweden',          venue:'New York/NJ'   },
   { grp:'R32', num:'M79', id:537425, utc:1,    date:'2026-07-01', teams:'Win A v 3rd C/E/F/H/I', venue:'Mexico City'   },
   { grp:'R32', num:'M80', id:537426, utc:16,   date:'2026-07-01', teams:'Win L v 3rd E/H/I/J/K', venue:'Atlanta'       },
-  { grp:'R32', num:'M82', id:537422, utc:20,   date:'2026-07-01', teams:'Win G v 3rd A/E/H/I/J', venue:'Seattle'       },
+  { grp:'R32', num:'M82', id:537422, utc:20,   date:'2026-07-01', teams:'Belgium v 3rd A/E/H/I/J', venue:'Seattle'       },
   { grp:'R32', num:'M81', id:537421, utc:0,    date:'2026-07-02', teams:'USA v Bosnia',            venue:'San Francisco' },
   { grp:'R32', num:'M84', id:537420, utc:19,   date:'2026-07-02', teams:'Win H v 2nd J',         venue:'Los Angeles'   },
   { grp:'R32', num:'M83', id:537419, utc:23,   date:'2026-07-02', teams:'2nd K v 2nd L',         venue:'Toronto'       },
   { grp:'R32', num:'M85', id:537429, utc:3,    date:'2026-07-03', teams:'Win B v 3rd E/F/G/I/J', venue:'Vancouver'     },
   { grp:'R32', num:'M86', id:537427, utc:22,   date:'2026-07-03', teams:'Win J v 2nd H',         venue:'Miami'         },
   { grp:'R32', num:'M87', id:537430, utc:1.5,  date:'2026-07-04', teams:'Win K v 3rd D/E/I/J/L', venue:'Kansas City'   },
-  { grp:'R32', num:'M88', id:537428, utc:18,   date:'2026-07-03', teams:'2nd D v 2nd G',         venue:'Dallas'        },
+  { grp:'R32', num:'M88', id:537428, utc:18,   date:'2026-07-03', teams:'Australia v Egypt',        venue:'Dallas'        },
   // Round of 16 (M89-M96) - Jul 4-8
   { grp:'R16', num:'M89', id:537375, utc:21,   date:'2026-07-04', teams:'Win M74 v Win M77',     venue:'Philadelphia'  },
   { grp:'R16', num:'M90', id:537376, utc:17,   date:'2026-07-04', teams:'Win M73 v Win M75',     venue:'Houston'       },
@@ -4764,7 +4778,7 @@ let lastFetch = null;
 
 async function loadScores() {
   try {
-    const res = await fetch('dummy.json?t=' + Date.now());
+    const res = await fetch('data.json?t=' + Date.now());
     const data = await res.json();
     const newScoreMap = {};
     const newScoreMapById = {};
@@ -5850,5 +5864,30 @@ if (koBtn) koBtn.addEventListener('click', () => {
 <!-- Buy Me a Coffee widget -->
 <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="coolcato" data-description="Support me on Buy me a coffee!" data-message="" data-color="#C9A84C" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
 
+<script>
+const FORM_ACTION = 'https://docs.google.com/forms/d/e/1FAIpQLScrBvWbYhPRbY9kEJlPbAsZoeglw2DYXdfEKIRUTnMmx1_1dg/formResponse';
+const ENTRY_ID = 'entry.1045781291';
+function submitEmail(suffix) {
+  const input = document.getElementById('email-input-' + suffix);
+  const success = document.getElementById('signup-success-' + suffix);
+  if (!input) return;
+  const email = input.value.trim();
+  if (!email || !email.includes('@')) {
+    input.style.border = '1px solid #E74C3C';
+    return;
+  }
+  input.style.border = '';
+  fetch(`${FORM_ACTION}?${ENTRY_ID}=${encodeURIComponent(email)}`, {
+    method: 'POST', mode: 'no-cors'
+  }).then(() => {
+    if (success) success.style.display = 'block';
+    input.value = '';
+  });
+}
+['desk','mob'].forEach(s => {
+  const el = document.getElementById('email-input-' + s);
+  if (el) el.addEventListener('keydown', e => { if (e.key === 'Enter') submitEmail(s); });
+});
+</script>
 </body>
 </html>
