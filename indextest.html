@@ -4500,45 +4500,41 @@
     <p id="footer-tz">All times AEST (UTC+10) &bull; Source: FIFA / Fox Sports 2026 &bull; <span id="version">v1.4</span></p>
     <p>72 group stage matches &bull; 12 groups &bull; Top 2 per group + 8 best 3rd place advance</p>
   <!-- Desktop: single banner -->
-  <div id="support-banner-desktop" style="
-    background: rgba(201,168,76,0.07);
-    border: 1px solid var(--gold);
-    border-radius: 8px;
-    padding: 10px 16px;
-    margin: 20px auto 8px;
-    max-width: 900px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    font-family: 'Barlow Condensed', sans-serif;
-  ">
-    <span style="color:var(--text);font-weight:600;font-size:14px;white-space:nowrap;">
-      📬 Get notified — EPL, Champions League, NFL &amp; more
-    </span>
-    <div style="display:flex;border:1px solid rgba(201,168,76,0.3);border-radius:4px;overflow:hidden;background:#1a1a1a;">
-      <input type="email" id="email-input-desk" placeholder="your@email.com"
-        style="background:transparent;border:none;outline:none;padding:6px 10px;
-        font-family:'Barlow Condensed',sans-serif;font-size:13px;color:#e8e8e8;
-        letter-spacing:0.05em;width:180px;" />
-      <button onclick="submitEmail('desk')"
-        style="background:var(--gold);border:none;padding:6px 14px;
-        font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;
-        letter-spacing:1px;text-transform:uppercase;color:#0d0d0d;cursor:pointer;white-space:nowrap;">
-        NOTIFY ME
-      </button>
+  <div id="support-banner-desktop" style="margin:20px auto 8px;max-width:600px;">
+    <div style="
+      background:rgba(201,168,76,0.07);border:1px solid var(--gold);
+      border-radius:8px;padding:10px 16px;margin-bottom:8px;
+      font-family:'Barlow Condensed',sans-serif;
+    ">
+      <div style="color:var(--text);font-weight:600;font-size:14px;margin-bottom:8px;">📬 Get notified — EPL, Champions League, NFL &amp; more</div>
+      <div style="display:flex;border:1px solid rgba(201,168,76,0.3);border-radius:4px;overflow:hidden;background:#1a1a1a;">
+        <input type="email" id="email-input-desk" placeholder="your@email.com"
+          style="flex:1;background:transparent;border:none;outline:none;padding:8px 10px;
+          font-family:'Barlow Condensed',sans-serif;font-size:14px;color:#e8e8e8;" />
+        <button onclick="submitEmail('desk')"
+          style="background:var(--gold);border:none;padding:8px 14px;
+          font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;
+          letter-spacing:1px;text-transform:uppercase;color:#0d0d0d;cursor:pointer;">
+          NOTIFY ME
+        </button>
+      </div>
+      <div id="signup-success-desk" style="display:none;color:#2ECC71;font-size:13px;font-weight:600;margin-top:6px;">✓ You're on the list!</div>
     </div>
-    <span id="signup-success-desk" style="display:none;color:#2ECC71;font-size:13px;font-weight:600;">✓ You're on the list!</span>
-    <span style="color:var(--text-muted);font-size:13px;">|</span>
-    <span style="color:var(--text-muted);font-size:13px;white-space:nowrap;">
-      ☕ Free &amp; ad-free — if useful,
-    </span>
-    <a href="https://www.buymeacoffee.com/coolcato" target="_blank"
-       style="background:transparent;color:var(--gold);border:1px solid var(--gold);
-       padding:6px 14px;border-radius:4px;font-weight:700;font-size:13px;
-       text-decoration:none;letter-spacing:1px;white-space:nowrap;">
-      BUY ME A COFFEE
-    </a>
+    <div style="
+      background:rgba(201,168,76,0.07);border:1px solid var(--gold);
+      border-radius:8px;padding:10px 16px;
+      display:flex;align-items:center;justify-content:space-between;
+      font-family:'Barlow Condensed',sans-serif;gap:12px;
+    ">
+      <span style="color:var(--text-muted);font-size:13px;">☕ Free &amp; ad-free — if it's been useful</span>
+      <a href="https://www.buymeacoffee.com/coolcato" target="_blank"
+         style="background:transparent;color:var(--gold);border:1px solid var(--gold);
+         padding:6px 14px;border-radius:4px;font-weight:700;font-size:13px;
+         text-decoration:none;letter-spacing:1px;white-space:nowrap;">
+        BUY ME A COFFEE
+      </a>
+    </div>
+  </div>
   </div>
   <!-- Mobile: two separate bars -->
   <div id="support-banner-mobile" style="display:none;margin:20px auto 8px;max-width:900px;">
