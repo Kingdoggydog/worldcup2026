@@ -4500,52 +4500,62 @@
     <p id="footer-tz">All times AEST (UTC+10) &bull; Source: FIFA / Fox Sports 2026 &bull; <span id="version">v1.4</span></p>
     <p>72 group stage matches &bull; 12 groups &bull; Top 2 per group + 8 best 3rd place advance</p>
   <!-- Desktop: single banner -->
+  <div style="width:100%;display:flex;justify-content:center;margin:12px 0 4px;">
   <div id="support-banner-desktop" style="
     background: rgba(201,168,76,0.07);
     border: 1px solid var(--gold);
     border-radius: 8px;
-    padding: 12px 16px;
-    margin: 20px auto 8px;
-    max-width: 900px;
-    display: flex;
+    padding: 10px 20px;
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    gap: 16px;
+    gap: 12px;
     font-family: 'Barlow Condensed', sans-serif;
   ">
     <span style="color:var(--text);font-weight:600;font-size:14px;white-space:nowrap;">
-      📬 Get notified — EPL, Champions League, NFL &amp; more
+      📬 Get notified — EPL, Champs League, NFL &amp; more
     </span>
-    <a href="https://forms.gle/SdgXv6VJLanh5JBJ6" target="_blank"
-       style="background:var(--gold);color:#000;padding:6px 14px;border-radius:4px;
-       font-weight:700;font-size:13px;text-decoration:none;letter-spacing:1px;white-space:nowrap;">
-      NOTIFY ME
-    </a>
+    <div style="display:flex;border:1px solid rgba(201,168,76,0.3);border-radius:4px;overflow:hidden;background:#1a1a1a;">
+      <input type="email" id="email-input-desk" placeholder="your@email.com"
+        style="background:transparent;border:none;outline:none;padding:6px 10px;
+        font-family:'Barlow Condensed',sans-serif;font-size:13px;color:#e8e8e8;width:160px;" />
+      <button onclick="submitEmail('desk')"
+        style="background:var(--gold);border:none;padding:6px 12px;
+        font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;
+        letter-spacing:1px;text-transform:uppercase;color:#0d0d0d;cursor:pointer;white-space:nowrap;">
+        NOTIFY ME
+      </button>
+    </div>
+    <span id="signup-success-desk" style="display:none;color:#2ECC71;font-size:13px;font-weight:600;white-space:nowrap;">✓ You're on the list!</span>
     <span style="color:var(--text-muted);font-size:13px;">|</span>
-    <span style="color:var(--text-muted);font-size:13px;white-space:nowrap;">
-      ☕ Free &amp; ad-free — if it's been useful,
-    </span>
+    <span style="color:var(--text-muted);font-size:13px;white-space:nowrap;">☕ Free &amp; ad-free — if it's been useful,</span>
     <a href="https://www.buymeacoffee.com/coolcato" target="_blank"
        style="background:transparent;color:var(--gold);border:1px solid var(--gold);
-       padding:6px 14px;border-radius:4px;font-weight:700;font-size:13px;
+       padding:6px 12px;border-radius:4px;font-weight:700;font-size:13px;
        text-decoration:none;letter-spacing:1px;white-space:nowrap;">
       BUY ME A COFFEE
     </a>
+  </div>
   </div>
   <!-- Mobile: two separate bars -->
   <div id="support-banner-mobile" style="display:none;margin:20px auto 8px;max-width:900px;">
     <div style="
       background:rgba(201,168,76,0.07);border:1px solid var(--gold);
       border-radius:8px;padding:10px 16px;margin-bottom:8px;
-      display:flex;align-items:center;justify-content:space-between;
-      font-family:'Barlow Condensed',sans-serif;gap:12px;
+      font-family:'Barlow Condensed',sans-serif;
     ">
-      <span style="color:var(--text);font-weight:600;font-size:14px;">📬 Get notified — EPL, CL, NFL &amp; more</span>
-      <a href="https://forms.gle/SdgXv6VJLanh5JBJ6" target="_blank"
-         style="background:var(--gold);color:#000;padding:6px 14px;border-radius:4px;
-         font-weight:700;font-size:13px;text-decoration:none;letter-spacing:1px;white-space:nowrap;">
-        NOTIFY ME
-      </a>
+      <div style="color:var(--text);font-weight:600;font-size:14px;margin-bottom:8px;">📬 Get notified — EPL, CL, NFL &amp; more</div>
+      <div style="display:flex;border:1px solid rgba(201,168,76,0.3);border-radius:4px;overflow:hidden;background:#1a1a1a;">
+        <input type="email" id="email-input-mob" placeholder="your@email.com"
+          style="flex:1;background:transparent;border:none;outline:none;padding:8px 10px;
+          font-family:'Barlow Condensed',sans-serif;font-size:14px;color:#e8e8e8;" />
+        <button onclick="submitEmail('mob')"
+          style="background:var(--gold);border:none;padding:8px 14px;
+          font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;
+          letter-spacing:1px;text-transform:uppercase;color:#0d0d0d;cursor:pointer;">
+          NOTIFY ME
+        </button>
+      </div>
+      <div id="signup-success-mob" style="display:none;color:#2ECC71;font-size:13px;font-weight:600;margin-top:6px;">✓ You're on the list!</div>
     </div>
     <div style="
       background:rgba(201,168,76,0.07);border:1px solid var(--gold);
@@ -5850,5 +5860,30 @@ if (koBtn) koBtn.addEventListener('click', () => {
 <!-- Buy Me a Coffee widget -->
 <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="coolcato" data-description="Support me on Buy me a coffee!" data-message="" data-color="#C9A84C" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
 
+<script>
+const FORM_ACTION = 'https://docs.google.com/forms/d/e/1FAIpQLScrBvWbYhPRbY9kEJlPbAsZoeglw2DYXdfEKIRUTnMmx1_1dg/formResponse';
+const ENTRY_ID = 'entry.1045781291';
+function submitEmail(suffix) {
+  const input = document.getElementById('email-input-' + suffix);
+  const success = document.getElementById('signup-success-' + suffix);
+  if (!input) return;
+  const email = input.value.trim();
+  if (!email || !email.includes('@')) {
+    input.style.border = '1px solid #E74C3C';
+    return;
+  }
+  input.style.border = '';
+  fetch(`${FORM_ACTION}?${ENTRY_ID}=${encodeURIComponent(email)}`, {
+    method: 'POST', mode: 'no-cors'
+  }).then(() => {
+    if (success) success.style.display = 'block';
+    input.value = '';
+  });
+}
+['desk','mob'].forEach(s => {
+  const el = document.getElementById('email-input-' + s);
+  if (el) el.addEventListener('keydown', e => { if (e.key === 'Enter') submitEmail(s); });
+});
+</script>
 </body>
 </html>
