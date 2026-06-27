@@ -475,8 +475,9 @@ function buildResultsLookup(grp,allResults){
 }
 
 // Teams confirmed as best 3rd place qualifiers - hardcoded until API confirms
-const KNOWN_THIRD = new Set(['Bosnia','Ecuador','Sweden','England','Portugal','Paraguay','Egypt','Ghana']);
+const KNOWN_THIRD = new Set(['Bosnia','Ecuador','Sweden','Paraguay']);
 const KNOWN_ELIMINATED_THIRD = new Set(['Uruguay']);
+const KNOWN_QUALIFIED = new Set(['England','Ghana','Portugal','Egypt']);
 
 function calcGroupBadges(grp,teamNames,results){
   const{finished,remaining}=getGroupFixtureStatus(grp,results);
@@ -584,7 +585,7 @@ function render(highlightTeam,data){
       const gdStr=s.p>0?(gd>0?'+'+gd:String(gd)):'-';
       const hiIdx=_highlightTeams.findIndex(t=>t&&t!=='none'&&t===name);
       const hiCls=hiIdx>=0?` hi-${hiIdx+1}`:'';
-      const badge=KNOWN_ELIMINATED_THIRD.has(name)?'E':KNOWN_THIRD.has(name)?'3':(badges[name]||'');
+      const badge=KNOWN_ELIMINATED_THIRD.has(name)?'E':KNOWN_THIRD.has(name)?'3':KNOWN_QUALIFIED.has(name)?'Q':(badges[name]||'');
       const badgeColor=badge==='1'?'#FFD700':badge==='Q'?'#2ECC71':badge==='2'?'#5DADE2':badge==='3'?'#F39C12':badge==='E'?'#E74C3C':'transparent';
       const badgeHtml=badge?`<span class="qual-badge" style="background:${badgeColor};" title="${badge==='1'?'Group winner clinched':badge==='Q'?'Qualified (top 2 or best 8 3rd place)':badge==='2'?'Runner-up clinched':badge==='3'?'Qualified as best 3rd place':'Eliminated'}">${badge}</span>`:'';
       rows+=`<tr class="${hiCls}">
@@ -646,17 +647,18 @@ function renderThirdPlace(groups,groupStats){
   tbody.innerHTML=thirds.map((t,i)=>{
     const advances=i<8||KNOWN_THIRD.has(t.team);
     const confirmed3rd=KNOWN_THIRD.has(t.team);
+    const eliminated3rd=KNOWN_ELIMINATED_THIRD.has(t.team);
     const gdStr=t.p>0?(t.gd>0?'+'+t.gd:String(t.gd)):'-';
-    const statusCell=confirmed3rd?'✅ Advance':groupStageComplete?(advances?'✅ Advance':'❌ Eliminated'):'-';
-    const posColor=confirmed3rd?'#F39C12':groupStageComplete?(advances?'#2ECC71':'var(--text-muted)'):'var(--text-muted)';
-    const badge3=confirmed3rd?`<span class="qual-badge" style="background:#F39C12;" title="Qualified as best 3rd place">3</span>`:'';
+    const statusCell=eliminated3rd?'❌ Eliminated':confirmed3rd?'✅ Advance':groupStageComplete?(advances?'✅ Advance':'❌ Eliminated'):'-';
+    const posColor=eliminated3rd?'#E74C3C':confirmed3rd?'#F39C12':groupStageComplete?(advances?'#2ECC71':'var(--text-muted)'):'var(--text-muted)';
+    const badge3=confirmed3rd?`<span class="qual-badge" style="background:#F39C12;" title="Qualified as best 3rd place">3</span>`:eliminated3rd?`<span class="qual-badge" style="background:#E74C3C;" title="Eliminated">E</span>`:'';
     return `<tr class="${advances?'advances':''}">
       <td class="pos" style="color:${posColor};">${i+1}</td>
       <td class="team-name">${flagImg(t.team)}${t.team}${badge3}<span class="grp-badge" style="color:${GROUP_COLORS[t.grp]}">${t.grp}</span></td>
       <td>${t.p>0?t.p:'-'}</td><td>${t.p>0?t.w:'-'}</td><td>${t.p>0?t.d:'-'}</td><td>${t.p>0?t.l:'-'}</td>
       <td>${gdStr}</td><td>${t.p>0?t.gf:'-'}</td>
       <td class="pts">${t.p>0?t.pts:'-'}</td>
-      <td style="font-size:13px;color:${confirmed3rd?'#F39C12':groupStageComplete?(advances?'#2ECC71':'#E74C3C'):'var(--text-muted)'};">${statusCell}</td>
+      <td style="font-size:13px;color:${eliminated3rd?'#E74C3C':confirmed3rd?'#F39C12':groupStageComplete?(advances?'#2ECC71':'#E74C3C'):'var(--text-muted)'};">${statusCell}</td>
     </tr>`;
   }).join('');
 }
