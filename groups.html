@@ -168,7 +168,7 @@
     Groups with a <span style="display:inline-block;width:8px;height:8px;background:#2ECC71;border-radius:50%;vertical-align:middle;margin:0 2px"></span> are in play &mdash; standings shown are provisional.<br>
     <span style="display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:6px;">
       <span style="display:inline-flex;align-items:center;gap:4px;"><span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#FFD700;color:#0A0E1A;font-weight:800;font-size:10px;font-family:'Barlow Condensed',sans-serif;">1</span> Group winner clinched</span>
-      <span style="display:inline-flex;align-items:center;gap:4px;"><span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#2ECC71;color:#0A0E1A;font-weight:800;font-size:10px;font-family:'Barlow Condensed',sans-serif;">Q</span> Qualified (top 2 guaranteed)</span>
+      <span style="display:inline-flex;align-items:center;gap:4px;"><span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#2ECC71;color:#0A0E1A;font-weight:800;font-size:10px;font-family:'Barlow Condensed',sans-serif;">Q</span> Qualified (top 2 or best 8 3rd place)</span>
       <span style="display:inline-flex;align-items:center;gap:4px;"><span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#5DADE2;color:#0A0E1A;font-weight:800;font-size:10px;font-family:'Barlow Condensed',sans-serif;">2</span> Runner-up clinched</span>
       <span style="display:inline-flex;align-items:center;gap:4px;"><span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#F39C12;color:#0A0E1A;font-weight:800;font-size:10px;font-family:'Barlow Condensed',sans-serif;">3</span> Qualified as best 3rd</span>
       <span style="display:inline-flex;align-items:center;gap:4px;"><span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#E74C3C;color:#0A0E1A;font-weight:800;font-size:10px;font-family:'Barlow Condensed',sans-serif;">E</span> Eliminated</span>
@@ -475,7 +475,8 @@ function buildResultsLookup(grp,allResults){
 }
 
 // Teams confirmed as best 3rd place qualifiers - hardcoded until API confirms
-const KNOWN_THIRD = new Set(['Bosnia','Ecuador','Sweden']);
+const KNOWN_THIRD = new Set(['Bosnia','Ecuador','Sweden','England','Portugal','Paraguay','Egypt','Ghana']);
+const KNOWN_ELIMINATED_THIRD = new Set(['Uruguay']);
 
 function calcGroupBadges(grp,teamNames,results){
   const{finished,remaining}=getGroupFixtureStatus(grp,results);
@@ -583,9 +584,9 @@ function render(highlightTeam,data){
       const gdStr=s.p>0?(gd>0?'+'+gd:String(gd)):'-';
       const hiIdx=_highlightTeams.findIndex(t=>t&&t!=='none'&&t===name);
       const hiCls=hiIdx>=0?` hi-${hiIdx+1}`:'';
-      const badge=KNOWN_THIRD.has(name)?'3':(badges[name]||'');
+      const badge=KNOWN_ELIMINATED_THIRD.has(name)?'E':KNOWN_THIRD.has(name)?'3':(badges[name]||'');
       const badgeColor=badge==='1'?'#FFD700':badge==='Q'?'#2ECC71':badge==='2'?'#5DADE2':badge==='3'?'#F39C12':badge==='E'?'#E74C3C':'transparent';
-      const badgeHtml=badge?`<span class="qual-badge" style="background:${badgeColor};" title="${badge==='1'?'Group winner clinched':badge==='Q'?'Qualified (top 2 guaranteed)':badge==='2'?'Runner-up clinched':badge==='3'?'Qualified as best 3rd place':'Eliminated'}">${badge}</span>`:'';
+      const badgeHtml=badge?`<span class="qual-badge" style="background:${badgeColor};" title="${badge==='1'?'Group winner clinched':badge==='Q'?'Qualified (top 2 or best 8 3rd place)':badge==='2'?'Runner-up clinched':badge==='3'?'Qualified as best 3rd place':'Eliminated'}">${badge}</span>`:'';
       rows+=`<tr class="${hiCls}">
         <td class="stat" style="width:20px;padding-left:8px">${i+1}</td>
         <td class="team-name">${flagImg(name)}${name}${badgeHtml}</td>
