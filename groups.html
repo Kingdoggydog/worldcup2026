@@ -475,10 +475,11 @@ function buildResultsLookup(grp,allResults){
 }
 
 // Teams confirmed as best 3rd place qualifiers - hardcoded until API confirms
-const KNOWN_THIRD = new Set(['Bosnia','Ecuador','Sweden','Paraguay','Senegal']);
-const KNOWN_ELIMINATED_THIRD = new Set(['Uruguay','Scotland']);
-const KNOWN_QUALIFIED = new Set(['England','Ghana','Portugal']);
-const KNOWN_SECOND = new Set(['Egypt']);
+const KNOWN_THIRD = new Set(['Bosnia','Ecuador','Sweden','Paraguay','Senegal','Ghana']);
+const KNOWN_ELIMINATED_THIRD = new Set(['Uruguay','Scotland','Panama']);
+const KNOWN_QUALIFIED = new Set(['Portugal']);
+const KNOWN_SECOND = new Set(['Egypt','Croatia']);
+const KNOWN_FIRST = new Set(['England']);
 
 function calcGroupBadges(grp,teamNames,results){
   const{finished,remaining}=getGroupFixtureStatus(grp,results);
@@ -586,7 +587,7 @@ function render(highlightTeam,data){
       const gdStr=s.p>0?(gd>0?'+'+gd:String(gd)):'-';
       const hiIdx=_highlightTeams.findIndex(t=>t&&t!=='none'&&t===name);
       const hiCls=hiIdx>=0?` hi-${hiIdx+1}`:'';
-      const badge=KNOWN_ELIMINATED_THIRD.has(name)?'E':KNOWN_THIRD.has(name)?'3':KNOWN_QUALIFIED.has(name)?'Q':KNOWN_SECOND.has(name)?'2':(badges[name]||'');
+      const badge=KNOWN_ELIMINATED_THIRD.has(name)?'E':KNOWN_THIRD.has(name)?'3':KNOWN_FIRST.has(name)?'1':KNOWN_QUALIFIED.has(name)?'Q':KNOWN_SECOND.has(name)?'2':(badges[name]||'');
       const badgeColor=badge==='1'?'#FFD700':badge==='Q'?'#2ECC71':badge==='2'?'#5DADE2':badge==='3'?'#F39C12':badge==='E'?'#E74C3C':'transparent';
       const badgeHtml=badge?`<span class="qual-badge" style="background:${badgeColor};" title="${badge==='1'?'Group winner clinched':badge==='Q'?'Qualified (top 2 or best 8 3rd place)':badge==='2'?'Runner-up clinched':badge==='3'?'Qualified as best 3rd place':'Eliminated'}">${badge}</span>`:'';
       rows+=`<tr class="${hiCls}">
