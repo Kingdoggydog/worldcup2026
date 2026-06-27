@@ -475,9 +475,10 @@ function buildResultsLookup(grp,allResults){
 }
 
 // Teams confirmed as best 3rd place qualifiers - hardcoded until API confirms
-const KNOWN_THIRD = new Set(['Bosnia','Ecuador','Sweden','Paraguay']);
+const KNOWN_THIRD = new Set(['Bosnia','Ecuador','Sweden','Paraguay','Senegal']);
 const KNOWN_ELIMINATED_THIRD = new Set(['Uruguay']);
-const KNOWN_QUALIFIED = new Set(['England','Ghana','Portugal','Egypt']);
+const KNOWN_QUALIFIED = new Set(['England','Ghana','Portugal']);
+const KNOWN_SECOND = new Set(['Egypt']);
 
 function calcGroupBadges(grp,teamNames,results){
   const{finished,remaining}=getGroupFixtureStatus(grp,results);
@@ -585,7 +586,7 @@ function render(highlightTeam,data){
       const gdStr=s.p>0?(gd>0?'+'+gd:String(gd)):'-';
       const hiIdx=_highlightTeams.findIndex(t=>t&&t!=='none'&&t===name);
       const hiCls=hiIdx>=0?` hi-${hiIdx+1}`:'';
-      const badge=KNOWN_ELIMINATED_THIRD.has(name)?'E':KNOWN_THIRD.has(name)?'3':KNOWN_QUALIFIED.has(name)?'Q':(badges[name]||'');
+      const badge=KNOWN_ELIMINATED_THIRD.has(name)?'E':KNOWN_THIRD.has(name)?'3':KNOWN_QUALIFIED.has(name)?'Q':KNOWN_SECOND.has(name)?'2':(badges[name]||'');
       const badgeColor=badge==='1'?'#FFD700':badge==='Q'?'#2ECC71':badge==='2'?'#5DADE2':badge==='3'?'#F39C12':badge==='E'?'#E74C3C':'transparent';
       const badgeHtml=badge?`<span class="qual-badge" style="background:${badgeColor};" title="${badge==='1'?'Group winner clinched':badge==='Q'?'Qualified (top 2 or best 8 3rd place)':badge==='2'?'Runner-up clinched':badge==='3'?'Qualified as best 3rd place':'Eliminated'}">${badge}</span>`:'';
       rows+=`<tr class="${hiCls}">
@@ -645,7 +646,7 @@ function renderThirdPlace(groups,groupStats){
   section.style.display='block';
   const groupStageComplete=thirds.every(t=>t.p===3);
   tbody.innerHTML=thirds.map((t,i)=>{
-    const advances=i<8||KNOWN_THIRD.has(t.team);
+    const advances=(i<8||KNOWN_THIRD.has(t.team))&&!KNOWN_ELIMINATED_THIRD.has(t.team);
     const confirmed3rd=KNOWN_THIRD.has(t.team);
     const eliminated3rd=KNOWN_ELIMINATED_THIRD.has(t.team);
     const gdStr=t.p>0?(t.gd>0?'+'+t.gd:String(t.gd)):'-';
