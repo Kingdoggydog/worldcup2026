@@ -439,18 +439,18 @@ function buildNums(){
   BASE.forEach(m=>{ mnums[m.id]=m.mnum; mnumToId[m.mnum]=m.id; });
 }
 
-// Resolve winner of a match by mnum (e.g. 'M74') from byId results
+// Resolve winner of a match by mnum (e.g. 'M74') from matches array
 function resolveWinner(mnum) {
   const id = mnumToId[mnum];
   if (!id) return null;
-  const m = byId[id];
+  const m = matches.find(x => x.id === id);
   if (!m || m.status !== 'FINISHED') return null;
   const hg = m.score?.fullTime?.home;
   const ag = m.score?.fullTime?.away;
   if (hg === null || ag === null) return null;
   if (hg > ag) return m.homeTeam?.name || null;
   if (ag > hg) return m.awayTeam?.name || null;
-  return null; // draw shouldn't happen in knockout
+  return null;
 }
 
 // Auto-populate R16+ team slots from finished R32/R16 results
@@ -734,19 +734,19 @@ async function load(){
     const d=await r.json();
     const ko=d.matches.filter(m=>m.stage!=='GROUP_STAGE');
     if(ko.length>0){
-      const byId={};
-      BASE.forEach(m=>byId[m.id]={...m});
+      const mergeById={};
+      BASE.forEach(m=>mergeById[m.id]={...m});
       ko.forEach(m=>{
-        if(byId[m.id]){
+        if(mergeById[m.id]){
           // Force API data - no date gate, API is source of truth for teams
           const groupsComplete=true; // SET TO: new Date()>new Date('2026-06-28T19:00:00Z') FOR PRODUCTION
-          const isLast32=byId[m.id].stage==='LAST_32';
+          const isLast32=mergeById[m.id].stage==='LAST_32';
           const homeTeam=(isLast32&&!groupsComplete)?{name:null,shortName:null}:m.homeTeam;
           const awayTeam=(isLast32&&!groupsComplete)?{name:null,shortName:null}:m.awayTeam;
-          byId[m.id]={...byId[m.id],homeTeam,awayTeam,score:m.score,status:m.status,minute:m.minute,injuryTime:m.injuryTime};
+          mergeById[m.id]={...mergeById[m.id],homeTeam,awayTeam,score:m.score,status:m.status,minute:m.minute,injuryTime:m.injuryTime};
         }
       });
-      matches=BASE.map(m=>byId[m.id]||m);
+      matches=BASE.map(m=>mergeById[m.id]||m);
       resolveKnockoutTeams();
 
       // Hardcoded overrides - teams confirmed but API not yet populated.
