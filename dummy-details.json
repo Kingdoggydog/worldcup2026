@@ -5,18 +5,18 @@
     "minute": 54,
     "injuryTime": null,
     "homeTeam": {"id": 759, "name": "Germany", "shortName": "Germany"},
-    "awayTeam": {"id": 772, "name": "South Korea", "shortName": "Korea Republic"},
+    "awayTeam": {"id": 761, "name": "Paraguay", "shortName": "Paraguay"},
     "score": {
       "fullTime": {"home": 2, "away": 1},
       "halfTime": {"home": 1, "away": 0}
     },
     "goals": [
       {"minute": 23, "injuryTime": null, "type": "REGULAR", "team": {"name": "Germany"}, "scorer": {"name": "Musiala"}, "assist": {"name": "Wirtz"}},
-      {"minute": 41, "injuryTime": null, "type": "REGULAR", "team": {"name": "South Korea"}, "scorer": {"name": "Son Heung-min"}, "assist": null},
+      {"minute": 41, "injuryTime": null, "type": "REGULAR", "team": {"name": "Paraguay"}, "scorer": {"name": "Sanabria"}, "assist": null},
       {"minute": 51, "injuryTime": null, "type": "PENALTY", "team": {"name": "Germany"}, "scorer": {"name": "Havertz"}, "assist": null}
     ],
     "bookings": [
-      {"minute": 37, "card": "YELLOW", "team": {"name": "South Korea"}, "player": {"name": "Kim Min-jae"}},
+      {"minute": 37, "card": "YELLOW", "team": {"name": "Paraguay"}, "player": {"name": "Alderete"}},
       {"minute": 49, "card": "YELLOW", "team": {"name": "Germany"}, "player": {"name": "Kimmich"}}
     ]
   },
@@ -48,18 +48,18 @@
     "minute": 45,
     "injuryTime": null,
     "homeTeam": {"id": 769, "name": "Mexico", "shortName": "Mexico"},
-    "awayTeam": {"id": 805, "name": "Belgium", "shortName": "Belgium"},
+    "awayTeam": {"id": 791, "name": "Ecuador", "shortName": "Ecuador"},
     "score": {
       "fullTime": {"home": 1, "away": 1},
       "halfTime": {"home": 1, "away": 1}
     },
     "goals": [
       {"minute": 12, "injuryTime": null, "type": "REGULAR", "team": {"name": "Mexico"}, "scorer": {"name": "Lozano"}, "assist": {"name": "Herrera"}},
-      {"minute": 39, "injuryTime": null, "type": "REGULAR", "team": {"name": "Belgium"}, "scorer": {"name": "De Bruyne"}, "assist": {"name": "Lukaku"}}
+      {"minute": 39, "injuryTime": null, "type": "REGULAR", "team": {"name": "Ecuador"}, "scorer": {"name": "Caicedo"}, "assist": {"name": "Valencia"}}
     ],
     "bookings": [
       {"minute": 28, "card": "YELLOW", "team": {"name": "Mexico"}, "player": {"name": "Guardado"}},
-      {"minute": 43, "card": "YELLOW", "team": {"name": "Belgium"}, "player": {"name": "De Bruyne"}}
+      {"minute": 43, "card": "YELLOW", "team": {"name": "Ecuador"}, "player": {"name": "Preciado"}}
     ]
   }
 }
