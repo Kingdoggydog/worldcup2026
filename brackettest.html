@@ -336,6 +336,7 @@ const BASE = [
 
 let matches=BASE.map(m=>({...m}));
 const mnums={};
+const mnumToId={};
 let matchDetails={};
 
 function norm(n){return n?(NAME_MAP[n]||n):null;}
@@ -435,7 +436,38 @@ function byStage(s){return matches.filter(m=>m.stage===s).sort((a,b)=>new Date(a
 
 function buildNums(){
   // Match numbers are hardcoded in BASE via mnum - no order dependency
-  BASE.forEach(m=>{ mnums[m.id]=m.mnum; });
+  BASE.forEach(m=>{ mnums[m.id]=m.mnum; mnumToId[m.mnum]=m.id; });
+}
+
+// Resolve winner of a match by mnum (e.g. 'M74') from byId results
+function resolveWinner(mnum) {
+  const id = mnumToId[mnum];
+  if (!id) return null;
+  const m = byId[id];
+  if (!m || m.status !== 'FINISHED') return null;
+  const hg = m.score?.fullTime?.home;
+  const ag = m.score?.fullTime?.away;
+  if (hg === null || ag === null) return null;
+  if (hg > ag) return m.homeTeam?.name || null;
+  if (ag > hg) return m.awayTeam?.name || null;
+  return null; // draw shouldn't happen in knockout
+}
+
+// Auto-populate R16+ team slots from finished R32/R16 results
+function resolveKnockoutTeams() {
+  matches.forEach(m => {
+    if (!FEEDERS[m.id]) return; // only process matches that have feeders
+    if (m.homeTeam?.name && m.awayTeam?.name) return; // already populated
+    const [homeMnum, awayMnum] = FEEDERS[m.id];
+    if (!m.homeTeam?.name) {
+      const winner = resolveWinner(homeMnum);
+      if (winner) m.homeTeam = { name: winner, shortName: winner };
+    }
+    if (!m.awayTeam?.name) {
+      const winner = resolveWinner(awayMnum);
+      if (winner) m.awayTeam = { name: winner, shortName: winner };
+    }
+  });
 }
 
 function render(){
@@ -695,6 +727,7 @@ function buildEventCard(m){
 
 async function load(){
   buildNums();
+  resolveKnockoutTeams();
   render();
   try{
     const r=await fetch('dummy.json?t='+Date.now());
@@ -714,6 +747,7 @@ async function load(){
         }
       });
       matches=BASE.map(m=>byId[m.id]||m);
+      resolveKnockoutTeams();
 
       // Hardcoded overrides - teams confirmed but API not yet populated.
       // Safe to leave in - only fires if API still has null, remove once API populates.
