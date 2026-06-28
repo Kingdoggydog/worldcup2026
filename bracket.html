@@ -336,6 +336,7 @@ const BASE = [
 
 let matches=BASE.map(m=>({...m}));
 const mnums={};
+const mnumToId={};
 let matchDetails={};
 
 function norm(n){return n?(NAME_MAP[n]||n):null;}
@@ -435,7 +436,38 @@ function byStage(s){return matches.filter(m=>m.stage===s).sort((a,b)=>new Date(a
 
 function buildNums(){
   // Match numbers are hardcoded in BASE via mnum - no order dependency
-  BASE.forEach(m=>{ mnums[m.id]=m.mnum; });
+  BASE.forEach(m=>{ mnums[m.id]=m.mnum; mnumToId[m.mnum]=m.id; });
+}
+
+// Resolve winner of a match by mnum (e.g. 'M74') from matches array
+function resolveWinner(mnum) {
+  const id = mnumToId[mnum];
+  if (!id) return null;
+  const m = matches.find(x => x.id === id);
+  if (!m || m.status !== 'FINISHED') return null;
+  const hg = m.score?.fullTime?.home;
+  const ag = m.score?.fullTime?.away;
+  if (hg === null || ag === null) return null;
+  if (hg > ag) return m.homeTeam?.name || null;
+  if (ag > hg) return m.awayTeam?.name || null;
+  return null;
+}
+
+// Auto-populate R16+ team slots from finished R32/R16 results
+function resolveKnockoutTeams() {
+  matches.forEach(m => {
+    if (!FEEDERS[m.id]) return; // only process matches that have feeders
+    if (m.homeTeam?.name && m.awayTeam?.name) return; // already populated
+    const [homeMnum, awayMnum] = FEEDERS[m.id];
+    if (!m.homeTeam?.name) {
+      const winner = resolveWinner(homeMnum);
+      if (winner) m.homeTeam = { name: winner, shortName: winner };
+    }
+    if (!m.awayTeam?.name) {
+      const winner = resolveWinner(awayMnum);
+      if (winner) m.awayTeam = { name: winner, shortName: winner };
+    }
+  });
 }
 
 function render(){
@@ -695,53 +727,30 @@ function buildEventCard(m){
 
 async function load(){
   buildNums();
+  resolveKnockoutTeams();
   render();
   try{
     const r=await fetch('data.json?t='+Date.now());
     const d=await r.json();
     const ko=d.matches.filter(m=>m.stage!=='GROUP_STAGE');
     if(ko.length>0){
-      const byId={};
-      BASE.forEach(m=>byId[m.id]={...m});
+      const mergeById={};
+      BASE.forEach(m=>mergeById[m.id]={...m});
       ko.forEach(m=>{
-        if(byId[m.id]){
+        if(mergeById[m.id]){
           // Force API data - no date gate, API is source of truth for teams
           const groupsComplete=true; // SET TO: new Date()>new Date('2026-06-28T19:00:00Z') FOR PRODUCTION
-          const isLast32=byId[m.id].stage==='LAST_32';
+          const isLast32=mergeById[m.id].stage==='LAST_32';
           const homeTeam=(isLast32&&!groupsComplete)?{name:null,shortName:null}:m.homeTeam;
           const awayTeam=(isLast32&&!groupsComplete)?{name:null,shortName:null}:m.awayTeam;
-          byId[m.id]={...byId[m.id],homeTeam,awayTeam,score:m.score,status:m.status,minute:m.minute,injuryTime:m.injuryTime};
+          mergeById[m.id]={...mergeById[m.id],homeTeam,awayTeam,score:m.score,status:m.status,minute:m.minute,injuryTime:m.injuryTime};
         }
       });
-      matches=BASE.map(m=>byId[m.id]||m);
+      matches=BASE.map(m=>mergeById[m.id]||m);
+      resolveKnockoutTeams();
 
       // Hardcoded overrides - teams confirmed but API not yet populated.
       // Safe to leave in - only fires if API still has null, remove once API populates.
-      const KNOWN_TEAMS = {
-        537429: { home:'Switzerland', away:'Algeria' },  // M85 - Switzerland Win B, Algeria 3rd J
-        537417: { home:'South Africa', away:'Canada' },  // M73 - South Africa 2nd A, Canada 2nd B
-        537423: { home:'Brazil', away:null },      // M76 - Brazil won Group C
-        537418: { home:'Netherlands', away:'Morocco' }, // M75 - Netherlands Win F, Morocco 2nd C
-        537423: { home:'Brazil', away:'Japan' },         // M76 - Brazil Win C, Japan 2nd F
-        537426: { home:'England', away:'Congo DR' },     // M80 - England Win L, Congo DR 3rd K
-        537419: { home:'Portugal', away:'Croatia' },    // M83 - Portugal 2nd K, Croatia 2nd L
-        537430: { home:'Colombia', away:'Ghana' },       // M87 - Colombia Win K, Ghana 3rd L
-        537420: { home:'Spain', away:'Austria' },        // M84 - Spain Win H, Austria 2nd J
-        537427: { home:'Argentina', away:'Cape Verde' }, // M86 - Argentina Win J, Cape Verde 2nd H
-        537421: { home:null, away:'Bosnia' },            // M81 - Bosnia 3rd place vs USA
-        537425: { home:null, away:'Ecuador' },           // M79 - Ecuador 3rd Group E vs Mexico
-        537416: { home:'France', away:'Sweden' },        // M77 - France Win I, Sweden 3rd F
-        537424: { home:'Ivory Coast', away:'Norway' },   // M78 - Ivory Coast 2nd E, Norway 2nd I
-        537422: { home:'Belgium', away:'Senegal' },      // M82 - Belgium Win G, Senegal 3rd I
-        537428: { home:'Australia', away:'Egypt' },      // M88 - Australia 2nd D, Egypt 2nd G
-      };
-      matches=matches.map(m=>{
-        const override=KNOWN_TEAMS[m.id];
-        if(!override) return m;
-        const homeTeam=(override.home&&!m.homeTeam?.name)?{name:override.home,shortName:override.home}:m.homeTeam;
-        const awayTeam=(override.away&&!m.awayTeam?.name)?{name:override.away,shortName:override.away}:m.awayTeam;
-        return {...m,homeTeam,awayTeam};
-      });
     }
     render();
   }catch(e){console.log('data.json:',e.message);}
