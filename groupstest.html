@@ -475,11 +475,11 @@ function buildResultsLookup(grp,allResults){
 }
 
 // Teams confirmed as best 3rd place qualifiers - hardcoded until API confirms
-const KNOWN_THIRD = new Set(['Bosnia','Ecuador','Sweden','Paraguay','Senegal','Ghana']);
-const KNOWN_ELIMINATED_THIRD = new Set(['Uruguay','Scotland','Panama']);
-const KNOWN_QUALIFIED = new Set(['Portugal']);
-const KNOWN_SECOND = new Set(['Egypt','Croatia']);
-const KNOWN_FIRST = new Set(['England']);
+const KNOWN_THIRD = new Set(['Bosnia','Ecuador','Sweden','Paraguay','Senegal','Ghana','Congo DR']);
+const KNOWN_ELIMINATED_THIRD = new Set(['Uruguay','Scotland','Panama','South Korea','Uzbekistan']);
+const KNOWN_QUALIFIED = new Set([]);
+const KNOWN_SECOND = new Set(['Egypt','Croatia','Portugal']);
+const KNOWN_FIRST = new Set(['England','Colombia']);
 
 function calcGroupBadges(grp,teamNames,results){
   const{finished,remaining}=getGroupFixtureStatus(grp,results);
@@ -623,10 +623,10 @@ function render(highlightTeam,data){
   Object.entries(GROUPS).forEach(([grp,teamList])=>{
     sortedGroups[grp]=sortTeams(teamList,grp,groups[grp]||{},results);
   });
-  renderThirdPlace(sortedGroups,groups);
+  renderThirdPlace(sortedGroups,groups,data?.matches||[]);
 }
 
-function renderThirdPlace(groups,groupStats){
+function renderThirdPlace(groups,groupStats,matches){
   const thirds=[];
   Object.entries(groups).forEach(([grp,sorted])=>{
     if(!sorted||sorted.length<3)return;
@@ -645,7 +645,8 @@ function renderThirdPlace(groups,groupStats){
   const tbody=document.getElementById('third-place-body');
   if(thirds.length===0){section.style.display='none';return;}
   section.style.display='block';
-  const groupStageComplete=thirds.every(t=>t.p===3);
+  const groupStageComplete = thirds.length === 12 && 
+    matches.filter(m=>m.stage==='GROUP_STAGE').every(m=>m.status==='FINISHED');
   tbody.innerHTML=thirds.map((t,i)=>{
     const advances=(i<8||KNOWN_THIRD.has(t.team))&&!KNOWN_ELIMINATED_THIRD.has(t.team);
     const confirmed3rd=KNOWN_THIRD.has(t.team);
