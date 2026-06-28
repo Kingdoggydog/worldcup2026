@@ -4462,20 +4462,6 @@
     World Cup 2026 results, scores and standings updated live during the tournament.
   </p>
 
-  <div style="
-    background: rgba(201,168,76,0.07);
-    border: 1px solid var(--gold);
-    border-radius: 6px;
-    padding: 9px 14px;
-    margin-bottom: 10px;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 14px;
-    color: var(--text-sub);
-    line-height: 1.5;
-  ">
-    <span style="color:var(--gold);font-weight:700;letter-spacing:1px;text-transform:uppercase;font-size:12px;">Update</span>
-    <span style="margin-left:8px;">The group stage is nearly complete — thanks for all the interest, comments and feedback — and a special thanks to everyone who bought me a coffee! ☕<br>Looking forward to bringing you the knockout stage, with live scores and match info on both the Schedule and Bracket pages.</span>
-  </div>
   <div id="next-match-card" style="background:#111827;border:1px solid #1E2840;border-left:3px solid #C9A84C;border-radius:0 6px 6px 0;padding:7px 16px;margin-bottom:12px;display:flex;align-items:center;gap:12px;">
     <span style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#C9A84C;white-space:nowrap;">Next Match</span>
     <div style="display:flex;align-items:center;gap:10px;flex:1;justify-content:center;">
@@ -4679,22 +4665,22 @@ const MATCHES = [
 // Round labels: R32=Round of 32, R16=Round of 16, QF=Quarter-final, SF=Semi-final, F=Final
 const KNOCKOUT_MATCHES = [
   // Round of 32 (M73-M88) - Jun 28 - Jul 4
-  { grp:'R32', num:'M73', id:537417, utc:19,   date:'2026-06-28', teams:'2nd A v 2nd B',         venue:'Los Angeles'   },
+  { grp:'R32', num:'M73', id:537417, utc:19,   date:'2026-06-28', teams:'2nd A v 2nd B',     venue:'Los Angeles'   },
   { grp:'R32', num:'M76', id:537423, utc:17,   date:'2026-06-29', teams:'Win C v 2nd F',         venue:'Houston'       },
-  { grp:'R32', num:'M74', id:537415, utc:20.5, date:'2026-06-29', teams:'Germany v Paraguay',       venue:'Boston'        },
+  { grp:'R32', num:'M74', id:537415, utc:20.5, date:'2026-06-29', teams:'Win E v 3rd A/B/C/D/F',       venue:'Boston'        },
   { grp:'R32', num:'M75', id:537418, utc:1,    date:'2026-06-30', teams:'Win F v 2nd C',         venue:'Monterrey'     },
-  { grp:'R32', num:'M78', id:537424, utc:17,   date:'2026-06-30', teams:'Ivory Coast v Norway',    venue:'Dallas'        },
-  { grp:'R32', num:'M77', id:537416, utc:21,   date:'2026-06-30', teams:'France v Sweden',          venue:'New York/NJ'   },
-  { grp:'R32', num:'M79', id:537425, utc:1,    date:'2026-07-01', teams:'Win A v 3rd C/E/F/H/I', venue:'Mexico City'   },
-  { grp:'R32', num:'M80', id:537426, utc:16,   date:'2026-07-01', teams:'Win L v 3rd E/H/I/J/K', venue:'Atlanta'       },
-  { grp:'R32', num:'M82', id:537422, utc:20,   date:'2026-07-01', teams:'Belgium v 3rd A/E/H/I/J', venue:'Seattle'       },
-  { grp:'R32', num:'M81', id:537421, utc:0,    date:'2026-07-02', teams:'USA v Bosnia',            venue:'San Francisco' },
-  { grp:'R32', num:'M84', id:537420, utc:19,   date:'2026-07-02', teams:'Win H v 2nd J',         venue:'Los Angeles'   },
-  { grp:'R32', num:'M83', id:537419, utc:23,   date:'2026-07-02', teams:'2nd K v 2nd L',         venue:'Toronto'       },
-  { grp:'R32', num:'M85', id:537429, utc:3,    date:'2026-07-03', teams:'Win B v 3rd E/F/G/I/J', venue:'Vancouver'     },
+  { grp:'R32', num:'M78', id:537424, utc:17,   date:'2026-06-30', teams:'2nd E v 2nd I',    venue:'Dallas'        },
+  { grp:'R32', num:'M77', id:537416, utc:21,   date:'2026-06-30', teams:'Win I v 3rd C/D/F/G/H',          venue:'New York/NJ'   },
+  { grp:'R32', num:'M79', id:537425, utc:1,    date:'2026-07-01', teams:'Win A v 3rd C/E/F/H/I',          venue:'Mexico City'   },
+  { grp:'R32', num:'M80', id:537426, utc:16,   date:'2026-07-01', teams:'Win L v 3rd E/H/I/J/K',        venue:'Atlanta'       },
+  { grp:'R32', num:'M82', id:537422, utc:20,   date:'2026-07-01', teams:'Win G v 3rd A/E/H/I/J',         venue:'Seattle'       },
+  { grp:'R32', num:'M81', id:537421, utc:0,    date:'2026-07-02', teams:'Win D v 3rd B/E/F/I/J',            venue:'San Francisco' },
+  { grp:'R32', num:'M84', id:537420, utc:19,   date:'2026-07-02', teams:'Win H v 2nd J',           venue:'Los Angeles'   },
+  { grp:'R32', num:'M83', id:537419, utc:23,   date:'2026-07-02', teams:'2nd K v 2nd L',        venue:'Toronto'       },
+  { grp:'R32', num:'M85', id:537429, utc:3,    date:'2026-07-03', teams:'Win B v 3rd E/F/G/I/J',      venue:'Vancouver'     },
   { grp:'R32', num:'M86', id:537427, utc:22,   date:'2026-07-03', teams:'Win J v 2nd H',         venue:'Miami'         },
-  { grp:'R32', num:'M87', id:537430, utc:1.5,  date:'2026-07-04', teams:'Win K v 3rd D/E/I/J/L', venue:'Kansas City'   },
-  { grp:'R32', num:'M88', id:537428, utc:18,   date:'2026-07-03', teams:'Australia v Egypt',        venue:'Dallas'        },
+  { grp:'R32', num:'M87', id:537430, utc:1.5,  date:'2026-07-04', teams:'Win K v 3rd D/E/I/J/L',           venue:'Kansas City'   },
+  { grp:'R32', num:'M88', id:537428, utc:18,   date:'2026-07-03', teams:'2nd D v 2nd G',        venue:'Dallas'        },
   // Round of 16 (M89-M96) - Jul 4-8
   { grp:'R16', num:'M89', id:537375, utc:21,   date:'2026-07-04', teams:'Win M74 v Win M77',     venue:'Philadelphia'  },
   { grp:'R16', num:'M90', id:537376, utc:17,   date:'2026-07-04', teams:'Win M73 v Win M75',     venue:'Houston'       },
@@ -4774,7 +4760,7 @@ let lastFetch = null;
 
 async function loadScores() {
   try {
-    const res = await fetch('data.json?t=' + Date.now());
+    const res = await fetch('dummy.json?t=' + Date.now());
     const data = await res.json();
     const newScoreMap = {};
     const newScoreMapById = {};
@@ -4798,7 +4784,7 @@ async function loadScores() {
     console.log('Could not load scores:', e.message);
   }
   try {
-    const detRes = await fetch('match-details.json?t=' + Date.now());
+    const detRes = await fetch('dummy-details.json?t=' + Date.now());
     matchDetails = await detRes.json();
   } catch(e) {
     matchDetails = matchDetails || {};
@@ -5212,10 +5198,11 @@ function render(offset, team) {
     if (!is24) { displayH = hh % 12 || 12; }
     const timeStr = `${displayH}:${String(mm).padStart(2,'0')}${is24 ? '' : (hh >= 12 ? 'pm' : 'am')}`;
 
-    // Teams
-    const parts = nextMatch.teams.split(' v ');
+    // Teams - resolve placeholders via applyGroupWinners
+    const resolvedTeams = applyGroupWinners(nextMatch.teams, nextMatch.id);
+    const parts = resolvedTeams.split(' v ');
     const home = parts[0]?.trim() || '';
-    const away = parts[1]?.trim() || nextMatch.teams;
+    const away = parts[1]?.trim() || resolvedTeams;
 
     document.getElementById('nm-home').textContent = home;
     document.getElementById('nm-away').textContent = away;
@@ -5223,10 +5210,14 @@ function render(offset, team) {
     const grpColors = {
       A:'#E74C3C',B:'#E67E22',C:'#F0C040',D:'#2ECC71',
       E:'#1ABC9C',F:'#5DADE2',G:'#A569BD',H:'#EC407A',
-      I:'#FF7043',J:'#26C6DA',K:'#9CCC65',L:'#FFA726'
+      I:'#FF7043',J:'#26C6DA',K:'#9CCC65',L:'#FFA726',
+      R32:'#7A82A8',R16:'#5DADE2',QF:'#A569BD',SF:'#EC407A','3rd':'#1ABC9C',Final:'#C9A84C'
     };
     const grpColor = grpColors[nextMatch.grp] || '#C9A84C';
-    document.getElementById('nm-venue').innerHTML = `<span style="color:${grpColor};font-weight:800;">Group ${nextMatch.grp}</span> · ${nextMatch.venue}`;
+    const grpLabel = ['R32','R16','QF','SF','3rd','Final'].includes(nextMatch.grp)
+      ? `<span style="color:${grpColor};font-weight:800;">${nextMatch.grp} ${nextMatch.num}</span> · ${nextMatch.venue}`
+      : `<span style="color:${grpColor};font-weight:800;">Group ${nextMatch.grp}</span> · ${nextMatch.venue}`;
+    document.getElementById('nm-venue').innerHTML = grpLabel;
     document.getElementById('nm-home-flag').src = flagUrl(home);
     document.getElementById('nm-home-flag').alt = home;
     document.getElementById('nm-away-flag').src = flagUrl(away);
