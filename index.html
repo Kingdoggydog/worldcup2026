@@ -5212,10 +5212,11 @@ function render(offset, team) {
     if (!is24) { displayH = hh % 12 || 12; }
     const timeStr = `${displayH}:${String(mm).padStart(2,'0')}${is24 ? '' : (hh >= 12 ? 'pm' : 'am')}`;
 
-    // Teams
-    const parts = nextMatch.teams.split(' v ');
+    // Teams - resolve placeholders via applyGroupWinners
+    const resolvedTeams = applyGroupWinners(nextMatch.teams, nextMatch.id);
+    const parts = resolvedTeams.split(' v ');
     const home = parts[0]?.trim() || '';
-    const away = parts[1]?.trim() || nextMatch.teams;
+    const away = parts[1]?.trim() || resolvedTeams;
 
     document.getElementById('nm-home').textContent = home;
     document.getElementById('nm-away').textContent = away;
@@ -5223,10 +5224,14 @@ function render(offset, team) {
     const grpColors = {
       A:'#E74C3C',B:'#E67E22',C:'#F0C040',D:'#2ECC71',
       E:'#1ABC9C',F:'#5DADE2',G:'#A569BD',H:'#EC407A',
-      I:'#FF7043',J:'#26C6DA',K:'#9CCC65',L:'#FFA726'
+      I:'#FF7043',J:'#26C6DA',K:'#9CCC65',L:'#FFA726',
+      R32:'#7A82A8',R16:'#5DADE2',QF:'#A569BD',SF:'#EC407A','3rd':'#1ABC9C',Final:'#C9A84C'
     };
     const grpColor = grpColors[nextMatch.grp] || '#C9A84C';
-    document.getElementById('nm-venue').innerHTML = `<span style="color:${grpColor};font-weight:800;">Group ${nextMatch.grp}</span> · ${nextMatch.venue}`;
+    const grpLabel = ['R32','R16','QF','SF','3rd','Final'].includes(nextMatch.grp)
+      ? `<span style="color:${grpColor};font-weight:800;">${nextMatch.grp} ${nextMatch.num}</span> · ${nextMatch.venue}`
+      : `<span style="color:${grpColor};font-weight:800;">Group ${nextMatch.grp}</span> · ${nextMatch.venue}`;
+    document.getElementById('nm-venue').innerHTML = grpLabel;
     document.getElementById('nm-home-flag').src = flagUrl(home);
     document.getElementById('nm-home-flag').alt = home;
     document.getElementById('nm-away-flag').src = flagUrl(away);
