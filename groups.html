@@ -475,11 +475,11 @@ function buildResultsLookup(grp,allResults){
 }
 
 // Teams confirmed as best 3rd place qualifiers - hardcoded until API confirms
-const KNOWN_THIRD = new Set(['Bosnia','Ecuador','Sweden','Paraguay','Senegal','Ghana']);
-const KNOWN_ELIMINATED_THIRD = new Set(['Uruguay','Scotland','Panama']);
-const KNOWN_QUALIFIED = new Set(['Portugal']);
-const KNOWN_SECOND = new Set(['Egypt','Croatia']);
-const KNOWN_FIRST = new Set(['England']);
+const KNOWN_THIRD = new Set(['Bosnia','Ecuador','Sweden','Paraguay','Senegal','Ghana','Congo DR']);
+const KNOWN_ELIMINATED_THIRD = new Set(['Uruguay','Scotland','Panama','South Korea']);
+const KNOWN_QUALIFIED = new Set([]);
+const KNOWN_SECOND = new Set(['Egypt','Croatia','Portugal']);
+const KNOWN_FIRST = new Set(['England','Colombia']);
 
 function calcGroupBadges(grp,teamNames,results){
   const{finished,remaining}=getGroupFixtureStatus(grp,results);
