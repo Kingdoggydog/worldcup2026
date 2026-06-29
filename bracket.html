@@ -379,8 +379,14 @@ function teams(m){
 function mbox(m,off){
   const{h,a,hph,aph}=teams(m);
   const fin=m.status==='FINISHED';
-  const hg=m.score?.fullTime?.home,ag=m.score?.fullTime?.away;
   const winner=m.score?.winner;
+  const dur2=m.score?.duration;
+  const isPSO=dur2==='PENALTY_SHOOTOUT';
+  const isET=dur2==='EXTRA_TIME';
+  const hg=isPSO||isET?m.score?.regularTime?.home:m.score?.fullTime?.home;
+  const ag=isPSO||isET?m.score?.regularTime?.away:m.score?.fullTime?.away;
+  const penH=isPSO?m.score?.penalties?.home:null;
+  const penA=isPSO?m.score?.penalties?.away:null;
   const hw=fin&&(winner==='HOME_TEAM'||(winner==null&&hg!=null&&hg>ag));
   const aw=fin&&(winner==='AWAY_TEAM'||(winner==null&&ag!=null&&ag>hg));
   const num=mnums[m.id]||'';
@@ -394,8 +400,10 @@ function mbox(m,off){
   </div>`;
   const live=m.status==='IN_PLAY'||m.status==='PAUSED';
   const paused=m.status==='PAUSED';
-  const minLabel=live?(paused?'HT':m.minute?`${m.minute}${m.injuryTime?'+'+m.injuryTime:''}'`:'LIVE'):(fin?'FT':'');
-  const liveHtml=live?`<span class="live-dot"></span><span style="color:${paused?'var(--gold)':'#2ECC71'};font-size:10px;font-weight:700;margin-left:3px;">${minLabel}</span>`:(fin?`<span style="color:var(--text-muted);font-size:10px;font-weight:700;">FT</span>`:'');
+  const ftLabel=fin?(isPSO?'PSO':isET?'AET':'FT'):'';
+  const penStr=(isPSO&&penH!==null)?'('+penH+'-'+penA+' pens)':'';
+  const minLabel=live?(paused?'HT':m.minute?`${m.minute}${m.injuryTime?'+'+m.injuryTime:''}'`:'LIVE'):ftLabel;
+  const liveHtml=live?`<span class="live-dot"></span><span style="color:${paused?'var(--gold)':'#2ECC71'};font-size:10px;font-weight:700;margin-left:3px;">${minLabel}</span>`:(fin?`<span style="color:var(--text-muted);font-size:10px;font-weight:700;">${ftLabel} ${penStr}</span>`:'');
   const hasEv=matchDetails[String(m.id)]&&['FINISHED','IN_PLAY','PAUSED'].includes(matchDetails[String(m.id)]?.status)&&((matchDetails[String(m.id)]?.goals||[]).length>0||(matchDetails[String(m.id)]?.bookings||[]).length>0);
   return `<div class="mb${fin?' fin':''}${live?' live':''}${hasEv?' has-events':''}" data-mid="${m.id}">
     <div class="mbnum"><span>${num}${liveHtml}</span><span class="mbt">${dt}</span></div>
@@ -407,8 +415,14 @@ function mbox(m,off){
 function mobMatch(m,off){
   const{h,a,hph,aph}=teams(m);
   const fin=m.status==='FINISHED';
-  const hg=m.score?.fullTime?.home,ag=m.score?.fullTime?.away;
   const winner=m.score?.winner;
+  const dur2=m.score?.duration;
+  const isPSO=dur2==='PENALTY_SHOOTOUT';
+  const isET=dur2==='EXTRA_TIME';
+  const hg=isPSO||isET?m.score?.regularTime?.home:m.score?.fullTime?.home;
+  const ag=isPSO||isET?m.score?.regularTime?.away:m.score?.fullTime?.away;
+  const penH=isPSO?m.score?.penalties?.home:null;
+  const penA=isPSO?m.score?.penalties?.away:null;
   const hw=fin&&(winner==='HOME_TEAM'||(winner==null&&hg!=null&&hg>ag));
   const aw=fin&&(winner==='AWAY_TEAM'||(winner==null&&ag!=null&&ag>hg));
   const num=mnums[m.id]||'';
@@ -422,8 +436,10 @@ function mobMatch(m,off){
   </div>`;
   const live=m.status==='IN_PLAY'||m.status==='PAUSED';
   const paused=m.status==='PAUSED';
-  const minLabel=live?(paused?'HT':m.minute?`${m.minute}${m.injuryTime?'+'+m.injuryTime:''}'`:'LIVE'):(fin?'FT':'');
-  const liveHtml=live?`<span class="live-dot"></span><span style="color:${paused?'var(--gold)':'#2ECC71'};font-size:10px;font-weight:700;margin-left:3px;">${minLabel}</span>`:(fin?`<span style="color:var(--text-muted);font-size:10px;font-weight:700;">FT</span>`:'');
+  const ftLabel=fin?(isPSO?'PSO':isET?'AET':'FT'):'';
+  const penStr=(isPSO&&penH!==null)?'('+penH+'-'+penA+' pens)':'';
+  const minLabel=live?(paused?'HT':m.minute?`${m.minute}${m.injuryTime?'+'+m.injuryTime:''}'`:'LIVE'):ftLabel;
+  const liveHtml=live?`<span class="live-dot"></span><span style="color:${paused?'var(--gold)':'#2ECC71'};font-size:10px;font-weight:700;margin-left:3px;">${minLabel}</span>`:(fin?`<span style="color:var(--text-muted);font-size:10px;font-weight:700;">${ftLabel} ${penStr}</span>`:'');
   const hasEv=matchDetails[String(m.id)]&&['FINISHED','IN_PLAY','PAUSED'].includes(matchDetails[String(m.id)]?.status)&&((matchDetails[String(m.id)]?.goals||[]).length>0||(matchDetails[String(m.id)]?.bookings||[]).length>0);
   return `<div class="mm${fin?' fin':''}${live?' live':''}${hasEv?' has-events':''}" data-mid="${m.id}">
     <div class="mmh"><span class="mnum">${num}${liveHtml}</span><span>${dt}</span></div>
@@ -448,6 +464,9 @@ function resolveWinner(mnum) {
   const hg = m.score?.fullTime?.home;
   const ag = m.score?.fullTime?.away;
   if (hg === null || ag === null) return null;
+  if (m.score?.winner === 'HOME_TEAM') return m.homeTeam?.name || null;
+  if (m.score?.winner === 'AWAY_TEAM') return m.awayTeam?.name || null;
+  // Fallback to score comparison
   if (hg > ag) return m.homeTeam?.name || null;
   if (ag > hg) return m.awayTeam?.name || null;
   return null;
