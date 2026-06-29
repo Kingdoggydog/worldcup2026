@@ -4783,10 +4783,17 @@ async function loadScores() {
       const home = normalise(m.homeTeam.shortName || m.homeTeam.name || '');
       const away = normalise(m.awayTeam.shortName || m.awayTeam.name || '');
       const status = m.status;
-      const hg = m.score?.fullTime?.home;
-      const ag = m.score?.fullTime?.away;
+      const duration = m.score?.duration;
+      const isPSO = duration === 'PENALTY_SHOOTOUT';
+      const isET = duration === 'EXTRA_TIME';
+      const hg = isPSO || isET ? m.score?.regularTime?.home : m.score?.fullTime?.home;
+      const ag = isPSO || isET ? m.score?.regularTime?.away : m.score?.fullTime?.away;
+      const penH = isPSO ? m.score?.penalties?.home : null;
+      const penA = isPSO ? m.score?.penalties?.away : null;
+      const scoreLabel = isPSO ? 'PSO' : isET ? 'AET' : null;
+      const winner = m.score?.winner;
       const entry = { home: hg, away: ag, status, minute: m.minute, injuryTime: m.injuryTime, id: m.id,
-                      homeName: home, awayName: away };
+                      homeName: home, awayName: away, penH, penA, scoreLabel, winner };
       // Key by name for group stage matches
       if (home && away) newScoreMap[home + '|' + away] = entry;
       // Key by ID for all matches (knockout)
@@ -4830,11 +4837,14 @@ function resolveKnockoutRef(ref) {
   const id = matchNumToId[mnum];
   if (!id) return ref;
   const s = scoreMapById[id];
-  if (!s || s.status !== 'FINISHED' || s.home === null || s.away === null) return ref;
-  // Determine winner or loser
+  if (!s || s.status !== 'FINISHED') return ref;
+  // Use API winner field - handles AET and PSO correctly
+  if (s.winner === 'HOME_TEAM') return winMatch ? s.homeName : s.awayName;
+  if (s.winner === 'AWAY_TEAM') return winMatch ? s.awayName : s.homeName;
+  // Fallback to score comparison
   if (s.home > s.away) return winMatch ? s.homeName : s.awayName;
   if (s.away > s.home) return winMatch ? s.awayName : s.homeName;
-  return ref; // draw shouldn't happen in knockout but leave as-is
+  return ref;
 }
 
 function applyGroupWinners(teamsStr, id) {
@@ -4971,8 +4981,10 @@ function getScore(teamsStr, id) {
   }
   if (!s) return null;
   if (s.status === 'FINISHED' && s.home !== null && s.away !== null) {
-    return { home: s.home, away: s.away, cls: 'score-ft', label: 'FT',
-             homeName: s.homeName, awayName: s.awayName };
+    const label = s.scoreLabel || 'FT';
+    const penStr = s.penH !== null && s.penA !== null ? ` (${s.penH}-${s.penA} pens)` : '';
+    return { home: s.home, away: s.away, cls: 'score-ft', label,
+             penStr, homeName: s.homeName, awayName: s.awayName };
   }
   if ((s.status === 'IN_PLAY' || s.status === 'PAUSED') && s.home !== null) {
     const minStr = s.minute ? `${s.minute}${s.injuryTime ? '+'+s.injuryTime : ''}'` : '';
@@ -5065,7 +5077,7 @@ function render(offset, team) {
           <span class="score-home">${flagImg(home)}${home}</span>
           <span class="score-nums"><span class="score-number">${score.home} - ${score.away}</span><span class="score-vs-hidden">v</span></span>
           <span class="score-away">${away}${flagImg(away)}</span>
-          <span class="score-right">${statusStr}${minStr}</span>
+          <span class="score-right">${statusStr}${minStr}${score.penStr||''}</span>
         </span>`;
       } else {
         scoreHtml = `<span class="teams">${teamsHtml(m.teams)}</span>`;
@@ -5136,7 +5148,7 @@ function render(offset, team) {
             <span class="score-home">${flagImg(hn)}${hn}</span>
             <span class="score-nums"><span class="score-number">${score.home} - ${score.away}</span><span class="score-vs-hidden">v</span></span>
             <span class="score-away">${an}${flagImg(an)}</span>
-            <span class="score-right">${statusStr}${minStr}</span>
+            <span class="score-right">${statusStr}${minStr}${score.penStr||''}</span>
           </span>`;
         } else {
           scoreHtml = `<span class="teams">${teamsHtml(m.teams)}</span>`;
