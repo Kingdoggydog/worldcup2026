@@ -379,10 +379,14 @@ function teams(m){
 function mbox(m,off){
   const{h,a,hph,aph}=teams(m);
   const fin=m.status==='FINISHED';
-  const dur=m.score?.duration;const isPSO=dur==="PENALTY_SHOOTOUT";const isET=dur==="EXTRA_TIME";
-  const hg=isPSO||isET?m.score?.regularTime?.home:m.score?.fullTime?.home,ag=isPSO||isET?m.score?.regularTime?.away:m.score?.fullTime?.away;
-  const penH=isPSO?m.score?.penalties?.home:null,penA=isPSO?m.score?.penalties?.away:null;
   const winner=m.score?.winner;
+  const dur2=m.score?.duration;
+  const isPSO=dur2==='PENALTY_SHOOTOUT';
+  const isET=dur2==='EXTRA_TIME';
+  const hg=isPSO||isET?m.score?.regularTime?.home:m.score?.fullTime?.home;
+  const ag=isPSO||isET?m.score?.regularTime?.away:m.score?.fullTime?.away;
+  const penH=isPSO?m.score?.penalties?.home:null;
+  const penA=isPSO?m.score?.penalties?.away:null;
   const hw=fin&&(winner==='HOME_TEAM'||(winner==null&&hg!=null&&hg>ag));
   const aw=fin&&(winner==='AWAY_TEAM'||(winner==null&&ag!=null&&ag>hg));
   const num=mnums[m.id]||'';
@@ -397,7 +401,7 @@ function mbox(m,off){
   const live=m.status==='IN_PLAY'||m.status==='PAUSED';
   const paused=m.status==='PAUSED';
   const ftLabel=fin?(isPSO?'PSO':isET?'AET':'FT'):'';
-  const penStr=isPSO&&penH!==null?'('+penH+'-'+penA+' pens)':'';
+  const penStr=(isPSO&&penH!==null)?'('+penH+'-'+penA+' pens)':'';
   const minLabel=live?(paused?'HT':m.minute?`${m.minute}${m.injuryTime?'+'+m.injuryTime:''}'`:'LIVE'):ftLabel;
   const liveHtml=live?`<span class="live-dot"></span><span style="color:${paused?'var(--gold)':'#2ECC71'};font-size:10px;font-weight:700;margin-left:3px;">${minLabel}</span>`:(fin?`<span style="color:var(--text-muted);font-size:10px;font-weight:700;">${ftLabel} ${penStr}</span>`:'');
   const hasEv=matchDetails[String(m.id)]&&['FINISHED','IN_PLAY','PAUSED'].includes(matchDetails[String(m.id)]?.status)&&((matchDetails[String(m.id)]?.goals||[]).length>0||(matchDetails[String(m.id)]?.bookings||[]).length>0);
@@ -411,10 +415,14 @@ function mbox(m,off){
 function mobMatch(m,off){
   const{h,a,hph,aph}=teams(m);
   const fin=m.status==='FINISHED';
-  const dur=m.score?.duration;const isPSO=dur==="PENALTY_SHOOTOUT";const isET=dur==="EXTRA_TIME";
-  const hg=isPSO||isET?m.score?.regularTime?.home:m.score?.fullTime?.home,ag=isPSO||isET?m.score?.regularTime?.away:m.score?.fullTime?.away;
-  const penH=isPSO?m.score?.penalties?.home:null,penA=isPSO?m.score?.penalties?.away:null;
   const winner=m.score?.winner;
+  const dur2=m.score?.duration;
+  const isPSO=dur2==='PENALTY_SHOOTOUT';
+  const isET=dur2==='EXTRA_TIME';
+  const hg=isPSO||isET?m.score?.regularTime?.home:m.score?.fullTime?.home;
+  const ag=isPSO||isET?m.score?.regularTime?.away:m.score?.fullTime?.away;
+  const penH=isPSO?m.score?.penalties?.home:null;
+  const penA=isPSO?m.score?.penalties?.away:null;
   const hw=fin&&(winner==='HOME_TEAM'||(winner==null&&hg!=null&&hg>ag));
   const aw=fin&&(winner==='AWAY_TEAM'||(winner==null&&ag!=null&&ag>hg));
   const num=mnums[m.id]||'';
@@ -429,7 +437,7 @@ function mobMatch(m,off){
   const live=m.status==='IN_PLAY'||m.status==='PAUSED';
   const paused=m.status==='PAUSED';
   const ftLabel=fin?(isPSO?'PSO':isET?'AET':'FT'):'';
-  const penStr=isPSO&&penH!==null?'('+penH+'-'+penA+' pens)':'';
+  const penStr=(isPSO&&penH!==null)?'('+penH+'-'+penA+' pens)':'';
   const minLabel=live?(paused?'HT':m.minute?`${m.minute}${m.injuryTime?'+'+m.injuryTime:''}'`:'LIVE'):ftLabel;
   const liveHtml=live?`<span class="live-dot"></span><span style="color:${paused?'var(--gold)':'#2ECC71'};font-size:10px;font-weight:700;margin-left:3px;">${minLabel}</span>`:(fin?`<span style="color:var(--text-muted);font-size:10px;font-weight:700;">${ftLabel} ${penStr}</span>`:'');
   const hasEv=matchDetails[String(m.id)]&&['FINISHED','IN_PLAY','PAUSED'].includes(matchDetails[String(m.id)]?.status)&&((matchDetails[String(m.id)]?.goals||[]).length>0||(matchDetails[String(m.id)]?.bookings||[]).length>0);
