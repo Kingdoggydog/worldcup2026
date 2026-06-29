@@ -26,12 +26,7 @@ jobs:
           curl -s "https://fancy-block-fde3.aking116.workers.dev/competitions/WC/matches?season=2026" \
             -o data_raw.json \
             --fail --max-time 25 --retry 1 --retry-delay 3
-          python3 -c "
-import json, datetime
-with open('data_raw.json') as f: d=json.load(f)
-d['fetchedAt'] = datetime.datetime.utcnow().isoformat()
-with open('data.json','w') as f: json.dump(d,f,separators=(',',':'))
-"
+          python3 inject_timestamp.py
 
       - name: Fetch top scorers
         id: fetch_scorers
