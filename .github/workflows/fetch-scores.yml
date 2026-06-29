@@ -24,8 +24,14 @@ jobs:
         continue-on-error: true
         run: |
           curl -s "https://fancy-block-fde3.aking116.workers.dev/competitions/WC/matches?season=2026" \
-            -o data.json \
+            -o data_raw.json \
             --fail --max-time 25 --retry 1 --retry-delay 3
+          python3 -c "
+import json, datetime
+with open('data_raw.json') as f: d=json.load(f)
+d['fetchedAt'] = datetime.datetime.utcnow().isoformat()
+with open('data.json','w') as f: json.dump(d,f,separators=(',',':'))
+"
 
       - name: Fetch top scorers
         id: fetch_scorers
@@ -45,12 +51,10 @@ jobs:
 
           WORKER = "https://fancy-block-fde3.aking116.workers.dev"
 
-          # Load the bulk matches list we just fetched
           with open('data.json') as f:
               data = json.load(f)
           matches = data.get('matches', [])
 
-          # Load existing match-details.json (built up over the tournament)
           details = {}
           if os.path.exists('match-details.json'):
               try:
@@ -64,14 +68,12 @@ jobs:
               mid = str(m.get('id'))
               status = m.get('status')
               if status in ('IN_PLAY', 'PAUSED'):
-                  to_fetch.append(mid)               # always refresh live matches
+                  to_fetch.append(mid)
               elif status == 'FINISHED' and mid not in details:
-                  to_fetch.append(mid)               # fetch once, never again
+                  to_fetch.append(mid)
 
           print(f"Matches needing detail fetch: {len(to_fetch)}")
 
-          # Cap per run so a big backlog (e.g. first run of the day) doesn't risk rate limits.
-          # Remaining matches will simply be picked up on the next run a minute later.
           MAX_PER_RUN = 15
           if len(to_fetch) > MAX_PER_RUN:
               print(f"  Capping to {MAX_PER_RUN} this run; rest will be picked up next run")
@@ -89,7 +91,6 @@ jobs:
                   )
                   with urllib.request.urlopen(req, timeout=15) as resp:
                       full = json.loads(resp.read().decode())
-                  # Only keep the fields we actually use, to keep file size sane
                   details[mid] = {
                       "status": full.get("status"),
                       "minute": full.get("minute"),
@@ -100,7 +101,7 @@ jobs:
                       "substitutions": full.get("substitutions", []),
                   }
                   fetched += 1
-                  time.sleep(1.5)  # gentle pacing, well under 30 calls/min
+                  time.sleep(1.5)
               except urllib.error.HTTPError as e:
                   body = e.read().decode(errors='replace')[:200]
                   print(f"  Failed to fetch match {mid}: HTTP {e.code} - {body}")
@@ -133,11 +134,11 @@ jobs:
         continue-on-error: true
         run: node calc-group-winners.js
 
-      - name: Commit and push if changed
+      - name: Commit and push
         if: steps.fetch.outcome == 'success'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data.json scorers.json match-details.json group-winners.json .fail_count
-          git diff --staged --quiet || git commit -m "Update scores $(date -u '+%Y-%m-%d %H:%M UTC')"
+          git commit -m "Update scores $(date -u '+%Y-%m-%d %H:%M UTC')"
           git push
