@@ -4982,7 +4982,7 @@ function getScore(teamsStr, id) {
   if (!s) return null;
   if (s.status === 'FINISHED' && s.home !== null && s.away !== null) {
     const label = s.scoreLabel || 'FT';
-    const penStr = s.penH !== null && s.penA !== null ? ` (${s.penH}-${s.penA} pens)` : '';
+    const penStr = s.penH !== null && s.penA !== null ? ` (${s.penH}-${s.penA}p)` : '';
     return { home: s.home, away: s.away, cls: 'score-ft', label,
              penStr, homeName: s.homeName, awayName: s.awayName };
   }
