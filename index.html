@@ -4913,7 +4913,10 @@ function buildEventCard(teamsStr, id) {
   // Combine goals + bookings into one event list per team, tagged with type
   const events = { home: [], away: [] };
 
-  (det.goals || []).forEach(g => {
+  const isPSOMatch = det.score?.duration === 'PENALTY_SHOOTOUT';
+  const goals = (det.goals || []).filter(g => !(isPSOMatch && g.minute >= 120 && g.type === 'PENALTY'));
+
+  goals.forEach(g => {
     let side = g.team?.name === homeName || normalise(g.team?.name) === normalise(homeName) ? 'home' : 'away';
     let tag = '';
     if (g.type === 'OWN') {
