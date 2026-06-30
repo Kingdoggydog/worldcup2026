@@ -678,7 +678,9 @@ function buildEventCard(m){
   // Use names from matchDetails directly - most reliable source
   const homeName=det.homeTeam?.name||det.homeTeam?.shortName||m.homeTeam?.name||'';
   const events={home:[],away:[]};
-  (det.goals||[]).forEach(g=>{
+  const isPSOMatch=det.score?.duration==='PENALTY_SHOOTOUT';
+  const goals=(det.goals||[]).filter(g=>!(isPSOMatch&&g.minute>=120&&g.type==='PENALTY'));
+  goals.forEach(g=>{
     let side=g.team?.name===homeName?'home':'away';
     let tag='';
     if(g.type==='OWN'){side=side==='home'?'away':'home';tag=' (OG)';}
