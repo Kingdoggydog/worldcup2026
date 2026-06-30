@@ -546,7 +546,7 @@
     text-align: right; font-family: 'Barlow', sans-serif;
     overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0;
   }
-  @media(max-width:900px) { .pen-score { display: none; } }
+  @media(max-width:900px) { .pen-score { display: inline; } }
   body.print-mode .venue { font-size: 8.5px; color: #111 !important; }
 
   .vs { color: var(--text-muted); font-size: clamp(9px, 1.3vw, 11px); margin: 0 3px; font-weight: 400; }
@@ -5090,7 +5090,7 @@ function render(offset, team) {
       }
       html += `<div class="match${cls}${hasEventData(m.teams)?' has-events':''}" data-teams="${m.teams.replace(/"/g,'&quot;')}">
         <span class="grp ${m.grp}">${m.grp}</span>
-        <span class="time">${t}</span>
+        ${score&&score.cls==='score-ft'?'' : `<span class="time">${t}</span>`}
         ${scoreHtml}
         <span class="venue">${m.venue}</span>
       </div>`;
@@ -5162,7 +5162,7 @@ function render(offset, team) {
         const koColor = koColors[m.grp] || '#7A82A8';
         html += `<div class="match${cls}${hasEventData(m.teams, m.id)?' has-events':''}" data-mid="${m.id||''}" data-teams="${m.teams.replace(/"/g,'&quot;')}">
           <span class="grp" style="color:${koColor};width:52px">${m.grp} <span style="font-weight:400;font-size:11px">${m.num}</span></span>
-          <span class="time">${t}</span>
+          ${score&&score.cls==='score-ft'?'' : `<span class="time">${t}</span>`}
           ${scoreHtml}
           <span class="venue">${m.venue}</span>
         </div>`;
