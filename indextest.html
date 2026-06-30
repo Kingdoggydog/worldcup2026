@@ -542,9 +542,11 @@
 
   .venue {
     font-size: clamp(10px, 1.4vw, 12px);
-    color: var(--text-muted); flex-shrink: 0;
+    color: var(--text-muted); flex-shrink: 1;
     text-align: right; font-family: 'Barlow', sans-serif;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0;
   }
+  @media(max-width:900px) { .pen-score { display: inline; } }
   body.print-mode .venue { font-size: 8.5px; color: #111 !important; }
 
   .vs { color: var(--text-muted); font-size: clamp(9px, 1.3vw, 11px); margin: 0 3px; font-weight: 400; }
@@ -606,6 +608,7 @@
     display: flex; align-items: center; gap: 4px;
     font-weight: 700; font-size: clamp(12px,1.8vw,15px);
     color: var(--text); justify-content: flex-start; flex: 1;
+    overflow: hidden; min-width: 0;
   }
   .score-nums {
     font-weight: 800; font-size: clamp(13px,2vw,16px);
@@ -614,8 +617,8 @@
     position: relative;
   }
   .score-right {
-    display: flex; align-items: center; gap: 4px;
-    font-size: 11px; white-space: nowrap;
+    display: flex; align-items: center; gap: 3px;
+    font-size: 11px; white-space: nowrap; flex-shrink: 0;
   }
   .score-status { color: var(--text-muted); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
   .score-status.live { color: #2ECC71; }
@@ -4790,7 +4793,7 @@ async function loadScores() {
       const ag = isPSO || isET ? m.score?.regularTime?.away : m.score?.fullTime?.away;
       const penH = isPSO ? m.score?.penalties?.home : null;
       const penA = isPSO ? m.score?.penalties?.away : null;
-      const scoreLabel = isPSO ? 'PSO' : isET ? 'AET' : null;
+      const scoreLabel = isET ? 'AET' : null;
       const winner = m.score?.winner;
       const entry = { home: hg, away: ag, status, minute: m.minute, injuryTime: m.injuryTime, id: m.id,
                       homeName: home, awayName: away, penH, penA, scoreLabel, winner };
@@ -4913,7 +4916,10 @@ function buildEventCard(teamsStr, id) {
   // Combine goals + bookings into one event list per team, tagged with type
   const events = { home: [], away: [] };
 
-  (det.goals || []).forEach(g => {
+  const isPSOMatch = det.score?.duration === 'PENALTY_SHOOTOUT';
+  const goals = (det.goals || []).filter(g => !(isPSOMatch && g.minute >= 120 && g.type === 'PENALTY'));
+
+  goals.forEach(g => {
     let side = g.team?.name === homeName || normalise(g.team?.name) === normalise(homeName) ? 'home' : 'away';
     let tag = '';
     if (g.type === 'OWN') {
@@ -4982,7 +4988,7 @@ function getScore(teamsStr, id) {
   if (!s) return null;
   if (s.status === 'FINISHED' && s.home !== null && s.away !== null) {
     const label = s.scoreLabel || 'FT';
-    const penStr = s.penH !== null && s.penA !== null ? ` (${s.penH}-${s.penA} pens)` : '';
+    const penStr = s.penH !== null && s.penA !== null ? ` (${s.penH}-${s.penA}p)` : '';
     return { home: s.home, away: s.away, cls: 'score-ft', label,
              penStr, homeName: s.homeName, awayName: s.awayName };
   }
@@ -5077,14 +5083,14 @@ function render(offset, team) {
           <span class="score-home">${flagImg(home)}${home}</span>
           <span class="score-nums"><span class="score-number">${score.home} - ${score.away}</span><span class="score-vs-hidden">v</span></span>
           <span class="score-away">${away}${flagImg(away)}</span>
-          <span class="score-right">${statusStr}${minStr}${score.penStr||''}</span>
+          <span class="score-right">${statusStr}${minStr}${score.penStr?`<span class="pen-score" style="font-size:10px;color:var(--text-muted)">${score.penStr}</span>`:''}</span>
         </span>`;
       } else {
         scoreHtml = `<span class="teams">${teamsHtml(m.teams)}</span>`;
       }
       html += `<div class="match${cls}${hasEventData(m.teams)?' has-events':''}" data-teams="${m.teams.replace(/"/g,'&quot;')}">
         <span class="grp ${m.grp}">${m.grp}</span>
-        <span class="time">${t}</span>
+        ${score&&score.cls==='score-ft'?'' : `<span class="time">${t}</span>`}
         ${scoreHtml}
         <span class="venue">${m.venue}</span>
       </div>`;
@@ -5148,7 +5154,7 @@ function render(offset, team) {
             <span class="score-home">${flagImg(hn)}${hn}</span>
             <span class="score-nums"><span class="score-number">${score.home} - ${score.away}</span><span class="score-vs-hidden">v</span></span>
             <span class="score-away">${an}${flagImg(an)}</span>
-            <span class="score-right">${statusStr}${minStr}${score.penStr||''}</span>
+            <span class="score-right">${statusStr}${minStr}${score.penStr?`<span class="pen-score" style="font-size:10px;color:var(--text-muted)">${score.penStr}</span>`:''}</span>
           </span>`;
         } else {
           scoreHtml = `<span class="teams">${teamsHtml(m.teams)}</span>`;
@@ -5156,7 +5162,7 @@ function render(offset, team) {
         const koColor = koColors[m.grp] || '#7A82A8';
         html += `<div class="match${cls}${hasEventData(m.teams, m.id)?' has-events':''}" data-mid="${m.id||''}" data-teams="${m.teams.replace(/"/g,'&quot;')}">
           <span class="grp" style="color:${koColor};width:52px">${m.grp} <span style="font-weight:400;font-size:11px">${m.num}</span></span>
-          <span class="time">${t}</span>
+          ${score&&score.cls==='score-ft'?'' : `<span class="time">${t}</span>`}
           ${scoreHtml}
           <span class="venue">${m.venue}</span>
         </div>`;
