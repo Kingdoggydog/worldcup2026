@@ -546,6 +546,7 @@
     text-align: right; font-family: 'Barlow', sans-serif;
     overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0;
   }
+  @media(max-width:900px) { .pen-score { display: none; } }
   body.print-mode .venue { font-size: 8.5px; color: #111 !important; }
 
   .vs { color: var(--text-muted); font-size: clamp(9px, 1.3vw, 11px); margin: 0 3px; font-weight: 400; }
@@ -607,6 +608,7 @@
     display: flex; align-items: center; gap: 4px;
     font-weight: 700; font-size: clamp(12px,1.8vw,15px);
     color: var(--text); justify-content: flex-start; flex: 1;
+    overflow: hidden; min-width: 0;
   }
   .score-nums {
     font-weight: 800; font-size: clamp(13px,2vw,16px);
@@ -615,8 +617,8 @@
     position: relative;
   }
   .score-right {
-    display: flex; align-items: center; gap: 4px;
-    font-size: 11px; white-space: nowrap; flex-shrink: 0; max-width: 90px; overflow: hidden;
+    display: flex; align-items: center; gap: 3px;
+    font-size: 11px; white-space: nowrap; flex-shrink: 0;
   }
   .score-status { color: var(--text-muted); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
   .score-status.live { color: #2ECC71; }
@@ -5081,7 +5083,7 @@ function render(offset, team) {
           <span class="score-home">${flagImg(home)}${home}</span>
           <span class="score-nums"><span class="score-number">${score.home} - ${score.away}</span><span class="score-vs-hidden">v</span></span>
           <span class="score-away">${away}${flagImg(away)}</span>
-          <span class="score-right">${statusStr}${minStr}${score.penStr?`<span style="font-size:10px;color:var(--text-muted)">${score.penStr}</span>`:''}</span>
+          <span class="score-right">${statusStr}${minStr}${score.penStr?`<span class="pen-score" style="font-size:10px;color:var(--text-muted)">${score.penStr}</span>`:''}</span>
         </span>`;
       } else {
         scoreHtml = `<span class="teams">${teamsHtml(m.teams)}</span>`;
@@ -5152,7 +5154,7 @@ function render(offset, team) {
             <span class="score-home">${flagImg(hn)}${hn}</span>
             <span class="score-nums"><span class="score-number">${score.home} - ${score.away}</span><span class="score-vs-hidden">v</span></span>
             <span class="score-away">${an}${flagImg(an)}</span>
-            <span class="score-right">${statusStr}${minStr}${score.penStr?`<span style="font-size:10px;color:var(--text-muted)">${score.penStr}</span>`:''}</span>
+            <span class="score-right">${statusStr}${minStr}${score.penStr?`<span class="pen-score" style="font-size:10px;color:var(--text-muted)">${score.penStr}</span>`:''}</span>
           </span>`;
         } else {
           scoreHtml = `<span class="teams">${teamsHtml(m.teams)}</span>`;
