@@ -616,7 +616,7 @@
   }
   .score-right {
     display: flex; align-items: center; gap: 4px;
-    font-size: 11px; white-space: nowrap;
+    font-size: 11px; white-space: nowrap; flex-shrink: 0; max-width: 90px; overflow: hidden;
   }
   .score-status { color: var(--text-muted); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
   .score-status.live { color: #2ECC71; }
@@ -5081,7 +5081,7 @@ function render(offset, team) {
           <span class="score-home">${flagImg(home)}${home}</span>
           <span class="score-nums"><span class="score-number">${score.home} - ${score.away}</span><span class="score-vs-hidden">v</span></span>
           <span class="score-away">${away}${flagImg(away)}</span>
-          <span class="score-right">${statusStr}${minStr}${score.penStr||''}</span>
+          <span class="score-right">${statusStr}${minStr}${score.penStr?`<span style="font-size:10px;color:var(--text-muted)">${score.penStr}</span>`:''}</span>
         </span>`;
       } else {
         scoreHtml = `<span class="teams">${teamsHtml(m.teams)}</span>`;
@@ -5152,7 +5152,7 @@ function render(offset, team) {
             <span class="score-home">${flagImg(hn)}${hn}</span>
             <span class="score-nums"><span class="score-number">${score.home} - ${score.away}</span><span class="score-vs-hidden">v</span></span>
             <span class="score-away">${an}${flagImg(an)}</span>
-            <span class="score-right">${statusStr}${minStr}${score.penStr||''}</span>
+            <span class="score-right">${statusStr}${minStr}${score.penStr?`<span style="font-size:10px;color:var(--text-muted)">${score.penStr}</span>`:''}</span>
           </span>`;
         } else {
           scoreHtml = `<span class="teams">${teamsHtml(m.teams)}</span>`;
