@@ -542,8 +542,9 @@
 
   .venue {
     font-size: clamp(10px, 1.4vw, 12px);
-    color: var(--text-muted); flex-shrink: 0;
+    color: var(--text-muted); flex-shrink: 1;
     text-align: right; font-family: 'Barlow', sans-serif;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0;
   }
   body.print-mode .venue { font-size: 8.5px; color: #111 !important; }
 
@@ -4790,7 +4791,7 @@ async function loadScores() {
       const ag = isPSO || isET ? m.score?.regularTime?.away : m.score?.fullTime?.away;
       const penH = isPSO ? m.score?.penalties?.home : null;
       const penA = isPSO ? m.score?.penalties?.away : null;
-      const scoreLabel = isPSO ? 'PSO' : isET ? 'AET' : null;
+      const scoreLabel = isET ? 'AET' : null;
       const winner = m.score?.winner;
       const entry = { home: hg, away: ag, status, minute: m.minute, injuryTime: m.injuryTime, id: m.id,
                       homeName: home, awayName: away, penH, penA, scoreLabel, winner };
