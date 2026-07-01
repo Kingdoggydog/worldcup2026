@@ -5083,7 +5083,7 @@ function render(offset, team) {
           <span class="score-home">${flagImg(home)}${home}</span>
           <span class="score-nums"><span class="score-number">${score.home} - ${score.away}</span><span class="score-vs-hidden">v</span></span>
           <span class="score-away">${away}${flagImg(away)}</span>
-          <span class="score-right">${statusStr}${minStr}${score.penStr?`<span class="pen-score" style="font-size:10px;color:var(--text-muted)">${score.penStr}</span>`:''}</span>
+          <span class="score-right">${score.penStr?`<span class="pen-score" style="font-size:10px;color:var(--gold)">${score.penStr}</span>`:''} ${statusStr}${minStr}</span>
         </span>`;
       } else {
         scoreHtml = `<span class="teams">${teamsHtml(m.teams)}</span>`;
@@ -5126,7 +5126,10 @@ function render(offset, team) {
       // If group filter is a group stage letter, skip knockout stage
       if (groupFilter !== 'all' && !koRounds.includes(groupFilter)) return;
       let koFiltered = cityFilter === 'all' ? koBuckets[k] : koBuckets[k].filter(m => m.venue === cityFilter);
-      if (teamFilter !== 'all') koFiltered = koFiltered.filter(m => m.teams.includes(teamFilter));
+      if (teamFilter !== 'all') koFiltered = koFiltered.filter(m => {
+        const resolved = applyGroupWinners(m.teams, m.id);
+        return resolved.includes(teamFilter);
+      });
       if (hideFinished) koFiltered = koFiltered.filter(m => { const sc = getScore(m.teams, m.id); return !sc || sc.cls !== 'score-ft'; });
       if (groupFilter !== 'all' && koRounds.includes(groupFilter)) koFiltered = koFiltered.filter(m => m.grp === groupFilter);
       if (koFiltered.length === 0) return;
@@ -5154,7 +5157,7 @@ function render(offset, team) {
             <span class="score-home">${flagImg(hn)}${hn}</span>
             <span class="score-nums"><span class="score-number">${score.home} - ${score.away}</span><span class="score-vs-hidden">v</span></span>
             <span class="score-away">${an}${flagImg(an)}</span>
-            <span class="score-right">${statusStr}${minStr}${score.penStr?`<span class="pen-score" style="font-size:10px;color:var(--text-muted)">${score.penStr}</span>`:''}</span>
+            <span class="score-right">${score.penStr?`<span class="pen-score" style="font-size:10px;color:var(--gold)">${score.penStr}</span>`:''} ${statusStr}${minStr}</span>
           </span>`;
         } else {
           scoreHtml = `<span class="teams">${teamsHtml(m.teams)}</span>`;
