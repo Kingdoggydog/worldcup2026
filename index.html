@@ -5126,7 +5126,10 @@ function render(offset, team) {
       // If group filter is a group stage letter, skip knockout stage
       if (groupFilter !== 'all' && !koRounds.includes(groupFilter)) return;
       let koFiltered = cityFilter === 'all' ? koBuckets[k] : koBuckets[k].filter(m => m.venue === cityFilter);
-      if (teamFilter !== 'all') koFiltered = koFiltered.filter(m => m.teams.includes(teamFilter));
+      if (teamFilter !== 'all') koFiltered = koFiltered.filter(m => {
+        const resolved = applyGroupWinners(m.teams, m.id);
+        return resolved.includes(teamFilter);
+      });
       if (hideFinished) koFiltered = koFiltered.filter(m => { const sc = getScore(m.teams, m.id); return !sc || sc.cls !== 'score-ft'; });
       if (groupFilter !== 'all' && koRounds.includes(groupFilter)) koFiltered = koFiltered.filter(m => m.grp === groupFilter);
       if (koFiltered.length === 0) return;
