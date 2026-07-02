@@ -61,7 +61,6 @@ body.print-mode .champ{font-size:9px;margin-top:1px;min-height:12px;}
 .blbl{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--gold);text-align:center;padding:6px 2px;border-bottom:1px solid var(--border);margin-bottom:6px;}
 .bmatches{display:flex;flex-direction:column;justify-content:space-around;flex:1;gap:3px;padding:2px 0;overflow:visible;}
 .mb{background:var(--card);border:1px solid var(--border);border-radius:4px;overflow:hidden;margin:2px 0;width:100%;}
-.mb.fin{border-color:var(--win);}
 .mb.live{border-color:#F39C12;}
 .mbnum{font-size:11px;font-weight:700;color:var(--gold);padding:4px 7px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;}
 .mbnum .mbt{color:#8A93B8;font-weight:600;}
@@ -80,7 +79,7 @@ body.print-mode .champ{font-size:9px;margin-top:1px;min-height:12px;}
 .mround{display:none;flex-direction:column;gap:8px;}
 .mround.on{display:flex;}
 .mm{background:var(--card);border:1px solid var(--border);border-radius:6px;overflow:hidden;}
-.mm.fin{border-color:var(--win);}
+
 .mmh{display:flex;justify-content:space-between;padding:4px 10px;border-bottom:1px solid var(--border);font-size:11px;color:#8A93B8;font-weight:600;}
 .mmh .mnum{color:var(--gold);font-weight:800;font-size:12px;}
 .mmt{display:flex;align-items:center;gap:8px;padding:7px 10px;border-bottom:1px solid var(--border);font-size:14px;font-weight:600;}
@@ -400,8 +399,8 @@ function mbox(m,off){
   </div>`;
   const live=m.status==='IN_PLAY'||m.status==='PAUSED';
   const paused=m.status==='PAUSED';
-  const ftLabel=fin?(isPSO?'PSO':isET?'AET':'FT'):'';
-  const penStr=(isPSO&&penH!==null)?'('+penH+'-'+penA+' pens)':'';
+  const ftLabel=fin?(isET?'AET':'FT'):'';
+  const penStr=(isPSO&&penH!==null)?'('+penH+'-'+penA+'p)':'';
   const minLabel=live?(paused?'HT':m.minute?`${m.minute}${m.injuryTime?'+'+m.injuryTime:''}'`:'LIVE'):ftLabel;
   const liveHtml=live?`<span class="live-dot"></span><span style="color:${paused?'var(--gold)':'#2ECC71'};font-size:10px;font-weight:700;margin-left:3px;">${minLabel}</span>`:(fin?`<span style="color:var(--text-muted);font-size:10px;font-weight:700;">${ftLabel} ${penStr}</span>`:'');
   const hasEv=matchDetails[String(m.id)]&&['FINISHED','IN_PLAY','PAUSED'].includes(matchDetails[String(m.id)]?.status)&&((matchDetails[String(m.id)]?.goals||[]).length>0||(matchDetails[String(m.id)]?.bookings||[]).length>0);
@@ -436,8 +435,8 @@ function mobMatch(m,off){
   </div>`;
   const live=m.status==='IN_PLAY'||m.status==='PAUSED';
   const paused=m.status==='PAUSED';
-  const ftLabel=fin?(isPSO?'PSO':isET?'AET':'FT'):'';
-  const penStr=(isPSO&&penH!==null)?'('+penH+'-'+penA+' pens)':'';
+  const ftLabel=fin?(isET?'AET':'FT'):'';
+  const penStr=(isPSO&&penH!==null)?'('+penH+'-'+penA+'p)':'';
   const minLabel=live?(paused?'HT':m.minute?`${m.minute}${m.injuryTime?'+'+m.injuryTime:''}'`:'LIVE'):ftLabel;
   const liveHtml=live?`<span class="live-dot"></span><span style="color:${paused?'var(--gold)':'#2ECC71'};font-size:10px;font-weight:700;margin-left:3px;">${minLabel}</span>`:(fin?`<span style="color:var(--text-muted);font-size:10px;font-weight:700;">${ftLabel} ${penStr}</span>`:'');
   const hasEv=matchDetails[String(m.id)]&&['FINISHED','IN_PLAY','PAUSED'].includes(matchDetails[String(m.id)]?.status)&&((matchDetails[String(m.id)]?.goals||[]).length>0||(matchDetails[String(m.id)]?.bookings||[]).length>0);
