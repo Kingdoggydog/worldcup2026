@@ -382,8 +382,8 @@ function mbox(m,off){
   const dur2=m.score?.duration;
   const isPSO=dur2==='PENALTY_SHOOTOUT';
   const isET=dur2==='EXTRA_TIME';
-  const hg=isPSO||isET?m.score?.regularTime?.home:m.score?.fullTime?.home;
-  const ag=isPSO||isET?m.score?.regularTime?.away:m.score?.fullTime?.away;
+  const hg=isPSO?m.score?.regularTime?.home:m.score?.fullTime?.home;
+  const ag=isPSO?m.score?.regularTime?.away:m.score?.fullTime?.away;
   const penH=isPSO?m.score?.penalties?.home:null;
   const penA=isPSO?m.score?.penalties?.away:null;
   const hw=fin&&(winner==='HOME_TEAM'||(winner==null&&hg!=null&&hg>ag));
@@ -418,8 +418,8 @@ function mobMatch(m,off){
   const dur2=m.score?.duration;
   const isPSO=dur2==='PENALTY_SHOOTOUT';
   const isET=dur2==='EXTRA_TIME';
-  const hg=isPSO||isET?m.score?.regularTime?.home:m.score?.fullTime?.home;
-  const ag=isPSO||isET?m.score?.regularTime?.away:m.score?.fullTime?.away;
+  const hg=isPSO?m.score?.regularTime?.home:m.score?.fullTime?.home;
+  const ag=isPSO?m.score?.regularTime?.away:m.score?.fullTime?.away;
   const penH=isPSO?m.score?.penalties?.home:null;
   const penA=isPSO?m.score?.penalties?.away:null;
   const hw=fin&&(winner==='HOME_TEAM'||(winner==null&&hg!=null&&hg>ag));
