@@ -4789,8 +4789,8 @@ async function loadScores() {
       const duration = m.score?.duration;
       const isPSO = duration === 'PENALTY_SHOOTOUT';
       const isET = duration === 'EXTRA_TIME';
-      const hg = isPSO ? m.score?.regularTime?.home : m.score?.fullTime?.home;
-      const ag = isPSO ? m.score?.regularTime?.away : m.score?.fullTime?.away;
+      const hg = isPSO ? (m.score?.regularTime?.home??0)+(m.score?.extraTime?.home??0) : m.score?.fullTime?.home;
+      const ag = isPSO ? (m.score?.regularTime?.away??0)+(m.score?.extraTime?.away??0) : m.score?.fullTime?.away;
       const penH = isPSO ? m.score?.penalties?.home : null;
       const penA = isPSO ? m.score?.penalties?.away : null;
       const scoreLabel = isET ? 'AET' : null;
