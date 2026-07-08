@@ -114,7 +114,7 @@
   <div class="top-mask"></div>
   <div class="still-in-note">
     <div class="still-in-dot"></div>
-    <span>Green players are still in the tournament (QF stage) and can add to their tally</span>
+    <span>Green players are still in the tournament and can add to their tally</span>
   </div>
   <div class="legend-bar">
     <span><span class="legend-icon">⚽</span> Goals</span>
@@ -164,10 +164,7 @@ async function loadActiveTeams() {
     });
     STILL_IN = active;
     // Update note with round
-    const stages = [...new Set((data.matches||[]).filter(m=>m.stage!=='GROUP_STAGE'&&['TIMED','IN_PLAY','PAUSED'].includes(m.status)).map(m=>m.stage))];
-    const stageLabel = stages.includes('QUARTER_FINALS')?'QF':stages.includes('LAST_16')?'R16':stages.includes('SEMI_FINALS')?'SF':stages.includes('FINAL')?'Final':'knockout';
-    const noteEl = document.querySelector('.still-in-note span');
-    if (noteEl) noteEl.textContent = `Green players are still in the tournament (${stageLabel}) and can add to their tally`;
+
   } catch(e) {}
 }
 
