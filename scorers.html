@@ -7,7 +7,6 @@
   <meta name="description" content="FIFA World Cup 2026 Golden Boot race - top scorers updated live throughout the tournament.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="World Cup 2026 Schedule">
   <meta property="og:title" content="World Cup 2026 Top Scorers - Golden Boot Race">
@@ -32,10 +31,6 @@
       .scorers-table { font-size: 12px; table-layout: fixed; width: 100%; }
       .player-name { font-size: 12.5px; }
       .player-team { font-size: 11px; }
-      /* Explicit width on every column - table-layout:fixed needs this on ALL
-         columns (not just player), otherwise browsers compute the remaining
-         columns inconsistently, which was causing the goals number to
-         visually collide with wrapped player names. */
       .col-pos { width: 6%; }
       .col-player { width: 30%; }
       .col-goals { width: 16%; }
@@ -46,7 +41,6 @@
       .scorers-table th .sublabel { display: none; }
       .scorers-table th { font-size: 14px; }
     }
-
     .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
     .header h1 { font-weight: 800; font-size: clamp(22px,5vw,36px); letter-spacing: 1px; text-transform: uppercase; line-height: 1; color: var(--gold); }
     .header .sub { font-size: clamp(11px,2vw,14px); font-weight: 400; letter-spacing: 2px; text-transform: uppercase; color: var(--text-sub); margin-top: 4px; }
@@ -54,11 +48,17 @@
     .nav-btn { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: clamp(10px,1.5vw,13px); letter-spacing: 0.5px; text-transform: uppercase; padding: 5px 10px; border-radius: 4px; cursor: pointer; border: 1.5px solid var(--ctrl-border); background: var(--ctrl-bg); color: var(--ctrl-text); text-decoration: none; transition: all 0.2s; white-space: nowrap; display: inline-block; }
     .nav-btn:hover { opacity: 0.8; }
     .nav-btn.active { background: var(--gold); color: #0A0E1A; border-color: var(--gold); }
-
+    .still-in-note {
+      display: flex; align-items: center; gap: 8px;
+      background: rgba(46,204,113,0.08);
+      border: 1px solid rgba(46,204,113,0.25);
+      border-radius: 6px; padding: 8px 12px;
+      margin-bottom: 14px;
+      font-size: 13px; color: var(--text-sub);
+    }
+    .still-in-dot { width: 8px; height: 8px; background: var(--win); border-radius: 50%; flex-shrink: 0; }
     .scorers-table { width: 100%; border-collapse: separate; border-spacing: 0; }
     .scorers-table th { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); padding: 8px 12px; border-bottom: 2px solid var(--border); text-align: center; }
-
-    /* Legend bar (mobile only, NOT sticky) + sticky table header (th-level, with iOS fix) */
     .legend-bar { display: none; }
     .legend-icon { display: inline-block; margin-right: 4px; font-weight: 700; color: var(--gold); }
     .scorers-table thead th {
@@ -67,25 +67,9 @@
       -webkit-transform: translateZ(0); transform: translateZ(0);
       -webkit-backface-visibility: hidden; backface-visibility: hidden;
     }
-    .top-mask {
-      display: none;
-      position: fixed; top: 0; left: 0; right: 0;
-      height: 38px;
-      background: var(--bg);
-      z-index: 20;
-      pointer-events: none;
-    }
+    .top-mask { display: none; position: fixed; top: 0; left: 0; right: 0; height: 38px; background: var(--bg); z-index: 20; pointer-events: none; }
     @media (max-width: 600px) {
-      .legend-bar {
-        display: flex; flex-wrap: wrap; gap: 10px;
-        align-items: center;
-        padding: 8px 10px;
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: 8px;
-        margin-bottom: 12px;
-        font-size: 10.5px; color: var(--text-sub);
-      }
+      .legend-bar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; padding: 8px 10px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 12px; font-size: 10.5px; color: var(--text-sub); }
       .top-mask { display: block; }
       .scorers-table thead th { top: 38px; }
     }
@@ -96,19 +80,16 @@
     .scorers-table td.stat { text-align: center; color: var(--text-sub); font-size: 15px; }
     .scorers-table tr:hover td { background: rgba(255,255,255,0.02); }
     .scorers-table tr:first-child td { background: rgba(201,168,76,0.06); }
-
+    .scorers-table tr.still-in .player-name { color: var(--win); }
     .pos { font-size: 13px; color: var(--text-muted); font-weight: 700; text-align: center; width: 30px; }
     .pos.gold { color: #FFD700; }
     .pos.silver { color: #C0C0C0; }
     .pos.bronze { color: #CD7F32; }
-
     .player-name { font-weight: 700; font-size: 17px; text-align: left; }
     .player-team { font-size: 13px; color: var(--text-sub); margin-top: 2px; display: flex; align-items: center; gap: 4px; justify-content: flex-start; }
     .player-team img { width: 16px; height: 12px; object-fit: contain; }
-
     .last-updated { font-size: 12px; color: var(--text-muted); text-align: right; margin-top: 12px; letter-spacing: 1px; }
     .loading { text-align: center; padding: 40px; color: var(--text-muted); font-size: 16px; letter-spacing: 1px; }
-
     .footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--border); }
     .footer p { font-size: 12px; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; }
     .footer a { color: var(--text-muted); text-decoration: none; }
@@ -117,7 +98,6 @@
 </head>
 <body>
 <div class="page">
-
   <div class="header">
     <div>
       <h1>FIFA World Cup 2026</h1>
@@ -132,6 +112,10 @@
   </div>
 
   <div class="top-mask"></div>
+  <div class="still-in-note">
+    <div class="still-in-dot"></div>
+    <span>Green players are still in the tournament (QF stage) and can add to their tally</span>
+  </div>
   <div class="legend-bar">
     <span><span class="legend-icon">⚽</span> Goals</span>
     <span><span class="legend-icon">🅰️</span> Assists</span>
@@ -142,11 +126,8 @@
   <div class="last-updated" id="last-updated"></div>
 
   <div class="footer">
-    <p>
-      <a href="https://www.reddit.com/user/coolcato" target="_blank">&#128075; Made by u/coolcato</a>
-    </p>
+    <p><a href="https://www.reddit.com/user/coolcato" target="_blank">&#128075; Made by u/coolcato</a></p>
   </div>
-
 </div>
 
 <script>
@@ -164,6 +145,36 @@ const FLAGS = {
   'USA':'us','United States':'us','Uruguay':'uy','Uzbekistan':'uz'
 };
 
+// Teams still in - derived dynamically from data.json knockout fixtures
+let STILL_IN = new Set();
+
+async function loadActiveTeams() {
+  try {
+    const res = await fetch('data.json?t=' + Date.now());
+    const data = await res.json();
+    const active = new Set();
+    (data.matches || []).forEach(m => {
+      if (m.stage === 'GROUP_STAGE') return;
+      if (['TIMED','IN_PLAY','PAUSED'].includes(m.status)) {
+        if (m.homeTeam?.name) active.add(m.homeTeam.name);
+        if (m.homeTeam?.shortName) active.add(m.homeTeam.shortName);
+        if (m.awayTeam?.name) active.add(m.awayTeam.name);
+        if (m.awayTeam?.shortName) active.add(m.awayTeam.shortName);
+      }
+    });
+    STILL_IN = active;
+    // Update note with round
+    const stages = [...new Set((data.matches||[]).filter(m=>m.stage!=='GROUP_STAGE'&&['TIMED','IN_PLAY','PAUSED'].includes(m.status)).map(m=>m.stage))];
+    const stageLabel = stages.includes('QUARTER_FINALS')?'QF':stages.includes('LAST_16')?'R16':stages.includes('SEMI_FINALS')?'SF':stages.includes('FINAL')?'Final':'knockout';
+    const noteEl = document.querySelector('.still-in-note span');
+    if (noteEl) noteEl.textContent = `Green players are still in the tournament (${stageLabel}) and can add to their tally`;
+  } catch(e) {}
+}
+
+function isStillIn(shortName) {
+  return STILL_IN.has(shortName);
+}
+
 function flagImg(shortName) {
   const code = FLAGS[shortName];
   return code ? `<img src="https://flagcdn.com/w20/${code}.png" alt="${shortName}" style="width:16px;height:12px;object-fit:contain;">` : '';
@@ -177,6 +188,7 @@ function posClass(i) {
 }
 
 async function loadScorers() {
+  await loadActiveTeams();
   try {
     const res = await fetch('scorers.json?t=' + Date.now());
     const data = await res.json();
@@ -207,11 +219,11 @@ async function loadScorers() {
       const player = s.player;
       const team = s.team;
       const flag = flagImg(team.shortName);
-      // Show = for tied positions
+      const stillIn = isStillIn(team.shortName) || isStillIn(team.name);
       const prev = i > 0 ? scorers[i-1] : null;
       const tied = prev && s.goals === prev.goals && (s.assists ?? 0) === (prev.assists ?? 0);
       const posDisplay = tied ? '=' : (i + 1);
-      html += `<tr>
+      html += `<tr${stillIn ? ' class="still-in"' : ''}>
         <td class="pos col-pos ${posClass(i)}">${posDisplay}</td>
         <td class="col-player" style="text-align:left;">
           <div class="player-name">${player.name}</div>
