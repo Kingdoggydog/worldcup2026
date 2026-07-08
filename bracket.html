@@ -76,7 +76,7 @@ body.print-mode .champ{font-size:9px;margin-top:1px;min-height:12px;}
 .champ{font-size:13px;font-weight:800;color:var(--win);text-align:center;min-height:18px;margin-top:3px;}
 .tplbl{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--sub);text-align:center;margin-top:12px;}
 .bmob{display:none;}
-.mround{display:none;flex-direction:column;gap:8px;}
+.mround{display:none;flex-direction:column;gap:8px;overflow:visible;}
 .mround.on{display:flex;}
 .mm{background:var(--card);border:1px solid var(--border);border-radius:6px;overflow:hidden;}
 
@@ -98,7 +98,10 @@ body.print-mode .champ{font-size:9px;margin-top:1px;min-height:12px;}
     box-shadow: 0 0 0 1.5px rgba(255,255,255,0.55), 0 0 12px rgba(255,255,255,0.15);
     cursor: pointer;
     overflow: visible;
-    z-index: 50;
+    z-index: 200;
+  }
+  .mb.has-events:hover .event-card, .mm.has-events:hover .event-card {
+    z-index: 201;
   }
   .event-card {
     position: absolute;
@@ -113,14 +116,9 @@ body.print-mode .champ{font-size:9px;margin-top:1px;min-height:12px;}
     overflow: hidden;
   }
   /* Left cols: card appears to the right of the match box */
-  [data-side="left"] .event-card {
-    left: 100%; top: 0;
-    margin-left: 6px;
-  }
-  /* Right cols: card appears to the left of the match box */
-  [data-side="right"] .event-card {
-    right: 100%; top: 0; left: auto;
-    margin-right: 6px;
+  @media(min-width:901px) {
+    [data-side="left"] .event-card { left: 100%; top: 0; margin-left: 6px; }
+    [data-side="right"] .event-card { right: 100%; top: 0; left: auto; margin-right: 6px; }
   }
   .event-card-body { display: flex; }
   .ev-col { flex: 1; padding: 8px 10px; min-width: 0; }
@@ -550,7 +548,7 @@ function render(){
     r32El.innerHTML=r32pairs.map(pair=>{
       const[m1,m2]=pair.matches.map(id=>mById(id)).filter(Boolean);
       if(!m1&&!m2)return '';
-      return `<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:4px;">
+      return `<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:visible;margin-bottom:4px;">
         <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);padding:4px 10px;border-bottom:1px solid var(--border);text-align:right;">
           winners meet in <span style="color:var(--gold)">${pair.r16}</span>
         </div>
@@ -575,7 +573,7 @@ function render(){
     r16El.innerHTML=r16pairs.map(pair=>{
       const[m1,m2]=pair.matches.map(id=>mById(id)).filter(Boolean);
       if(!m1&&!m2)return '';
-      return `<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:4px;">
+      return `<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:visible;margin-bottom:4px;">
         <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);padding:4px 10px;border-bottom:1px solid var(--border);text-align:right;">
           Winners meet in <span style="color:var(--gold)">${pair.next}</span>
         </div>
@@ -598,7 +596,7 @@ function render(){
     qfEl.innerHTML=qfpairs.map(pair=>{
       const[m1,m2]=pair.matches.map(id=>mById(id)).filter(Boolean);
       if(!m1&&!m2)return '';
-      return `<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:4px;">
+      return `<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:visible;margin-bottom:4px;">
         <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);padding:4px 10px;border-bottom:1px solid var(--border);text-align:right;">
           Winners meet in <span style="color:var(--gold)">${pair.next}</span>
         </div>
@@ -615,7 +613,7 @@ function render(){
   const sfEl=document.getElementById('mrsf');
   if(sfEl){
     const m1=mById(537387),m2=mById(537388);
-    sfEl.innerHTML=`<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:4px;">
+    sfEl.innerHTML=`<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:visible;margin-bottom:4px;">
       <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);padding:4px 10px;border-bottom:1px solid var(--border);text-align:right;">
         Winners meet in <span style="color:var(--gold)">M104 The Final</span>
       </div>
