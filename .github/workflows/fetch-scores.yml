@@ -11,6 +11,10 @@ env:
 permissions:
   contents: write
 
+concurrency:
+  group: fetch-scores
+  cancel-in-progress: false
+
 jobs:
   fetch-scores:
     runs-on: ubuntu-latest
@@ -136,5 +140,6 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data.json scorers.json match-details.json group-winners.json .fail_count
           git commit -m "Update scores $(date -u '+%Y-%m-%d %H:%M UTC')"
+          sleep $((RANDOM % 10 + 1))
           git pull --rebase
           git push
