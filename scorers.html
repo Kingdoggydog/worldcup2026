@@ -161,6 +161,18 @@ async function loadActiveTeams() {
         if (m.awayTeam?.name) active.add(m.awayTeam.name);
         if (m.awayTeam?.shortName) active.add(m.awayTeam.shortName);
       }
+      // Also add winners of finished knockout matches in case next round not yet populated
+      if (m.status === 'FINISHED' && m.stage !== 'GROUP_STAGE') {
+        const winner = m.score?.winner;
+        if (winner === 'HOME_TEAM' && m.homeTeam?.name) {
+          active.add(m.homeTeam.name);
+          if (m.homeTeam?.shortName) active.add(m.homeTeam.shortName);
+        }
+        if (winner === 'AWAY_TEAM' && m.awayTeam?.name) {
+          active.add(m.awayTeam.name);
+          if (m.awayTeam?.shortName) active.add(m.awayTeam.shortName);
+        }
+      }
     });
     STILL_IN = active;
     // Update note with round
