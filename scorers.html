@@ -153,6 +153,8 @@ async function loadActiveTeams() {
     const res = await fetch('data.json?t=' + Date.now());
     const data = await res.json();
     const active = new Set();
+    // Only add teams that have an upcoming TIMED/IN_PLAY knockout match
+    // This is the most reliable signal - if a team has a future match they're still in
     (data.matches || []).forEach(m => {
       if (m.stage === 'GROUP_STAGE') return;
       if (['TIMED','IN_PLAY','PAUSED'].includes(m.status)) {
@@ -161,19 +163,28 @@ async function loadActiveTeams() {
         if (m.awayTeam?.name) active.add(m.awayTeam.name);
         if (m.awayTeam?.shortName) active.add(m.awayTeam.shortName);
       }
-      // Also add winners of finished knockout matches in case next round not yet populated
-      if (m.status === 'FINISHED' && m.stage !== 'GROUP_STAGE') {
-        const winner = m.score?.winner;
-        if (winner === 'HOME_TEAM' && m.homeTeam?.name) {
-          active.add(m.homeTeam.name);
-          if (m.homeTeam?.shortName) active.add(m.homeTeam.shortName);
-        }
-        if (winner === 'AWAY_TEAM' && m.awayTeam?.name) {
-          active.add(m.awayTeam.name);
-          if (m.awayTeam?.shortName) active.add(m.awayTeam.shortName);
-        }
-      }
     });
+    // If active is empty (between rounds, API not yet populated next round)
+    // fall back to most recent round's winners
+    if (active.size === 0) {
+      const stages = ['QUARTER_FINALS','LAST_16','LAST_32'];
+      for (const stage of stages) {
+        const stageMatches = (data.matches||[]).filter(m=>m.stage===stage&&m.status==='FINISHED');
+        if (stageMatches.length === 0) continue;
+        stageMatches.forEach(m => {
+          const winner = m.score?.winner;
+          if (winner === 'HOME_TEAM' && m.homeTeam?.name) {
+            active.add(m.homeTeam.name);
+            if (m.homeTeam?.shortName) active.add(m.homeTeam.shortName);
+          }
+          if (winner === 'AWAY_TEAM' && m.awayTeam?.name) {
+            active.add(m.awayTeam.name);
+            if (m.awayTeam?.shortName) active.add(m.awayTeam.shortName);
+          }
+        });
+        if (active.size > 0) break;
+      }
+    }
     STILL_IN = active;
     // Update note with round
 
