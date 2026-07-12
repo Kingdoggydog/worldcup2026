@@ -146,54 +146,64 @@ const FLAGS = {
 };
 
 // Teams still in - derived dynamically from data.json knockout fixtures
+// Same FEEDERS and BASE as bracket - used to resolve active teams
+const FEEDERS = {
+  537375:['M74','M77'],537376:['M73','M75'],537377:['M76','M78'],537378:['M79','M80'],
+  537379:['M83','M84'],537380:['M81','M82'],537381:['M86','M88'],537382:['M85','M87'],
+  537383:['M89','M90'],537384:['M93','M94'],537385:['M91','M92'],537386:['M95','M96'],
+  537387:['M97','M98'],537388:['M99','M100'],537390:['M101','M102'],537389:['M101','M102'],
+};
+const BASE_IDS = {
+  M73:537417,M74:537415,M75:537418,M76:537423,M77:537416,M78:537424,
+  M79:537425,M80:537426,M81:537421,M82:537422,M83:537419,M84:537420,
+  M85:537429,M86:537427,M87:537430,M88:537428,
+  M89:537375,M90:537376,M91:537377,M92:537378,M93:537379,M94:537380,M95:537381,M96:537382,
+  M97:537383,M98:537384,M99:537385,M100:537386,
+  M101:537387,M102:537388,M103:537389,M104:537390
+};
+
 let STILL_IN = new Set();
+let _matchById = {};
 
-async function loadActiveTeams() {
-  try {
-    const res = await fetch('data.json?t=' + Date.now());
-    const data = await res.json();
-    const active = new Set();
-    // Only add teams that have an upcoming TIMED/IN_PLAY knockout match
-    // This is the most reliable signal - if a team has a future match they're still in
-    (data.matches || []).forEach(m => {
-      if (m.stage === 'GROUP_STAGE') return;
-      if (['TIMED','IN_PLAY','PAUSED'].includes(m.status)) {
-        // Only add if team name is actually populated (not null)
-        if (m.homeTeam?.name && m.homeTeam.name.length > 0) active.add(m.homeTeam.name);
-        if (m.homeTeam?.shortName && m.homeTeam.shortName.length > 0) active.add(m.homeTeam.shortName);
-        if (m.awayTeam?.name && m.awayTeam.name.length > 0) active.add(m.awayTeam.name);
-        if (m.awayTeam?.shortName && m.awayTeam.shortName.length > 0) active.add(m.awayTeam.shortName);
-      }
-    });
-    // If active is empty (between rounds, API not yet populated next round)
-    // fall back to most recent round's winners
-    if (active.size === 0) {
-      const stages = ['QUARTER_FINALS','LAST_16','LAST_32'];
-      for (const stage of stages) {
-        const stageMatches = (data.matches||[]).filter(m=>m.stage===stage&&m.status==='FINISHED');
-        if (stageMatches.length === 0) continue;
-        stageMatches.forEach(m => {
-          const winner = m.score?.winner;
-          if (winner === 'HOME_TEAM' && m.homeTeam?.name) {
-            active.add(m.homeTeam.name);
-            if (m.homeTeam?.shortName) active.add(m.homeTeam.shortName);
-          }
-          if (winner === 'AWAY_TEAM' && m.awayTeam?.name) {
-            active.add(m.awayTeam.name);
-            if (m.awayTeam?.shortName) active.add(m.awayTeam.shortName);
-          }
-        });
-        if (active.size > 0) break;
-      }
-    }
-    STILL_IN = active;
-    // Update note with round
-
-  } catch(e) {}
+function resolveWinner(mnum) {
+  const id = BASE_IDS[mnum];
+  if (!id) return null;
+  const m = _matchById[id];
+  if (!m || m.status !== 'FINISHED') return null;
+  const winner = m.score?.winner;
+  if (winner === 'HOME_TEAM') return m.homeTeam?.name || null;
+  if (winner === 'AWAY_TEAM') return m.awayTeam?.name || null;
+  return null;
 }
 
-function isStillIn(shortName) {
-  return STILL_IN.has(shortName);
+function buildStillIn() {
+  const active = new Set();
+  Object.values(_matchById).forEach(m => {
+    if (!m.stage || m.stage === 'GROUP_STAGE') return;
+    if (['TIMED','IN_PLAY','PAUSED'].includes(m.status)) {
+      const feeders = FEEDERS[m.id];
+      if (feeders) {
+        const home = resolveWinner(feeders[0]);
+        const away = resolveWinner(feeders[1]);
+        if (home) active.add(home);
+        if (away) active.add(away);
+      } else {
+        if (m.homeTeam?.name) active.add(m.homeTeam.name);
+        if (m.awayTeam?.name) active.add(m.awayTeam.name);
+      }
+    }
+  });
+  STILL_IN = active;
+}
+
+async function loadActiveTeams(data) {
+  _matchById = {};
+  (data.matches || []).forEach(m => { if (m.id) _matchById[m.id] = m; });
+  buildStillIn();
+}
+
+function isStillIn(name) {
+  return STILL_IN.has(name);
 }
 
 function flagImg(shortName) {
@@ -209,7 +219,11 @@ function posClass(i) {
 }
 
 async function loadScorers() {
-  await loadActiveTeams();
+  try {
+    const matchRes = await fetch('data.json?t=' + Date.now());
+    const matchData = await matchRes.json();
+    await loadActiveTeams(matchData);
+  } catch(e) {}
   try {
     const res = await fetch('scorers.json?t=' + Date.now());
     const data = await res.json();
