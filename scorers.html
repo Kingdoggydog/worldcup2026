@@ -158,10 +158,11 @@ async function loadActiveTeams() {
     (data.matches || []).forEach(m => {
       if (m.stage === 'GROUP_STAGE') return;
       if (['TIMED','IN_PLAY','PAUSED'].includes(m.status)) {
-        if (m.homeTeam?.name) active.add(m.homeTeam.name);
-        if (m.homeTeam?.shortName) active.add(m.homeTeam.shortName);
-        if (m.awayTeam?.name) active.add(m.awayTeam.name);
-        if (m.awayTeam?.shortName) active.add(m.awayTeam.shortName);
+        // Only add if team name is actually populated (not null)
+        if (m.homeTeam?.name && m.homeTeam.name.length > 0) active.add(m.homeTeam.name);
+        if (m.homeTeam?.shortName && m.homeTeam.shortName.length > 0) active.add(m.homeTeam.shortName);
+        if (m.awayTeam?.name && m.awayTeam.name.length > 0) active.add(m.awayTeam.name);
+        if (m.awayTeam?.shortName && m.awayTeam.shortName.length > 0) active.add(m.awayTeam.shortName);
       }
     });
     // If active is empty (between rounds, API not yet populated next round)
