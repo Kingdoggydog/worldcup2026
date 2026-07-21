@@ -8,22 +8,18 @@
 <meta name="keywords" content="FIFA World Cup 2026 schedule, World Cup 2026 fixtures, World Cup 2026 times, World Cup 2026 AEST, World Cup 2026 Melbourne, World Cup 2026 Australia, World Cup 2026 group stage, World Cup 2026 knockout">
 <meta name="author" content="kingdoggydog">
 <link rel="canonical" href="https://kingdoggydog.github.io/worldcup2026/">
-
 <!-- Open Graph (for Facebook, Reddit, LinkedIn previews) -->
 <meta property="og:title" content="World Cup 2026 Schedule - Live Scores & Local Times">
 <meta property="og:description" content="All 104 matches with live scores, standings and bracket. Times in your timezone. Free, no ads.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://kingdoggydog.github.io/worldcup2026/">
-
 <!-- Twitter/X card -->
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="World Cup 2026 Schedule - Live Scores & Local Times">
 <meta name="twitter:description" content="All 104 matches with live scores, standings and bracket. Times in your timezone. Free, no ads.">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500&display=swap');
-
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
   /* ── DARK MODE (default) ─────────────────────────────────────────────────── */
   :root {
     --bg:           #0A0E1A;
@@ -45,12 +41,10 @@
     --h1-color:     var(--gold);
     --page-shadow:  0 0 60px rgba(0,0,0,0.8);
   }
-
   /* group badge colours - dark mode: brighter */
   .A{color:#E74C3C}.B{color:#E67E22}.C{color:#F0C040}.D{color:#2ECC71}
   .E{color:#1ABC9C}.F{color:#5DADE2}.G{color:#A569BD}.H{color:#EC407A}
   .I{color:#FF7043}.J{color:#26C6DA}.K{color:#9CCC65}.L{color:#FFA726}
-
   /* ── PRINT MODE (toggled) ────────────────────────────────────────────────── */
   body.print-mode {
     --bg:           #ffffff;
@@ -72,14 +66,12 @@
     --h1-color:     #111111;
     --page-shadow:  none;
   }
-
   body.print-mode .A{color:#c0392b} body.print-mode .B{color:#d35400}
   body.print-mode .C{color:#b7950b} body.print-mode .D{color:#1e8449}
   body.print-mode .E{color:#148f77} body.print-mode .F{color:#1a5276}
   body.print-mode .G{color:#6c3483} body.print-mode .H{color:#b03a7c}
   body.print-mode .I{color:#ba4a00} body.print-mode .J{color:#0e6655}
   body.print-mode .K{color:#1d6328} body.print-mode .L{color:#d4800a}
-
   /* ── BASE STYLES ─────────────────────────────────────────────────────────── */
   body {
     background: var(--bg);
@@ -87,7 +79,6 @@
     font-family: 'Barlow', sans-serif;
     transition: background 0.3s, color 0.3s;
   }
-
   /* ── NIGHT MODE: free-flowing web page layout ────────────────────────────── */
   .page {
     max-width: 900px;
@@ -100,8 +91,6 @@
     transition: background 0.3s, box-shadow 0.3s;
     min-height: 100vh;
   }
-
-
   /* ── MATCH EVENT CARD (hover/tap popup) ──────────────────────────────── */
   .match { position: relative; cursor: pointer; }
   .event-card {
@@ -147,11 +136,9 @@
   .ev-scorer { color: var(--gold); font-weight: 800; }
   .ev-assist { color: var(--text); font-size: 11px; }
   .ev-empty { font-size: 11.5px; color: var(--text-muted); font-style: italic; padding: 4px 0; }
-
   @media (max-width: 600px) {
     .event-card { width: 94vw; left: 50%; }
   }
-
   /* ── PRINT MODE: lock to A4 ──────────────────────────────────────────────── */
   body.print-mode .page {
     width: 210mm; max-width: 210mm;
@@ -159,7 +146,6 @@
     min-height: unset;
     box-shadow: none;
   }
-
   body.print-mode #next-match-card { display: none !important; }
   @media (max-width: 600px) {
     #next-match-card { flex-wrap: wrap !important; justify-content: center !important; gap: 4px !important; }
@@ -167,7 +153,6 @@
     #next-match-card > div { order: 2; width: 100% !important; justify-content: center !important; }
     #next-match-card > span#nm-venue { order: 3; width: 100% !important; text-align: center !important; }
   }
-
   /* ── HEADER ──────────────────────────────────────────────────────────────── */
   .header {
     display: flex; justify-content: space-between; align-items: flex-start;
@@ -176,7 +161,6 @@
     gap: 16px; flex-wrap: nowrap;
   }
   body.print-mode .header { padding-bottom: 3px; margin-bottom: 4px; align-items: flex-end; flex-wrap: nowrap; }
-
   .header h1 {
     font-family: 'Barlow Condensed', sans-serif; font-weight: 800;
     font-size: clamp(22px, 5vw, 36px);
@@ -184,7 +168,6 @@
     color: var(--h1-color);
   }
   body.print-mode .header h1 { font-size: 18px; }
-
   .header .sub {
     font-family: 'Barlow Condensed', sans-serif;
     font-size: clamp(11px, 2vw, 14px);
@@ -192,13 +175,11 @@
     text-transform: uppercase; color: var(--text-sub); margin-top: 4px;
   }
   body.print-mode .header .sub { font-size: 9px; margin-top: 2px; }
-
   .header-right {
     text-align: right; display: flex; flex-direction: column;
     gap: 8px; align-items: flex-end; flex-shrink: 0;
   }
   body.print-mode .header-right { gap: 4px; }
-
   /* ── CONTROLS ────────────────────────────────────────────────────────────── */
   .ctrl-row { display: flex; align-items: center; gap: 8px; }
   .highlight-rows { display: flex; flex-direction: column; gap: 6px; }
@@ -219,14 +200,12 @@
   body.print-mode .hl-ctrl-row { display: none !important; }
   body.print-mode .ctrl-label { display: none !important; }
   @media screen and (max-width: 900px) { #feedback-nav { display: none !important; } }
-
   .ctrl-label {
     font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
     font-size: clamp(10px, 1.5vw, 13px);
     letter-spacing: 1px; text-transform: uppercase; color: var(--text-sub); white-space: nowrap;
   }
   body.print-mode .ctrl-label { font-size: 10px; }
-
   select {
     font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
     font-size: clamp(12px, 1.8vw, 15px);
@@ -237,7 +216,6 @@
   }
   body.print-mode select { font-size: 12px; padding: 2px 5px; border-radius: 3px; }
   select:focus { outline: 2px solid var(--highlight-bl); }
-
   .nav-btn {
     font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
     font-size: clamp(11px, 1.5vw, 13px);
@@ -251,7 +229,6 @@
   .nav-btn:hover { opacity: 0.8; }
   .nav-btn.active { background: var(--gold); color: #0A0E1A; border-color: var(--gold); }
   body.print-mode .nav-btn { display: none; }
-
   .nav-btn {
     font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
     font-size: clamp(11px, 1.5vw, 13px);
@@ -265,7 +242,6 @@
   .nav-btn:hover { opacity: 0.8; }
   .nav-btn.active { background: var(--gold); color: #0A0E1A; border-color: var(--gold); }
   body.print-mode .nav-btn { display: none; }
-
   #mode-toggle {
     font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
     font-size: clamp(11px, 1.5vw, 13px);
@@ -338,7 +314,6 @@
   .time-switch-track.on .time-switch-thumb {
     transform: translateX(16px); background: #0A0E1A;
   }
-
   /* knockout section heading */
   .knockout-heading {
     grid-column: 1 / -1;
@@ -358,24 +333,19 @@
     font-family: 'Barlow Condensed', sans-serif; font-size: clamp(10px, 1.5vw, 12px);
     color: var(--text-sub); letter-spacing: 1px; text-transform: uppercase;
   }
-
   .ko-match .grp { color: var(--text-muted); font-style: italic; width: auto; font-size: 8px; }
-
-
   .highlight-note {
     font-size: clamp(10px, 1.5vw, 12px);
     color: var(--text-muted);
     font-family: 'Barlow Condensed', sans-serif; font-style: italic;
   }
   body.print-mode .highlight-note { font-size: 8px; }
-
   /* ── LEGEND ──────────────────────────────────────────────────────────────── */
   .legend {
     display: flex; flex-wrap: wrap; gap: 5px 12px;
     margin-bottom: 16px; flex-shrink: 0;
   }
   body.print-mode .legend { gap: 2px 6px; margin-bottom: 3px; }
-
   .legend-item {
     display: flex; align-items: center; gap: 5px;
     font-family: 'Barlow Condensed', sans-serif;
@@ -383,10 +353,8 @@
     color: var(--text-sub); letter-spacing: 0.3px;
   }
   body.print-mode .legend-item { font-size: 9px; gap: 4px; }
-
   .legend-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
   body.print-mode .legend-dot { width: 8px; height: 8px; border-radius: 1px; }
-
   /* ── SCHEDULE GRID ───────────────────────────────────────────────────────── */
   .schedule {
     display: grid; grid-template-columns: 1fr 1fr;
@@ -396,7 +364,6 @@
   body.single-col:not(.print-mode) .schedule { grid-template-columns: 1fr !important; }
   @media screen and (max-width: 900px) { #col-switch { display: none !important; } #col-switch-row { display: none !important; } }
   @media screen and (max-width: 900px) { #col-switch { display: none !important; } #col-switch-row { display: none !important; } }
-
   /* coffee buttons + version (defined once, cleanly) */
   #bmc-header {
     font-family: 'Barlow Condensed', sans-serif;
@@ -410,10 +377,8 @@
   }
   #bmc-header:hover { opacity: 0.8; }
   body.print-mode #bmc-header { display: none !important; }
-
   #version { color: var(--text-muted); font-style: italic; }
   body.print-mode #version { color: #888; }
-
   #bmc-mobile {
     display: none; text-align: center;
     margin-top: 16px; padding-top: 12px;
@@ -436,7 +401,6 @@
   }
   #bmc-mobile a:hover { opacity: 0.8; }
   body.print-mode #bmc-mobile { display: none !important; }
-
   /* single column + larger text on mobile - night mode only */
   @media screen and (max-width: 900px) {
     #bmc-header { display: inline-block; }
@@ -462,7 +426,6 @@
     body:not(.print-mode) .legend-item { font-size: 11px; }
     body:not(.print-mode) .page { padding: 16px 14px 24px 14px; }
   }
-
   /* ── DAY BLOCK ───────────────────────────────────────────────────────────── */
   .day { break-inside: avoid; }
   .day-header {
@@ -471,21 +434,18 @@
     padding-bottom: 4px; margin-bottom: 6px;
   }
   body.print-mode .day-header { padding-bottom: 1px; margin-bottom: 1px; gap: 4px; }
-
   .day-name {
     font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
     font-size: clamp(13px, 2vw, 16px);
     text-transform: uppercase; letter-spacing: 1px; color: var(--gold);
   }
   body.print-mode .day-name { font-size: 11px; }
-
   .day-date {
     font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
     font-size: clamp(12px, 1.8vw, 14px);
     color: var(--text); letter-spacing: 0.5px;
   }
   body.print-mode .day-date { font-size: 10px; color: #111; font-weight: 700; }
-
   /* ── MATCH ROW ───────────────────────────────────────────────────────────── */
   .match {
     display: flex; align-items: center; gap: 8px;
@@ -509,7 +469,6 @@
     background: #e0e0e0;
     border-left-color: #555555;
   }
-
   .match.highlighted {
     /* colour applied by hi-1, hi-2, hi-3, hi-4 classes */
   }
@@ -517,21 +476,18 @@
   .match.hi-2 { background: rgba(41,182,246,0.18); border-left-color: #29B6F6; }
   .match.hi-3 { background: rgba(155,89,182,0.12);  border-left-color: #9B59B6; }
   .match.hi-4 { background: rgba(255,159,64,0.12);  border-left-color: #FF9F40; }
-
   .grp {
     font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
     font-size: clamp(10px, 1.5vw, 12px);
     width: 16px; flex-shrink: 0; text-align: center;
   }
   body.print-mode .grp { font-size: 9px; width: 13px; }
-
   .time {
     font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
     font-size: clamp(14px, 2vw, 17px);
     width: 46px; flex-shrink: 0; color: var(--text);
   }
   body.print-mode .time { font-size: 11px; width: 38px; }
-
   .teams {
     flex: 1; font-family: 'Barlow Condensed', sans-serif; font-weight: 600;
     font-size: clamp(13px, 2vw, 16px);
@@ -539,7 +495,6 @@
     position: relative;
   }
   body.print-mode .teams { font-size: 11px; }
-
   .venue {
     font-size: clamp(10px, 1.4vw, 12px);
     color: var(--text-muted); flex-shrink: 1;
@@ -548,13 +503,10 @@
   }
   @media(max-width:900px) { .pen-score { display: inline; } }
   body.print-mode .venue { font-size: 8.5px; color: #111 !important; }
-
   .vs { color: var(--text-muted); font-size: clamp(9px, 1.3vw, 11px); margin: 0 3px; font-weight: 400; }
   body.print-mode .vs { font-size: 8px; margin: 0 2px; }
-
   .flag { width: 18px; height: 13px; object-fit: cover; border-radius: 2px; vertical-align: middle; flex-shrink: 0; }
   body.print-mode .flag { width: 15px; height: 11px; border-radius: 1px; }
-
   /* ── FOOTER ──────────────────────────────────────────────────────────────── */
   .footer {
     margin-top: 20px; padding-top: 10px;
@@ -564,14 +516,11 @@
   }
   body.print-mode .footer { display: none; }
   body.print-mode #support-banner-desktop, body.print-mode #support-banner-mobile { display: none !important; }
-
   .footer p {
     font-size: clamp(10px, 1.4vw, 12px);
     color: var(--footer-text);
     font-family: 'Barlow Condensed', sans-serif; letter-spacing: 0.5px;
   }
-
-
   /* ── PRINT MEDIA ─────────────────────────────────────────────────────────── */
   .schedule-note {
     background: var(--bg-match); border: 1px solid var(--border);
@@ -584,7 +533,6 @@
   }
   .schedule-note strong { color: var(--gold); }
   body.print-mode .schedule-note { display: none !important; }
-
   /* scores */
   body.hide-scores .score-ft .score-right,
   body.hide-scores .score-live .score-right { visibility: hidden; }
@@ -593,7 +541,6 @@
   .score-number { display: inline; }
   body.hide-scores .score-number { display: none; }
   body.hide-scores .score-vs-hidden { display: inline; color: var(--text-muted); font-size: clamp(12px,1.8vw,15px); font-weight: 700; }
-
   .score-inline {
     display: flex; align-items: center; gap: 6px; flex: 1;
     font-family: 'Barlow Condensed', sans-serif; justify-content: flex-start;
@@ -624,7 +571,6 @@
   .score-status.live { color: #2ECC71; }
   .score-ft .score-nums { color: var(--gold); }
   .score-live .score-nums { color: #2ECC71; animation: pulse-score 1.5s ease-in-out infinite; }
-
   .score-ft {
     font-family: 'Barlow Condensed', sans-serif; font-weight: 800;
     font-size: clamp(12px, 1.8vw, 15px);
@@ -644,7 +590,6 @@
   .score-label.live { color: #2ECC71; }
   @keyframes pulse-score { 0%,100%{opacity:1} 50%{opacity:0.6} }
   body.print-mode .score-live, body.print-mode .score-ft { font-size: 10px; }
-
   #jump-btn {
     display: none;
     position: fixed;
@@ -667,7 +612,6 @@
   #jump-btn { display: block; }
   body.print-mode #jump-btn { display: none !important; }
   @media print { #jump-btn { display: none !important; } }
-
   @page {
     size: letter;
     margin: 0.5in;
@@ -692,7 +636,6 @@
   .nav-btn:hover { opacity: 0.8; }
   .nav-btn.active { background: var(--gold); color: #0A0E1A; border-color: var(--gold); }
   body.print-mode .nav-btn { display: none; }
-
   #mode-toggle { display: none; }
   }
 </style>
@@ -4264,7 +4207,6 @@
 <body>
 <!-- dark mode is default; .print-mode toggled by JS -->
 <div class="page">
-
   <div class="header">
     <div>
       <h1>FIFA World Cup 2026</h1>
@@ -4450,12 +4392,8 @@
           </div>
         </div>
       </div>
-
     </div>
   </div>
-
-
-
   <!-- SEO: static text for Google indexing -->
   <p style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;">
     FIFA World Cup 2026 schedule with all 104 matches including group stage and knockout rounds.
@@ -4465,7 +4403,6 @@
     Australia Socceroos matches, USA USMNT fixtures, England, Brazil, Argentina and all national teams.
     World Cup 2026 results, scores and standings updated live during the tournament.
   </p>
-
   <div style="
     background: rgba(201,168,76,0.07);
     border: 1px solid var(--gold);
@@ -4499,7 +4436,6 @@
     <span id="nm-venue" style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#7A82A8;white-space:nowrap;text-align:right;"></span>
   </div>
   <div class="schedule" id="schedule"></div>
-
   <div class="footer">
     <p id="footer-tz">All times AEST (UTC+10) &bull; Source: FIFA / Fox Sports 2026 &bull; <span id="version">v1.4</span></p>
     <p>72 group stage matches &bull; 12 groups &bull; Top 2 per group + 8 best 3rd place advance</p>
@@ -4529,7 +4465,7 @@
         NOTIFY ME
       </button>
     </div>
-    <span id="signup-success-desk" style="display:none;color:#2ECC71;font-size:13px;font-weight:600;white-space:nowrap;">✓ You're on the list!</span>
+    <span id="signup-success-desk" style="display:none;color:#2ECC71;font-size:13px;font-weight:600;white-space:nowrap;">✓ Almost there - check your email to confirm.</span>
     <span style="color:var(--text-muted);font-size:13px;">|</span>
     <span style="color:var(--text-muted);font-size:13px;white-space:nowrap;">☕ Free &amp; ad-free — if it's been useful,</span>
     <a href="https://www.buymeacoffee.com/coolcato" target="_blank"
@@ -4559,7 +4495,7 @@
           NOTIFY ME
         </button>
       </div>
-      <div id="signup-success-mob" style="display:none;color:#2ECC71;font-size:13px;font-weight:600;margin-top:6px;">✓ You're on the list!</div>
+      <div id="signup-success-mob" style="display:none;color:#2ECC71;font-size:13px;font-weight:600;margin-top:6px;">✓ Almost there - check your email to confirm.</div>
     </div>
     <div style="
       background:rgba(201,168,76,0.07);border:1px solid var(--gold);
@@ -4581,12 +4517,8 @@
   <div style="text-align:center;margin-top:12px;">
     <a href="https://www.reddit.com/user/coolcato" target="_blank" style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;color:var(--text-muted);text-decoration:none;letter-spacing:1px;">👋 Made by u/coolcato</a>
   </div>
-
-
 </div>
-
 <button id="jump-btn" onclick="jumpToNextDay()">&#9660; Today's matches</button>
-
 <script>
 // UTC times verified from kickoffclock.com CSV (cross-referenced FIFA/Fox Sports)
 const MATCHES = [
@@ -4677,8 +4609,6 @@ const MATCHES = [
   { grp:'L', utc:21,   date:'2026-06-27', teams:'Panama v England',            venue:'New York/NJ'   },
   { grp:'L', utc:21,   date:'2026-06-27', teams:'Croatia v Ghana',             venue:'Philadelphia'  },
 ];
-
-
 // UTC times from kickoffclock CSV. Venues/opponents TBD for knockout rounds.
 // Round labels: R32=Round of 32, R16=Round of 16, QF=Quarter-final, SF=Semi-final, F=Final
 const KNOCKOUT_MATCHES = [
@@ -4720,9 +4650,7 @@ const KNOCKOUT_MATCHES = [
   { grp:'3rd', num:'M103', id:537389, utc:21,   date:'2026-07-18', teams:'Loss M101 v Loss M102',      venue:'Miami'      },
   { grp:'Final',num:'M104',id:537390, utc:19,   date:'2026-07-19', teams:'FINAL: Win M101 v Win M102', venue:'New York/NJ'},
 ];
-
 let showKnockout = true;
-
 // ISO 3166-1 alpha-2 codes for flagcdn.com
 const FLAGS = {
   'Algeria':'dz','Argentina':'ar','Australia':'au','Austria':'at',
@@ -4738,14 +4666,12 @@ const FLAGS = {
   'South Africa':'za','South Korea':'kr','S. Korea':'kr',  'Spain':'es','Sweden':'se','Switzerland':'ch','Tunisia':'tn',
   'Turkiye':'tr','Uruguay':'uy','USA':'us','Uzbekistan':'uz',
 };
-
 function flagImg(team) {
   const code = FLAGS[team];
   if (!code) return '';
   const size = team === 'Jordan' ? 'w80' : 'w20';
   return `<img class="flag" src="https://flagcdn.com/${size}/${code}.png" alt="">`;
 }
-
 function teamsHtml(teamsStr) {
   const parts = teamsStr.split(' v ');
   if (parts.length !== 2) return teamsStr;
@@ -4753,8 +4679,6 @@ function teamsHtml(teamsStr) {
   const away = parts[1].trim();
   return `${flagImg(home)} ${home} <span class="vs">v</span> ${away} ${flagImg(away)}`;
 }
-
-
 // ── LIVE SCORES FROM data.json ────────────────────────────────────────────────
 // Maps API shortName/name values to our display names in MATCHES array
 const API_NAME_MAP = {
@@ -4764,18 +4688,15 @@ const API_NAME_MAP = {
   'Cape Verde Islands':'Cape Verde', 'Cape Verde':'Cape Verde',
   'Congo DR':'Congo DR', 'Ivory Coast':'Ivory Coast',
 };
-
 function normalise(name) {
   return API_NAME_MAP[name] || name;
 }
-
 // scoreMap: keyed by "HomeTeam|AwayTeam" -> {home, away, status}
 let scoreMap = {};
 let scoreMapById = {};
 let matchDetails = {};
 let groupWinners = {};
 let lastFetch = null;
-
 async function loadScores() {
   try {
     const res = await fetch('data.json?t=' + Date.now());
@@ -4821,7 +4742,6 @@ async function loadScores() {
     groupWinners = groupWinners || {};
   }
 }
-
 // Swap "Win X" placeholders for confirmed team names once a group is mathematically clinched.
 // Letter range A-L only (group letters) - never touches "Win M89" style knockout-round references.
 // Build match number -> id lookup from MATCHES array (called once after MATCHES defined)
@@ -4830,7 +4750,6 @@ function buildMatchNumToId() {
   matchNumToId = {};
   [...MATCHES, ...KNOCKOUT_MATCHES].forEach(m => { if (m.num && m.id) matchNumToId[m.num] = m.id; });
 }
-
 // Resolve 'Win MXX' or 'Loss MXX' from scoreMapById results
 function resolveKnockoutRef(ref) {
   const winMatch = ref.match(/^Win (M\d+)$/);
@@ -4849,7 +4768,6 @@ function resolveKnockoutRef(ref) {
   if (s.away > s.home) return winMatch ? s.awayName : s.homeName;
   return ref;
 }
-
 function applyGroupWinners(teamsStr, id) {
   let result = teamsStr.replace(/\bWin ([A-L])\b/g, (match, letter) => {
     const winner = groupWinners[letter]?.first;
@@ -4873,8 +4791,6 @@ function applyGroupWinners(teamsStr, id) {
   }
   return result;
 }
-
-
 // ── MATCH EVENT CARD (hover/tap for goals, cards, subs) ────────────────────
 function getMatchId(teamsStr, id) {
   if (id) return id;
@@ -4886,7 +4802,6 @@ function getMatchId(teamsStr, id) {
   const s = scoreMap[home + '|' + away];
   return s ? s.id : null;
 }
-
 function hasEventData(teamsStr, id) {
   const mid = id || getMatchId(teamsStr);
   if (!mid) return false;
@@ -4895,7 +4810,6 @@ function hasEventData(teamsStr, id) {
   if (!['FINISHED', 'IN_PLAY', 'PAUSED'].includes(det.status)) return false;
   return (det.goals && det.goals.length > 0) || (det.bookings && det.bookings.length > 0);
 }
-
 function buildEventCard(teamsStr, id) {
   if (document.body.classList.contains('hide-scores')) return null; // never leak results
   const mid = id || getMatchId(teamsStr);
@@ -4903,22 +4817,17 @@ function buildEventCard(teamsStr, id) {
   const det = matchDetails[String(mid)];
   if (!det) return null;
   if (!['FINISHED', 'IN_PLAY', 'PAUSED'].includes(det.status)) return null;
-
   const parts = teamsStr.split(' v ');
   if (parts.length !== 2) return null;
   const homeName = parts[0].trim();
   const awayName = parts[1].trim();
-
   const hg = det.score?.fullTime?.home;
   const ag = det.score?.fullTime?.away;
   if (hg === null || hg === undefined) return null;
-
   // Combine goals + bookings into one event list per team, tagged with type
   const events = { home: [], away: [] };
-
   const isPSOMatch = det.score?.duration === 'PENALTY_SHOOTOUT';
   const goals = (det.goals || []).filter(g => !(isPSOMatch && g.minute >= 120 && g.type === 'PENALTY'));
-
   goals.forEach(g => {
     let side = g.team?.name === homeName || normalise(g.team?.name) === normalise(homeName) ? 'home' : 'away';
     let tag = '';
@@ -4937,7 +4846,6 @@ function buildEventCard(teamsStr, id) {
       html: `<span class="ev-icon">&#9917;</span> <span class="ev-min">${g.minute}${g.injuryTime ? '+'+g.injuryTime : ''}'</span> <span class="ev-player ev-scorer">${g.scorer.name}${tag}</span>${assistStr}`
     });
   });
-
   (det.bookings || []).forEach(b => {
     const side = b.team?.name === homeName || normalise(b.team?.name) === normalise(homeName) ? 'home' : 'away';
     const icon = b.card === 'RED' ? '&#128997;' : '&#129000;';
@@ -4948,21 +4856,16 @@ function buildEventCard(teamsStr, id) {
       html: `<span class="ev-icon">${icon}</span> <span class="ev-min">${b.minute}'</span> <span class="ev-player">${b.player.name}</span>`
     });
   });
-
   events.home.sort((a,b) => a.sortMin - b.sortMin);
   events.away.sort((a,b) => a.sortMin - b.sortMin);
-
   if (events.home.length === 0 && events.away.length === 0) return null; // 0-0 finished, nothing to show
-
   const statusLabel = det.status === 'FINISHED' ? 'FT' : det.status === 'PAUSED' ? 'HT' : (det.minute ? `${det.minute}'` : 'LIVE');
-
   const homeCol = events.home.length
     ? events.home.map(e => `<div class="ev-row">${e.html}</div>`).join('')
     : '<div class="ev-empty">No events</div>';
   const awayCol = events.away.length
     ? events.away.map(e => `<div class="ev-row">${e.html}</div>`).join('')
     : '<div class="ev-empty">No events</div>';
-
   return `
     <div class="event-card">
       <div class="event-card-body">
@@ -4971,8 +4874,6 @@ function buildEventCard(teamsStr, id) {
       </div>
     </div>`;
 }
-
-
 function getScore(teamsStr, id) {
   // Try ID lookup first (knockout matches)
   let s = id ? scoreMapById[id] : null;
@@ -5000,14 +4901,10 @@ function getScore(teamsStr, id) {
   }
   return null;
 }
-
 const DAYS   = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-
 function pad(n) { return String(Math.floor(Math.abs(n))).padStart(2,'0'); }
-
 let use12hr = true;
-
 function formatTime(h) {
   const norm = ((h % 24) + 24) % 24;
   const hrs  = Math.floor(norm);
@@ -5019,20 +4916,17 @@ function formatTime(h) {
   }
   return pad(hrs) + ':' + pad(mins);
 }
-
 function localDateKey(utcHours, dateStr, offset) {
   const [y, m, d] = dateStr.split('-').map(Number);
   const ms = Date.UTC(y, m-1, d) + utcHours * 3600000 + offset * 3600000;
   const dt = new Date(ms);
   return `${dt.getUTCFullYear()}-${String(dt.getUTCMonth()+1).padStart(2,'0')}-${String(dt.getUTCDate()).padStart(2,'0')}`;
 }
-
 function fmtHeader(key) {
   const [y,m,d] = key.split('-').map(Number);
   const dt = new Date(Date.UTC(y, m-1, d));
   return { name: DAYS[dt.getUTCDay()], date: d + ' ' + MONTHS[m-1] };
 }
-
 function render(offset, team) {
   // team param kept for compat but we use _highlightTeams array
   const buckets = {};
@@ -5044,10 +4938,8 @@ function render(offset, team) {
   keys.forEach(k => buckets[k].sort((a,b) => {
     return ((a.utc+offset)%24+24)%24 - ((b.utc+offset)%24+24)%24;
   }));
-
   const sched = document.getElementById('schedule');
   sched.innerHTML = '';
-
   // --- GROUP STAGE ---
   const cityFilter = document.getElementById('city-filter')?.value || 'all';
   const teamFilter = document.getElementById('team-filter')?.value || 'all';
@@ -5098,7 +4990,6 @@ function render(offset, team) {
     div.innerHTML = html;
     sched.appendChild(div);
   });
-
   // --- KNOCKOUT STAGE ---
   if (showKnockout) {
     // Heading spanning both columns
@@ -5106,7 +4997,6 @@ function render(offset, team) {
     heading.className = 'knockout-heading';
     heading.innerHTML = '<h2>Knockout Stage</h2><span class="ko-sub">Round of 32 &bull; R16 &bull; QF &bull; SF &bull; Final</span>';
     sched.appendChild(heading);
-
     // Bucket knockout matches by local date
     const koBuckets = {};
     KNOCKOUT_MATCHES.forEach(m => {
@@ -5117,11 +5007,9 @@ function render(offset, team) {
     koKeys.forEach(k => koBuckets[k].sort((a,b) => {
       return ((a.utc+offset)%24+24)%24 - ((b.utc+offset)%24+24)%24;
     }));
-
     // Round label colours
     const koColors = { R32:'#7A82A8', R16:'#5DADE2', QF:'#A569BD', SF:'#EC407A', '3rd':'#1ABC9C', Final:'#C9A84C' };
     const koPrintColors = { R32:'#555', R16:'#1a5276', QF:'#6c3483', SF:'#b03a7c', '3rd':'#148f77', Final:'#b7950b' };
-
     koKeys.forEach(k => {
       // If group filter is a group stage letter, skip knockout stage
       if (groupFilter !== 'all' && !koRounds.includes(groupFilter)) return;
@@ -5174,7 +5062,6 @@ function render(offset, team) {
       sched.appendChild(div);
     });
   }
-
   const sign = offset >= 0 ? '+' : '';
   const frac = offset % 1 !== 0;
   const lbl  = frac
@@ -5182,7 +5069,6 @@ function render(offset, team) {
     : `UTC${sign}${offset}`;
   document.getElementById('footer-tz').innerHTML =
     `All times ${lbl} \u2022 Source: FIFA / Fox Sports 2026 \u2022 <span id="version" style="color:var(--text-muted);font-style:italic">v1.4</span>`;
-
   // Next match card + countdown
   const FLAGS = {
     'Algeria':'dz','Argentina':'ar','Australia':'au','Austria':'at','Belgium':'be',
@@ -5196,19 +5082,16 @@ function render(offset, team) {
     'South Korea':'kr','Spain':'es','Sweden':'se','Switzerland':'ch','Tunisia':'tn',
     'Turkiye':'tr','Uruguay':'uy','USA':'us','Uzbekistan':'uz'
   };
-
   function flagUrl(team) {
     const normalised = team.replace(/&amp;/g, '&').trim();
     const code = FLAGS[normalised] || FLAGS[normalised.split(' ')[0]];
     return code ? `https://flagcdn.com/w20/${code}.png` : '';
   }
-
   function updateNextMatch() {
     const now = new Date();
     const offset = parseFloat(document.getElementById('tz-select').value);
     let nextMatch = null;
     let nextTime = null;
-
     for (const m of [...MATCHES, ...KNOCKOUT_MATCHES]) {
       const utcH = Math.floor(m.utc);
       const utcM = Math.round((m.utc % 1) * 60);
@@ -5220,10 +5103,8 @@ function render(offset, team) {
         }
       }
     }
-
     const card = document.getElementById('next-match-card');
     if (!nextMatch) { if (card) card.style.display = 'none'; return; }
-
     // Local kickoff time
     const localTime = new Date(nextTime.getTime() + offset * 3600000);
     const hh = localTime.getUTCHours();
@@ -5233,13 +5114,11 @@ function render(offset, team) {
     const is24 = document.body.classList.contains('time24') || localStorage.getItem('wc2026_timeformat') === '24';
     if (!is24) { displayH = hh % 12 || 12; }
     const timeStr = `${displayH}:${String(mm).padStart(2,'0')}${is24 ? '' : (hh >= 12 ? 'pm' : 'am')}`;
-
     // Teams - resolve placeholders via applyGroupWinners
     const resolvedTeams = applyGroupWinners(nextMatch.teams, nextMatch.id);
     const parts = resolvedTeams.split(' v ');
     const home = parts[0]?.trim() || '';
     const away = parts[1]?.trim() || resolvedTeams;
-
     document.getElementById('nm-home').textContent = home;
     document.getElementById('nm-away').textContent = away;
     document.getElementById('nm-kickoff').textContent = timeStr;
@@ -5258,7 +5137,6 @@ function render(offset, team) {
     document.getElementById('nm-home-flag').alt = home;
     document.getElementById('nm-away-flag').src = flagUrl(away);
     document.getElementById('nm-away-flag').alt = away;
-
     // Countdown
     const diff = nextTime - now;
     const days = Math.floor(diff / 86400000);
@@ -5271,10 +5149,8 @@ function render(offset, team) {
     else countdown = `${mins}m ${secs}s`;
     document.getElementById('nm-countdown').textContent = countdown;
   }
-
   updateNextMatch();
   setInterval(updateNextMatch, 1000);
-
   // Update kickoff date label based on timezone
   // First match is Mexico v South Africa: 2026-06-11T19:00:00Z
   const firstMatchUTC = new Date('2026-06-11T19:00:00Z');
@@ -5291,7 +5167,6 @@ function render(offset, team) {
   const el = document.getElementById('kickoff-date');
   if (el) el.textContent = `${d} ${m} ${y} (${tzLabel})`;
 }
-
 // Global highlights array - up to 4 teams
 const HL_COLORS = ['#2ECC71','#29B6F6','#9B59B6','#FF9F40'];
 let _highlightTeams = ['none','none','none','none'];
@@ -5299,22 +5174,18 @@ try {
   const _saved = localStorage.getItem('wc2026_highlights');
   if (_saved) _highlightTeams = JSON.parse(_saved);
 } catch(e) {}
-
 function saveHighlights() {
   try { localStorage.setItem('wc2026_highlights', JSON.stringify(_highlightTeams)); } catch(e) {}
   // Also save first team to wc2026_highlight for groups page compatibility
   try { localStorage.setItem('wc2026_highlight', _highlightTeams[0]||'none'); } catch(e) {}
 }
-
 const ALL_TEAMS = ['Algeria','Argentina','Australia','Austria','Belgium','Bosnia','Brazil','Canada','Cape Verde','Colombia','Congo DR','Croatia','Curacao','Czechia','Ecuador','Egypt','England','France','Germany','Ghana','Haiti','Iran','Iraq','Ivory Coast','Japan','Jordan','Mexico','Morocco','Netherlands','New Zealand','Norway','Panama','Paraguay','Portugal','Qatar','Saudi Arabia','Scotland','Senegal','South Africa','South Korea','Spain','Sweden','Switzerland','Tunisia','Turkiye','Uruguay','USA','Uzbekistan'];
-
 function teamSelectHTML(selectedVal, rowIdx) {
   const taken = _highlightTeams.filter((t,i) => t && t !== 'none' && i !== rowIdx);
   return '<option value="none">— Remove —</option>' +
     ALL_TEAMS.filter(t => !taken.includes(t) || t === selectedVal)
       .map(t => `<option value="${t}"${t===selectedVal?' selected':''}>${t}</option>`).join('');
 }
-
 function renderHighlightRows() {
   const container = document.getElementById('highlight-rows');
   if (!container) return;
@@ -5333,7 +5204,6 @@ function renderHighlightRows() {
   const addBtn = document.getElementById('hl-add-btn');
   if (addBtn) addBtn.style.display = rows.length >= 4 ? 'none' : 'inline-block';
 }
-
 function addHighlightRow() {
   const idx = _highlightTeams.findIndex(t => !t || t === 'none');
   if (idx === -1) return;
@@ -5346,7 +5216,6 @@ function addHighlightRow() {
   const s = getState();
   render(s.offset, s.team);
 }
-
 function updateHighlight(idx, val) {
   if (val === 'none') {
     removeHighlight(idx);
@@ -5363,7 +5232,6 @@ function updateHighlight(idx, val) {
   const s = getState();
   render(s.offset, s.team);
 }
-
 function removeHighlight(idx) {
   _highlightTeams[idx] = 'none';
   // Compact array - move nones to end
@@ -5373,26 +5241,22 @@ function removeHighlight(idx) {
   const s = getState();
   render(s.offset, s.team);
 }
-
 function getState() {
   return {
     offset: parseFloat(document.getElementById('tz-select').value),
     team: _highlightTeams[0] || 'none'  // kept for compatibility
   };
 }
-
 document.getElementById('tz-select').addEventListener('change', () => {
   const s = getState();
   try { localStorage.setItem('wc2026_tz', document.getElementById('tz-select').selectedIndex); } catch(e) {}
   render(s.offset, s.team);
 });
-
 function downloadICS() {
   const cityFilter = document.getElementById('city-filter')?.value || 'all';
   const groupFilter = document.getElementById('group-filter')?.value || 'all';
   const teamFilter = document.getElementById('team-filter')?.value || 'all';
   const koRounds = ['R32','R16','QF','SF','Final'];
-
   // Get all matches (group + knockout) that pass current filters
   const allMatches = [...MATCHES, ...KNOCKOUT_MATCHES];
   const filtered = allMatches.filter(m => {
@@ -5406,14 +5270,11 @@ function downloadICS() {
     }
     return true;
   });
-
   if (filtered.length === 0) {
     alert('No matches match your current filters.');
     return;
   }
-
   function pad(n) { return String(n).padStart(2, '0'); }
-
   function toICSDate(dateStr, utcFloat) {
     const utcH = Math.floor(utcFloat);
     const utcM = Math.round((utcFloat % 1) * 60);
@@ -5424,7 +5285,6 @@ function downloadICS() {
       pad(d.getUTCHours()) +
       pad(d.getUTCMinutes()) + '00Z';
   }
-
   function toICSDateEnd(dateStr, utcFloat) {
     const utcH = Math.floor(utcFloat);
     const utcM = Math.round((utcFloat % 1) * 60);
@@ -5436,7 +5296,6 @@ function downloadICS() {
       pad(d.getUTCHours()) +
       pad(d.getUTCMinutes()) + '00Z';
   }
-
   const lines = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
@@ -5446,7 +5305,6 @@ function downloadICS() {
     'X-WR-CALNAME:FIFA World Cup 2026',
     'X-WR-TIMEZONE:UTC',
   ];
-
   filtered.forEach((m, i) => {
     const grpLabel = koRounds.includes(m.grp) ? m.grp : `Group ${m.grp}`;
     const num = m.num ? ` (${m.num})` : '';
@@ -5460,14 +5318,11 @@ function downloadICS() {
     lines.push('DESCRIPTION:' + grpLabel + num + ' - ' + m.venue + ' - kingdoggydog.github.io/worldcup2026');
     lines.push('END:VEVENT');
   });
-
   lines.push('END:VCALENDAR');
-
   const blob = new Blob([lines.join('\r\n')], { type: 'text/calendar;charset=utf-8' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-
   // Build filename from filters
   let fname = 'worldcup2026';
   if (teamFilter !== 'all') fname += `-${teamFilter.replace(/ /g,'')}`;
@@ -5477,7 +5332,6 @@ function downloadICS() {
   a.click();
   URL.revokeObjectURL(url);
 }
-
 function clearFilters() {
   document.getElementById('city-filter').value = 'all';
   document.getElementById('group-filter').value = 'all';
@@ -5486,25 +5340,21 @@ function clearFilters() {
   const s = getState();
   render(s.offset, s.team);
 }
-
 document.getElementById('city-filter').addEventListener('change', () => {
   try { localStorage.setItem('wc2026_city', document.getElementById('city-filter').value); } catch(e) {}
   const s = getState();
   render(s.offset, s.team);
 });
-
 document.getElementById('group-filter').addEventListener('change', () => {
   try { localStorage.setItem('wc2026_groupfilter', document.getElementById('group-filter').value); } catch(e) {}
   const s = getState();
   render(s.offset, s.team);
 });
-
 document.getElementById('team-filter').addEventListener('change', () => {
   try { localStorage.setItem('wc2026_teamfilter', document.getElementById('team-filter').value); } catch(e) {}
   const s = getState();
   render(s.offset, s.team);
 });
-
 // Restore saved filters - explicitly reset first to prevent Safari form cache issues
 try {
   document.getElementById('city-filter').value = 'all';
@@ -5535,16 +5385,13 @@ try {
     if (opt) sel.value = savedTeamFilter;
   }
 } catch(e) {}
-
 function jumpToNextDay() {
   const offset = parseFloat(document.getElementById('tz-select').value);
   const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-
   // Get today's local date in the selected timezone
   const now = new Date();
   const localNow = new Date(now.getTime() + offset * 3600000);
   const todayText = localNow.getUTCDate() + ' ' + months[localNow.getUTCMonth()];
-
   // Find the day block matching today first
   const days = document.querySelectorAll('#schedule .day');
   for (const day of days) {
@@ -5556,7 +5403,6 @@ function jumpToNextDay() {
       return;
     }
   }
-
   // If today not found (hide completed etc), fall back to first visible day with upcoming match
   const nowUTC = Date.now();
   for (const day of days) {
@@ -5576,8 +5422,6 @@ function jumpToNextDay() {
     }
   }
 }
-
-
 // Mode toggle
 // Hide completed toggle
 const finishedBtn = document.getElementById('finished-toggle');
@@ -5591,7 +5435,6 @@ finishedBtn.addEventListener('click', () => {
   const s = getState();
   render(s.offset, s.team);
 });
-
 // Scores toggle
 const scoresBtn = document.getElementById('scores-toggle');
 let scoresHidden = false;
@@ -5603,13 +5446,11 @@ scoresBtn.addEventListener('click', () => {
   scoresBtn.textContent = scoresHidden ? 'Show Scores' : 'Hide Scores';
   try { localStorage.setItem('wc2026_hidescores', scoresHidden ? '1' : '0'); } catch(e) {}
 });
-
 const btn = document.getElementById('mode-toggle');
 btn.addEventListener('click', () => {
   const isPrint = document.body.classList.toggle('print-mode');
   btn.textContent = isPrint ? '\u2600 Switch to Night Mode' : '\u2788 Switch to Print Mode';
 });
-
 // Column layout toggle
 let singleCol = false;
 try {
@@ -5618,7 +5459,6 @@ try {
     document.body.classList.add('single-col');
   }
 } catch(e) {}
-
 function updateColSwitch() {
   const track = document.getElementById('cs-track');
   const left  = document.getElementById('cs-left');
@@ -5640,7 +5480,6 @@ document.getElementById('col-switch').addEventListener('click', () => {
   updateColSwitch();
 });
 updateColSwitch();
-
 // Time format switch
 function updateSwitch() {
   const track = document.getElementById('ts-track');
@@ -5657,7 +5496,6 @@ function updateSwitch() {
     right.classList.add('active');
   }
 }
-
 document.getElementById('time-switch').addEventListener('click', () => {
   use12hr = !use12hr;
   updateSwitch();
@@ -5665,14 +5503,12 @@ document.getElementById('time-switch').addEventListener('click', () => {
   const s = getState();
   render(s.offset, s.team);
 });
-
 // Restore saved time format
 try {
   const saved = localStorage.getItem('wc2026_timeformat');
   if (saved === '24') { use12hr = false; }
 } catch(e) {}
 updateSwitch();
-
 // Knockout toggle
 const koBtn = document.getElementById('knockout-toggle');
 if (koBtn) koBtn.addEventListener('click', () => {
@@ -5681,7 +5517,6 @@ if (koBtn) koBtn.addEventListener('click', () => {
   const s = getState();
   render(s.offset, s.team);
 });
-
 // Auto-detect user timezone and select matching dropdown option
 (function() {
   // Map IANA timezone strings to UTC offset values matching our dropdown
@@ -5752,10 +5587,8 @@ if (koBtn) koBtn.addEventListener('click', () => {
     'America/Anchorage':   -8,  'America/Juneau':      -8,
     'Pacific/Honolulu':    -10, 'Pacific/Tahiti':      -10,
   };
-
   // Render highlight rows from saved state
   renderHighlightRows();
-
   // Restore saved timezone preference
   try {
     const savedTz = localStorage.getItem('wc2026_tz');
@@ -5769,7 +5602,6 @@ if (koBtn) koBtn.addEventListener('click', () => {
       }
     }
   } catch(e) {}
-
   // Get user's IANA timezone
   let userTz = 0; // default to UTC+0 if no match
   try {
@@ -5782,7 +5614,6 @@ if (koBtn) koBtn.addEventListener('click', () => {
       userTz = offsetMins / 60;
     }
   } catch(e) {}
-
   // Select the matching dropdown option (pick closest if no exact match)
   const sel = document.getElementById('tz-select');
   const opts = Array.from(sel.options);
@@ -5794,13 +5625,11 @@ if (koBtn) koBtn.addEventListener('click', () => {
   sel.selectedIndex = bestIdx;
   // Save auto-detected tz so other pages stay in sync
   try { localStorage.setItem('wc2026_tz', bestIdx); } catch(e) {}
-
   function restoreAndRender() {
     renderHighlightRows();
     const s = getState();
     render(s.offset, s.team);
   }
-
   loadScores().then(() => {
     buildMatchNumToId();
     restoreAndRender();
@@ -5812,7 +5641,6 @@ if (koBtn) koBtn.addEventListener('click', () => {
       });
     }, 60000);
   });
-
   // ── Match event card: hover (desktop) + tap (mobile) ────────────────────
   let activeCard = null;
   function closeEventCard() {
@@ -5829,7 +5657,6 @@ if (koBtn) koBtn.addEventListener('click', () => {
     activeCard = matchEl.querySelector('.event-card');
     positionEventCard(matchEl, activeCard);
   }
-
   function positionEventCard(matchEl, card) {
     // Find the true visual centre of the team names (home start -> away end),
     // not the whole row (which includes venue text and varies in width).
@@ -5837,22 +5664,17 @@ if (koBtn) koBtn.addEventListener('click', () => {
     const refRect = (scoreEl || matchEl).getBoundingClientRect();
     const matchRect = matchEl.getBoundingClientRect();
     const cardWidth = card.offsetWidth;
-
     const centerX = refRect.left + refRect.width / 2;
     let leftPx = (centerX - matchRect.left) - (cardWidth / 2);
-
     // Clamp so the card never overflows the viewport on mobile
     const margin = 8;
     const minLeftPx = margin - matchRect.left;
     const maxLeftPx = (window.innerWidth - margin - cardWidth) - matchRect.left;
     leftPx = Math.max(minLeftPx, Math.min(leftPx, maxLeftPx));
-
     card.style.left = leftPx + 'px';
     card.style.transform = 'none';
   }
-
   const isTouchDevice = window.matchMedia('(hover: none)').matches;
-
   document.addEventListener('mouseover', (e) => {
     if (isTouchDevice) return;
     const matchEl = e.target.closest('.match[data-teams]');
@@ -5880,16 +5702,12 @@ if (koBtn) koBtn.addEventListener('click', () => {
       closeEventCard();
     }
   });
-
 })();
 </script>
-
 <!-- Buy Me a Coffee widget -->
 <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="coolcato" data-description="Support me on Buy me a coffee!" data-message="" data-color="#C9A84C" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
-
 <script>
-const FORM_ACTION = 'https://docs.google.com/forms/d/e/1FAIpQLScrBvWbYhPRbY9kEJlPbAsZoeglw2DYXdfEKIRUTnMmx1_1dg/formResponse';
-const ENTRY_ID = 'entry.1045781291';
+const KIT_SUBSCRIBE_URL = 'https://app.kit.com/forms/9708248/subscriptions';
 function submitEmail(suffix) {
   const input = document.getElementById('email-input-' + suffix);
   const success = document.getElementById('signup-success-' + suffix);
@@ -5900,8 +5718,10 @@ function submitEmail(suffix) {
     return;
   }
   input.style.border = '';
-  fetch(`${FORM_ACTION}?${ENTRY_ID}=${encodeURIComponent(email)}`, {
-    method: 'POST', mode: 'no-cors'
+  fetch(KIT_SUBSCRIBE_URL, {
+    method: 'POST', mode: 'no-cors',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: 'email_address=' + encodeURIComponent(email)
   }).then(() => {
     if (success) success.style.display = 'block';
     input.value = '';
